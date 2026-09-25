@@ -1,0 +1,28 @@
+{
+  "name": "omnistream-for-codex",
+  "version": "1.0.0-rc3",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "scripts": {
+    "test": "node ./mcp/test-server.mjs && node --test ./mcp/test-scene.mjs && npm run test:public && npm run test:panel-source && npm run test:release",
+    "check": "node --check ./mcp/server.mjs && node --check ./mcp/paths.mjs && node --check ./mcp/control-rpc.mjs && node --check ./mcp/operation-queue.mjs && node --check ./mcp/process-identity.mjs && node --check ./mcp/prepare-stop-retry.mjs && node --check ./mcp/stream-stop-wait.mjs && node --check ./mcp/stage-path-policy.mjs && node --check ./mcp/test-server.mjs && node --check ./mcp/test-runtime.mjs && node --check ./mcp/panel-runtime-harness.mjs && node --check ./scripts/build-web.mjs && node --check ./scripts/test-web.mjs && node --check ./scripts/publication-audit.mjs && node --check ./scripts/doctor.mjs && node --check ./mcp/scene-tools.mjs && node --check ./mcp/live-events.mjs && node --check ./mcp/test-scene.mjs && npm --prefix ./web run typecheck",
+    "test:runtime": "node ./mcp/test-runtime.mjs",
+    "serve:panel-harness": "node ./mcp/panel-runtime-harness.mjs",
+    "build:web": "node ./scripts/build-web.mjs",
+    "test:web": "node ./scripts/test-web.mjs",
+    "audit:public": "node ./scripts/publication-audit.mjs",
+    "doctor": "node ./scripts/doctor.mjs",
+    "verify:source": "npm run check && npm test",
+    "verify:installed": "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\\installer\\Test-OmniStream.ps1",
+    "test:python": "python -m unittest discover -s tests -v",
+    "test:physics": "node ./mcp/test-runtime.mjs --physics",
+    "verify:release": "node ./scripts/verify-release.mjs",
+    "test:public": "node --test ./tests/test_public_contract.mjs",
+    "test:panel-source": "node ./web/tests/panel-contract.mjs --source-only",
+    "test:release": "node --test ./tests/test_release.mjs"
+  }
+}

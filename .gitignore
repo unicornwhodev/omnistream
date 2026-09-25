@@ -1,0 +1,26 @@
+# Generated or locally installed web artifacts. The WebRTC bundle embeds an
+# NVIDIA SDK and is intentionally built only on the end user's machine.
+mcp/web-dist/
+web/dist/
+web/node_modules/
+
+# Local Codex, browser, editor, and runtime evidence.
+.playwright-cli/
+.codex/
+.mcp/
+.vscode/
+.idea/
+coverage/
+playwright-report/
+test-results/
+*.log
+*.pid
+
+# Never publish local configuration or credentials.
+.env
+.env.*
+!.env.example
+web/.npmrc.local
+
+# Local release staging.
+release/

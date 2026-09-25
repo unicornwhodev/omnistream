@@ -1,0 +1,24 @@
+{
+  "name": "omnistream-for-codex",
+  "version": "1.0.0-rc3",
+  "description": "A source-only Codex simulation control studio for a windowless local NVIDIA Omniverse Kit runtime over WebRTC.",
+  "author": {
+    "name": "OmniStream contributors"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "OmniStream for Codex",
+    "shortDescription": "Inspect, animate, simulate and debug the open Omniverse scene.",
+    "longDescription": "A viewport-first control studio for the current scene of a managed windowless Kit runtime: inspect USD, preview/apply reversible physics and animation changes, run bounded simulations, observe live telemetry and diagnose scene structure. NVIDIA components remain external. Physical capabilities depend on the configured Kit application.",
+    "developerName": "OmniStream contributors",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": "Open OmniStream. Inspect my currently open managed Omniverse scene without reloading it; use live telemetry and reversible scene patches to configure, run and debug the requested animation or simulation.",
+    "brandColor": "#76B900"
+  },
+  "mcpServers": "./.mcp.json"
+}

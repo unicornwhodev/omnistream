@@ -1,0 +1,453 @@
+.live-scene-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  padding: 14px 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.live-scene-strip strong {
+  font-weight: 500;
+  color: #cdd6df;
+  font-variant-numeric: tabular-nums;
+}
+.live-state {
+  color: #afda7f;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.live-state::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.live-state.stale {
+  color: var(--muted);
+}
+.scene-workbench {
+  min-width: 0;
+}
+.scene-heading {
+  margin-bottom: 18px;
+}
+.scene-heading p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+  margin-top: 8px;
+}
+.scene-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 12px 0;
+}
+.scene-toolbar button {
+  font-size: 12px;
+}
+.scene-empty {
+  border: 1px dashed #444d57;
+  padding: 22px 18px;
+  border-radius: 8px;
+  margin: 18px 0;
+  background: #14181c;
+}
+.scene-empty strong {
+  font-size: 13px;
+}
+.scene-empty p {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.75;
+}
+.scene-metadata {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 6px 0;
+  border-block: 1px solid var(--line);
+  gap: 4px 16px;
+  margin: 18px 0;
+}
+.scene-metadata span {
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  gap: 8px;
+}
+.scene-metadata b {
+  font-weight: 550;
+  color: var(--text);
+}
+.scene-breadcrumb {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 10px 0;
+}
+.scene-breadcrumb button {
+  font-size: 10px;
+  min-height: 29px;
+  padding: 5px 9px;
+}
+.scene-breadcrumb code {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+  color: #b3c0cb;
+  white-space: nowrap;
+}
+.scene-tree {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #11161a;
+  max-height: 250px;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+.scene-tree [role="listitem"] {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #282e35;
+}
+.scene-tree [role="listitem"]:last-child {
+  border-bottom: 0;
+}
+.scene-tree button {
+  background: transparent;
+  border-color: transparent;
+  border-radius: 0;
+}
+.scene-tree [role="listitem"] > button:first-child {
+  text-align: left;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 3px;
+  padding: 11px 12px;
+}
+.scene-tree strong {
+  font-size: 12px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.scene-tree small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.scene-tree [role="listitem"] > button:last-child:not(:first-child) {
+  margin-right: 8px;
+  font-size: 10px;
+  color: var(--subtle);
+  padding: 6px;
+  min-height: 29px;
+}
+.scene-tree .selected {
+  background: #233022;
+  box-shadow: inset 2px 0 var(--accent);
+}
+.scene-tree .selected strong {
+  color: #d1eaba;
+}
+.scene-tree p {
+  padding: 18px 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.scene-pagination {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  margin-top: 9px;
+}
+.scene-pagination button {
+  font-size: 10px;
+  min-height: 28px;
+  padding: 5px 8px;
+}
+.scene-pagination span {
+  color: var(--subtle);
+  font-size: 10px;
+}
+.scene-section {
+  margin-top: 22px;
+  padding-top: 19px;
+  border-top: 1px solid var(--line);
+}
+.scene-section h4 {
+  margin-bottom: 14px;
+}
+.scene-section > p,
+.scene-details > p {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.scene-section > label,
+.scene-details > label {
+  margin-top: 14px;
+}
+.scene-target {
+  background: #222930;
+  border-radius: 5px;
+  padding: 8px 10px;
+  color: var(--muted);
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.scene-target code {
+  color: #d0dbe5;
+  font-size: 11px;
+}
+.scene-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #c2ccd6;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 13px;
+}
+.scene-check input {
+  margin: 0;
+}
+.scene-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+  align-items: end;
+}
+.scene-grid button {
+  font-size: 11px;
+  min-height: 40px;
+}
+.scene-help {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.65;
+  margin: 12px 0 !important;
+}
+.vector-input {
+  border: 0;
+  padding: 0;
+  margin: 16px 0;
+  min-width: 0;
+}
+.vector-input legend {
+  color: #c3cdd7;
+  font-size: 12px;
+  font-weight: 550;
+  margin-bottom: 6px;
+}
+.vector-input > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.vector-input label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 10px;
+  color: var(--subtle);
+}
+.vector-input input {
+  margin: 0;
+  padding: 8px;
+  height: 37px;
+  min-height: 37px;
+}
+.scene-code {
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  max-height: 330px;
+  padding: 12px;
+  tab-size: 2;
+}
+.scene-preview {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid #485735;
+  background: #1b251b;
+  border-radius: 8px;
+}
+.scene-preview h4 {
+  color: #d1e5b4;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.scene-preview pre {
+  max-height: 220px;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid #344131;
+  background: #101810;
+  color: #c6d7c0;
+  font-size: 11px;
+  margin: 12px 0;
+}
+.scene-preview button {
+  margin-top: 12px;
+}
+.scene-preview .scene-check {
+  color: #d1dfc7;
+}
+.scene-warning {
+  color: var(--warning) !important;
+  font-size: 11px;
+  border: 1px solid #615137;
+  background: #2c261d;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin: 12px 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.scene-details dl {
+  max-height: 300px;
+  overflow: auto;
+  margin-top: 12px;
+}
+.scene-details dl > div {
+  border-bottom: 1px solid var(--line);
+  padding: 9px 0;
+}
+.scene-details dt {
+  font-size: 11px;
+  font-family: Consolas, monospace;
+  color: #d8e1e9;
+}
+.scene-details dt small {
+  display: block;
+  color: var(--subtle);
+  font-size: 10px;
+  margin-top: 3px;
+}
+.scene-details dd {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.scene-details > button {
+  margin-top: 12px;
+  width: 100%;
+}
+.scene-issue {
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--warning);
+  background: #1c2024;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 5px;
+  font-size: 11px;
+}
+.scene-issue.error {
+  border-left-color: var(--danger);
+}
+.scene-issue strong {
+  font-size: 11px;
+}
+.scene-issue code {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+.scene-issue p {
+  color: #bbc5ce;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+.watch-values {
+  margin-top: 14px;
+}
+.watch-values > div {
+  padding: 12px 0;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+}
+.watch-values code {
+  font-size: 10px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.watch-values strong {
+  font-size: 11px;
+  text-align: right;
+  max-width: 52%;
+  overflow-wrap: anywhere;
+}
+.watch-values > p {
+  color: var(--subtle);
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 12px;
+}
+.scene-log {
+  background: #0f1418;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 14px;
+  max-height: 310px;
+  overflow: auto;
+}
+.scene-log > div {
+  display: grid;
+  grid-template-columns: 57px 1fr;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  gap: 3px 9px;
+}
+.scene-log time {
+  font-family: Consolas, monospace;
+  color: var(--subtle);
+  font-size: 10px;
+}
+.scene-log strong {
+  font-size: 10px;
+  color: #c1cdd8;
+  overflow-wrap: anywhere;
+}
+.scene-log span {
+  grid-column: 2;
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.scene-log > p {
+  color: var(--subtle);
+  font-size: 11px;
+  padding: 12px 0;
+}
+@media (max-width: 640px) {
+  .live-scene-strip {
+    gap: 7px 12px;
+    font-size: 9px;
+  }
+  .scene-metadata {
+    gap: 2px 12px;
+  }
+}

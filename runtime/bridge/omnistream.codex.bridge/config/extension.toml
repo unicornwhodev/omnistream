@@ -1,0 +1,14 @@
+[package]
+version = "1.0.0-rc3"
+title = "OmniStream Codex Control Bridge"
+description = "Authenticated loopback control bridge used by OmniStream for Codex."
+category = "Developer Tools"
+keywords = ["omnistream", "codex", "webrtc", "usd"]
+
+[dependencies]
+"omni.usd" = {}
+"omni.timeline" = {}
+"omni.kit.viewport.utility" = {}
+
+[[python.module]]
+name = "omnistream.codex.bridge"

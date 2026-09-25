@@ -1,0 +1,438 @@
+{
+  "schemaVersion": 1,
+  "product": "omnistream-for-codex",
+  "version": "1.0.0-rc3",
+  "generatedAt": "2026-09-05T06:44:20.512849+00:00",
+  "files": [
+    {
+      "path": ".codex-plugin/plugin.json",
+      "size": 1242,
+      "sha256": "6ebbb5ad76f7c6351e96792fc0105b2f46ec79c89703540a8c789e38f6ada9eb"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "size": 1448,
+      "sha256": "53aaef5649bd71e7f4677d2fe6ea16b9a609a91cd7424af5f5a5b5c3c8983708"
+    },
+    {
+      "path": ".github/workflows/runtime-smoke.yml",
+      "size": 864,
+      "sha256": "b21fc4feffff636d51dd74b64d9fd34e948223d208d81b77411fa524b00b6979"
+    },
+    {
+      "path": ".gitignore",
+      "size": 478,
+      "sha256": "9941664a2d0c2cd0199c963d70c4e41616e06eee2b1d5acd1ab80ad594264219"
+    },
+    {
+      "path": ".mcp.json",
+      "size": 156,
+      "sha256": "63371ba53bcef97280baceba496c91b44a7eb5ce019e368fac0adab3c08966d5"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "size": 4761,
+      "sha256": "16299250f6ff4b862ecad4693ec97bf1e75d28bf2d90d4ca4c9181fab16f3bd4"
+    },
+    {
+      "path": "QA-REPORT.md",
+      "size": 7861,
+      "sha256": "82a77abe7a42fef01d10b4b0b145f1d2ecb0e9980de97223a9c91e3762a103ff"
+    },
+    {
+      "path": "README.md",
+      "size": 5786,
+      "sha256": "8ff10809bb5ed3ea2da491def77890f5824afedd9a815ba68370c34cf5a4a426"
+    },
+    {
+      "path": "THIRD_PARTY.md",
+      "size": 1112,
+      "sha256": "860eae60b167400f3b2003c2f35a75adf8fcb498087e022f9cae3818fb650102"
+    },
+    {
+      "path": "config/README.md",
+      "size": 453,
+      "sha256": "2a071e27ed2a8507ca87709919358c322c6e24be70db817e77893eec02208c54"
+    },
+    {
+      "path": "config/omnistream.schema.json",
+      "size": 1014,
+      "sha256": "3f7020955b15b749416aa0c9d70769651993bce01ec77cd9008d314e0fc7f257"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "size": 3984,
+      "sha256": "fcfaf627e7f1258871891166894b9cfa9aa159c6f27980f9913752f56a6f1831"
+    },
+    {
+      "path": "docs/CONFIGURATION.md",
+      "size": 3080,
+      "sha256": "fed66b5ae8b8834fa7d79aa4ecada8ac4dddcc6875e9af6db6a5d188ea9cbe24"
+    },
+    {
+      "path": "docs/INSTALLATION.md",
+      "size": 5909,
+      "sha256": "fcdd5fcabd7ff91d3be39cfd4c88c9933099edbfb52a8082f265181201c847fb"
+    },
+    {
+      "path": "docs/LIVE-SCENE.md",
+      "size": 13023,
+      "sha256": "b8a5740aa454656b49e76626db25589c7984366a99699741caa3af9399a346fa"
+    },
+    {
+      "path": "docs/MCP-REFERENCE.md",
+      "size": 5260,
+      "sha256": "c42ca605c37d19690dbeb7d693768b414f0e0c53e517dd36a0d0b68e957b8749"
+    },
+    {
+      "path": "docs/OPERATIONS.md",
+      "size": 6964,
+      "sha256": "5b166ba3d33a9fec5b1925e955cacd05c90a514211b7decb141d6472299f3a6e"
+    },
+    {
+      "path": "docs/PUBLIC-DEPLOYMENT.md",
+      "size": 4803,
+      "sha256": "6b0456cb90269252e404dfc95b1e987a20bce4de3fbd4bb92a334efc5de4b205"
+    },
+    {
+      "path": "docs/PUBLICATION.md",
+      "size": 3249,
+      "sha256": "ebfd2c582267a4e7c0f2e8426a33335c7bbcb9c3230e78d9bd9695389b11f18b"
+    },
+    {
+      "path": "docs/QUICKSTART.md",
+      "size": 3408,
+      "sha256": "b93d14898f14a63785908e464f8aa7f2ce862650a1e099fdde35ca40d7aeb10a"
+    },
+    {
+      "path": "docs/RELEASE-CHECKLIST.md",
+      "size": 2944,
+      "sha256": "0bb6f09e67b3f848d9b078547f8ab1e9b363748ee2bc821668bf9d072546974a"
+    },
+    {
+      "path": "docs/SECURITY.md",
+      "size": 2451,
+      "sha256": "d5d8210ba083500094ea44a3c89143647e5abe1828fb9e611604ec47df4556e4"
+    },
+    {
+      "path": "docs/TROUBLESHOOTING.md",
+      "size": 3728,
+      "sha256": "5ca5fc66e38e3864c13698e9511ccc78455194f20933a37e44dfd9f1930c899c"
+    },
+    {
+      "path": "docs/VALIDATION.md",
+      "size": 5598,
+      "sha256": "1558e09f2e11e016d5e95e7593c36b71473759bd245f57d52f869eec7f35fba3"
+    },
+    {
+      "path": "installer/Build-Release.ps1",
+      "size": 4313,
+      "sha256": "ab2b1890434f7d7079f5d68f68041abca24c3612a2542f88b4666f759fd5070a"
+    },
+    {
+      "path": "installer/Diagnose-OmniStream.ps1",
+      "size": 754,
+      "sha256": "c5d99110ff54076ccfad7d565144ab52d02ba522b1144c85929689b02ee76bdf"
+    },
+    {
+      "path": "installer/Install-OmniStream.ps1",
+      "size": 27167,
+      "sha256": "066ca3823ffbd896103890446cfb63bdb36377e8e56c4526826f92c862266c98"
+    },
+    {
+      "path": "installer/README.md",
+      "size": 2408,
+      "sha256": "b417a12a5096452d71b1b450a00b02e2978d68b6b2f4e08dd57259ac766c2d87"
+    },
+    {
+      "path": "installer/Test-OmniStream.ps1",
+      "size": 3918,
+      "sha256": "394d989914573ab3f653a6043386a11c371732fbe8d3d82b0d57c5b080ee39a6"
+    },
+    {
+      "path": "installer/Uninstall-OmniStream.ps1",
+      "size": 2428,
+      "sha256": "85bd57c8843d170a5212f7538bee4b95f656c9c262696dbbb0e67f178b1e7190"
+    },
+    {
+      "path": "installer/diagnose.cmd",
+      "size": 138,
+      "sha256": "0ff98bec1709bef6147e899960924d0a1bbee17ad360ee7ffce7039540f39a10"
+    },
+    {
+      "path": "installer/install.cmd",
+      "size": 281,
+      "sha256": "7073b045eba6e972980562295a6d1ade7ee9f8f221c88d1c70b9b668fe1f7390"
+    },
+    {
+      "path": "installer/repair.cmd",
+      "size": 186,
+      "sha256": "1f4522a6ae36b1fff906a79df83c03aec830fe5ea029a1138a02b314f177246f"
+    },
+    {
+      "path": "installer/test.cmd",
+      "size": 134,
+      "sha256": "f1d1c1a03a7ca0a21a085a0cdb5b1db8cde2a2c74629cac520432657ce5752ae"
+    },
+    {
+      "path": "installer/uninstall.cmd",
+      "size": 139,
+      "sha256": "8264a901fa635273823f349c2490b1a622047cb76bf4955c963af04ce5819fa8"
+    },
+    {
+      "path": "mcp/control-rpc.mjs",
+      "size": 14858,
+      "sha256": "2551c6c6c0ac602343013dda656538ae31dd3f2f3dc40bdb9595c0e72b834d8e"
+    },
+    {
+      "path": "mcp/fixtures/control-camera.usda",
+      "size": 518,
+      "sha256": "3a88ff0221052cf68710bce40ff200df5e8238a433a2c40479792afb24fc8615"
+    },
+    {
+      "path": "mcp/launch-hidden-kit.ps1",
+      "size": 1636,
+      "sha256": "779122b34331bf2f8a3b430bd04ca7e6e81beacadc09650351c6e37b648a57f7"
+    },
+    {
+      "path": "mcp/live-events.mjs",
+      "size": 2013,
+      "sha256": "682394cf6682d96f1b737b4bd0eb8cb9b953f2507f609712d5afbdc2e12e7ec2"
+    },
+    {
+      "path": "mcp/operation-queue.mjs",
+      "size": 3588,
+      "sha256": "2e8a6438c529ab08095eaf55ee0530f40f5c4d1ad8930838bafe8e06540154b9"
+    },
+    {
+      "path": "mcp/panel-runtime-harness.mjs",
+      "size": 8543,
+      "sha256": "6c14f910fcad6d25823bbfca9a0041e687bbc4221acfd6dc4f642b405248924d"
+    },
+    {
+      "path": "mcp/paths.mjs",
+      "size": 2860,
+      "sha256": "ac2d084b91cd761c682c38f8a61795cacf88d1fdd3780d4e022d68fb98fc4377"
+    },
+    {
+      "path": "mcp/prepare-stop-retry.mjs",
+      "size": 5777,
+      "sha256": "bea3a5b6425e5afe03e550de8156592fa8e9b25ad7d373f4861d3047fea2b645"
+    },
+    {
+      "path": "mcp/process-identity.mjs",
+      "size": 7601,
+      "sha256": "876990b9b4fa36d31698b13735c56e232dca10c9886ec9f06608254d743bc197"
+    },
+    {
+      "path": "mcp/scene-tools.mjs",
+      "size": 9054,
+      "sha256": "56228d1c1c448f1dfdb064f7fba758d5b89ab4abd89e63fb4d03e8248cf9bee6"
+    },
+    {
+      "path": "mcp/server.mjs",
+      "size": 90118,
+      "sha256": "593e8ba6415954655f8f8504d7a143ec6dc39e20f0ba21186f1ba3f6338edd7a"
+    },
+    {
+      "path": "mcp/stage-path-policy.mjs",
+      "size": 5948,
+      "sha256": "3454629aa916b2ee90d677764feaa5c85d7452e4df76d391556e2dabcdd30414"
+    },
+    {
+      "path": "mcp/stream-stop-wait.mjs",
+      "size": 1084,
+      "sha256": "f592772084102ee8dbb285b945066ff63651b69467e2d1c7a33f83150d1239be"
+    },
+    {
+      "path": "mcp/test-runtime.mjs",
+      "size": 21336,
+      "sha256": "37aa11006f3247f7640c41cff09bf14462834f09e55a15ea40d7e8b7878dec48"
+    },
+    {
+      "path": "mcp/test-scene.mjs",
+      "size": 5265,
+      "sha256": "892852c1895173812bb4eec2804700a929b9daf91838e2e2441fbe0d15c40e28"
+    },
+    {
+      "path": "mcp/test-server.mjs",
+      "size": 38184,
+      "sha256": "22c23f6df664d2713ba9f99663163eac6a8a71e7f8611586f329f3519ff091d8"
+    },
+    {
+      "path": "package.json",
+      "size": 1996,
+      "sha256": "9103083f0c2ee3da35d254d00d158f80b0cd3fe5fce83fef770f80f828293514"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/config/extension.toml",
+      "size": 377,
+      "sha256": "e44af44b229b1bde4ff59a59befbf7575b4f07b7804c9bba7ab7f040beb3c277"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/__init__.py",
+      "size": 100,
+      "sha256": "75149de0204b3afd0e47f3df2808ab46eacc114e4d2a4a999d3c6141f55c058c"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/extension.py",
+      "size": 26973,
+      "sha256": "36567d367eb1d5069446a8afa9fe8658187bc9a7f3178af682fc24741ee4bd20"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/scene_policy.py",
+      "size": 7994,
+      "sha256": "485f0788e5a1cd10b382a1b85007b71e7db0f207763e20c691c27901f759b846"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/scene_service.py",
+      "size": 33160,
+      "sha256": "1ed553ebc1e6e268a6d2c02df592f29aed42b6d1575f81062f824d11f1b71bdd"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/telemetry.py",
+      "size": 1559,
+      "sha256": "6c2726182bb5c2983a1ae72ec0f6ba0c17ace656e61a47835d6649aff12302ea"
+    },
+    {
+      "path": "scripts/build-web.mjs",
+      "size": 993,
+      "sha256": "97028e4ec80272bd3f6c35ccad0c425dcba90581e8863d8e1e5a59ed55d69df3"
+    },
+    {
+      "path": "scripts/doctor.mjs",
+      "size": 6159,
+      "sha256": "b0f65493669227d36cc4a47cd761ab3ea138075ee18712a3667743aad8b8756f"
+    },
+    {
+      "path": "scripts/publication-audit.mjs",
+      "size": 5282,
+      "sha256": "48155c78ba7341d9ea04383cc921e14f8c58fa0f8e16d39729329ca3f548f9de"
+    },
+    {
+      "path": "scripts/test-web.mjs",
+      "size": 1310,
+      "sha256": "16da4a59e408ce0fae397e736b5c7a6be27088f3cb24913d0d21341c9819eb33"
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "size": 2525,
+      "sha256": "4c05de3bc240ec986ac5ce9cc6eeaca07da55fbe2ca8cbfb8f64c837db0bc068"
+    },
+    {
+      "path": "skills/omnistream-for-codex/SKILL.md",
+      "size": 8034,
+      "sha256": "837048b0a1dbb1d2f620bd459065ea50beec16e0e0e2b73269719d68279840b5"
+    },
+    {
+      "path": "tests/fixtures/omnistream-smoke.usda",
+      "size": 518,
+      "sha256": "3a88ff0221052cf68710bce40ff200df5e8238a433a2c40479792afb24fc8615"
+    },
+    {
+      "path": "tests/fixtures/physics-lab.usda",
+      "size": 2373,
+      "sha256": "ae8213095321757802ca63f534439531f931047845517b52836d73d8890e1e5e"
+    },
+    {
+      "path": "tests/test_public_contract.mjs",
+      "size": 4917,
+      "sha256": "9c14092393728c3dedcb41daf4f7585fe1bccdf5dbd6faf5e5b0ddc5dc34be40"
+    },
+    {
+      "path": "tests/test_release.mjs",
+      "size": 2299,
+      "sha256": "7490e6badd82ac511b2c659a37e2ae9f5b41a2144b430eb0675250810c5432c0"
+    },
+    {
+      "path": "tests/test_scene.py",
+      "size": 14714,
+      "sha256": "c3de240a8585612c8e8dccec987580abaa7e1d849ccd65e8dfd3af952c6d9d93"
+    },
+    {
+      "path": "web/.npmrc",
+      "size": 205,
+      "sha256": "39b70ef81fde66ea6b042941be14c7179964aef6e2ab0d6eaf298cce0bfe753e"
+    },
+    {
+      "path": "web/index.html",
+      "size": 307,
+      "sha256": "2c5aa83b4a467cba06d464ab91657af3913d5740c66ca967a0512395c3a698a2"
+    },
+    {
+      "path": "web/package-lock.json",
+      "size": 48880,
+      "sha256": "db5a42aa05db5316b033f6a2615db5c348b8d3bedfa5aded4928cd2f9bdf553b"
+    },
+    {
+      "path": "web/package.json",
+      "size": 981,
+      "sha256": "b8d9c4046c91d8c66748ff946aeea005d77d8e693714aad8d3be1b9cfcedad12"
+    },
+    {
+      "path": "web/src/Confirmation.tsx",
+      "size": 2296,
+      "sha256": "41723684576454ec40ee03257277f759bdc605c42d15e3a52564ac16b37e251e"
+    },
+    {
+      "path": "web/src/ErrorBoundary.tsx",
+      "size": 779,
+      "sha256": "30e8013d4938043d99b63706d5da47eea7247fc736a9230412b61c24c1ba15dd"
+    },
+    {
+      "path": "web/src/Icon.tsx",
+      "size": 1569,
+      "sha256": "5a2c6cce2eeeb0ee38bdad73ac3408d93aa0a7cc5603207a52f389214e874bd3"
+    },
+    {
+      "path": "web/src/SceneWorkbench.tsx",
+      "size": 41389,
+      "sha256": "74b48dd994bb76d82610f992147458d557318acbd311c6ed30a9b0dd6bd67c74"
+    },
+    {
+      "path": "web/src/index.css",
+      "size": 25814,
+      "sha256": "7d6c5636d6c03dc8b0cd6d52ed367a6dd2b517705bfbd60923a93127813e764e"
+    },
+    {
+      "path": "web/src/main.tsx",
+      "size": 104540,
+      "sha256": "e9e8338a3d3812cb508f1d94d65d1db236b1a67d3bd136eff0ea457a312fb389"
+    },
+    {
+      "path": "web/src/scene.css",
+      "size": 8189,
+      "sha256": "142d7b18d32b66ae0706cf1ae55f0b6fdd5debe00f5390462ff0e5c87fb2aff5"
+    },
+    {
+      "path": "web/src/tool-result.mjs",
+      "size": 1522,
+      "sha256": "1d89623272bf7c9c1f2613dc2b44acb7f17dad51277612e274eea1da93f6fc53"
+    },
+    {
+      "path": "web/tests/panel-contract.mjs",
+      "size": 12059,
+      "sha256": "e1aa6de4682afeca638018e5d86a04923c60139ad86ff1aaabc3c8aea473b10b"
+    },
+    {
+      "path": "web/tsconfig.app.json",
+      "size": 625,
+      "sha256": "93fdadbd50ff9ca7cd4d88ff6b433ed131568c968bf47c01846fc3010844ca00"
+    },
+    {
+      "path": "web/tsconfig.json",
+      "size": 119,
+      "sha256": "770b4140bbb581e2dfd9ea9946ffc9c75a1d86ba7d2db5f77c83e37cbdf9d808"
+    },
+    {
+      "path": "web/tsconfig.node.json",
+      "size": 558,
+      "sha256": "d366cc0827139db39c61815f22491bbfda56c654354a42ad7795143d314e45e8"
+    },
+    {
+      "path": "web/vite.config.ts",
+      "size": 1293,
+      "sha256": "323d268c0aa44e74712816bce5373578026c8b7159343fa37f3c48ce84060e9e"
+    }
+  ]
+}

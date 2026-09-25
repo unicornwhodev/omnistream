@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://omnistream.local/schemas/omnistream.schema.json",
+  "title": "OmniStream local configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kitRoot", "workspaceRoot", "assetRoots", "streamKitRelativePath", "signalingPort", "mediaPort"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 2 },
+    "kitRoot": { "type": "string", "minLength": 1 },
+    "workspaceRoot": { "type": "string", "minLength": 1 },
+    "assetRoots": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "streamKitRelativePath": { "type": "string", "pattern": "^(?![A-Za-z]:)(?![/\\\\])(?!.*\\.\\.).+\\.kit$" },
+    "signalingPort": { "type": "integer", "minimum": 1024, "maximum": 65535 },
+    "mediaPort": { "type": "integer", "minimum": 1024, "maximum": 65535 },
+    "runtimeChannel": { "type": "string", "enum": ["Production", "Feature", "Existing"] }
+  }
+}
