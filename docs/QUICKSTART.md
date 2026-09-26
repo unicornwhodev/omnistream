@@ -1,6 +1,6 @@
 # Quick start
 
-> RC3 : pour le travail dans la scène déjà ouverte, les nouveaux outils physiques/animation, la télémétrie et leurs limites, consulter [Scène ouverte et debug](LIVE-SCENE.md). Le cycle ci-dessous décrit le runtime et les outils historiques.
+Ce guide couvre l’installation puis les deux parcours du studio : lancer un fichier USD choisi par l’opérateur ou continuer à travailler sur la scène déjà ouverte dans la session Kit gérée.
 
 ## 1. Extract and install
 
@@ -40,13 +40,19 @@ The default installed plugin root is:
 
 Load/import that local plugin in Codex, then open **OmniStream for Codex**.
 
-## 4. Ouvrir votre vraie scène
+## 4. Choisir le parcours
+
+### Ouvrir une nouvelle scène
 
 L’installateur ne crée aucun contenu d’exemple. Le workspace utilisateur reste vide. Placer un USD de confiance dans le workspace configuré. Ne pas ouvrir un fichier inconnu sans en vérifier les dépendances/extensions.
 
 Dans **Configurer**, sélectionner le workspace puis utiliser **Scanner**, ou saisir le chemin réel de votre fichier. Valider la configuration. Dans **Lancer**, examiner le préflight puis lancer lorsque les vérifications requises sont satisfaites. Un port de signalisation disponible ne prouve pas qu’une image est reçue. Attendre l’apparition réelle de votre scène dans le viewport.
 
-Dans **Scène**, inspecter les objets actuels avant toute modification. Les contrôles physiques sont conditionnés à la capacité réelle de l’application Kit. Dans **Contrôler**, utiliser lecture, pause, arrêt, frames et seek ; la cadence cible ne promet pas de dilatation temporelle du solveur. **Superviser** et **Diagnostic** séparent état runtime, vidéo, bridge, scène, logs et mesures.
+### Continuer sur la scène déjà ouverte
+
+Ce parcours concerne le Kit géré par la session MCP courante. Si le runtime est prêt mais que le panneau a perdu son flux, utiliser **Rattacher** dans **Lancer** ou appeler `attach_omniverse_stream`. Ne pas appeler `launch_omniverse_simulation` pour une correction : ce lancement ouvre le fichier USD enregistré dans la configuration. Un Kit démarré séparément n’est pas adopté automatiquement.
+
+Dans **Scène**, inspecter le stage et l’objet avant toute modification. Prévisualiser la correction puis appliquer l’aperçu encore valide. Les contrôles physiques dépendent de la capacité réellement détectée par Kit. Dans **Contrôler**, utiliser lecture, pause, arrêt, frames et seek ; la cadence cible ne promet pas de dilatation temporelle du solveur. **Superviser** et **Diagnostic** séparent état runtime, vidéo, bridge, scène, logs et mesures.
 
 Si aucune scène ni mesure n’est disponible, l’interface l’indique au lieu de la remplacer par une donnée de démonstration. Les corrections de scène restent en session : exporter avant d’arrêter Kit. L’enregistrement de caméra est une écriture source distincte et explicitement confirmée.
 

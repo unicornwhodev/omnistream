@@ -1,10 +1,10 @@
 # Operations
 
-> RC3 : pour le travail dans la scène déjà ouverte, les nouveaux outils physiques/animation, la télémétrie et leurs limites, consulter [Scène ouverte et debug](LIVE-SCENE.md). Le cycle ci-dessous décrit le runtime et les outils historiques.
-
 ## Primary workflow: Configure → Launch → Supervise → Control
 
 For normal use, Codex should prefer the simulation-level workflow instead of assembling a run from many low-level calls. `preflight_omniverse_simulation` is the read-only readiness gate before launch, and `read_omnistream_runtime_logs` is the bounded diagnostic surface during supervision.
+
+There are two distinct scene workflows. **Configurer → Préflight → Lancer** opens the USD selected in the session configuration. **Scène** works on the stage already open in the managed Kit runtime and does not reload that USD. Use **Lancer → Rattacher** or `attach_omniverse_stream` only to reconnect the panel to that same ready session. An independently launched Kit process is not adopted automatically. The six panel sections are **Configurer**, **Lancer**, **Scène**, **Contrôler**, **Superviser**, and **Diagnostic**.
 
 ### 1. Configure
 
@@ -84,12 +84,16 @@ The stable public plugin name is `omnistream-for-codex`.
 
 The panel mirrors the same workflow:
 
-- **Configurer** — paths, stage, camera, initial time, playback policy;
-- **Lancer** — configuration summary, launch action, active session identity and advanced attach/start controls;
-- **Superviser** — health, PID/run identity, lifecycle, timeline, stage and frame policy;
-- **Contrôler** — transport, reset, seek, rate, loop and advanced camera controls.
+- **Configurer** — workspace, stage, camera, initial time and playback policy for a new launch;
+- **Lancer** — preflight, launch, active session identity, and attach to the existing managed stream;
+- **Scène** — inspect the open stage, preview/apply corrections, export or discard managed edits;
+- **Contrôler** — timeline transport and temporary camera navigation;
+- **Superviser** — runtime, WebRTC, bridge, stage and timeline health;
+- **Diagnostic** — scene structure, watched values, live events and bounded runtime logs.
 
 The WebRTC viewport remains the primary visual evidence. Process health alone is not a rendered scene.
+
+For the complete scene-edit operations, required stage/revision arguments, telemetry boundaries and physical-solver limits, see [Scène ouverte, simulation et diagnostic](LIVE-SCENE.md) and the [MCP reference](MCP-REFERENCE.md).
 
 ## Attach and terminate runtime
 

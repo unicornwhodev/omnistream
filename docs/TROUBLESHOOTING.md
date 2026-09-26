@@ -1,6 +1,6 @@
 # Troubleshooting
 
-> RC3 : pour le travail dans la scène déjà ouverte, les nouveaux outils physiques/animation, la télémétrie et leurs limites, consulter [Scène ouverte et debug](LIVE-SCENE.md). Le cycle ci-dessous décrit le runtime et les outils historiques.
+Pour une erreur lors de l’inspection, de l’édition ou de l’exécution du stage déjà ouvert, consulter aussi [Scène ouverte, simulation et diagnostic](LIVE-SCENE.md).
 
 Start with:
 
@@ -22,6 +22,14 @@ Managed Kit stdout/stderr logs live under `%LOCALAPPDATA%\OmniStream\logs`. In C
 Run `preflight_omniverse_simulation` or **Lancer → Préflight** and fix the failing blocking check rather than repeatedly invoking launch. Typical blockers are a missing workspace/stage, built `kit.exe`, streaming `.kit`, control bridge/panel bundle, or a signaling port already owned by another process.
 
 A configuration change invalidates the previous preflight result intentionally; rerun it before launch.
+
+## The current-stage tools reject an edit
+
+If inspection reports a different stage or revision, inspect the current stage again and create a fresh preview. Previews expire after 120 seconds; do not retry an old `previewId`. A structural diagnosis can be incomplete when its inspection is capped, so treat the result as bounded evidence.
+
+Physics controls require Kit to report the actual `omni.physx` capability and a compatible physics scene/body. USD physics schemas alone do not prove a solver is loaded; see [Scène ouverte](LIVE-SCENE.md).
+
+If live values are absent or marked stale, check the telemetry connection, `ageMs` and `stale` fields. Kit samples USD-visible values; process health or an open port does not prove a fresh sample or decoded video frame.
 
 ## `The panel bundle is missing`
 

@@ -1,14 +1,13 @@
 # Architecture
 
-> RC3 : pour le travail dans la scène déjà ouverte, les nouveaux outils physiques/animation, la télémétrie et leurs limites, consulter [Scène ouverte et debug](LIVE-SCENE.md). Le cycle ci-dessous décrit le runtime et les outils historiques.
-
 ```mermaid
 flowchart LR
   Codex["Codex Desktop"] -->|"MCP resource + tool calls"| MCP["Node MCP server\nOmniStream for Codex"]
   MCP -->|"private widget metadata\nWebRTC bearer"| Panel["Codex panel\nlocal WebRTC client"]
   Panel <-->|"loopback signaling/media"| Kit["NVIDIA Kit runtime\nexternal, --no-window"]
-  MCP -->|"authenticated JSONL\nephemeral loopback port"| Bridge["omnistream.codex.bridge\nOmniStream source"]
-  Bridge --> Kit
+  MCP <-->|"authenticated JSONL\nephemeral loopback port"| Bridge["omnistream.codex.bridge\nOmniStream source"]
+  Bridge -->|"scene inspection, session edits, telemetry"| Kit
+  Kit -->|"bounded samples and events"| Bridge
   MCP -->|"validated root-stage paths"| USD["Configured local USD workspace"]
   Assets["Configured local asset roots"] --> MCP
 ```
@@ -29,13 +28,19 @@ OmniStream separates a **validated simulation configuration** from a **tracked r
 
 This separation prevents UI configuration edits from silently changing a running simulation and prevents another mutation from interleaving during a launch sequence. A timeout with an uncertain effect is recorded on the managed session and closes the normal mutation path until reconciled.
 
+## Current-stage editing and observation
+
+The scene tools operate on the stage already open in the managed Kit session. They do not reload the configured file. A proposed edit is validated on an isolated USD stage, then applied to an OmniStream-owned session override layer only when its `stageId`, expected revision and unexpired preview still match. Undo/discard affects those managed edits; export writes a new `.usda` override layer under the configured workspace. The source stage is not saved by these patch operations. Explicit camera saving remains a separate source-writing action.
+
+Kit samples selected USD values and sends bounded events through the authenticated bridge. The MCP server caches the latest sample and event cursor; Codex reads that cache through `read_omniverse_live_telemetry`. The panel polls while visible. This path reports USD-visible values and event freshness; it is not a hard real-time model loop or a measurement of GPU frame rate. See [Scène ouverte](LIVE-SCENE.md) for supported edits and limits.
+
 ## Stream configuration
 
 The MCP runtime chooses the signaling/media ports once and passes the same values to Kit at launch using `omni.kit.livestream.app` primary stream settings. Runtime status returns those values to the React panel, which uses them to connect. This removes the previous split-brain risk where Kit and the client could silently use different ports.
 
 ## Persistence contract
 
-Timeline operations and camera navigation are session operations. OmniStream does not create cameras. Temporary camera movement is authored in the USD session layer and tracked as dirty. Selecting another camera is refused while that temporary pose is unsaved. `save_omniverse_camera` is the single explicit persistence operation: after confirmation, it writes the selected camera pose to a writable source layer and removes OmniStream's temporary session override.
+Timeline operations and camera navigation are session operations. OmniStream does not create cameras. Temporary camera movement is authored in the USD session layer and tracked as dirty. Selecting another camera is refused while that temporary pose is unsaved. In the camera workflow, `save_omniverse_camera` is the explicit persistence operation: after confirmation, it writes the selected camera pose to a writable source layer and removes OmniStream's temporary session override. Scene corrections use the separate new-file-only override export described above.
 
 ## Network and credential contract
 

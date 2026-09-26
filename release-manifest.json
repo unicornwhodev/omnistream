@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc3",
-  "generatedAt": "2026-09-05T06:44:20.512849+00:00",
+  "generatedAt": "2026-09-26T00:32:59.5482543Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -41,8 +41,8 @@
     },
     {
       "path": "README.md",
-      "size": 5786,
-      "sha256": "8ff10809bb5ed3ea2da491def77890f5824afedd9a815ba68370c34cf5a4a426"
+      "size": 6528,
+      "sha256": "299d4c0f8634341a26f8dde4501bcc56aea3cbd28efb73aeb19d5d4665593fdb"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -61,13 +61,13 @@
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "size": 3984,
-      "sha256": "fcfaf627e7f1258871891166894b9cfa9aa159c6f27980f9913752f56a6f1831"
+      "size": 4964,
+      "sha256": "25498f6293f19a6613b289fa5b24d30012434cf13220899635632f672d5ff9bb"
     },
     {
       "path": "docs/CONFIGURATION.md",
-      "size": 3080,
-      "sha256": "fed66b5ae8b8834fa7d79aa4ecada8ac4dddcc6875e9af6db6a5d188ea9cbe24"
+      "size": 3040,
+      "sha256": "104312d831ed2c4c31e925e796d7798302700f7c5d0c6113a9a88868e07644d6"
     },
     {
       "path": "docs/INSTALLATION.md",
@@ -76,18 +76,18 @@
     },
     {
       "path": "docs/LIVE-SCENE.md",
-      "size": 13023,
-      "sha256": "b8a5740aa454656b49e76626db25589c7984366a99699741caa3af9399a346fa"
+      "size": 13107,
+      "sha256": "d96cff0832825bf41f7c8dcaccda6cf33b20c58dd22b55b8a07f6766149000b2"
     },
     {
       "path": "docs/MCP-REFERENCE.md",
-      "size": 5260,
-      "sha256": "c42ca605c37d19690dbeb7d693768b414f0e0c53e517dd36a0d0b68e957b8749"
+      "size": 7515,
+      "sha256": "23253cd5c9d4bea61b9764ad5a147c1f1707174a973a05ecf464f1a4bb38c774"
     },
     {
       "path": "docs/OPERATIONS.md",
-      "size": 6964,
-      "sha256": "5b166ba3d33a9fec5b1925e955cacd05c90a514211b7decb141d6472299f3a6e"
+      "size": 7654,
+      "sha256": "60905922adeaf9da44d3be2d812eb034a110cb81c69a9e65a3670339647560c0"
     },
     {
       "path": "docs/PUBLIC-DEPLOYMENT.md",
@@ -101,8 +101,13 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "size": 3408,
-      "sha256": "b93d14898f14a63785908e464f8aa7f2ce862650a1e099fdde35ca40d7aeb10a"
+      "size": 3903,
+      "sha256": "023ce89bd3e8e8bc01787934ab3f4456134c95b0f75e7508cfb03eae0b37e77c"
+    },
+    {
+      "path": "docs/README.md",
+      "size": 1932,
+      "sha256": "bce61aa009fb6182a5e3bba42eece4c32bfd38078939ba6282b3a55560672a9a"
     },
     {
       "path": "docs/RELEASE-CHECKLIST.md",
@@ -111,13 +116,13 @@
     },
     {
       "path": "docs/SECURITY.md",
-      "size": 2451,
-      "sha256": "d5d8210ba083500094ea44a3c89143647e5abe1828fb9e611604ec47df4556e4"
+      "size": 2801,
+      "sha256": "aba0e10d2be57e2123658f58c131f0d8efeb06b7bc5264ccae42c7faf3e78894"
     },
     {
       "path": "docs/TROUBLESHOOTING.md",
-      "size": 3728,
-      "sha256": "5ca5fc66e38e3864c13698e9511ccc78455194f20933a37e44dfd9f1930c899c"
+      "size": 4422,
+      "sha256": "47c672a23f74f6ae0ee9e70f13f4115ab351414a549e374772b5d62d26bb4553"
     },
     {
       "path": "docs/VALIDATION.md",

@@ -1,8 +1,26 @@
 # MCP reference
 
-> RC3 : pour le travail dans la scène déjà ouverte, les nouveaux outils physiques/animation, la télémétrie et leurs limites, consulter [Scène ouverte et debug](LIVE-SCENE.md). Le cycle ci-dessous décrit le runtime et les outils historiques.
+OmniStream exposes two scene workflows: launch a configured USD stage, or work on the stage already open in the managed Kit session. The second workflow does not reload the configured file. Prefer the high-level simulation tools for a new launch and the scene tools for edits to the current stage. An independently launched Kit process is not adopted automatically.
 
-OmniStream exposes a high-level simulation workflow plus lower-level diagnostic/compatibility tools. Prefer the high-level tools for normal automation.
+## Current open-stage tools
+
+These tools act on the stage already open in the managed Kit session. Inspect the scene first, then pass its `stageId` and expected `revision` to preview/apply operations. They do not call `open` on the configured stage. See [Scène ouverte, simulation et diagnostic](LIVE-SCENE.md) for supported operations, physical-solver requirements, persistence and observation limits.
+
+| Tool | Purpose and boundary |
+|---|---|
+| `inspect_omniverse_scene` | Read the current stage identity/revision, units, time range, physics capability and a bounded page of direct children. |
+| `inspect_omniverse_prim` | Read bounded attributes, schemas and local transform for one prim at the current timeline time. |
+| `preview_omniverse_scene_patch` | Validate a bounded correction on an isolated USD stage; returns an expiring preview and does not edit the live stage. |
+| `apply_omniverse_scene_patch` | Apply that exact preview to an undoable OmniStream session layer if stage, revision and expiry still match. Does not save the source USD. |
+| `undo_omniverse_scene_patch` | Undo the last OmniStream correction; does not rewind a physics solver. |
+| `discard_omniverse_scene_edits` | Explicitly discard OmniStream's session corrections/history; does not delete source files. |
+| `export_omniverse_scene_patch` | With confirmation, write a new `.usda` override layer under the authorized workspace; no overwrite or flattening. |
+| `configure_omniverse_scene_watch` | Select up to 16 existing USD attributes for bounded live observation; optional local pause on non-finite values. |
+| `diagnose_omniverse_scene` | Bounded structural diagnosis of physics capability, bodies, colliders and selected animation/physics conflicts. |
+| `run_omniverse_scene` | Run animation or physics on the current stage with a wall-time limit; does not reload USD or guarantee deterministic stepping. |
+| `read_omniverse_live_telemetry` | Read the latest cached sample and cursor-based events; check connection, `ageMs` and `stale`. A new call is needed to observe later changes. |
+
+Scene edits remain in memory until exported or discarded. The separate `save_omniverse_camera` operation can write an existing camera pose to a USD source after an explicit request.
 
 ## High-level workflow
 
@@ -107,7 +125,7 @@ Read-only diagnostic tool. Optional:
 
 It reads only the active managed Kit session's log files, bounds the amount returned and redacts known session credentials plus token/password/authorization-like values.
 
-## Lower-level tools
+## Runtime, stage discovery, timeline and camera tools
 
 | Tool | Purpose |
 | --- | --- |

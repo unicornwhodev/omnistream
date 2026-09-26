@@ -1,7 +1,5 @@
 # Security
 
-> RC3 : pour le travail dans la scène déjà ouverte, les nouveaux outils physiques/animation, la télémétrie et leurs limites, consulter [Scène ouverte et debug](LIVE-SCENE.md). Le cycle ci-dessous décrit le runtime et les outils historiques.
-
 ## Local boundaries implemented by the plugin
 
 - The control bridge listener binds to IPv4 loopback and authenticates each session with a random token.
@@ -29,6 +27,10 @@ Never commit or publish:
 - generated `mcp/web-dist/` output.
 
 The public gate in `npm run audit:public` scans the staged Git index when one is available; in an extracted release/source tree it audits the source tree directly and rejects generated/dependency directories. It is not a substitute for protecting local runtime logs or workspaces.
+
+## Scene edits and persistence
+
+Scene corrections are checked on an isolated stage and applied to an OmniStream-owned session layer after stage/revision/preview checks. They remain in memory until exported as a new override layer or discarded; applying a patch does not save the source USD. Export requires an explicit confirmation and refuses to overwrite an existing file. Camera pose persistence is a separate explicit operation that writes to an existing writable USD source. Review the destination before saving or exporting, and see [Scène ouverte](LIVE-SCENE.md) for the full edit contract.
 
 ## Reporting a vulnerability
 

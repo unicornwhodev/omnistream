@@ -1,6 +1,6 @@
 # Configuration
 
-> RC3 : pour le travail dans la scène déjà ouverte, les nouveaux outils physiques/animation, la télémétrie et leurs limites, consulter [Scène ouverte et debug](LIVE-SCENE.md). Le cycle ci-dessous décrit le runtime et les outils historiques.
+Cette configuration sert à préparer et lancer un runtime Kit géré. Une correction sur la scène déjà ouverte n’exige pas de recharger ni de modifier ces chemins ; voir [Scène ouverte](LIVE-SCENE.md).
 
 ## Canonical layout
 

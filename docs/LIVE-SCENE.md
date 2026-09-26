@@ -1,4 +1,4 @@
-# Scène ouverte, simulation et debug — RC3
+# Scène ouverte, simulation et diagnostic
 
 ## Ce que ce module contrôle
 
@@ -28,7 +28,7 @@ La vidéo reste le rendu NVIDIA/RTX transmis par WebRTC ; aucun moteur 3D de rem
 | Exécuter sans recharger | `run_omniverse_scene` | Animation/timeline ou physique ; limite de durée réelle, retour au début optionnel, boucle désactivée. |
 | Lire l’observation en continu | `read_omniverse_live_telemetry` | Dernier échantillon et événements depuis un curseur, sans attendre un nouveau RPC Kit. |
 
-Les contrôles transport/caméra, le diagnostic runtime et la lecture des fichiers stdout/stderr de la RC1 restent disponibles.
+Les contrôles de timeline et de caméra, la supervision runtime et la lecture bornée des logs restent également disponibles ; voir la [référence MCP](MCP-REFERENCE.md).
 
 ### Paramètres de scène pris en charge
 
@@ -64,7 +64,7 @@ Trois boucles sont séparées :
 
 Le watchdog local met en pause au-delà de la durée réelle autorisée (1 à 3 600 secondes) ou lors d’une valeur surveillée non finie. Il fonctionne aussi panneau fermé, **tant que Kit et sa boucle principale restent réactifs**. Ce n’est pas un watchdog matériel : si le thread principal est bloqué, il ne peut pas s’exécuter. Une télémétrie vieille de plus de 2,5 secondes ou une déconnexion est explicitement marquée périmée.
 
-La surveillance lit le USD. Des états exclusivement conservés dans Fabric, CUDA ou une extension métier ne sont pas automatiquement observables. Le contrôle des robots, articulations, fluides, incendies, capteurs, graphes OmniGraph ou solveurs personnalisés exige encore un adaptateur métier ; la RC3 n’en prétend pas disposer.
+La surveillance lit le USD. Des états exclusivement conservés dans Fabric, CUDA ou une extension métier ne sont pas automatiquement observables. Le contrôle des robots, articulations, fluides, incendies, capteurs, graphes OmniGraph ou solveurs personnalisés exige encore un adaptateur métier ; ces interfaces ne sont pas prises en charge par les outils de scène actuels.
 
 ## Corrections et persistance
 

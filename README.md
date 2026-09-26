@@ -18,6 +18,13 @@ Le workspace et le dossier d’assets sont créés **vides**. Aucune scène d’
 
 [Première utilisation](docs/QUICKSTART.md) · [Installation et reprise](docs/INSTALLATION.md) · [Préparer la diffusion publique](docs/PUBLIC-DEPLOYMENT.md)
 
+## Choisir un parcours
+
+- **Ouvrir une nouvelle scène** : configurer le workspace et le fichier USD, lancer le préflight, puis démarrer la session Kit depuis **Lancer**.
+- **Travailler sur la scène déjà ouverte** : utiliser la session Kit OmniStream active, inspecter le stage dans **Scène**, puis prévisualiser et appliquer les corrections. Ne relancez pas la simulation pour une simple correction : le lancement charge le stage configuré.
+
+Le second parcours s’applique à une scène ouverte dans le runtime géré par la session MCP courante ; OmniStream ne rattache pas automatiquement un Kit lancé indépendamment. Voir le [guide de la scène ouverte](docs/LIVE-SCENE.md) et l’[index de la documentation](docs/README.md).
+
 ## Interface
 
 Viewport dominant, navigation latérale et inspecteur par tâche : **Configurer / Lancer / Scène / Contrôler / Superviser / Diagnostic**. Palette graphite, accents verts, champs lisibles, navigation clavier et adaptation aux petites largeurs. Le transport de lecture reste directement sous le viewport.
