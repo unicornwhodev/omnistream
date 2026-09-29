@@ -37,4 +37,4 @@ Le packaging Windows utilise directement `System.IO.Compression.ZipFile` et vér
 
 Les données de test restent dans les répertoires de tests. Aucune n’est copiée par l’installation normale dans le workspace. Une archive source peut contenir des tests sans que l’application fournisse un faux mode de démonstration.
 
-Run `npm run audit:public` separately on a clean release extraction. A developer checkout containing installed dependencies is intentionally rejected by the filesystem audit. CI uses `Build-Release.ps1` to audit a clean stage without weakening that boundary.
+Run `npm run audit:public` separately on a clean release extraction. A developer checkout containing installed dependencies is intentionally rejected by the filesystem audit. No GitHub Actions workflow is currently versioned in this repository; when CI is configured, it should use `Build-Release.ps1` to audit a clean stage without weakening that boundary.

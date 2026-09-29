@@ -1,8 +1,28 @@
 {
   "name": "omnistream-for-codex",
   "version": "1.0.0-rc3",
+  "description": "OmniStream for Codex: inspect and control a managed local NVIDIA Omniverse Kit session over WebRTC, with bounded USD scene editing and live telemetry.",
   "private": true,
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unicornwhodev/omnistream.git"
+  },
+  "homepage": "https://github.com/unicornwhodev/omnistream#readme",
+  "bugs": {
+    "url": "https://github.com/unicornwhodev/omnistream/issues"
+  },
+  "keywords": [
+    "codex",
+    "mcp",
+    "nvidia-omniverse",
+    "openusd",
+    "usd",
+    "simulation",
+    "physics",
+    "webrtc",
+    "windows"
+  ],
   "type": "module",
   "engines": {
     "node": ">=20.18.1"

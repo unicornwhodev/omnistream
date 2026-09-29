@@ -78,6 +78,6 @@ npm run test:physics
 
 ## Reste à qualifier
 
-Installation/réparation/reprise/désinstallation PowerShell ; installation propre et build Vite de production ; import et édition OpenUSD réels ; Kit/PhysX ; décodage et interactions WebRTC dans le vrai Codex ; jeux de données volumineux et extensions tierces. La CI Windows fournie n’a pas été exécutée depuis cet environnement. La sécurité testée n’équivaut pas à un audit indépendant.
+Installation/réparation/reprise/désinstallation PowerShell ; installation propre et build Vite de production ; import et édition OpenUSD réels ; Kit/PhysX ; décodage et interactions WebRTC dans le vrai Codex ; jeux de données volumineux et extensions tierces. Aucun workflow GitHub Actions n’est actuellement versionné dans le dépôt ; ce rapport ne revendique donc pas de succès CI. La sécurité testée n’équivaut pas à un audit indépendant.
 
 Ces limites justifient **RC3**, pas une promotion artificielle en stable. La licence du produit reste `UNLICENSED` ; aucune publication de catalogue ni modification des droits n’a été effectuée.

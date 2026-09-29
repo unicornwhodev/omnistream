@@ -27,6 +27,7 @@ Cette page oriente vers les guides correspondant au code de la version `1.0.0-rc
 | Frontières locales, données, identifiants et écriture USD | [Sécurité](SECURITY.md) |
 | Commandes de contrôle et preuves attendues | [Validation](VALIDATION.md) |
 | Conditions d’une release et d’une promotion RC → stable | [Checklist de release](RELEASE-CHECKLIST.md) |
+| Version, tags, archive source-only et packages de registre | [Versions et distribution](RELEASING.md) |
 | Politique de contenu publiable | [Publication du source](PUBLICATION.md) |
 | Portée de la distribution locale et limites de publication | [Diffusion publique](PUBLIC-DEPLOYMENT.md) |
 

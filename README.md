@@ -74,6 +74,18 @@ Sur une archive fraîchement extraite : `npm run verify:release -- --strict` pui
 
 [Validation](docs/VALIDATION.md) · [Checklist de release](docs/RELEASE-CHECKLIST.md) · [Changements](CHANGELOG.md) · [Tiers](THIRD_PARTY.md)
 
+## Version, téléchargement et licence
+
+La version source est `1.0.0-rc3` sur Windows 10/11 x64 avec GPU NVIDIA RTX. Ce dépôt est public, mais le logiciel reste `UNLICENSED` : aucune licence open source n’a été choisie. Le package npm n’est pas publié (`private: true`). Au 29 septembre 2026, aucun tag ou artefact de release n’est publié sur GitHub. La page [Releases](https://github.com/unicornwhodev/omnistream/releases) indiquera les téléchargements lorsqu’une candidate sera publiée.
+
+L’archive Windows source-only se construit avec :
+
+```powershell
+.\installer\Build-Release.ps1
+```
+
+Le script crée un ZIP et son fichier `.sha256` sous `release/`; le ZIP exclut Kit, les binaires NVIDIA, les dépendances WebRTC et le bundle généré. L’empreinte détecte les changements de fichiers mais n’est pas une signature. Les critères de tag, release candidate et distribution sont décrits dans [Versions et distribution](docs/RELEASING.md). Aucun package npm ou release GitHub stable n’est annoncé ici.
+
 ## Diffusion publique
 
 Cette passe prépare la distribution locale du logiciel ; elle ne publie pas le plugin dans un catalogue et n’expose aucun port Kit sur Internet. Une licence n’a pas encore été choisie : le projet reste `UNLICENSED`. Ne pas le présenter comme open source avant la décision explicite du titulaire des droits.

@@ -2,22 +2,12 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc3",
-  "generatedAt": "2026-09-26T00:32:59.5482543Z",
+  "generatedAt": "2026-09-29T17:45:52.1290700Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
       "size": 1242,
       "sha256": "6ebbb5ad76f7c6351e96792fc0105b2f46ec79c89703540a8c789e38f6ada9eb"
-    },
-    {
-      "path": ".github/workflows/ci.yml",
-      "size": 1448,
-      "sha256": "53aaef5649bd71e7f4677d2fe6ea16b9a609a91cd7424af5f5a5b5c3c8983708"
-    },
-    {
-      "path": ".github/workflows/runtime-smoke.yml",
-      "size": 864,
-      "sha256": "b21fc4feffff636d51dd74b64d9fd34e948223d208d81b77411fa524b00b6979"
     },
     {
       "path": ".gitignore",
@@ -36,13 +26,13 @@
     },
     {
       "path": "QA-REPORT.md",
-      "size": 7861,
-      "sha256": "82a77abe7a42fef01d10b4b0b145f1d2ecb0e9980de97223a9c91e3762a103ff"
+      "size": 7915,
+      "sha256": "03590dfbb3a216f18a5d3a3d681ad6c1318bf2335a483174ec36526e69954a54"
     },
     {
       "path": "README.md",
-      "size": 6528,
-      "sha256": "299d4c0f8634341a26f8dde4501bcc56aea3cbd28efb73aeb19d5d4665593fdb"
+      "size": 7562,
+      "sha256": "2151a1b5cb373663c222016d59b503c151c00ef13badb13a7eff766c3ba07c0d"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -96,8 +86,8 @@
     },
     {
       "path": "docs/PUBLICATION.md",
-      "size": 3249,
-      "sha256": "ebfd2c582267a4e7c0f2e8426a33335c7bbcb9c3230e78d9bd9695389b11f18b"
+      "size": 3348,
+      "sha256": "2741c53741cff2d0eedf7037f4948fcd675d62d2f5a315f99737956eecd9fed4"
     },
     {
       "path": "docs/QUICKSTART.md",
@@ -106,13 +96,18 @@
     },
     {
       "path": "docs/README.md",
-      "size": 1932,
-      "sha256": "bce61aa009fb6182a5e3bba42eece4c32bfd38078939ba6282b3a55560672a9a"
+      "size": 2038,
+      "sha256": "b23e7166ad36c9daa278a3d871fabe569d4a72700c59f0b6695517f7c896ac32"
     },
     {
       "path": "docs/RELEASE-CHECKLIST.md",
       "size": 2944,
       "sha256": "0bb6f09e67b3f848d9b078547f8ab1e9b363748ee2bc821668bf9d072546974a"
+    },
+    {
+      "path": "docs/RELEASING.md",
+      "size": 2711,
+      "sha256": "824e5595863dec2beacc7c1e677ea6256a77a95037806a8f0fe4cfe1fcf8af45"
     },
     {
       "path": "docs/SECURITY.md",
@@ -126,8 +121,8 @@
     },
     {
       "path": "docs/VALIDATION.md",
-      "size": 5598,
-      "sha256": "1558e09f2e11e016d5e95e7593c36b71473759bd245f57d52f869eec7f35fba3"
+      "size": 5712,
+      "sha256": "4a6799ceb8833dd9c4dcf25d466b73085c024dea76369b465cf556b35127fa24"
     },
     {
       "path": "installer/Build-Release.ps1",
@@ -266,8 +261,8 @@
     },
     {
       "path": "package.json",
-      "size": 1996,
-      "sha256": "9103083f0c2ee3da35d254d00d158f80b0cd3fe5fce83fef770f80f828293514"
+      "size": 2579,
+      "sha256": "907b6582d4d5f514b94b275eb9fc27355e6aa19d1e33622e557035d390ecdbc5"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/config/extension.toml",
