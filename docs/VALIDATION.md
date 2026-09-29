@@ -1,10 +1,10 @@
 # Validation
 
-OmniStream separates **source qualification**, **installed-runtime qualification**, and **visible Codex proof**. No single PID, port, build or unit test is presented as evidence for all three.
+OmniStream separates **source qualification**, **installed-runtime qualification**, and **visible Codex evidence**. No single process ID, port, build, or unit test is presented as evidence for all three.
 
 ## Source gate
 
-After `web` dependencies have been obtained on Windows:
+After obtaining the `web` dependencies on Windows:
 
 ```powershell
 npm run check
@@ -14,15 +14,15 @@ npm run test:web
 ```
 
 | Command | Evidence | Launches Kit / writes USD? |
-| --- | --- | --- |
-| `npm run check` | Node syntax plus real TypeScript/Vite panel type checks. | No. |
-| `npm test` | MCP descriptors/protocol, simulation contracts, atomic launch guard, loopback auth, path policy, redaction, safe stop and source-only behavior. | No. |
+|---|---|---|
+| `npm run check` | Node syntax plus TypeScript checks for the real panel and Vite application. | No. |
+| `npm test` | MCP descriptors/protocol, simulation contracts, atomic-launch guard, loopback auth, path policy, redaction, safe stop, and source-only behavior. | No. |
 | `npm run test:web` | Builds the real panel, validates its MCP resource/bundle contract, then removes generated test output. | No Kit / no USD. |
-| `npm run audit:public` | Verifies publication scope excludes generated/dependency/runtime material, local paths and common secret patterns. | No. |
+| `npm run audit:public` | Verifies that publication scope excludes generated/dependency/runtime material, local paths, and common secret patterns. | No. |
 
-No GitHub Actions workflow is currently versioned in this repository. Until a workflow is added and a run is observed, report these commands as local source checks rather than CI evidence.
+No GitHub Actions workflow is currently versioned in this repository. Until a workflow is added and a run is observed, report these commands as local source checks, not CI evidence.
 
-## Installed product gate
+## Installed-product gate
 
 Run:
 
@@ -30,71 +30,70 @@ Run:
 installer\test.cmd
 ```
 
-`Test-OmniStream.ps1` performs, in order:
+`Test-OmniStream.ps1` performs the following steps in order:
 
-1. source + TypeScript contracts;
+1. source and TypeScript contracts;
 2. MCP/security tests;
 3. panel build/resource contract;
 4. final panel build;
 5. strict environment/configuration doctor;
-6. NVIDIA project `repo.bat test` unless explicitly skipped;
-7. real `npm run test:runtime` unless explicitly skipped.
+6. NVIDIA project `repo.bat test`, unless explicitly skipped;
+7. real `npm run test:runtime`, unless explicitly skipped.
 
-The result is written to:
+The report is written to:
 
 ```text
 %LOCALAPPDATA%\OmniStream\state\validation-report.json
 ```
 
-The runtime smoke exercises the product workflow against real Kit:
+The runtime smoke test exercises the product workflow against real Kit:
 
 **Configure → Preflight → Launch → Supervise → Read bounded logs → Control → Camera navigation/save → Safe stop**.
 
-It verifies credentials are not exposed in ordinary structured results/log diagnostics and uses a temporary USD fixture rather than modifying a user scene.
+It verifies that credentials are not exposed in ordinary structured results or log diagnostics and uses a temporary USD fixture rather than modifying a user's scene.
 
 The runtime smoke command is available locally, but no self-hosted GitHub Actions workflow is currently versioned in this repository.
 
-## RC → stable promotion gate
+## RC-to-stable promotion gate
 
 `1.0.0-rc3` must remain an RC until all of the following are true on the intended target machine:
 
 - `installer\test.cmd` passes with **no skip flags**;
 - a decoded RTX/WebRTC frame is visible in the Codex panel;
 - focused pointer/keyboard input reaches the live Kit viewport;
-- the Simulation Deck can configure, preflight, launch, supervise and control a real stage deliberately supplied by the operator;
+- the Simulation Deck can configure, preflight, launch, supervise, and control a real stage deliberately provided by the operator;
 - safe runtime stop leaves no managed Kit process or signaling listener behind;
-- repair + rerun retains normalized configuration and external NVIDIA ownership boundaries.
+- repair and rerun retain normalized configuration and external NVIDIA ownership boundaries.
 
 Only after that evidence should the version be promoted to `1.0.0`.
 
 ## Manual Codex visual gate
 
-Automated runtime tests still do not prove that a particular Codex Desktop build actually rendered the embedded video. Verify:
+Automated runtime tests still do not prove that a particular Codex Desktop build rendered the embedded video. Verify that:
 
 1. `ui://omnistream-for-codex/panel.html` loads after the local panel build.
 2. Config validation does not start Kit.
-3. Launch reaches ready states for managed process, signaling, authenticated bridge and selected stage.
+3. Launch reaches ready states for the managed process, signaling, authenticated bridge, and selected stage.
 4. Supervision updates while runtime/timeline state changes.
-5. The connection overlay disappears after a decoded RTX frame is received.
-6. Play/pause/reset/step/seek/rate/loop operate without terminating Kit.
+5. The connection overlay disappears after a decoded RTX frame arrives.
+6. Play/pause/reset/step/seek/rate/loop work without terminating Kit.
 7. Viewport input works after focus.
 8. Runtime stop completes cleanly.
 
 Record this separately from the machine-readable validation report.
 
+## Additional RC3 gates
 
-## Gates supplémentaires RC3
+`npm test` includes 12 Node tests for the new contracts, cache, and multiplexing over a real authenticated local socket. `npm run test:python` runs 17 Python tests independent of Kit and 15 additional tests requiring real `pxr`. If `pxr` is unavailable, those 15 tests are **SKIPPED**, never counted as passes. No CI workflow is currently versioned here, so there is no current CI result to report for this candidate.
 
-`npm test` comprend les 12 tests Node des nouveaux contrats, du cache et du multiplexage d’un véritable socket local authentifié. `npm run test:python` exécute 17 tests Python indépendants de Kit et 15 tests supplémentaires nécessitant un vrai `pxr`. En l’absence de `pxr`, ces quinze tests sont **SKIPPED**, jamais considérés réussis. Aucun workflow de CI n’est actuellement versionné ici ; il n’y a donc pas de résultat CI courant à attribuer à cette candidate.
+The runtime smoke test now includes preview/apply/undo for USD animation and monitoring with a local duration limit. `npm run test:physics` adds a drop test that must observe displacement in USD. It fails without PhysX capability or USD-visible motion. A solver that uses Fabric only needs a different measurement adapter.
 
-Le smoke runtime comprend désormais aperçu/application/annulation d’une animation USD et surveillance avec limite locale de durée. `npm run test:physics` ajoute un essai de chute dont le déplacement doit être observé dans le USD. Il échoue sans capacité PhysX ou sans remontée USD du mouvement. Un moteur utilisant seulement Fabric exige un autre adaptateur de mesure.
+The PowerShell report explicitly separates automatic checks from `visualWebRtcVerified`, `codexHostVerified`, and `productionReady`, which remain false: scripts do not grant themselves visual certification. Automated success alone is not a stable-release promotion.
 
-Le rapport PowerShell distingue explicitement les contrôles automatiques de `visualWebRtcVerified`, `codexHostVerified` et `productionReady`, laissés à false : les scripts ne s’attribuent pas une certification visuelle. Le succès automatique n’est pas à lui seul une promotion stable.
+See `QA-REPORT.md` for the results actually obtained, local versions, and checks not run.
 
-Voir `QA-REPORT.md` pour les résultats effectivement obtenus, les versions locales et les validations non exécutées.
+## RC3 public checks
 
-## Contrôles publics RC3
+`npm test` also includes 12 UI/state-integrity tests and 7 distribution tests (rejecting binaries, null bytes, dependencies, oversized files, and symbolic links; Windows packaging contract). `npm run test:panel-source` checks source without claiming to check a bundle. `npm run test:web` keeps the Vite build and real-bundle checks as distinct required steps.
 
-`npm test` inclut aussi 12 tests d’intégrité des états/interface et 7 tests de distribution (rejets de binaires, octets nuls, dépendances, gros fichiers et liens symboliques ; contrat de packaging Windows). `npm run test:panel-source` vérifie le source sans prétendre vérifier un bundle. `npm run test:web` garde le build Vite et les contrôles du vrai bundle comme étapes obligatoires distinctes.
-
-Le banc navigateur RC3 a utilisé le vrai source React et le vrai SDK NVIDIA local, d’abord sans hôte, puis avec le vrai processus MCP par un adaptateur IPC réservé au test. Aucun résultat de scène/Kit/WebRTC n’a été fabriqué pour ce contrôle. Cela prouve le parcours sans runtime et les erreurs effectives, pas l’édition dans Kit ni la vidéo. Voir le rapport de cette livraison.
+The RC3 browser harness used the real React source and local NVIDIA SDK, first without a host, then with the real MCP process through a test-only IPC adapter. No scene/Kit/WebRTC result was fabricated for this check. This demonstrates the no-runtime workflow and actual errors, not editing in Kit or video. See the report for this release.

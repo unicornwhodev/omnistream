@@ -1,34 +1,34 @@
-# Documentation OmniStream
+# OmniStream documentation
 
-Cette page oriente vers les guides correspondant au code de la version `1.0.0-rc3`. La [checklist de validation](RELEASE-CHECKLIST.md) et le [rapport QA](../QA-REPORT.md) distinguent les vérifications locales des gates Windows, Kit, RTX, WebRTC et Codex qui restent à qualifier.
+This index links to guides aligned with the code in version `1.0.0-rc3`. The [release checklist](RELEASE-CHECKLIST.md) and [QA report](../QA-REPORT.md) distinguish local checks from Windows, Kit, RTX, WebRTC, and Codex gates that still need qualification.
 
-## Installer et démarrer
+## Install and get started
 
-| Besoin | Guide |
+| Need | Guide |
 |---|---|
-| Première installation et choix du parcours | [Démarrage rapide](QUICKSTART.md) |
-| Prérequis, installation, reprise, réparation et désinstallation | [Installation](INSTALLATION.md) |
-| Chemins, ports, variables d’environnement et racines USD | [Configuration](CONFIGURATION.md) |
-| Résoudre un blocage ou une erreur | [Dépannage](TROUBLESHOOTING.md) |
+| First install and choosing a workflow | [Quick start](QUICKSTART.md) |
+| Prerequisites, installation, resume, repair, and uninstall | [Installation](INSTALLATION.md) |
+| Paths, ports, environment variables, and USD roots | [Configuration](CONFIGURATION.md) |
+| Resolve a blocker or error | [Troubleshooting](TROUBLESHOOTING.md) |
 
-## Utiliser le studio
+## Use the studio
 
-| Besoin | Guide |
+| Need | Guide |
 |---|---|
-| Comprendre Configurer, Lancer, Scène, Contrôler, Superviser et Diagnostic | [Opérations](OPERATIONS.md) |
-| Inspecter, corriger, exécuter et surveiller le stage déjà ouvert | [Scène ouverte, simulation et diagnostic](LIVE-SCENE.md) |
-| Trouver les outils MCP et leurs rôles | [Référence MCP](MCP-REFERENCE.md) |
+| Understand Configure, Launch, Scene, Control, Supervise, and Diagnostics | [Operations](OPERATIONS.md) |
+| Inspect, edit, run, and monitor the already-open stage | [Open scene, simulation, and diagnostics](LIVE-SCENE.md) |
+| Find MCP tools and their roles | [MCP reference](MCP-REFERENCE.md) |
 
-## Comprendre et qualifier le produit
+## Understand and qualify the product
 
-| Besoin | Guide |
+| Need | Guide |
 |---|---|
-| Composants, flux et responsabilités | [Architecture](ARCHITECTURE.md) |
-| Frontières locales, données, identifiants et écriture USD | [Sécurité](SECURITY.md) |
-| Commandes de contrôle et preuves attendues | [Validation](VALIDATION.md) |
-| Conditions d’une release et d’une promotion RC → stable | [Checklist de release](RELEASE-CHECKLIST.md) |
-| Version, tags, archive source-only et packages de registre | [Versions et distribution](RELEASING.md) |
-| Politique de contenu publiable | [Publication du source](PUBLICATION.md) |
-| Portée de la distribution locale et limites de publication | [Diffusion publique](PUBLIC-DEPLOYMENT.md) |
+| Components, data flows, and responsibilities | [Architecture](ARCHITECTURE.md) |
+| Local boundaries, data, credentials, and USD writes | [Security](SECURITY.md) |
+| Verification commands and expected evidence | [Validation](VALIDATION.md) |
+| Release and RC-to-stable promotion criteria | [Release checklist](RELEASE-CHECKLIST.md) |
+| Version, tags, source archive, and registry packages | [Versions and distribution](RELEASING.md) |
+| Policy for publishable content | [Source publication](PUBLICATION.md) |
+| Local distribution scope and publication limits | [Public distribution](PUBLIC-DEPLOYMENT.md) |
 
-Les changements sont consignés dans le [changelog](../CHANGELOG.md). Le [rapport QA](../QA-REPORT.md) est un relevé de résultats pour cette candidate, pas une promesse de qualification sur une autre machine.
+Changes are recorded in the [changelog](../CHANGELOG.md). The [QA report](../QA-REPORT.md) records results for this candidate; it is not a qualification promise for another machine.

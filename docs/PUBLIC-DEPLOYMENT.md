@@ -1,48 +1,48 @@
-# Diffusion publique — RC3
+# Public distribution — RC3
 
-## Cible de cette livraison
+## Target for this release
 
-Une application **locale installable sur un poste Windows RTX**, intégrée à Codex. Ce n’est pas une offre SaaS, un serveur multi-utilisateur ni un rendu disponible sur une URL publique. Le bridge de contrôle reste authentifié et borné au loopback. Ne pas l’exposer par redirection de ports ou tunnel public.
+An **installable local application for a Windows RTX machine**, integrated with Codex. This is not a SaaS offering, multi-user server, or renderer available at a public URL. The control bridge remains authenticated and bound to loopback. Do not expose it through port forwarding or a public tunnel.
 
-La distribution est composée du source OmniStream, de son bridge, de l’installateur, des tests et de la documentation. Les composants NVIDIA et les dépendances Web sont obtenus sur le poste cible. Le bundle contenant le SDK WebRTC est construit localement, jamais livré dans ce ZIP.
+The distribution contains OmniStream source, its bridge, installer, tests, and documentation. NVIDIA components and web dependencies are obtained on the target machine. The bundle containing the WebRTC SDK is built locally and is never included in this ZIP.
 
-## Aucun parcours de démonstration implicite
+## No implicit demo workflow
 
-L’installation crée les répertoires nécessaires mais n’injecte aucune scène, animation, configuration fictive ou télémétrie. Il faut choisir un USD réel. Les fichiers sous `tests/fixtures` et `mcp/fixtures` servent aux tests explicites, dans des copies temporaires. Les doubles de test du protocole ne sont pas importés par l’interface de production et ne servent jamais ses réponses.
+Installation creates required directories but injects no scene, animation, fictional configuration, or telemetry. The operator must choose a real USD file. Files under `tests/fixtures` and `mcp/fixtures` are used only by explicit tests, on temporary copies. Protocol test doubles are not imported by the production interface and never provide its responses.
 
-Les nombres initiaux visibles dans la configuration, comme le temps initial ou le multiplicateur de cadence, sont des paramètres à appliquer, pas des mesures. Les mesures absentes restent inconnues. Un diagnostic tronqué ou ancien ne permet pas de conclure que toute la scène est valide. Un port prêt n’allume pas l’état vidéo : une image doit avoir été décodée.
+Initial values visible in the configuration, such as initial time or cadence multiplier, are settings to apply, not measurements. Missing measurements remain unknown. A truncated or old diagnostic cannot establish that the entire scene is valid. A ready port does not make video active: a frame must be decoded.
 
-## Parcours public
+## User workflow
 
-Installer les prérequis via l’assistant, laisser les vérifications se terminer et charger le plugin local. Choisir le workspace et le USD. Valider la configuration, lire le préflight, puis lancer. L’inspection et l’édition sont disponibles seulement après connexion effective du bridge. La navigation reste disponible pour consulter l’installation, les états et les erreurs.
+Install prerequisites with the wizard, let the checks finish, and load the local plugin. Choose the workspace and USD file. Validate the configuration, review preflight, then launch. Inspection and editing are available only after the bridge has connected successfully. Navigation remains available for checking installation, status, and errors.
 
-Le studio distingue la configuration d’une session, son runtime, le contenu USD, le transport de lecture, la supervision et le diagnostic. Les formulaires ne sont pas rafraîchis depuis une ancienne configuration pendant la saisie. Les clés d’animation sont saisies par l’opérateur ou capturées depuis une pile TRS réelle reconnue ; aucune rotation de démonstration n’est préchargée.
+The studio distinguishes session configuration, runtime, USD content, playback transport, supervision, and diagnostics. Forms are not refreshed from old configuration while the operator is typing. Animation keys are entered by the operator or captured from a recognized real TRS stack; no demo rotation is preloaded.
 
-## Contrôles avant publication
+## Pre-publication checks
 
-| Vérification | État de cette livraison |
+| Check | Status for this release |
 |---|---|
-| Source, TypeScript, protocole et contrats UI | Exécutés localement : PASS |
-| Intégrité, absence de dépendances/binaires redistribués | Vérifiés sur extraction propre |
-| Front réel, navigation et erreurs du vrai MCP sans Kit | Exécutés via Chromium et adaptateur de transport de test |
-| Build Vite de production / installation propre | Non validés ici : dépendance native Linux manquante, réseau d’installation indisponible |
-| Windows + RTX + Kit + PhysX | À qualifier sur le poste cible |
-| Décodage vidéo et interactions dans le vrai Codex | À vérifier sur le poste cible |
-| Installation/reprise/réparation/désinstallation Windows | Scripts revus, pas exécutés ici |
-| Licence publique et éventuelle soumission catalogue | Décision et démarche du titulaire des droits ; non effectuées |
+| Source, TypeScript, protocol, and UI contracts | Run locally: PASS |
+| Integrity and absence of redistributed dependencies/binaries | Verified on a clean extraction |
+| Real panel, navigation, and errors from the real MCP without Kit | Run with Chromium and a test transport adapter |
+| Production Vite build / clean install | Not verified here: missing native dependency, installation network unavailable |
+| Windows + RTX + Kit + PhysX | To qualify on the target machine |
+| Video decoding and interaction in actual Codex | To verify on the target machine |
+| Windows install/resume/repair/uninstall | Scripts reviewed, not run here |
+| Public licence and any catalogue submission | Rights holder decision/action; not done |
 
-Le code demeure `1.0.0-rc3` et `UNLICENSED`. Ne pas présenter cette archive comme une version stable certifiée, ni comme une publication open source ou un plugin déjà accepté dans un catalogue.
+The code remains `1.0.0-rc3` and `UNLICENSED`. Do not present this archive as certified stable, open source, or a plugin already accepted into a catalogue.
 
-## Dossier de validation à conserver
+## Validation record to retain
 
-Après une installation propre, conserver `validation-report.json` et les versions exactes de Windows, GPU/driver, Kit, extensions, SDK WebRTC, Node et Codex. Ajouter une observation réelle de la vidéo et des actions dans le viewport. Exécuter `npm run test:physics` : le succès exige un déplacement physique observable, pas une simple réponse au lancement. Essayer aussi arrêt externe, reconnexion, erreur de chemin, perte du bridge, export sans écrasement, reprise d’installation et désinstallation préservant NVIDIA et les données utilisateur.
+After a clean installation, retain `validation-report.json` and exact versions of Windows, GPU/driver, Kit, extensions, WebRTC SDK, Node, and Codex. Add a real observation of video and viewport interactions. Run `npm run test:physics`: passing requires observable physical displacement, not merely a launch response. Also try external stop, reconnect, path error, bridge loss, export without overwriting, install resume, and uninstall that preserves NVIDIA and user data.
 
-Le test local de cette livraison n’a pas ouvert une application Kit réelle. Il a montré que son absence reste une absence, avec de vraies erreurs MCP, et non un état de démonstration.
+The local test for this release did not open a real Kit application. It showed that the absence of Kit remains an absence, with actual MCP errors, rather than a demo state.
 
-## Références de maintenance
+## Maintenance references
 
-- API d’intégration UI officielle : https://developers.openai.com/plugins/reference
-- SDK NVIDIA et documentation correspondant au paquet installé : https://docs.omniverse.nvidia.com/ov-web-sdk/latest/web-streaming-library/overview.html
-- Limites de `Compress-Archive` pour les fichiers cachés : https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.archive/compress-archive
+- Official UI integration API: https://developers.openai.com/plugins/reference
+- NVIDIA SDK and documentation matching the installed package: https://docs.omniverse.nvidia.com/ov-web-sdk/latest/web-streaming-library/overview.html
+- `Compress-Archive` limitations for hidden files: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.archive/compress-archive
 
-Le source conserve la version épinglée du SDK. Une mise à jour de celui-ci doit repasser la qualification, pas seulement modifier un numéro dans le lockfile.
+The source pins its SDK version. An SDK update must go through qualification again; changing only the version in the lockfile is insufficient.

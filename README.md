@@ -1,63 +1,63 @@
 # OmniStream for Codex — 1.0.0-rc3
 
-Studio local pour piloter **une vraie scène NVIDIA Omniverse Kit** depuis Codex : configurer une session, lancer le runtime sans fenêtre native, inspecter/modifier le USD, piloter animations et corps rigides, observer la télémétrie et diagnostiquer les erreurs. Le navigateur reçoit le rendu WebRTC ; il ne le remplace pas par une scène 3D locale.
+A local studio for controlling **a real NVIDIA Omniverse Kit scene** from Codex: configure a session, launch the runtime without a native window, inspect and edit USD, control animation and rigid bodies, observe telemetry, and diagnose errors. The browser receives the WebRTC render; it does not replace it with a local 3D scene.
 
-**Statut : release candidate, pas version stable certifiée.** Le contrôleur et le front ont été testés localement ; la qualification Windows/RTX/Kit, le build de production et le flux vidéo réel dans Codex restent des gates de livraison. Les résultats et limites sont détaillés dans [QA-REPORT.md](QA-REPORT.md).
+**Status: release candidate, not a certified stable release.** The controller and panel have been tested locally; Windows/RTX/Kit qualification, the production build, and the real video stream in Codex remain release gates. See [QA-REPORT.md](QA-REPORT.md) for results and limitations.
 
-## Installer
+## Install
 
-Sur le poste Windows RTX cible, extraire l’archive puis lancer :
+On the target Windows RTX machine, extract the archive and run:
 
 ```bat
 installer\install.cmd
 ```
 
-L’assistant vérifie les prérequis, ouvre les sources externes nécessaires, attend les installations/acceptations de l’opérateur puis reprend. Il ne contient ni Kit, ni runtime/extension NVIDIA compilée, ni SDK WebRTC préemballé, ni bundle généré. Les dépendances sont obtenues sur le poste cible. Le plugin installé se trouve par défaut sous `%LOCALAPPDATA%\OmniStream\plugin`.
+The wizard checks prerequisites, opens the required external sources, waits for the operator to complete installations or accept terms, then resumes. The archive contains no Kit, compiled NVIDIA runtime or extension, prepackaged WebRTC SDK, or generated bundle. Dependencies are obtained on the target machine. By default, the installed plugin is under `%LOCALAPPDATA%\OmniStream\plugin`.
 
-Le workspace et le dossier d’assets sont créés **vides**. Aucune scène d’exemple, animation préfabriquée, statistique ou télémétrie fictive n’est installée. Utiliser votre propre USD de confiance. Le mode de développement n’est pas lancé par l’installateur et ne remplace pas le transport de production.
+The workspace and asset folder are created **empty**. No sample scene, canned animation, decorative statistic, or fabricated telemetry is installed. Use your own trusted USD file. The development mode is not launched by the installer and does not replace the production transport.
 
-[Première utilisation](docs/QUICKSTART.md) · [Installation et reprise](docs/INSTALLATION.md) · [Préparer la diffusion publique](docs/PUBLIC-DEPLOYMENT.md)
+[Quick start](docs/QUICKSTART.md) · [Installation and recovery](docs/INSTALLATION.md) · [Preparing a public distribution](docs/PUBLIC-DEPLOYMENT.md)
 
-## Choisir un parcours
+## Choose a workflow
 
-- **Ouvrir une nouvelle scène** : configurer le workspace et le fichier USD, lancer le préflight, puis démarrer la session Kit depuis **Lancer**.
-- **Travailler sur la scène déjà ouverte** : utiliser la session Kit OmniStream active, inspecter le stage dans **Scène**, puis prévisualiser et appliquer les corrections. Ne relancez pas la simulation pour une simple correction : le lancement charge le stage configuré.
+- **Open a new scene:** configure the workspace and USD file, run preflight, then start the Kit session from **Launch**.
+- **Work on the scene that is already open:** use the active OmniStream Kit session, inspect the stage in **Scene**, then preview and apply corrections. Do not relaunch the simulation for a simple correction: launch loads the configured stage.
 
-Le second parcours s’applique à une scène ouverte dans le runtime géré par la session MCP courante ; OmniStream ne rattache pas automatiquement un Kit lancé indépendamment. Voir le [guide de la scène ouverte](docs/LIVE-SCENE.md) et l’[index de la documentation](docs/README.md).
+The second workflow applies to a scene opened in the runtime managed by the current MCP session; OmniStream does not automatically attach to a Kit process launched independently. See the [open-scene guide](docs/LIVE-SCENE.md) and the [documentation index](docs/README.md).
 
 ## Interface
 
-Viewport dominant, navigation latérale et inspecteur par tâche : **Configurer / Lancer / Scène / Contrôler / Superviser / Diagnostic**. Palette graphite, accents verts, champs lisibles, navigation clavier et adaptation aux petites largeurs. Le transport de lecture reste directement sous le viewport.
+The studio has a dominant viewport, side navigation, and task inspector: **Configure / Launch / Scene / Control / Supervise / Diagnostics**. The current application displays these section names in French: **Configurer / Lancer / Scène / Contrôler / Superviser / Diagnostic**. It uses a graphite palette with green accents, readable fields, keyboard navigation, and a responsive layout. Playback controls remain directly below the viewport.
 
-Un chemin saisi reste un brouillon jusqu’à validation et ne signifie pas que la scène est chargée. Les valeurs absentes sont marquées « Non vérifié » ou « — ». L’état vidéo actif exige une image décodée, pas seulement un port ouvert. Les commandes de scène sont désactivées sans bridge authentifié. Les formulaires ne sont pas écrasés par la supervision périodique.
+A typed path remains a draft until validated; it does not mean that a scene is loaded. Missing values are marked “Not verified” (“Non vérifié”) or “—”. Video is marked active only after a frame is decoded, not merely when a port is open. Scene commands are disabled without an authenticated bridge. Periodic supervision does not overwrite form input.
 
-## Ce que Codex peut réellement demander
+## What Codex can actually request
 
-| Parcours | Outils principaux |
+| Workflow | Main tools |
 |---|---|
-| Préparer le runtime | `configure_omniverse_simulation`, `preflight_omniverse_simulation` |
-| Démarrer/rattacher | `launch_omniverse_simulation`, `attach_omniverse_stream` |
-| Inspecter le contenu | `inspect_omniverse_scene`, `inspect_omniverse_prim` |
-| Corriger sans écrire la source | `preview_omniverse_scene_patch`, `apply_omniverse_scene_patch`, `undo_omniverse_scene_patch` |
-| Exécuter et contrôler | `run_omniverse_scene`, `control_omniverse_simulation` |
-| Observer/debugger | `supervise_omniverse_simulation`, `read_omniverse_live_telemetry`, `diagnose_omniverse_scene`, `read_omnistream_runtime_logs` |
-| Conserver/abandonner | `export_omniverse_scene_patch`, `discard_omniverse_scene_edits` |
+| Prepare the runtime | `configure_omniverse_simulation`, `preflight_omniverse_simulation` |
+| Start or attach | `launch_omniverse_simulation`, `attach_omniverse_stream` |
+| Inspect the scene | `inspect_omniverse_scene`, `inspect_omniverse_prim` |
+| Correct without writing the source | `preview_omniverse_scene_patch`, `apply_omniverse_scene_patch`, `undo_omniverse_scene_patch` |
+| Run and control | `run_omniverse_scene`, `control_omniverse_simulation` |
+| Observe and debug | `supervise_omniverse_simulation`, `read_omniverse_live_telemetry`, `diagnose_omniverse_scene`, `read_omnistream_runtime_logs` |
+| Keep or discard changes | `export_omniverse_scene_patch`, `discard_omniverse_scene_edits` |
 
-[Référence MCP](docs/MCP-REFERENCE.md) · [Scène ouverte, physique et animation](docs/LIVE-SCENE.md)
+[MCP reference](docs/MCP-REFERENCE.md) · [Open scene, physics, and animation](docs/LIVE-SCENE.md)
 
-L’édition concerne les transformations TRS, clés, paramètres physiques autorisés, colliders, corps rigides et gravité. Ce n’est pas un éditeur complet de robots, fluides, animation squelettique ou graphes OmniGraph. La présence de schémas USD ne prouve pas que PhysX est disponible. La cadence cible n’est pas une vitesse physique garantie.
+Editing covers TRS transforms, animation keys, approved physical properties, colliders, rigid bodies, and gravity. This is not a complete editor for robots, fluids, skeletal animation, or OmniGraph. The presence of USD schemas does not prove that PhysX is available. Target cadence is not a guaranteed physical speed.
 
-## Sécurité et données
+## Security and data
 
-Runtime local géré, bridge loopback authentifié, workspace borné, opérations sérialisées et limites d’observation. Aperçus liés à une scène/révision, expiration, annulation en session et export vers un nouveau fichier. Aucun Python arbitraire envoyé par le modèle. L’enregistrement explicite d’une caméra reste une exception qui écrit dans la source autorisée.
+The managed runtime is local, its control bridge is authenticated and bound to loopback, the workspace is bounded, operations are serialized, and observation has explicit limits. Previews are tied to a scene revision and expire; edits can be undone in-session or exported to a new file. The model cannot send arbitrary Python. Explicit camera saving remains an exception that writes to an authorized source file.
 
-Fermer le panneau n’équivaut pas à arrêter Kit ; fermer sa session MCP provoque l’arrêt sécurisé. Les corrections non exportées sont perdues à l’arrêt du runtime. L’annulation d’un patch n’est pas un retour arrière déterministe du solveur. Le produit n’est pas un service Windows autonome ni un serveur de rendu multi-utilisateur sur Internet.
+Closing the panel does not stop Kit; closing its MCP session triggers a safe stop. Unexported corrections are lost when the runtime stops. Undoing a patch does not deterministically rewind the solver. The product is not a standalone Windows service or an internet-hosted multi-user rendering server.
 
-[Architecture](docs/ARCHITECTURE.md) · [Sécurité](docs/SECURITY.md) · [Dépannage](docs/TROUBLESHOOTING.md)
+[Architecture](docs/ARCHITECTURE.md) · [Security](docs/SECURITY.md) · [Troubleshooting](docs/TROUBLESHOOTING.md)
 
-## Vérifier
+## Verify
 
-Après obtention des dépendances sur la plateforme cible :
+After obtaining dependencies on the target platform:
 
 ```powershell
 npm --prefix .\web ci
@@ -68,24 +68,24 @@ npm run test:web
 npm run build:web
 ```
 
-Les tests natifs `npm run test:runtime` et `npm run test:physics` utilisent des USD de test en copie temporaire. Ces données restent séparées du produit et du workspace utilisateur. Aucun résultat simulé de ces tests n’est affiché comme télémétrie réelle. La qualification visible dans Codex reste séparée.
+The native tests `npm run test:runtime` and `npm run test:physics` use test USD files in temporary copies. These files remain separate from the product and the user's workspace. Test results are never displayed as real telemetry. Visible qualification in Codex is a separate gate.
 
-Sur une archive fraîchement extraite : `npm run verify:release -- --strict` puis `npm run audit:public`. Le manifeste vérifie l’intégrité des fichiers ; ce n’est pas une signature numérique.
+From a freshly extracted archive, run `npm run verify:release -- --strict` and then `npm run audit:public`. The manifest checks file integrity; it is not a digital signature.
 
-[Validation](docs/VALIDATION.md) · [Checklist de release](docs/RELEASE-CHECKLIST.md) · [Changements](CHANGELOG.md) · [Tiers](THIRD_PARTY.md)
+[Validation](docs/VALIDATION.md) · [Release checklist](docs/RELEASE-CHECKLIST.md) · [Changelog](CHANGELOG.md) · [Third-party notice](THIRD_PARTY.md)
 
-## Version, téléchargement et licence
+## Version, downloads, and licence
 
-La version source est `1.0.0-rc3` sur Windows 10/11 x64 avec GPU NVIDIA RTX. Ce dépôt est public, mais le logiciel reste `UNLICENSED` : aucune licence open source n’a été choisie. Le package npm n’est pas publié (`private: true`). Au 29 septembre 2026, aucun tag ou artefact de release n’est publié sur GitHub. La page [Releases](https://github.com/unicornwhodev/omnistream/releases) indiquera les téléchargements lorsqu’une candidate sera publiée.
+The source version is `1.0.0-rc3`, targeting Windows 10/11 x64 with an NVIDIA RTX GPU. This repository is public, but the software remains `UNLICENSED`: no open-source licence has been selected. The npm package is not published (`private: true`). As of September 29, 2026, no tag or release artifact has been published on GitHub. The [Releases page](https://github.com/unicornwhodev/omnistream/releases) will list downloads when a candidate is published.
 
-L’archive Windows source-only se construit avec :
+Build the source-only Windows archive with:
 
 ```powershell
 .\installer\Build-Release.ps1
 ```
 
-Le script crée un ZIP et son fichier `.sha256` sous `release/`; le ZIP exclut Kit, les binaires NVIDIA, les dépendances WebRTC et le bundle généré. L’empreinte détecte les changements de fichiers mais n’est pas une signature. Les critères de tag, release candidate et distribution sont décrits dans [Versions et distribution](docs/RELEASING.md). Aucun package npm ou release GitHub stable n’est annoncé ici.
+The script creates a ZIP and its `.sha256` file under `release/`. The ZIP excludes Kit, NVIDIA binaries, WebRTC dependencies, and the generated bundle. The digest detects file changes but is not a signature. Tagging, release-candidate, and distribution criteria are described in [Versions and distribution](docs/RELEASING.md). No npm package or stable GitHub release is announced here.
 
-## Diffusion publique
+## Public distribution
 
-Cette passe prépare la distribution locale du logiciel ; elle ne publie pas le plugin dans un catalogue et n’expose aucun port Kit sur Internet. Une licence n’a pas encore été choisie : le projet reste `UNLICENSED`. Ne pas le présenter comme open source avant la décision explicite du titulaire des droits.
+This release-preparation pass covers local software distribution; it does not publish the plugin in a catalogue or expose any Kit port to the internet. No licence has been selected, so the project remains `UNLICENSED`. Do not describe it as open source until the rights holder has made that decision.

@@ -32,7 +32,7 @@ Installer state is persisted at:
 
 The checkpoint retains the install root, Kit root, workspace, asset root, selected streaming layer and runtime channel. Rerunning the installer revalidates these values instead of blindly trusting the previous phase.
 
-A release archive also includes `release-manifest.json`; the installer verifies every signed file before installation and rejects unexpected source files outside known local generated directories.
+A release archive also includes `release-manifest.json`; the installer verifies each listed file's size and SHA-256 hash before installation and rejects unexpected source files outside known local generated directories. The manifest is not a digital signature.
 
 ## Validation report
 

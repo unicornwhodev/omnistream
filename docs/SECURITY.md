@@ -30,7 +30,7 @@ The public gate in `npm run audit:public` scans the staged Git index when one is
 
 ## Scene edits and persistence
 
-Scene corrections are checked on an isolated stage and applied to an OmniStream-owned session layer after stage/revision/preview checks. They remain in memory until exported as a new override layer or discarded; applying a patch does not save the source USD. Export requires an explicit confirmation and refuses to overwrite an existing file. Camera pose persistence is a separate explicit operation that writes to an existing writable USD source. Review the destination before saving or exporting, and see [Scène ouverte](LIVE-SCENE.md) for the full edit contract.
+Scene corrections are checked on an isolated stage and applied to an OmniStream-owned session layer after stage/revision/preview checks. They remain in memory until exported as a new override layer or discarded; applying a patch does not save the source USD. Export requires an explicit confirmation and refuses to overwrite an existing file. Camera pose persistence is a separate explicit operation that writes to an existing writable USD source. Review the destination before saving or exporting, and see [Open scene](LIVE-SCENE.md) for the full edit contract.
 
 ## Reporting a vulnerability
 

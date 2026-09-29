@@ -4,7 +4,7 @@ OmniStream exposes two scene workflows: launch a configured USD stage, or work o
 
 ## Current open-stage tools
 
-These tools act on the stage already open in the managed Kit session. Inspect the scene first, then pass its `stageId` and expected `revision` to preview/apply operations. They do not call `open` on the configured stage. See [Scène ouverte, simulation et diagnostic](LIVE-SCENE.md) for supported operations, physical-solver requirements, persistence and observation limits.
+These tools act on the stage already open in the managed Kit session. Inspect the scene first, then pass its `stageId` and expected `revision` to preview/apply operations. They do not call `open` on the configured stage. See [Open scene, simulation, and diagnostics](LIVE-SCENE.md) for supported operations, physical-solver requirements, persistence, and observation limits.
 
 | Tool | Purpose and boundary |
 |---|---|

@@ -32,7 +32,7 @@ This separation prevents UI configuration edits from silently changing a running
 
 The scene tools operate on the stage already open in the managed Kit session. They do not reload the configured file. A proposed edit is validated on an isolated USD stage, then applied to an OmniStream-owned session override layer only when its `stageId`, expected revision and unexpired preview still match. Undo/discard affects those managed edits; export writes a new `.usda` override layer under the configured workspace. The source stage is not saved by these patch operations. Explicit camera saving remains a separate source-writing action.
 
-Kit samples selected USD values and sends bounded events through the authenticated bridge. The MCP server caches the latest sample and event cursor; Codex reads that cache through `read_omniverse_live_telemetry`. The panel polls while visible. This path reports USD-visible values and event freshness; it is not a hard real-time model loop or a measurement of GPU frame rate. See [Scène ouverte](LIVE-SCENE.md) for supported edits and limits.
+Kit samples selected USD values and sends bounded events through the authenticated bridge. The MCP server caches the latest sample and event cursor; Codex reads that cache through `read_omniverse_live_telemetry`. The panel polls while visible. This path reports USD-visible values and event freshness; it is not a hard real-time model loop or a measurement of GPU frame rate. See [Open scene](LIVE-SCENE.md) for supported edits and limits.
 
 ## Stream configuration
 

@@ -1,103 +1,103 @@
-# Scène ouverte, simulation et diagnostic
+# Open scene, simulation, and diagnostics
 
-## Ce que ce module contrôle
+## What this module controls
 
-La scène est celle **déjà ouverte dans le Kit géré par cette session MCP**. Aucun rechargement n’est nécessaire pour inspecter ses objets, préparer une animation, modifier des paramètres physiques autorisés ou relancer la timeline. Une application Omniverse lancée indépendamment n’est pas automatiquement adoptée : le bridge doit appartenir au runtime géré, avec son authentification et son workspace.
+The scene is the one **already open in the Kit runtime managed by this MCP session**. No reload is needed to inspect its objects, prepare animation, change approved physics settings, or run the timeline. An Omniverse application launched independently is not automatically adopted: the bridge must belong to the managed runtime and use its authentication and workspace.
 
-La vidéo reste le rendu NVIDIA/RTX transmis par WebRTC ; aucun moteur 3D de remplacement n’a été ajouté au navigateur. Le lancement utilise le mode sans fenêtre native. Kit reste actif en arrière-plan tant que sa session MCP est active. Fermer le panneau n’arrête pas une exécution ; arrêter/quitter le serveur MCP déclenche son arrêt sécurisé. Il ne s’agit pas d’un service Windows persistant indépendant de Codex.
+Video remains the NVIDIA/RTX render streamed over WebRTC; no replacement 3D engine has been added to the browser. Launch uses a mode without a native window. Kit stays active in the background while its MCP session is active. Closing the panel does not stop a run; stopping or quitting the MCP server triggers a safe stop. This is not a Windows service that runs independently of Codex.
 
-## Deux parcours distincts
+## Two separate workflows
 
-**Nouvelle session :** installer → ouvrir le studio → configurer le workspace et le USD → préflight → lancer. Cela ouvre un fichier et démarre/réutilise Kit.
+**New session:** install → open the studio → configure the workspace and USD → preflight → launch. This opens a file and starts or reuses Kit.
 
-**Scène déjà ouverte :** rattacher le flux si nécessaire → inspecter la scène → choisir un objet → prévisualiser → appliquer → exécuter → observer → pause/stop → corriger → relancer. Ne pas rappeler `launch_omniverse_simulation` pour une simple correction : cette ancienne commande charge le stage configuré.
+**Scene already open:** attach the stream if needed → inspect the scene → choose an object → preview → apply → run → observe → pause/stop → edit → run again. Do not call `launch_omniverse_simulation` for a simple correction: that command loads the configured stage.
 
-## Actions réellement exposées
+## Actions actually available
 
-| Besoin | Outil | Particularités |
+| Need | Tool | Details |
 |---|---|---|
-| Parcourir la scène | `inspect_omniverse_scene` | Enfants directs paginés, `stageId`, révision, axe vertical, unités, plage de temps, disponibilité de PhysX. |
-| Inspecter un objet | `inspect_omniverse_prim` | Attributs scalaires/vecteurs bornés, schémas, matrice locale, nombre de clés. Les grands tableaux sont omis. |
-| Préparer une correction | `preview_omniverse_scene_patch` | Validation et construction d’une couche USD isolée, sans modification de la scène vivante. |
-| Appliquer | `apply_omniverse_scene_patch` | Requiert l’identifiant de scène, la révision attendue et un aperçu non expiré. |
-| Annuler | `undo_omniverse_scene_patch` | Dernière correction OmniStream, pas l’historique de tous les outils Kit. Jusqu’à 12 états. |
-| Exporter | `export_omniverse_scene_patch` | Nouveau fichier `.usda` dans le workspace, confirmation obligatoire, jamais d’écrasement. |
-| Abandonner | `discard_omniverse_scene_edits` | Supprime les corrections privées et leur historique, après confirmation ; pas les sources. |
-| Configurer la surveillance | `configure_omniverse_scene_watch` | Jusqu’à 16 attributs USD existants, avec pause locale optionnelle sur NaN/Inf. |
-| Diagnostiquer | `diagnose_omniverse_scene` | Inspection structurelle bornée : capacités, corps, colliders, animation/dynamique incompatible, masses invalides, scènes physiques absentes/multiples. |
-| Exécuter sans recharger | `run_omniverse_scene` | Animation/timeline ou physique ; limite de durée réelle, retour au début optionnel, boucle désactivée. |
-| Lire l’observation en continu | `read_omniverse_live_telemetry` | Dernier échantillon et événements depuis un curseur, sans attendre un nouveau RPC Kit. |
+| Browse the scene | `inspect_omniverse_scene` | Paginated direct children, `stageId`, revision, up axis, units, time range, and PhysX availability. |
+| Inspect an object | `inspect_omniverse_prim` | Bounded scalar/vector attributes, schemas, local matrix, and key count. Large arrays are omitted. |
+| Prepare a correction | `preview_omniverse_scene_patch` | Validates and builds an isolated USD layer without changing the live scene. |
+| Apply | `apply_omniverse_scene_patch` | Requires the scene ID, expected revision, and an unexpired preview. |
+| Undo | `undo_omniverse_scene_patch` | Undoes the latest OmniStream correction, not the history of all Kit tools. Up to 12 states. |
+| Export | `export_omniverse_scene_patch` | Writes a new `.usda` file to the workspace after confirmation; never overwrites. |
+| Discard | `discard_omniverse_scene_edits` | Deletes private corrections and their history after confirmation; does not touch source files. |
+| Configure observation | `configure_omniverse_scene_watch` | Up to 16 existing USD attributes, with an optional local pause on NaN/Inf. |
+| Diagnose | `diagnose_omniverse_scene` | Bounded structural inspection: capabilities, bodies, colliders, animation/dynamic-body conflicts, invalid masses, and missing/multiple physics scenes. |
+| Run without reloading | `run_omniverse_scene` | Animation/timeline or physics, with a wall-clock duration limit, optional rewind-to-start, and looping disabled. |
+| Read live observation | `read_omniverse_live_telemetry` | Latest sample and events from a cursor, without waiting for another Kit RPC. |
 
-Les contrôles de timeline et de caméra, la supervision runtime et la lecture bornée des logs restent également disponibles ; voir la [référence MCP](MCP-REFERENCE.md).
+Timeline and camera controls, runtime supervision, and bounded log reads are also available; see the [MCP reference](MCP-REFERENCE.md).
 
-### Paramètres de scène pris en charge
+### Supported scene settings
 
-`transform` : position, rotation locale XYZ en degrés, échelle. Cette opération remplace l’ordre local des opérations de transformation dans la couche de correction. Elle n’est donc pas un petit delta ajouté à une pile arbitraire : inspecter la matrice et vérifier la cible avant validation.
+`transform`: position, local XYZ rotation in degrees, and scale. This operation replaces the local transform-op order in the correction layer. It is not a small delta added to an arbitrary stack: inspect the matrix and verify the target before confirming.
 
-`animate_transform` : 2 à 120 clés complètes, temps en secondes strictement croissants, translation/rotation/échelle. Les secondes sont converties en time codes USD avec la cadence du stage. Pas d’interpolation quaternion, de courbes Bézier, d’animation squelettique ou de retargeting dans cette RC. Un corps animé doit être cinématique, pas dynamique.
+`animate_transform`: 2–120 complete keys, with strictly increasing time in seconds and translation/rotation/scale. Seconds are converted to USD time codes using the stage rate. This RC does not support quaternion interpolation, Bézier curves, skeletal animation, or retargeting. An animated body must be kinematic, not dynamic.
 
-`rigid_body` : masse, cinématique/dynamique et collider optionnel. `collider` : activation/désactivation sur une géométrie. Les meshes utilisent une approximation convex hull, pas une reconstruction exacte de maillage concave. Les corps imbriqués et instances sont refusés.
+`rigid_body`: mass, kinematic/dynamic state, and optional collider. `collider`: enable/disable collision on geometry. Meshes use a convex-hull approximation, not an exact concave mesh reconstruction. Nested bodies and instances are rejected.
 
-`physics_scene` : création/configuration d’un prim PhysicsScene, direction et intensité de gravité. Les distances/accélérations sont exprimées en unités de la scène ; 9,81 convient à des mètres, 981 à des centimètres. Lire `metersPerUnit` et `upAxis` avant de proposer une configuration. Le paramètre `mass` suit les unités de masse USD, usuellement le kilogramme.
+`physics_scene`: create/configure a PhysicsScene prim, gravity direction and magnitude. Distances/accelerations use scene units; 9.81 is appropriate for metres and 981 for centimetres. Read `metersPerUnit` and `upAxis` before proposing settings. The `mass` parameter follows USD mass units, usually kilograms.
 
-`attribute` : modification typée d’une petite liste blanche d’attributs physiques existants (masse, densité, vitesses, activation, gravité, friction, restitution). Pas de code Python, shader, référence externe ou chaîne USD arbitraire. L’interface propose les formulaires principaux ; l’édition d’attributs détaillés est exposée à Codex par MCP.
+`attribute`: typed edits to a short allowlist of existing physics attributes (mass, density, velocities, enabled state, gravity, friction, restitution). No Python code, shader, external reference, or arbitrary USD string. The panel provides the main forms; detailed attribute editing is exposed to Codex through MCP.
 
-`playback_range` : début, fin et images par seconde. Les métadonnées sont appliquées à la couche de session, pas sauvegardées dans la source. Des changements externes concurrents de ces métadonnées sont détectés et peuvent bloquer l’annulation plutôt que d’être écrasés.
+`playback_range`: start, end, and frames per second. Metadata is applied to the session layer, not saved to the source. Concurrent external changes to this metadata are detected and may block undo rather than being overwritten.
 
-## Exécution physique et ses limites
+## Physics execution and its limits
 
-La présence de `UsdPhysics` permet l’édition du USD mais **ne prouve pas la disponibilité du solveur**. Le mode physique requiert la détection effective de l’extension `omni.physx`, au moins une scène physique et un corps actif ; les erreurs structurelles détectées bloquent le lancement.
+The presence of `UsdPhysics` allows USD editing but **does not prove that a solver is available**. Physics mode requires the `omni.physx` extension to be detected, at least one physics scene, and an active body; detected structural errors block execution.
 
-Le canal NVIDIA et le template sélectionnés doivent fournir cette extension. Lorsqu’elle est absente, le panneau l’indique et désactive le choix physique. Ajouter `"omni.physx" = {}` dans les dépendances de l’application Kit compatible, puis reconstruire avec les outils NVIDIA, est une opération d’administration du projet Kit, pas une installation silencieuse faite par un outil de simulation. Vérifier les disponibilités et conditions NVIDIA de ce projet. Aucune dépendance NVIDIA n’est redistribuée par cette archive.
+The selected NVIDIA channel and template must provide this extension. When it is missing, the panel reports that and disables physics mode. Adding `"omni.physx" = {}` to a compatible Kit application’s dependencies and rebuilding it with NVIDIA tools is an administration task for that Kit project; a simulation tool does not install it silently. Check the availability and terms for that project. This archive redistributes no NVIDIA dependencies.
 
-Les deux modes utilisent **la même timeline globale Kit**. Le mode animation ne désactive pas une physique déjà présente. Stop peut réinitialiser les états du moteur ; une annulation de patch n’est pas un retour arrière déterministe du solveur. `seek` et frame arrière ne sont pas une intégration physique inverse.
+Both modes use **the same global Kit timeline**. Animation mode does not disable existing physics. Stop may reset engine state; undoing a patch does not deterministically rewind the solver. `seek` and stepping backward are not reverse physics integration.
 
-L’ancien `rateMultiplier` règle la cadence cible d’updates, **pas une dilatation temporelle physique garantie**. Le panneau le nomme désormais « Cadence cible ». Le solveur, les réglages d’application et la politique de frames déterminent l’exécution réelle.
+The legacy `rateMultiplier` controls target update cadence, **not guaranteed physical time scaling**. The panel now calls it “Target cadence” (“Cadence cible”). The solver, application settings, and frame policy determine actual execution.
 
-## Sens exact du « temps réel »
+## What “real time” means here
 
-Trois boucles sont séparées :
+There are three separate loops:
 
-- **Vidéo** : flux WebRTC natif, cadence dépendante de Kit/RTX et du décodage. Aucun FPS vidéo n’est inventé à partir de l’horloge du bridge.
-- **Observation locale** : échantillonnage visé toutes les 250 ms sur le thread principal Kit, événements envoyés par le socket authentifié, cache MCP indépendant. Le panneau lit ce cache toutes les secondes lorsqu’il est visible. `kitUpdateMs` mesure la boucle d’update Kit, pas la durée GPU ou les FPS vidéo.
-- **Décisions Codex** : le modèle appelle les outils pour observer, diagnostiquer puis agir. Les événements ne réveillent pas automatiquement le modèle et ne lui donnent pas une boucle de raisonnement à chaque frame.
+- **Video:** native WebRTC stream, with cadence dependent on Kit/RTX and decoding. Video FPS is never inferred from the bridge clock.
+- **Local observation:** sampling targets every 250 ms on Kit’s main thread; events are sent over the authenticated socket to an independent MCP cache. The panel reads this cache every second while visible. `kitUpdateMs` measures the Kit update loop, not GPU time or video FPS.
+- **Codex decisions:** the model calls tools to observe, diagnose, and act. Events do not wake the model automatically or give it a reasoning loop on every frame.
 
-Le watchdog local met en pause au-delà de la durée réelle autorisée (1 à 3 600 secondes) ou lors d’une valeur surveillée non finie. Il fonctionne aussi panneau fermé, **tant que Kit et sa boucle principale restent réactifs**. Ce n’est pas un watchdog matériel : si le thread principal est bloqué, il ne peut pas s’exécuter. Une télémétrie vieille de plus de 2,5 secondes ou une déconnexion est explicitement marquée périmée.
+The local watchdog pauses after the allowed wall-clock duration (1–3,600 seconds) or when a watched value is non-finite. It also runs with the panel closed, **as long as Kit and its main loop remain responsive**. This is not a hardware watchdog: if the main thread is blocked, it cannot run. Telemetry older than 2.5 seconds or a disconnection is explicitly marked stale.
 
-La surveillance lit le USD. Des états exclusivement conservés dans Fabric, CUDA ou une extension métier ne sont pas automatiquement observables. Le contrôle des robots, articulations, fluides, incendies, capteurs, graphes OmniGraph ou solveurs personnalisés exige encore un adaptateur métier ; ces interfaces ne sont pas prises en charge par les outils de scène actuels.
+Monitoring reads USD. State stored only in Fabric, CUDA, or a domain extension is not automatically observable. Controlling robots, joints, fluids, fire, sensors, OmniGraph, or custom solvers still requires a domain adapter; current scene tools do not support those interfaces.
 
-## Corrections et persistance
+## Corrections and persistence
 
-Un aperçu porte sur une scène et une révision précises et expire après 120 secondes. Au maximum 4 aperçus, 32 opérations par patch, 120 clés par animation, 2 Mio de couche gérée et 12 états d’annulation sont conservés.
+A preview is tied to one scene and revision and expires after 120 seconds. At most 4 previews, 32 operations per patch, 120 animation keys, 2 MiB of managed layer data, and 12 undo states are retained.
 
-L’application transfère la couche validée dans une couche anonyme privée de la session. Les deux couches affectées sont sauvegardées en mémoire avant transfert et restaurées si l’application échoue ; `Sdf.ChangeBlock` seul ne serait pas une transaction. Si une opinion plus forte de la session masque une propriété proposée, le patch est refusé plutôt qu’annoncé efficace.
+Applying a correction transfers the validated layer into a private anonymous session layer. Both affected layers are saved in memory before transfer and restored if applying fails; `Sdf.ChangeBlock` alone would not be a transaction. If a stronger session opinion masks a proposed property, the patch is rejected instead of being reported as effective.
 
-Pause est requise pour préparer/appliquer les transformations ; **Stop** pour les paramètres physiques et l’annulation. Les corrections de scène n’appellent pas `Save` sur les sources. L’ancien outil `save_omniverse_camera` reste l’exception explicite : il peut sauvegarder la pose de caméra dans un fichier existant autorisé, uniquement à la demande de l’utilisateur.
+Pause is required to prepare/apply transforms; **Stop** is required for physics settings and undo. Scene corrections do not call `Save` on source files. The legacy `save_omniverse_camera` tool remains the explicit exception: at the user's request, it can save a camera pose into an authorized existing file.
 
-Exporter produit **une couche d’overrides**, pas une scène autonome ou aplatie. Il faut la composer avec la scène source dans un projet USD ; les assets référencés ne sont pas copiés. L’export ne vide pas la session et ne marque pas les corrections comme abandonnées. Exporter puis abandonner permet ensuite d’ouvrir un autre stage. Arrêter Kit sans export perd les corrections en mémoire.
+Export produces **an override layer**, not a standalone or flattened scene. Compose it with the source scene in a USD project; referenced assets are not copied. Export does not clear the session or mark corrections as discarded. Exporting and then discarding lets you open another stage. Stopping Kit without exporting loses in-memory corrections.
 
-## Logs et diagnostic
+## Logs and diagnostics
 
-Tampons bornés : 400 événements bridge, 500 événements cache MCP, 150 événements d’interface. Le curseur, les pertes et la fraîcheur sont exposés. Les logs Carbonite utilisent le callback public lorsqu’il est disponible ; les fichiers runtime stdout/stderr restent accessibles autrement. La lecture des fichiers est limitée à leur dernière tranche de 512 Kio, puis au nombre de lignes demandé.
+Buffers are bounded: 400 bridge events, 500 MCP cache events, and 150 UI events. The cursor, dropped events, and freshness are exposed. Carbonite logs use the public callback when available; runtime stdout/stderr files are available otherwise. File reads are limited to the last 512 KiB, followed by the requested line count.
 
-L’expurgation masque les deux secrets de session et les formats de credentials usuels. Elle n’est pas une garantie de détection de tous les secrets arbitraires d’extensions tierces : relire les logs avant de les publier.
+Redaction masks the two session secrets and common credential formats. It does not guarantee detection of every arbitrary secret from third-party extensions; review logs before publishing them.
 
-En cas de `revision_conflict` ou `stage_changed`, inspecter puis recréer l’aperçu, sans boucle aveugle de réapplication. En cas de `operation_uncertain`, superviser le runtime et suivre l’arrêt sécurisé ; une erreur de transport ne prouve pas l’absence d’effet.
+On `revision_conflict` or `stage_changed`, inspect again and create a new preview instead of blindly retrying. On `operation_uncertain`, supervise the runtime and follow safe-stop recovery; a transport error does not prove that no effect occurred.
 
-## Parcours sur votre scène
+## Workflow on your scene
 
-L’installateur ne copie aucune scène ni animation dans le workspace. Choisir un fichier USD réel et de confiance, placé dans le workspace autorisé, ou inspecter le stage déjà ouvert dans le Kit géré.
+The installer does not copy a scene or animation into the workspace. Choose a real, trusted USD file within the authorized workspace, or inspect the stage already open in the managed Kit runtime.
 
-Dans **Scène**, inspecter puis sélectionner un objet. Les paramètres sans observation restent vides. Pour une animation, saisir les clés explicitement, ou utiliser la capture de la pose courante : elle n’est proposée que pour une pile TRS locale simple reconnue. Les piles complexes ne sont pas arbitrairement décomposées. Les valeurs de capture proviennent d’une nouvelle inspection du prim à l’instant choisi par le runtime. Le champ de temps indique où placer cette pose dans l’animation ; saisir ce champ ne déplace pas à lui seul la timeline.
+In **Scene** (currently **Scène**), inspect and select an object. Unobserved settings remain empty. For animation, enter keys explicitly or capture the current pose; capture is offered only for a recognized simple local TRS stack. Complex stacks are not decomposed arbitrarily. Captured values come from a fresh inspection of the prim at the time chosen by the runtime. The time field sets where to place this pose in the animation; editing that field does not move the timeline by itself.
 
-Prévisualiser la correction puis confirmer son application avant expiration de l’aperçu. Arrêter la timeline avant les changements physiques. Une désactivation de collider existant écrit maintenant effectivement `physics:collisionEnabled = false`. Choisir une durée bornée valide, exécuter puis observer la scène et les mesures réelles. Un diagnostic ancien ou incomplet est signalé ; une inspection tronquée bloque le lancement automatique borné.
+Preview the correction and confirm applying it before the preview expires. Stop the timeline before physics changes. Disabling an existing collider now actually writes `physics:collisionEnabled = false`. Choose a valid bounded duration, run, then observe the scene and real measurements. Stale or incomplete diagnostics are reported; a truncated inspection blocks an automatic bounded run.
 
-Les scènes `tests/fixtures/*.usda` et `mcp/fixtures/*.usda` sont réservées aux tests explicites. Elles ne sont importées ni par l’interface de production, ni par le serveur MCP normal. `npm run test:runtime` et `npm run test:physics` utilisent des copies temporaires dédiées : il s’agit de tests natifs, pas d’un mode de démonstration du produit.
+The scenes in `tests/fixtures/*.usda` and `mcp/fixtures/*.usda` are reserved for explicit tests. They are imported neither by the production interface nor by the normal MCP server. `npm run test:runtime` and `npm run test:physics` use dedicated temporary copies: they are native tests, not a product demo mode.
 
-## Références techniques
+## Technical references
 
-- NVIDIA Kit streaming : https://docs.omniverse.nvidia.com/kit/docs/kit-app-template/latest/docs/streaming.html
-- NVIDIA Timeline : https://docs.omniverse.nvidia.com/kit/docs/omni.timeline/latest/omni.timeline/omni.timeline.Timeline.html
-- OpenUSD layers : https://openusd.org/release/api/class_sdf_layer.html
-- OpenUSD Xformable : https://openusd.org/dev/api/class_usd_geom_xformable.html
-- OpenAI plugin/UI bridge : https://developers.openai.com/plugins/build/chatgpt-ui
+- NVIDIA Kit streaming: https://docs.omniverse.nvidia.com/kit/docs/kit-app-template/latest/docs/streaming.html
+- NVIDIA Timeline: https://docs.omniverse.nvidia.com/kit/docs/omni.timeline/latest/omni.timeline/omni.timeline.Timeline.html
+- OpenUSD layers: https://openusd.org/release/api/class_sdf_layer.html
+- OpenUSD Xformable: https://openusd.org/dev/api/class_usd_geom_xformable.html
+- OpenAI plugin/UI bridge: https://developers.openai.com/plugins/build/chatgpt-ui

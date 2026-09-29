@@ -1,37 +1,37 @@
-# Versions, tags et distribution
+# Versions, tags, and distribution
 
-## Identité de version
+## Version identity
 
-La version courante est `1.0.0-rc3`. Elle doit rester cohérente entre `package.json`, `web/package.json`, `.codex-plugin/plugin.json`, l’extension OmniStream Bridge et `release-manifest.json`. Le suffixe `-rc3` désigne une candidate, pas une certification stable.
+The current version is `1.0.0-rc3`. It must remain consistent across `package.json`, `web/package.json`, `.codex-plugin/plugin.json`, the OmniStream Bridge extension, and `release-manifest.json`. The `-rc3` suffix denotes a candidate, not stable certification.
 
-Les tags Git suivent la forme `v<version>`, par exemple `v1.0.0-rc3`. Un tag doit pointer sur le commit examiné et qualifié pour cette version. La [checklist de release](RELEASE-CHECKLIST.md) fixe les contrôles avant un tag de candidate ou la promotion vers `1.0.0`.
+Git tags use the form `v<version>`, for example `v1.0.0-rc3`. A tag must point to the commit reviewed and qualified for that version. The [release checklist](RELEASE-CHECKLIST.md) defines the checks required before a candidate tag or promotion to `1.0.0`.
 
-État au 29 septembre 2026 : le dépôt n’a pas encore de tag GitHub, de GitHub Release ni de package publié dans un registre. Une archive candidate peut être construite localement ; le présent document ne présente pas cet artefact local comme un téléchargement public.
+Status as of September 29, 2026: the repository has no GitHub tag, GitHub Release, or package published to a registry. A candidate archive can be built locally; this document does not present that local artifact as a public download.
 
-## Artefact à télécharger
+## Downloadable artifact
 
-OmniStream fournit une archive Windows source-only, pas un runtime NVIDIA précompilé. Pour la construire depuis la racine du dépôt :
+OmniStream provides a Windows source-only archive, not a prebuilt NVIDIA runtime. Build it from the repository root with:
 
 ```powershell
 .\installer\Build-Release.ps1
 ```
 
-Le résultat est placé dans `release/` sous la forme `omnistream-for-codex-<version>.zip` et `omnistream-for-codex-<version>.zip.sha256`. Le ZIP contient le source OmniStream, l’installateur, les tests et la documentation. Kit, le SDK WebRTC NVIDIA, leurs caches et le bundle du panneau sont obtenus ou construits sur le poste cible.
+The output is placed under `release/` as `omnistream-for-codex-<version>.zip` and `omnistream-for-codex-<version>.zip.sha256`. The ZIP contains OmniStream source, the installer, tests, and documentation. Kit, the NVIDIA WebRTC SDK, their caches, and the panel bundle are obtained or built on the target machine.
 
-Après extraction, vérifier le manifeste strict :
+After extraction, verify the strict manifest:
 
 ```powershell
 npm run verify:release -- --strict
 ```
 
-Le SHA-256 et le manifeste attestent l’intégrité des fichiers par rapport aux valeurs fournies ; ils ne constituent pas une signature numérique ni une certification de provenance.
+SHA-256 and the manifest attest that files match the supplied values; they are neither a digital signature nor a provenance certification.
 
-## Packages de registre et licence
+## Registry packages and licence
 
-`package.json` décrit le dépôt, ses mots-clés, son support et son périmètre. Il garde `private: true` et `license: UNLICENSED`; aucun package npm n’est publié. Ne pas retirer cette protection ni attribuer une licence sans la décision du titulaire des droits. La visibilité publique du dépôt ne concède pas de droits de réutilisation ou de redistribution.
+`package.json` describes the repository, its keywords, support, and scope. It keeps `private: true` and `license: UNLICENSED`; no npm package is published. Do not remove this protection or assign a licence without a decision by the rights holder. Public repository visibility does not grant rights to reuse or redistribute the software.
 
-Une GitHub Release de candidate doit être marquée **Pre-release**, utiliser un tag correspondant à la version et joindre le ZIP ainsi que son fichier `.sha256`. Ne pas annoncer de release stable tant que les gates de [validation](VALIDATION.md) et de [licence](PUBLIC-DEPLOYMENT.md) ne sont pas franchies.
+A GitHub Release for a candidate must be marked **Pre-release**, use a tag that matches the version, and attach the ZIP and its `.sha256` file. Do not announce a stable release until the [validation](VALIDATION.md) and [licensing](PUBLIC-DEPLOYMENT.md) gates have been met.
 
 ## CI
 
-Le dépôt ne contient actuellement aucun workflow GitHub Actions versionné. Les commandes de source et d’installation doivent donc être décrites comme des contrôles locaux jusqu’à ce qu’un workflow soit ajouté et qu’une exécution soit observée.
+The repository currently contains no versioned GitHub Actions workflow. Until a workflow is added and a run is observed, describe source and installation commands as local checks.

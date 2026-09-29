@@ -1,6 +1,6 @@
 # Quick start
 
-Ce guide couvre l’installation puis les deux parcours du studio : lancer un fichier USD choisi par l’opérateur ou continuer à travailler sur la scène déjà ouverte dans la session Kit gérée.
+This guide covers installation and the studio's two workflows: launch an operator-selected USD file or continue working on a scene already open in the managed Kit session.
 
 ## 1. Extract and install
 
@@ -10,9 +10,9 @@ On the Windows RTX machine that will run Omniverse Kit, extract the OmniStream r
 installer\install.cmd
 ```
 
-The installer verifies the release manifest before copying source files. It then checks Node/npm, Git and the NVIDIA driver. NVIDIA Kit/WebRTC components are **not bundled**: when they are missing, OmniStream opens or invokes the official NVIDIA acquisition/setup path, waits for the operator to complete any NVIDIA terms/login/template steps, validates the resulting local project, and resumes.
+The installer verifies the release manifest before copying source files. It then checks Node/npm, Git, and the NVIDIA driver. NVIDIA Kit/WebRTC components are **not bundled**: if they are missing, OmniStream opens or invokes the official NVIDIA acquisition/setup flow, waits for the operator to complete any NVIDIA terms, login, or template steps, validates the resulting local project, and resumes.
 
-For a product-oriented installation choose **Production** when prompted. Choose **Existing** only when you already have a compatible Kit project. Use **Feature** for development/prototyping rather than qualification.
+For a product-oriented installation, choose **Production** when prompted. Choose **Existing** only if you already have a compatible Kit project. Use **Feature** for development/prototyping, not qualification.
 
 ## 2. Let installation qualification finish
 
@@ -28,7 +28,7 @@ The machine-readable report is stored at:
 %LOCALAPPDATA%\OmniStream\state\validation-report.json
 ```
 
-If the runtime smoke was skipped, the installation is usable for diagnosis/development but is **not qualified stable** until `installer\test.cmd` succeeds without skip switches.
+If the runtime smoke test was skipped, the installation can be used for diagnosis/development but is **not qualified as stable** until `installer\test.cmd` succeeds without skip switches.
 
 ## 3. Load the local plugin in Codex
 
@@ -40,21 +40,21 @@ The default installed plugin root is:
 
 Load/import that local plugin in Codex, then open **OmniStream for Codex**.
 
-## 4. Choisir le parcours
+## 4. Choose a workflow
 
-### Ouvrir une nouvelle scène
+### Open a new scene
 
-L’installateur ne crée aucun contenu d’exemple. Le workspace utilisateur reste vide. Placer un USD de confiance dans le workspace configuré. Ne pas ouvrir un fichier inconnu sans en vérifier les dépendances/extensions.
+The installer creates no sample content. The user workspace remains empty. Place a trusted USD file in the configured workspace. Do not open an unfamiliar file without checking its dependencies/extensions.
 
-Dans **Configurer**, sélectionner le workspace puis utiliser **Scanner**, ou saisir le chemin réel de votre fichier. Valider la configuration. Dans **Lancer**, examiner le préflight puis lancer lorsque les vérifications requises sont satisfaites. Un port de signalisation disponible ne prouve pas qu’une image est reçue. Attendre l’apparition réelle de votre scène dans le viewport.
+In **Configure** (currently **Configurer**), select the workspace and use **Scan** (currently **Scanner**), or enter the path to your real file. Validate the configuration. In **Launch** (currently **Lancer**), review preflight and launch when the required checks pass. An available signaling port does not prove that a frame is being received. Wait until your actual scene appears in the viewport.
 
-### Continuer sur la scène déjà ouverte
+### Continue with the scene already open
 
-Ce parcours concerne le Kit géré par la session MCP courante. Si le runtime est prêt mais que le panneau a perdu son flux, utiliser **Rattacher** dans **Lancer** ou appeler `attach_omniverse_stream`. Ne pas appeler `launch_omniverse_simulation` pour une correction : ce lancement ouvre le fichier USD enregistré dans la configuration. Un Kit démarré séparément n’est pas adopté automatiquement.
+This workflow applies to Kit managed by the current MCP session. If the runtime is ready but the panel has lost its stream, use **Attach** (currently **Rattacher**) in **Launch** or call `attach_omniverse_stream`. Do not call `launch_omniverse_simulation` for a correction: launch opens the USD file saved in the configuration. A separately started Kit process is not automatically adopted.
 
-Dans **Scène**, inspecter le stage et l’objet avant toute modification. Prévisualiser la correction puis appliquer l’aperçu encore valide. Les contrôles physiques dépendent de la capacité réellement détectée par Kit. Dans **Contrôler**, utiliser lecture, pause, arrêt, frames et seek ; la cadence cible ne promet pas de dilatation temporelle du solveur. **Superviser** et **Diagnostic** séparent état runtime, vidéo, bridge, scène, logs et mesures.
+In **Scene** (currently **Scène**), inspect the stage and object before making changes. Preview the correction, then apply the still-valid preview. Physics controls depend on the capability Kit actually reports. In **Control** (currently **Contrôler**), use play, pause, stop, frame stepping, and seek; target cadence does not promise solver time dilation. **Supervise** (currently **Superviser**) and **Diagnostics** (currently **Diagnostic**) distinguish runtime, video, bridge, scene, logs, and measurements.
 
-Si aucune scène ni mesure n’est disponible, l’interface l’indique au lieu de la remplacer par une donnée de démonstration. Les corrections de scène restent en session : exporter avant d’arrêter Kit. L’enregistrement de caméra est une écriture source distincte et explicitement confirmée.
+If no scene or measurement is available, the interface says so instead of substituting demo data. Scene corrections remain in the session: export them before stopping Kit. Camera saving is a separate source write that requires explicit confirmation.
 
 ## 5. Recover if something fails
 
@@ -64,4 +64,4 @@ installer\repair.cmd
 installer\test.cmd
 ```
 
-`repair.cmd` reuses the existing external Kit project and does not delete or redownload NVIDIA software. See [Troubleshooting](TROUBLESHOOTING.md) for failure-specific guidance.
+`repair.cmd` reuses the existing external Kit project and does not delete or redownload NVIDIA software. See [Troubleshooting](TROUBLESHOOTING.md) for guidance specific to each failure.
