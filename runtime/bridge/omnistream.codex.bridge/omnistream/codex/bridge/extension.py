@@ -48,6 +48,9 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
         self._host = str(_setting("controlHost", "127.0.0.1"))
         self._port = int(_setting("controlPort", 0) or 0)
         token = os.environ.get("CODEX_OMNIVERSE_CONTROL_TOKEN", "")
+        if not self._port and not token and not self._allowed_root and self._host == "127.0.0.1":
+            carb.log_info("OmniStream bridge disabled: no managed session configured.")
+            return
         if self._host != "127.0.0.1" or not self._port or len(token) < 32 or not self._allowed_root:
             carb.log_error("OmniStream bridge disabled: invalid loopback control settings or allowedRoot.")
             return
@@ -565,6 +568,8 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
     async def _camera_save(self):
         prim = self._camera_prim()
         stage = self._stage()
+        camera_path = prim.GetPath().pathString
+        stage_identifier = stage.GetRootLayer().identifier
         matrix = self._camera_matrix(prim)
         session = stage.GetSessionLayer()
         target_layer = None
@@ -585,7 +590,14 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
             except ValueError as exc:
                 raise RuntimeError("Camera source layer is outside the authorized workspace") from exc
         with Usd.EditContext(stage, target_layer):
-            UsdGeom.Xformable(prim).MakeMatrixXform().Set(matrix)
+            # The session already contains the matrix op. MakeMatrixXform()
+            # would try to append that same composed op and can return an
+            # invalid handle. Author its source opinion and order explicitly.
+            xform = UsdGeom.Xformable(prim)
+            reset_stack = xform.GetResetXformStack()
+            attribute = prim.CreateAttribute("xformOp:transform", Sdf.ValueTypeNames.Matrix4d, custom=False)
+            attribute.Set(matrix)
+            xform.SetXformOpOrder([UsdGeom.XformOp(attribute)], reset_stack)
         if not target_layer.Save():
             raise RuntimeError("The camera layer could not be saved.")
         # Remove only OmniStream's temporary camera override after a successful
@@ -597,6 +609,14 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
                     prim.RemoveProperty(name)
         self._camera_dirty = False
         await omni.kit.app.get_app().next_update_async()
+        # Kit can recompose/reload a saved layer on the next update. Handles
+        # captured before that update are no longer safe to dereference.
+        current_stage = self._stage()
+        if current_stage.GetRootLayer().identifier != stage_identifier:
+            raise RuntimeError("Camera source was saved, but the active stage changed before confirmation.")
+        prim = current_stage.GetPrimAtPath(camera_path)
+        if not prim or not prim.IsA(UsdGeom.Camera):
+            raise RuntimeError("Camera source was saved, but the camera is no longer present in the active stage.")
         result = self._simulation_state()
         result["saved"] = True
         result["camera"] = {

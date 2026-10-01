@@ -7,6 +7,12 @@ try {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'release-manifest.json'), 'utf8'));
   const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
   if (manifest.schemaVersion !== 1 || manifest.version !== pkg.version || !Array.isArray(manifest.files) || !manifest.files.length) throw Error('Invalid release manifest/version');
+  const plugin = JSON.parse(fs.readFileSync(path.join(root, '.codex-plugin/plugin.json'), 'utf8'));
+  const web = JSON.parse(fs.readFileSync(path.join(root, 'web/package.json'), 'utf8'));
+  const bridge = fs.readFileSync(path.join(root, 'runtime/bridge/omnistream.codex.bridge/config/extension.toml'), 'utf8');
+  const bridgeVersion = bridge.match(/^version\s*=\s*"([^"]+)"/m)?.[1];
+  const readmeHeading = fs.readFileSync(path.join(root, 'README.md'), 'utf8').split(/\r?\n/, 1)[0];
+  if (plugin.version !== pkg.version || web.version !== pkg.version || bridgeVersion !== pkg.version || !readmeHeading.endsWith(pkg.version)) throw Error('Version mismatch across package, plugin, web, bridge or README');
   const seen = new Set();
   for (const entry of manifest.files) {
     if (typeof entry.path !== 'string' || !entry.path || entry.path.includes('\\') || entry.path.includes(':') || path.isAbsolute(entry.path) || entry.path.split('/').some(p => !p || p === '.' || p === '..') || seen.has(entry.path)) throw Error('Invalid/duplicate manifest path');
@@ -17,7 +23,7 @@ try {
     const data = fs.readFileSync(target);
     if (data.length !== entry.size || createHash('sha256').update(data).digest('hex') !== entry.sha256) throw Error('Integrity mismatch: ' + entry.path);
   }
-  for (const required of ['package.json', '.codex-plugin/plugin.json', '.mcp.json', 'installer/install.cmd']) {
+  for (const required of ['package.json', '.codex-plugin/plugin.json', '.mcp.json', 'installer/install.cmd', 'web/package.json', 'runtime/bridge/omnistream.codex.bridge/config/extension.toml', 'README.md']) {
     if (!seen.has(required)) throw Error('Required release file not covered: ' + required);
   }
   if (strict) {

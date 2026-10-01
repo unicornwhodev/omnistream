@@ -7,8 +7,10 @@ OmniStream separates **source qualification**, **installed-runtime qualification
 After obtaining the `web` dependencies on Windows:
 
 ```powershell
+npm --prefix .\web ci
 npm run check
 npm test
+npm run test:python
 npm run test:web
 .\installer\Build-Release.ps1
 ```
@@ -17,6 +19,7 @@ npm run test:web
 |---|---|---|
 | `npm run check` | Node syntax plus TypeScript checks for the real panel and Vite application. | No. |
 | `npm test` | MCP descriptors/protocol, simulation contracts, atomic-launch guard, loopback auth, path policy, redaction, safe stop, and source-only behavior. | No. |
+| `npm run test:python` | Scene policy, telemetry, and actual OpenUSD authoring/undo/export when `pxr` is installed. USD-dependent skips are reported explicitly. | No Kit; temporary test USD only. |
 | `npm run test:web` | Builds the real panel, validates its MCP resource/bundle contract, then removes generated test output. | No Kit / no USD. |
 | `npm run audit:public` | Verifies that publication scope excludes generated/dependency/runtime material, local paths, and common secret patterns. | No. |
 
@@ -84,7 +87,18 @@ Record this separately from the machine-readable validation report.
 
 ## Additional RC3 gates
 
-`npm test` includes 12 Node tests for the new contracts, cache, and multiplexing over a real authenticated local socket. `npm run test:python` runs 17 Python tests independent of Kit and 15 additional tests requiring real `pxr`. If `pxr` is unavailable, those 15 tests are **SKIPPED**, never counted as passes. No CI workflow is currently versioned here, so there is no current CI result to report for this candidate.
+`npm test` includes 12 Node scene/event tests, 12 public-integrity tests, panel contracts, release checks, and the MCP protocol suite. On Windows, release checks also execute the prerequisite probes and validation-report serialization under Windows PowerShell. `npm run test:python` runs 17 Python tests independent of Kit and 17 additional tests requiring real `pxr`, including cadence changes and export. If `pxr` is unavailable, those 17 tests are **SKIPPED**, never counted as passes. No CI workflow is currently versioned here, so there is no current CI result to report for this candidate.
+
+For an isolated OpenUSD installation on Windows:
+
+```powershell
+$usdVenv = Join-Path $env:TEMP 'omnistream-usd-rc3'
+python -m venv $usdVenv
+& (Join-Path $usdVenv 'Scripts\python.exe') -m pip install usd-core==26.8
+& (Join-Path $usdVenv 'Scripts\python.exe') -m unittest discover -s tests -v
+```
+
+Keep the virtual environment outside the release tree. `usd-core` supplies OpenUSD bindings; it does not supply Kit or PhysX. Record the installed version and require zero skips for the native USD candidate gate.
 
 The runtime smoke test now includes preview/apply/undo for USD animation and monitoring with a local duration limit. `npm run test:physics` adds a drop test that must observe displacement in USD. It fails without PhysX capability or USD-visible motion. A solver that uses Fabric only needs a different measurement adapter.
 

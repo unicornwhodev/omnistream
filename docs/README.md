@@ -26,9 +26,10 @@ This index links to guides aligned with the code in version `1.0.0-rc3`. The [re
 | Components, data flows, and responsibilities | [Architecture](ARCHITECTURE.md) |
 | Local boundaries, data, credentials, and USD writes | [Security](SECURITY.md) |
 | Verification commands and expected evidence | [Validation](VALIDATION.md) |
+| Windows, OpenUSD, Kit, PhysX and FireViewer results obtained on October 1 | [Current qualification report](QUALIFICATION-2026-10-01.md) |
 | Release and RC-to-stable promotion criteria | [Release checklist](RELEASE-CHECKLIST.md) |
 | Version, tags, source archive, and registry packages | [Versions and distribution](RELEASING.md) |
 | Policy for publishable content | [Source publication](PUBLICATION.md) |
 | Local distribution scope and publication limits | [Public distribution](PUBLIC-DEPLOYMENT.md) |
 
-Changes are recorded in the [changelog](../CHANGELOG.md). The [QA report](../QA-REPORT.md) records results for this candidate; it is not a qualification promise for another machine.
+Changes are recorded in the [changelog](../CHANGELOG.md). The [current qualification report](QUALIFICATION-2026-10-01.md) records the tested target; the [earlier QA report](../QA-REPORT.md) is retained as history. Neither is a qualification promise for another machine.

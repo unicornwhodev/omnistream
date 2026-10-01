@@ -36,7 +36,11 @@ function atLeast(actual, expected) {
 }
 
 function commandVersion(command, args = ["--version"]) {
-  const result = spawnSync(command, args, { encoding: "utf8", windowsHide: true });
+  // Windows batch entry points must run through cmd; direct spawning is EINVAL.
+  const batch = process.platform === "win32" && command === "npm.cmd";
+  const result = spawnSync(batch ? "cmd.exe" : command, batch ? ["/d", "/s", "/c", "npm --version"] : args, {
+    encoding: "utf8", windowsHide: true
+  });
   if (result.error || result.status !== 0) return "";
   return `${result.stdout || ""}${result.stderr || ""}`.trim();
 }

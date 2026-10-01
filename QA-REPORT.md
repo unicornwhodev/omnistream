@@ -1,5 +1,7 @@
 # OmniStream 1.0.0-rc3 — Verification report
 
+> Historical source-only report. For the subsequent Windows/RTX/OpenUSD/PhysX and FireViewer map results, see the [October 1, 2026 qualification report](docs/QUALIFICATION-2026-10-01.md). Actual Codex video/input/dialog acceptance remains outstanding.
+
 ## Verdict
 
 The RC2 codebase received a redesign and hardening pass. The user workflow no longer installs a scene automatically, preloads animation, invents connection state, or substitutes a different renderer. **This conclusion covers the code and the workflow observed without Kit; it does not certify a native simulation or RTX video stream, neither of which was run here.**

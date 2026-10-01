@@ -2,7 +2,7 @@
 
 A local studio for controlling **a real NVIDIA Omniverse Kit scene** from Codex: configure a session, launch the runtime without a native window, inspect and edit USD, control animation and rigid bodies, observe telemetry, and diagnose errors. The browser receives the WebRTC render; it does not replace it with a local 3D scene.
 
-**Status: release candidate, not a certified stable release.** The controller and panel have been tested locally; Windows/RTX/Kit qualification, the production build, and the real video stream in Codex remain release gates. See [QA-REPORT.md](QA-REPORT.md) for results and limitations.
+**Status: release candidate, not a certified stable release.** Windows source/build checks, 34 actual OpenUSD tests, installed Kit/control tests, PhysX displacement, and the FireViewer Die–Pontaix map workflow passed on the recorded Existing runtime. Actual Codex video, viewport input, and dialogs remain acceptance gates. See the [October 1 qualification report](docs/QUALIFICATION-2026-10-01.md) for the exact target and limitations.
 
 ## Install
 
@@ -76,7 +76,7 @@ From a freshly extracted archive, run `npm run verify:release -- --strict` and t
 
 ## Version, downloads, and licence
 
-The source version is `1.0.0-rc3`, targeting Windows 10/11 x64 with an NVIDIA RTX GPU. This repository is public, but the software remains `UNLICENSED`: no open-source licence has been selected. The npm package is not published (`private: true`). As of September 29, 2026, no tag or release artifact has been published on GitHub. The [Releases page](https://github.com/unicornwhodev/omnistream/releases) will list downloads when a candidate is published.
+The source version is `1.0.0-rc3`, targeting Windows 10/11 x64 with an NVIDIA RTX GPU. This repository is public, but the software remains `UNLICENSED`: no open-source licence has been selected. The npm package is not published (`private: true`). As checked on October 1, 2026, no tag or release artifact has been published on GitHub. The [Releases page](https://github.com/unicornwhodev/omnistream/releases) will list downloads when a candidate is published.
 
 Build the source-only Windows archive with:
 

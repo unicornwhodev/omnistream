@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import net from "node:net";
 import os from "node:os";
 import { spawn } from "node:child_process";
@@ -24,7 +24,8 @@ import { listWorkspaceAssets, listWorkspaceUsdStages, validateStagePath } from "
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pluginRoot = path.resolve(__dirname, "..");
-const expectPanelBundle = process.env.OMNISTREAM_EXPECT_PANEL_BUNDLE === "1";
+const expectPanelBundle = process.env.OMNISTREAM_EXPECT_PANEL_BUNDLE === "1"
+  || existsSync(path.resolve(import.meta.dirname, "web-dist", "index.html"));
 
 function jsonLineReader(socket) {
   let buffer = "";

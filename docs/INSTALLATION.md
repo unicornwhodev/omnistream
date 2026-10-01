@@ -52,6 +52,8 @@ Use an existing compatible project containing `repo.bat`:
 
 The existing project must already contain a streaming `.kit` source layer when `-SkipNvidiaRuntimeSetup` is used. OmniStream still installs/updates its own bridge source and invokes the NVIDIA build so the generated runtime matches the bridge.
 
+The bridge includes its own `premake5.lua`. After the build, verify that `<kit-root>\_build\windows-x86_64\release\exts\omnistream.codex.bridge\config\extension.toml` exists. Copying Python into `source\extensions` alone does not make an extension available to Kit.
+
 ### Feature — developer/prototype path
 
 Feature mode clones NVIDIA's official `kit-app-template` repository directly and can run NVIDIA's `repo.bat template new` wizard. It is retained for development and prototyping; do not use it as the release-candidate stability gate when a Production Branch project is available.
@@ -120,3 +122,5 @@ installer\uninstall.cmd
 - **Uninstall** removes the OmniStream plugin by default and leaves the external NVIDIA project, configuration and workspace untouched. Use `-RemoveConfiguration` and/or `-RemoveWorkspace` only when those OmniStream-owned locations should also be deleted.
 
 The uninstaller never removes the external NVIDIA Kit project.
+
+Before removing anything, the uninstaller verifies OmniStream's package/plugin identity, rejects drive roots and linked target directories, and rejects targets overlapping configured Kit or asset paths. A custom `OMNISTREAM_HOME` cleanup clears the user's environment setting only when it points to that same home.

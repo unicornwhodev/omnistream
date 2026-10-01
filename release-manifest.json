@@ -2,12 +2,17 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc3",
-  "generatedAt": "2026-09-29T18:16:21.8188754Z",
+  "generatedAt": "2026-10-01T10:53:20.0489979Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
       "size": 1242,
       "sha256": "6ebbb5ad76f7c6351e96792fc0105b2f46ec79c89703540a8c789e38f6ada9eb"
+    },
+    {
+      "path": ".gitattributes",
+      "size": 98,
+      "sha256": "8d4ffff6aebfbb03bc7772ed96699ea6fb54171779e4ac24fbd709c4888fce4b"
     },
     {
       "path": ".gitignore",
@@ -21,33 +26,18 @@
     },
     {
       "path": "CHANGELOG.md",
-      "size": 4761,
-      "sha256": "16299250f6ff4b862ecad4693ec97bf1e75d28bf2d90d4ca4c9181fab16f3bd4"
-    },
-    {
-      "path": "QA-REPORT.md",
-      "size": 7269,
-      "sha256": "57aa5cd2038d53ecd5851f2633380f3ffc219aaf423271018f231722bded985f"
-    },
-    {
-      "path": "README.md",
-      "size": 7218,
-      "sha256": "646df2d606b47d1395a74cd1ca881e1ced18558f0281246766e9c5d8603d6ae1"
-    },
-    {
-      "path": "THIRD_PARTY.md",
-      "size": 1112,
-      "sha256": "860eae60b167400f3b2003c2f35a75adf8fcb498087e022f9cae3818fb650102"
-    },
-    {
-      "path": "config/README.md",
-      "size": 405,
-      "sha256": "b100dd5dc2a9ce27f1378f114e89b138611391cb8b54dca509ee76884ac2e88a"
+      "size": 5974,
+      "sha256": "039165dea9e157bbd19207c3cfe9c6dfe465639ba80a353ea7b4991dda256565"
     },
     {
       "path": "config/omnistream.schema.json",
       "size": 1014,
       "sha256": "3f7020955b15b749416aa0c9d70769651993bce01ec77cd9008d314e0fc7f257"
+    },
+    {
+      "path": "config/README.md",
+      "size": 405,
+      "sha256": "b100dd5dc2a9ce27f1378f114e89b138611391cb8b54dca509ee76884ac2e88a"
     },
     {
       "path": "docs/ARCHITECTURE.md",
@@ -61,13 +51,13 @@
     },
     {
       "path": "docs/INSTALLATION.md",
-      "size": 5909,
-      "sha256": "fcdd5fcabd7ff91d3be39cfd4c88c9933099edbfb52a8082f265181201c847fb"
+      "size": 6492,
+      "sha256": "dccbccb8f90e97c484283e0b56704a9c5399c981bcb0600077dc90c9cfbc2f16"
     },
     {
       "path": "docs/LIVE-SCENE.md",
-      "size": 11322,
-      "sha256": "afaa13a2ca067a4f5f8b629112051ec1b3f0965adf19accc13ab73763afa20ce"
+      "size": 11553,
+      "sha256": "82e07e2a2bdf69d285e6438b21f3ff0d2994ad21f2bd5567c4f8f50941e59ceb"
     },
     {
       "path": "docs/MCP-REFERENCE.md",
@@ -90,14 +80,19 @@
       "sha256": "51a044af722299849bc3d0572eca3a4f9a4f62af21f5d2577704416e9da95e6e"
     },
     {
+      "path": "docs/QUALIFICATION-2026-10-01.md",
+      "size": 8462,
+      "sha256": "f3f1bcc2830d66b176895135c8eccaae02c292cf274e2bb43c6924b0789292b3"
+    },
+    {
       "path": "docs/QUICKSTART.md",
       "size": 3833,
       "sha256": "0a7f1781d8d84fb20f6b6aab5840a2ca8833edf1990e20a7418996e740ab6921"
     },
     {
       "path": "docs/README.md",
-      "size": 1873,
-      "sha256": "fb97e997e1191ce3b43a84ad99068921e61482fc140cf296dbcd792268daddf1"
+      "size": 2101,
+      "sha256": "67baad2e85ce937270b2893f634f662031185b23b9390877792f019687746d17"
     },
     {
       "path": "docs/RELEASE-CHECKLIST.md",
@@ -106,8 +101,8 @@
     },
     {
       "path": "docs/RELEASING.md",
-      "size": 2397,
-      "sha256": "57cf057b3d009520c649568bfef2f5c893d2ed7fa30425aee2c1b85ed600909d"
+      "size": 2664,
+      "sha256": "8f45a957435fb5587d97809909b098b14124609ed5172dd6dedd3b2a620aa0c2"
     },
     {
       "path": "docs/SECURITY.md",
@@ -121,8 +116,8 @@
     },
     {
       "path": "docs/VALIDATION.md",
-      "size": 5465,
-      "sha256": "653810053dc44e4434257d9cf8bcd76d973eac650fbc5923d2b49724e8691fb9"
+      "size": 6394,
+      "sha256": "597be0089ef992b1933abb1565f53ee781a11aae569553c14780beaae8524262"
     },
     {
       "path": "installer/Build-Release.ps1",
@@ -135,9 +130,19 @@
       "sha256": "c5d99110ff54076ccfad7d565144ab52d02ba522b1144c85929689b02ee76bdf"
     },
     {
+      "path": "installer/diagnose.cmd",
+      "size": 158,
+      "sha256": "d79d442846d49fc8ccb8c7896e64220937c39b7558c76d437462a5b0d8a49222"
+    },
+    {
       "path": "installer/Install-OmniStream.ps1",
-      "size": 27167,
-      "sha256": "066ca3823ffbd896103890446cfb63bdb36377e8e56c4526826f92c862266c98"
+      "size": 27191,
+      "sha256": "4a81a8a5a8bca4eda3b748628f86d39567352df25106f6c4a37a4df5a1598ba1"
+    },
+    {
+      "path": "installer/install.cmd",
+      "size": 378,
+      "sha256": "baf2d57a3844b9c0e99342bc1cf6569f3371c8eb903413ca12826c6e07627d89"
     },
     {
       "path": "installer/README.md",
@@ -145,39 +150,29 @@
       "sha256": "cd8433aa381d9ce4cc1309cd33829095e48d15e23e9375dc8fdedf75f7b5c367"
     },
     {
-      "path": "installer/Test-OmniStream.ps1",
-      "size": 3918,
-      "sha256": "394d989914573ab3f653a6043386a11c371732fbe8d3d82b0d57c5b080ee39a6"
-    },
-    {
-      "path": "installer/Uninstall-OmniStream.ps1",
-      "size": 2428,
-      "sha256": "85bd57c8843d170a5212f7538bee4b95f656c9c262696dbbb0e67f178b1e7190"
-    },
-    {
-      "path": "installer/diagnose.cmd",
-      "size": 138,
-      "sha256": "0ff98bec1709bef6147e899960924d0a1bbee17ad360ee7ffce7039540f39a10"
-    },
-    {
-      "path": "installer/install.cmd",
-      "size": 281,
-      "sha256": "7073b045eba6e972980562295a6d1ade7ee9f8f221c88d1c70b9b668fe1f7390"
-    },
-    {
       "path": "installer/repair.cmd",
-      "size": 186,
-      "sha256": "1f4522a6ae36b1fff906a79df83c03aec830fe5ea029a1138a02b314f177246f"
+      "size": 206,
+      "sha256": "57c02a6e0f132cce336b508535749d06abb112f86825e6ac090f382da16d2a65"
+    },
+    {
+      "path": "installer/Test-OmniStream.ps1",
+      "size": 3925,
+      "sha256": "248204a21a4f0499d0ac30f1734fe2f0af958cb5a274bb94e3f12fe0c715732d"
     },
     {
       "path": "installer/test.cmd",
-      "size": 134,
-      "sha256": "f1d1c1a03a7ca0a21a085a0cdb5b1db8cde2a2c74629cac520432657ce5752ae"
+      "size": 154,
+      "sha256": "29df9840e13c1f6af3269f8d1219550e59bc46330b2d05180b422362a90bba62"
+    },
+    {
+      "path": "installer/Uninstall-OmniStream.ps1",
+      "size": 5106,
+      "sha256": "2a47345319a77f228f491fdd97799e7708bdbac0486f18caf9f817c703112fe4"
     },
     {
       "path": "installer/uninstall.cmd",
-      "size": 139,
-      "sha256": "8264a901fa635273823f349c2490b1a622047cb76bf4955c963af04ce5819fa8"
+      "size": 159,
+      "sha256": "1bbd182f12befcf57971352c0ec78ea278b0d9bc1e3dbafcc4a1ee3df90d2209"
     },
     {
       "path": "mcp/control-rpc.mjs",
@@ -256,13 +251,23 @@
     },
     {
       "path": "mcp/test-server.mjs",
-      "size": 38184,
-      "sha256": "22c23f6df664d2713ba9f99663163eac6a8a71e7f8611586f329f3519ff091d8"
+      "size": 38273,
+      "sha256": "36f222f2118e3f24da474dde4232f0618047fe4ad2a9f17dada0f4dd0858bacd"
     },
     {
       "path": "package.json",
       "size": 2579,
       "sha256": "907b6582d4d5f514b94b275eb9fc27355e6aa19d1e33622e557035d390ecdbc5"
+    },
+    {
+      "path": "QA-REPORT.md",
+      "size": 7522,
+      "sha256": "093c29732133d8830202e6d38f429036ab90c59800afb1234a2a14ec5166a1df"
+    },
+    {
+      "path": "README.md",
+      "size": 7376,
+      "sha256": "f33768c3bcec5aa5c18aa0506aa94098043baa8c37982da0d6afb79612497b48"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/config/extension.toml",
@@ -276,8 +281,8 @@
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/extension.py",
-      "size": 26973,
-      "sha256": "36567d367eb1d5069446a8afa9fe8658187bc9a7f3178af682fc24741ee4bd20"
+      "size": 28358,
+      "sha256": "ed82219163bcf6f68d71903e0f2dd6fe549637433a80f2fa1794a6dd79deb281"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/scene_policy.py",
@@ -286,13 +291,28 @@
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/scene_service.py",
-      "size": 33160,
-      "sha256": "1ed553ebc1e6e268a6d2c02df592f29aed42b6d1575f81062f824d11f1b71bdd"
+      "size": 33456,
+      "sha256": "5909109d01daf8b66873d020c19cc5307310e5d0d96b212d04d40e09f9e87381"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/telemetry.py",
       "size": 1559,
       "sha256": "6c2726182bb5c2983a1ae72ec0f6ba0c17ace656e61a47835d6649aff12302ea"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/tests/__init__.py",
+      "size": 44,
+      "sha256": "0d4f85f381a2f0eaf8041e64c1fddb772021c31dc65f8f71d193b4ad363ffbed"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/tests/test_startup.py",
+      "size": 3476,
+      "sha256": "e4e578c9bf7f9559fe8a9677a297ea5000bcb2d3094a30a1f8895d9a217bb6e2"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/premake5.lua",
+      "size": 233,
+      "sha256": "dcd955754ec517fc556d94fa45af6ed83c2c0915ec381bd994002cb848fedec1"
     },
     {
       "path": "scripts/build-web.mjs",
@@ -301,8 +321,8 @@
     },
     {
       "path": "scripts/doctor.mjs",
-      "size": 6159,
-      "sha256": "b0f65493669227d36cc4a47cd761ab3ea138075ee18712a3667743aad8b8756f"
+      "size": 6383,
+      "sha256": "c9ae0ddaf3dbc2f1dfda9532cca554c8d862e80ccae8b3e23e242b56e6d0e298"
     },
     {
       "path": "scripts/publication-audit.mjs",
@@ -316,8 +336,8 @@
     },
     {
       "path": "scripts/verify-release.mjs",
-      "size": 2525,
-      "sha256": "4c05de3bc240ec986ac5ce9cc6eeaca07da55fbe2ca8cbfb8f64c837db0bc068"
+      "size": 3326,
+      "sha256": "f068fefc1c0f1d45c67b93c624e92e59fb56f67bda641f0bddebeb732c6ce17e"
     },
     {
       "path": "skills/omnistream-for-codex/SKILL.md",
@@ -341,13 +361,18 @@
     },
     {
       "path": "tests/test_release.mjs",
-      "size": 2299,
-      "sha256": "7490e6badd82ac511b2c659a37e2ae9f5b41a2144b430eb0675250810c5432c0"
+      "size": 7662,
+      "sha256": "3165a06e86a15df5140c42dbf9c80a435c2afb2d42c16411cc0d3e6d5b7b4c0c"
     },
     {
       "path": "tests/test_scene.py",
-      "size": 14714,
-      "sha256": "c3de240a8585612c8e8dccec987580abaa7e1d849ccd65e8dfd3af952c6d9d93"
+      "size": 16569,
+      "sha256": "8ef0216aa9d1342828aff32b4d7b107ed5b53166fb26691f027572453c2dadc9"
+    },
+    {
+      "path": "THIRD_PARTY.md",
+      "size": 1112,
+      "sha256": "860eae60b167400f3b2003c2f35a75adf8fcb498087e022f9cae3818fb650102"
     },
     {
       "path": "web/.npmrc",
@@ -361,8 +386,8 @@
     },
     {
       "path": "web/package-lock.json",
-      "size": 48880,
-      "sha256": "db5a42aa05db5316b033f6a2615db5c348b8d3bedfa5aded4928cd2f9bdf553b"
+      "size": 72276,
+      "sha256": "129b36594c011a4d2651c01a074578af9d9b6dba73a043c1d910f98026950fe2"
     },
     {
       "path": "web/package.json",
@@ -385,11 +410,6 @@
       "sha256": "5a2c6cce2eeeb0ee38bdad73ac3408d93aa0a7cc5603207a52f389214e874bd3"
     },
     {
-      "path": "web/src/SceneWorkbench.tsx",
-      "size": 41389,
-      "sha256": "74b48dd994bb76d82610f992147458d557318acbd311c6ed30a9b0dd6bd67c74"
-    },
-    {
       "path": "web/src/index.css",
       "size": 25814,
       "sha256": "7d6c5636d6c03dc8b0cd6d52ed367a6dd2b517705bfbd60923a93127813e764e"
@@ -403,6 +423,11 @@
       "path": "web/src/scene.css",
       "size": 8189,
       "sha256": "142d7b18d32b66ae0706cf1ae55f0b6fdd5debe00f5390462ff0e5c87fb2aff5"
+    },
+    {
+      "path": "web/src/SceneWorkbench.tsx",
+      "size": 41389,
+      "sha256": "74b48dd994bb76d82610f992147458d557318acbd311c6ed30a9b0dd6bd67c74"
     },
     {
       "path": "web/src/tool-result.mjs",

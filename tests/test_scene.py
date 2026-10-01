@@ -172,6 +172,30 @@ class RealUsdTests(unittest.TestCase):
         p=self.preview(self.transform()); args=self.args()
         self.stage.DefinePrim('/World/External')
         with self.assertRaisesRegex(ValueError,'revision_conflict'): self.service.apply({**args,'previewId':p['previewId']})
+    def test_animation_seconds_survive_cadence_changes_and_export(self):
+        animation={'op':'animate_transform','primPath':'/World/Cube','keys':[{'timeSeconds':0,**TRS},{'timeSeconds':2,**TRS,'translation':[6,0,0]}]}
+        self.apply([animation])
+        self.apply([{'op':'playback_range','startSeconds':0,'endSeconds':2,'framesPerSecond':60}])
+        attr=self.stage.GetPrimAtPath('/World/Cube').GetAttribute('xformOp:translate:omnistream')
+        self.assertEqual(attr.GetTimeSamples(),[0,120])
+        self.assertEqual(list(attr.Get(Usd.TimeCode(60))),[3,0,0])
+        self.apply([animation])
+        self.assertEqual(attr.GetTimeSamples(),[0,120])
+        self.assertEqual(list(attr.Get(Usd.TimeCode(60))),[3,0,0])
+        self.service.export({**self.args(),'relativePath':'animation.usda','confirm':True})
+        exported=Usd.Stage.Open(str(self.root/'animation.usda'))
+        exported_attr=exported.GetPrimAtPath('/World/Cube').GetAttribute('xformOp:translate:omnistream')
+        rate=exported.GetTimeCodesPerSecond()
+        self.assertEqual(exported_attr.GetTimeSamples(),[0,2*rate])
+        self.assertEqual(list(exported_attr.Get(Usd.TimeCode(rate))),[3,0,0])
+        self.assertEqual(exported.GetEndTimeCode()/rate,2)
+        self.assertEqual((self.root/'scene.usda').read_bytes(),self.source)
+    def test_animation_before_playback_range_keeps_seconds(self):
+        self.apply([{'op':'animate_transform','primPath':'/World/Cube','keys':[{'timeSeconds':0,**TRS},{'timeSeconds':2,**TRS,'translation':[6,0,0]}]},
+                    {'op':'playback_range','startSeconds':0,'endSeconds':2,'framesPerSecond':30}])
+        attr=self.stage.GetPrimAtPath('/World/Cube').GetAttribute('xformOp:translate:omnistream')
+        self.assertEqual(attr.GetTimeSamples(),[0,60])
+        self.assertEqual(list(attr.Get(Usd.TimeCode(30))),[3,0,0])
     def test_export_new_file_only(self):
         self.apply(self.transform())
         self.service.export({**self.args(),'relativePath':'patch.usda','confirm':True})

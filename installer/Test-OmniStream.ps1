@@ -44,7 +44,7 @@ function Save-Report([bool]$Ok, [string]$Detail = "") {
     codexHostVerified = $false
     productionReady = $false
     detail = $Detail
-    checks = @($checks)
+    checks = $checks.ToArray()
   }
   [IO.File]::WriteAllText($ReportFile, ($report | ConvertTo-Json -Depth 6), (New-Object Text.UTF8Encoding($false)))
 }

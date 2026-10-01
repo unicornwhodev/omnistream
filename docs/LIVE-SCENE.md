@@ -34,7 +34,7 @@ Timeline and camera controls, runtime supervision, and bounded log reads are als
 
 `transform`: position, local XYZ rotation in degrees, and scale. This operation replaces the local transform-op order in the correction layer. It is not a small delta added to an arbitrary stack: inspect the matrix and verify the target before confirming.
 
-`animate_transform`: 2–120 complete keys, with strictly increasing time in seconds and translation/rotation/scale. Seconds are converted to USD time codes using the stage rate. This RC does not support quaternion interpolation, Bézier curves, skeletal animation, or retargeting. An animated body must be kinematic, not dynamic.
+`animate_transform`: 2–120 complete keys, with strictly increasing time in seconds and translation/rotation/scale. OmniStream pins the override layer's time-code rate and authors keys in that layer's clock. USD composition then preserves their time in seconds when the session cadence changes. Export retains that clock; `framesPerSecond` describes playback cadence and can differ from `timeCodesPerSecond`. This RC does not support quaternion interpolation, Bézier curves, skeletal animation, or retargeting. An animated body must be kinematic, not dynamic.
 
 `rigid_body`: mass, kinematic/dynamic state, and optional collider. `collider`: enable/disable collision on geometry. Meshes use a convex-hull approximation, not an exact concave mesh reconstruction. Nested bodies and instances are rejected.
 

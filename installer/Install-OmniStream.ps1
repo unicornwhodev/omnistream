@@ -128,12 +128,12 @@ function Get-VersionTuple([string]$Text) {
   return [Version]("{0}.{1}.{2}" -f $match.Groups[1].Value, $match.Groups[2].Value, $match.Groups[3].Value)
 }
 
-function Test-Tool([string]$Name, [string[]]$Args, [Version]$Minimum) {
+function Test-Tool([string]$Name, [string[]]$CommandArguments, [Version]$Minimum) {
   Refresh-ProcessPath
   $cmd = Get-Command $Name -ErrorAction SilentlyContinue
   if (-not $cmd) { return $false }
   try {
-    $raw = (& $Name @Args 2>&1 | Out-String).Trim()
+    $raw = (& $Name @CommandArguments 2>&1 | Out-String).Trim()
     if (-not $Minimum) { return $true }
     $version = Get-VersionTuple $raw
     return ($version -and $version -ge $Minimum)

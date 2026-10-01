@@ -203,6 +203,10 @@ class SceneService:
         return any(o["op"] in ("physics_scene", "rigid_body", "collider", "attribute") for o in ops)
 
     def _author(self, stage, layer, ops):
+        # Usd.EditContext(stage, layer) authors in the layer's local time domain.
+        # Pin that clock: USD then preserves seconds when session cadence changes.
+        if not layer.HasTimeCodesPerSecond():
+            layer.timeCodesPerSecond = stage.GetTimeCodesPerSecond()
         with Usd.EditContext(stage, layer):
             for op in ops:
                 kind = op["op"]
@@ -248,7 +252,7 @@ class SceneService:
                     xform.SetXformOpOrder([UsdGeom.XformOp(a) for a in attrs], reset)
                     frames = op["keys"] if kind == "animate_transform" else [op]
                     for frame in frames:
-                        tc = Usd.TimeCode(frame["timeSeconds"] * stage.GetTimeCodesPerSecond()) if kind == "animate_transform" else Usd.TimeCode.Default()
+                        tc = Usd.TimeCode(frame["timeSeconds"] * layer.timeCodesPerSecond) if kind == "animate_transform" else Usd.TimeCode.Default()
                         attrs[0].Set(Gf.Vec3d(*frame["translation"]), tc)
                         attrs[1].Set(Gf.Vec3f(*frame["rotation"]), tc)
                         attrs[2].Set(Gf.Vec3f(*frame["scale"]), tc)
@@ -451,9 +455,9 @@ class SceneService:
         export_layer.TransferContent(self._layer)
         config = export_layer.customLayerData.get("omnistreamPlayback")
         if config:
-            export_layer.startTimeCode = config["startSeconds"] * config["framesPerSecond"]
-            export_layer.endTimeCode = config["endSeconds"] * config["framesPerSecond"]
-            export_layer.timeCodesPerSecond = config["framesPerSecond"]
+            # Keep the clock used by the samples; changing it would retime them.
+            export_layer.startTimeCode = config["startSeconds"] * export_layer.timeCodesPerSecond
+            export_layer.endTimeCode = config["endSeconds"] * export_layer.timeCodesPerSecond
             export_layer.framesPerSecond = config["framesPerSecond"]
         data = export_layer.ExportToString().encode("utf8")
         # O_EXCL also rejects existing symlinks. Do not ever overwrite source USD.

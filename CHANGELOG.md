@@ -2,6 +2,14 @@
 
 ## 1.0.0-rc3 — Public studio and truthful runtime states
 
+- Windows qualification fixes: preserve prerequisite-probe arguments, launch npm diagnostics through `cmd.exe`, serialize validation reports on Windows PowerShell, initialize the correct module lookup from CMD, and accept a locally built panel during MCP tests.
+- Restore optional platform dependencies in the lockfile and update the transitive Nano ID dependency to 3.3.19.
+- Stage the Python bridge through the Kit extension build and add native tests for disabled startup, loopback rejection, and camera persistence.
+- Keep animation key times in seconds through session cadence changes and exported override layers.
+- Author persisted camera matrix opinions without adding a duplicate composed transform op; reacquire the camera after Kit updates.
+- Guard uninstall identity and protected paths, and preserve unrelated user environment configuration.
+- Enforce matching package/plugin/web/bridge/README versions in release verification; preserve checkout source bytes through Git attributes.
+- Record actual Windows/OpenUSD/Kit/PhysX and FireViewer Die–Pontaix qualification separately from the remaining Codex video/input/dialog gates.
 - Full graphite/green workspace redesign: navigation rail, dominant viewport, persistent transport and task inspector; six real runtime surfaces and responsive layout.
 - Removed unused generic favicon/social icons from the web scaffold.
 - No installed example USD, canned animation keys, fake loaded path, default-as-measurement telemetry or synthetic video. Test fixtures remain isolated.
@@ -11,7 +19,7 @@
 - Preview/export/discard safety, lost-edit confirmations, render error boundary and decoded-frame-only video status.
 - Release audit now inspects actual source and rejects hidden binary payloads/symlinks. Windows ZIP includes hidden metadata; strict manifest check detects extras.
 - Seven release checks plus twelve public UI/contract checks; explicit source-vs-bundle test modes; TypeScript pinned directly.
-- Actual-source browser checks without host and through a real native MCP subprocess, without fake runtime/scene/WebRTC responses. Windows/RTX/Kit, full Vite build and actual Codex video remain unverified target gates.
+- Initial browser checks used actual source without a host and through a native MCP subprocess, without fake runtime/scene/WebRTC responses. The dated qualification report records the subsequent Windows/OpenUSD/Kit/PhysX results; actual Codex video/input/dialog checks remain outstanding.
 
 
 

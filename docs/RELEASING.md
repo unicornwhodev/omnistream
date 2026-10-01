@@ -6,7 +6,7 @@ The current version is `1.0.0-rc3`. It must remain consistent across `package.js
 
 Git tags use the form `v<version>`, for example `v1.0.0-rc3`. A tag must point to the commit reviewed and qualified for that version. The [release checklist](RELEASE-CHECKLIST.md) defines the checks required before a candidate tag or promotion to `1.0.0`.
 
-Status as of September 29, 2026: the repository has no GitHub tag, GitHub Release, or package published to a registry. A candidate archive can be built locally; this document does not present that local artifact as a public download.
+Status checked on October 1, 2026: the repository has no GitHub tag or GitHub Release. The npm package remains unpublished (`private: true`). Candidate archives are built and verified locally; this document does not present those local artifacts as public downloads.
 
 ## Downloadable artifact
 
@@ -25,6 +25,8 @@ npm run verify:release -- --strict
 ```
 
 SHA-256 and the manifest attest that files match the supplied values; they are neither a digital signature nor a provenance certification.
+
+Git attributes keep source text in LF form on Windows, so checkout conversion does not invalidate source-file hashes. Regenerate the manifest after changing any distributed source or documentation; the manifest does not hash itself.
 
 ## Registry packages and licence
 
