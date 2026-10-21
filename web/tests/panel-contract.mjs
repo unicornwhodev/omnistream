@@ -47,7 +47,7 @@ assert.match(css, /\.health-grid/, "La supervision doit avoir une grille de sant
 assert.match(css, /\.transport-main/, "Le contrôle doit avoir un transport de simulation dédié.");
 
 assert.match(source, /toolResponseMetadata/, "Le panneau doit prioriser les métadonnées canoniques du widget.");
-assert.match(source, /metadataFromEnvelope/, "Le panneau doit accepter les enveloppes host de métadonnées.");
+assert.match(source, /privateToolMetadata/, "Le panneau doit accepter les enveloppes privées MCP Apps de métadonnées.");
 assert.match(source, /installViewportFocusGuard/, "Le focus du viewport doit être restauré après le SDK.");
 assert.match(source, /attributeFilter: \["tabindex", "style"\]/, "Un MutationObserver doit réparer les mutations SDK du viewport.");
 assert.match(source, /viewportRoot\.addEventListener\(\s*"keydown",\s*allowStandardTab,\s*\{\s*capture: true,?\s*\},?\s*\)/, "Le Tab doit être gardé au niveau capture du viewport uniquement.");
@@ -59,7 +59,7 @@ assert.match(source, /mode: "orbit" \| "pan"; horizontal: number; vertical: numb
 assert.doesNotMatch(source, /navigateCamera\("orbit"/, "Les boutons ne doivent plus appeler le contrat caméra historique.");
 assert.match(source, /toolResponseMetadata/, "Le bearer doit lire les métadonnées widget canoniques.");
 assert.match(source, /const response = await callHostTool\(TOOL_NAMES\.attachStream, \{\}\);/, "Le panneau doit demander un bearer privé pour le runtime Kit déjà géré.");
-assert.match(attachSource, /const meta = privateWidgetMetadata\(\);[\s\S]*?meta\["omnistream\/streamAccessToken"\]/, "Le bearer de reattach doit venir uniquement des métadonnées privées canoniques.");
+assert.match(attachSource, /const meta = privateWidgetMetadata\(response\);[\s\S]*?meta\["omnistream\/streamAccessToken"\]/, "Le bearer de reattach doit venir des métadonnées privées de sa réponse MCP, avec compatibilité du host historique.");
 assert.doesNotMatch(attachSource, /responseMeta\(response\)/, "Le reattach ne doit jamais accepter le bearer depuis l'enveloppe d'outil publique.");
 assert.match(source, /function isManagedActiveRuntime\(runtime: RuntimeStatus\)[\s\S]*?processOwnership === "owned"[\s\S]*?streamListening === true[\s\S]*?controlBridgeConnected === true/, "Le reattach doit rester borné à une session Kit gérée, vivante et complètement prête.");
 assert.match(source, /const initialFlowEpoch = sessionFlowEpoch\.current;[\s\S]*?const current = await refreshRuntime\(false\);[\s\S]*?await attachExistingRuntime\(current, initialFlowEpoch\);/, "Le reattach doit suivre le premier statut lu au montage.");

@@ -14,6 +14,7 @@ const sessionToken = randomBytes(32).toString("hex");
 
 const mcp = spawn(process.execPath, ["./mcp/server.mjs"], {
   cwd: pluginRoot,
+  windowsHide: true,
   stdio: ["pipe", "pipe", "pipe"]
 });
 
@@ -147,7 +148,8 @@ const httpServer = http.createServer(async (request, response) => {
         sendJson(response, 400, { error: "invalid_tool_request" });
         return;
       }
-      const result = await mcpRequest("tools/call", { name: body.name, arguments: body.args });
+      const timeoutMs = body.name === "launch_omniverse_simulation" ? 180_000 : 60_000;
+      const result = await mcpRequest("tools/call", { name: body.name, arguments: body.args }, timeoutMs);
       sendJson(response, 200, result);
     } catch {
       sendJson(response, 502, { error: "local_tool_unavailable" });

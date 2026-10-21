@@ -3,6 +3,20 @@ export function record(value) {
     ? value
     : null;
 }
+export function privateToolMetadata(response, canonicalMetadata) {
+  const metadata = (value, direct = false) => {
+    const root = record(value);
+    if (!root) return {};
+    for (const envelope of [root, record(root.result), record(root.mcp_tool_result), record(root.call_tool_result), record(root.tool_result)]) {
+      const hidden = record(envelope?._meta) ?? record(envelope?.metadata);
+      if (hidden) return hidden;
+    }
+    return direct ? root : {};
+  };
+  // UI tool results include their private _meta envelope in MCP Apps. A
+  // legacy host's global metadata can lag behind the current tool call.
+  return { ...metadata(canonicalMetadata, true), ...metadata(response) };
+}
 export function parseToolResult(response) {
   const outer = record(response);
   const owner = record(outer?.result) ?? outer;

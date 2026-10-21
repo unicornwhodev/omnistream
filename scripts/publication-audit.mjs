@@ -6,7 +6,9 @@ const pluginRoot = resolve(import.meta.dirname, "..");
 const gitSafeDirectory = pluginRoot.replaceAll("\\", "/");
 const forbiddenNames = new Set(["node_modules", "_build", "extscache", "__pycache__", "packman", "deps", ".pytest_cache"]);
 const forbiddenDirectories = new Set([".playwright-cli", "mcp/web-dist", "web/dist", "web/node_modules", "release"]);
-const personalPublicationIdentity = ["charli", "dev420"].join("-");
+// Supply private names/addresses locally, never hard-code an operator identity.
+const privateMarkers = (process.env.OMNISTREAM_AUDIT_PRIVATE_MARKERS || "")
+  .split(";").map(value => value.trim().toLowerCase()).filter(Boolean);
 const copiedNvidiaSourceHeader = new RegExp([
   "SPDX-FileCopyrightText:",
   "NVIDIA CORPORATION"
@@ -15,7 +17,6 @@ const forbiddenPatterns = [
   ["Windows user-profile path", /[A-Za-z]:[\\/]+Users[\\/]+/i],
   ["OneDrive workspace marker", /OneDrive[\\/]/i],
   ["machine-specific Kit installation path", /D:[\\/]+Programs/i],
-  ["personal publication identity", new RegExp(personalPublicationIdentity, "i")],
   ["GitHub personal access token", /\bghp_[A-Za-z0-9]{30,}\b/],
   ["GitHub fine-grained token", /\bgithub_pat_[A-Za-z0-9_]{20,}\b/],
   ["AWS access key", /\bAKIA[0-9A-Z]{16}\b/],
@@ -91,6 +92,9 @@ for (const localPath of files) {
     content = readFileSync(full, "utf8");
   }
   if (content.includes("\0")) { failures.push(`${localPath}: binary data hidden in a source file`); continue; }
+  if (privateMarkers.some(marker => content.toLowerCase().includes(marker))) {
+    failures.push(`${localPath}: private operator marker (value omitted)`);
+  }
   for (const [label, pattern] of forbiddenPatterns) {
     pattern.lastIndex = 0;
     if (pattern.test(content)) failures.push(`${localPath}: ${label}`);

@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.0.0-rc4 — Validated launch snapshots
+
+- Requalify the current candidate locally on October 21: complete automatic Windows/Kit checks, OpenUSD, observed PhysX motion and actual decoded Chrome video/native input. Keep the Codex panel-opening blocker explicit; add sanitized evidence and a reproducible setup/usage guide.
+- Accept current signaling/TLS/remote configuration keys in strict doctor while validating their structure without echoing private values; preserve optional transport and remote profiles during repair.
+- Keep an already active decoded stream when Attach is requested again, avoiding a second SDK peer and a misleading negotiation failure.
+- Pin Vite 6.4.5; the recorded complete npm audit reports zero vulnerabilities.
+- Update only the transitive source-map-js dependency to 1.2.2.
+- Require validation and a matching preflight after every draft edit; display one complete launch snapshot and invalidate previous success messages.
+- Ignore outdated configuration/preflight/poll responses and admit only one concurrent launch.
+- Add opaque configuration identities and optional expectedConfigurationId to launch; reject a changed configuration before Kit side effects while retaining legacy empty arguments.
+- Snapshot preflight inputs before asynchronous runtime inspection.
+- Add behaviour tests using the existing Node runner and TypeScript compiler; retain the six-view interface.
+- Track source/native evidence and actual Codex video/input/dialog acceptance separately in the RC4 qualification report.
+- Read current private MCP Apps metadata during stream attachment, allow explicit attachment retries, and diagnose bounded signaling/CSP failures without reporting them as received video.
+- Document a real FireViewer Die–Pontaix map qualification case with isolated source copies and dedicated cameras; record the actual Codex CSP blocker separately from successful Kit controls.
+- Add an optional owned localhost TLS signaling relay for Codex hosts that require WSS. Require an already trusted, valid non-CA server certificate; never install trust or bypass certificate validation. Preserve Kit, NVIDIA SDK, bearer authentication and media ports.
+- Preserve the complete controller configuration when reopening: late runtime-default replies cannot replace its workspace or Kit root, and hydration grants no launch readiness.
+- Add an opt-in local MCP signaling transport for embedded hosts: bounded app-only exchanges negotiate the unchanged NVIDIA client's native WebRTC video/input with the owned loopback Kit session. Keep SDP/ICE in private app metadata, preserve bearer authentication, and close stale channels on session changes.
+- Match asynchronous WebSocket close semantics so the NVIDIA client can release its signaling socket without interpreting its own close as a remote disconnect.
+- Attach operator-allowlisted existing remote Kit streams with separate viewer ownership, private MCP signaling/ICE, native video/input, and local mutation guards. Support an explicitly verified private Tailscale peer as well as authenticated WSS with direct or server-configured TURN media; disconnect never stops the external runtime or GPU.
+
 ## 1.0.0-rc3 — Public studio and truthful runtime states
 
 - Windows qualification fixes: preserve prerequisite-probe arguments, launch npm diagnostics through `cmd.exe`, serialize validation reports on Windows PowerShell, initialize the correct module lookup from CMD, and accept a locally built panel during MCP tests.

@@ -1,6 +1,6 @@
 {
   "name": "omnistream-for-codex",
-  "version": "1.0.0-rc3",
+  "version": "1.0.0-rc4",
   "description": "A source-only Codex simulation control studio for a windowless local NVIDIA Omniverse Kit runtime over WebRTC.",
   "author": {
     "name": "OmniStream contributors"

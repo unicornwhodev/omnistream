@@ -463,6 +463,14 @@ function Save-Configuration {
     mediaPort = 47998
     runtimeChannel = $RuntimeChannel
   }
+  # Preserve operator-configured transport/profiles during an upgrade or repair.
+  # Credentials remain environment references and are never copied from env.
+  foreach ($key in @('panelSignalingTransport', 'signalingTls', 'remoteSessions')) {
+    if ($null -ne $ExistingConfig) {
+      $property = $ExistingConfig.PSObject.Properties[$key]
+      if ($null -ne $property -and $null -ne $property.Value) { $config[$key] = $property.Value }
+    }
+  }
   [IO.File]::WriteAllText($ConfigFile, ($config | ConvertTo-Json -Depth 5), (New-Object Text.UTF8Encoding($false)))
   # Public install never seeds the user's workspace. Test assets stay under tests/fixtures.
   [Environment]::SetEnvironmentVariable("OMNISTREAM_HOME", $OmniStreamHome, "User")

@@ -126,7 +126,13 @@ async function readOnlyBridgeTool(id, name, args) {
   let attempt = 0;
   while (Date.now() < deadline) {
     try {
-      return await tool(attempt === 0 ? id : 500 + id * 10 + attempt, name, args);
+      const response = await tool(attempt === 0 ? id : 500 + id * 10 + attempt, name, args);
+      // Supervision reports failed reads as data so its other health fields
+      // remain useful. Apply the same bounded read-only retry to that failure.
+      if (name === "supervise_omniverse_simulation" && response.structuredContent?.simulationError) {
+        throw new Error(String(response.structuredContent.simulationError));
+      }
+      return response;
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       if (!/did not complete the control request in time/i.test(message)) throw error;
@@ -228,7 +234,7 @@ try {
   assert.equal(supervised.structuredContent.health.stream, "ready");
   assert.equal(supervised.structuredContent.health.bridge, "ready");
   assert.equal(supervised.structuredContent.run.name, "OmniStream runtime fixture");
-  assert.ok(typeof supervised.structuredContent.simulation.state === "string", "Simulation supervision did not include the timeline state.");
+  assert.ok(typeof supervised.structuredContent.simulation?.state === "string", "Simulation supervision did not include the timeline state.");
 
   const listed = await readOnlyBridgeTool(6, "list_omniverse_cameras", {});
   assertBridgeResult(listed.structuredContent, "camera list");

@@ -1,8 +1,12 @@
-# OmniStream for Codex — 1.0.0-rc3
+# OmniStream for Codex — 1.0.0-rc4
+
+Existing remote Kit sessions can also be attached through an explicit private-network or WSS profile. See [Remote sessions](docs/REMOTE-SESSIONS.md); remote video/input does not expose local USD controls or provision a cloud GPU.
 
 A local studio for controlling **a real NVIDIA Omniverse Kit scene** from Codex: configure a session, launch the runtime without a native window, inspect and edit USD, control animation and rigid bodies, observe telemetry, and diagnose errors. The browser receives the WebRTC render; it does not replace it with a local 3D scene.
 
-**Status: release candidate, not a certified stable release.** Windows source/build checks, 34 actual OpenUSD tests, installed Kit/control tests, PhysX displacement, and the FireViewer Die–Pontaix map workflow passed on the recorded Existing runtime. Actual Codex video, viewport input, and dialogs remain acceptance gates. See the [October 1 qualification report](docs/QUALIFICATION-2026-10-01.md) for the exact target and limitations.
+**Status: locally qualified release candidate; Codex host acceptance remains blocked.** The [October 21 qualification](docs/QUALIFICATION-LOCAL-2026-10-21.md) records the full automatic Windows/Kit gate, 34 actual OpenUSD tests, PhysX displacement, and decoded 1280 × 720 RTX video with native pointer/keyboard interaction in Chrome through the local harness. The actual Codex panel did not open in this run; its video/input/dialog gate remains unverified. These results apply to the recorded Existing runtime and do not certify a stable release or a fresh installation.
+
+[Local setup, usage and current limits](docs/LOCAL-SETUP.md) · [Captured evidence](docs/evidence/local-2026-10-21/receipt.json)
 
 ## Install
 
@@ -76,7 +80,7 @@ From a freshly extracted archive, run `npm run verify:release -- --strict` and t
 
 ## Version, downloads, and licence
 
-The source version is `1.0.0-rc3`, targeting Windows 10/11 x64 with an NVIDIA RTX GPU. This repository is public, but the software remains `UNLICENSED`: no open-source licence has been selected. The npm package is not published (`private: true`). As checked on October 1, 2026, no tag or release artifact has been published on GitHub. The [Releases page](https://github.com/unicornwhodev/omnistream/releases) will list downloads when a candidate is published.
+The source version is `1.0.0-rc4`, targeting Windows 10/11 x64 with an NVIDIA RTX GPU. This repository is public, but the software remains `UNLICENSED`: no open-source licence has been selected. The npm package is not published (`private: true`). As checked on October 1, 2026, no tag or release artifact has been published on GitHub. The [Releases page](https://github.com/unicornwhodev/omnistream/releases) will list downloads when a candidate is published.
 
 Build the source-only Windows archive with:
 

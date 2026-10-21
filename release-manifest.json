@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
-  "version": "1.0.0-rc3",
-  "generatedAt": "2026-10-01T10:53:20.0489979Z",
+  "version": "1.0.0-rc4",
+  "generatedAt": "2026-10-21T11:40:55.052Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
       "size": 1242,
-      "sha256": "6ebbb5ad76f7c6351e96792fc0105b2f46ec79c89703540a8c789e38f6ada9eb"
+      "sha256": "cffbbe1fec0c3e0d76d66af61ce1bd866eef6f75417ef6aa6f384c6af46d38ff"
     },
     {
       "path": ".gitattributes",
@@ -26,18 +26,33 @@
     },
     {
       "path": "CHANGELOG.md",
-      "size": 5974,
-      "sha256": "039165dea9e157bbd19207c3cfe9c6dfe465639ba80a353ea7b4991dda256565"
+      "size": 9151,
+      "sha256": "b9b64a31c740edf5c4d7a29d7fd59775cfdfe14f345b54a0d7bb83393608fb9e"
     },
     {
-      "path": "config/omnistream.schema.json",
-      "size": 1014,
-      "sha256": "3f7020955b15b749416aa0c9d70769651993bce01ec77cd9008d314e0fc7f257"
+      "path": "QA-REPORT.md",
+      "size": 7522,
+      "sha256": "093c29732133d8830202e6d38f429036ab90c59800afb1234a2a14ec5166a1df"
+    },
+    {
+      "path": "README.md",
+      "size": 7870,
+      "sha256": "f7272d2ded73b2d0d5f70b9ef9bf9428f16dd71cc61776f2a9eeb55e8aa8f29c"
+    },
+    {
+      "path": "THIRD_PARTY.md",
+      "size": 1112,
+      "sha256": "860eae60b167400f3b2003c2f35a75adf8fcb498087e022f9cae3818fb650102"
     },
     {
       "path": "config/README.md",
       "size": 405,
       "sha256": "b100dd5dc2a9ce27f1378f114e89b138611391cb8b54dca509ee76884ac2e88a"
+    },
+    {
+      "path": "config/omnistream.schema.json",
+      "size": 3166,
+      "sha256": "6ca240d9a61c836ed0f10418133dca9e618d3cc423e83944fd9b74e4adcabb8b"
     },
     {
       "path": "docs/ARCHITECTURE.md",
@@ -46,8 +61,8 @@
     },
     {
       "path": "docs/CONFIGURATION.md",
-      "size": 3022,
-      "sha256": "8baa4da6d38b1d41266d62769e3380929c7669022875f169ead947e1be6fcf55"
+      "size": 5687,
+      "sha256": "ca76e1ada08fd3c38ad7ec52c5e3cb6852667111c893b0cbb701f9290fbae86d"
     },
     {
       "path": "docs/INSTALLATION.md",
@@ -60,19 +75,24 @@
       "sha256": "82e07e2a2bdf69d285e6438b21f3ff0d2994ad21f2bd5567c4f8f50941e59ceb"
     },
     {
+      "path": "docs/LOCAL-SETUP.md",
+      "size": 7190,
+      "sha256": "07f3da7fbf2ff963c010e5b454177bb469824a8c4996661f0da58a748ce372ca"
+    },
+    {
       "path": "docs/MCP-REFERENCE.md",
-      "size": 7515,
-      "sha256": "8b3603a827cd0892a2e7a47fca9de2478721cbde9e75cd78ac5ebd7b3cb8d1d3"
+      "size": 9814,
+      "sha256": "38aced06faa3c1a94938384601af291980dcaad93ff6823693b61988c034ac37"
     },
     {
       "path": "docs/OPERATIONS.md",
-      "size": 7966,
-      "sha256": "8b81a1640fabb58cc0a914727b95425c58b7937adcfa6412c1c58c1b31c2f17f"
+      "size": 8576,
+      "sha256": "8368829675048f9124633fb0983d4f64ac957e36f7d1fa9dc72277afff04bec1"
     },
     {
       "path": "docs/PUBLIC-DEPLOYMENT.md",
       "size": 4192,
-      "sha256": "9d65e8d68b2f869c9452b52eb6ec6af28dd8223724007421a4b7d13124054bd9"
+      "sha256": "a362f0b225ca32e36c7dfd21e007a741ec7f29bb224f66bfbfc50dfb1e8f7009"
     },
     {
       "path": "docs/PUBLICATION.md",
@@ -85,14 +105,29 @@
       "sha256": "f3f1bcc2830d66b176895135c8eccaae02c292cf274e2bb43c6924b0789292b3"
     },
     {
+      "path": "docs/QUALIFICATION-2026-10-11-RC4.md",
+      "size": 17243,
+      "sha256": "59e0a37c2e6105a41cf063ac617348efc838a7e072d50c107379f19e172baf74"
+    },
+    {
+      "path": "docs/QUALIFICATION-FIREVIEWER-RC4.md",
+      "size": 11070,
+      "sha256": "329005dbe64a11950154fdd7d51021ee8a882d5ca7bb5b28506972cc2ff7f132"
+    },
+    {
+      "path": "docs/QUALIFICATION-LOCAL-2026-10-21.md",
+      "size": 9976,
+      "sha256": "5da6c272e9508848c76b24db89a8142dc51b8f691689cc15b2683e5e775b85cc"
+    },
+    {
       "path": "docs/QUICKSTART.md",
       "size": 3833,
       "sha256": "0a7f1781d8d84fb20f6b6aab5840a2ca8833edf1990e20a7418996e740ab6921"
     },
     {
       "path": "docs/README.md",
-      "size": 2101,
-      "sha256": "67baad2e85ce937270b2893f634f662031185b23b9390877792f019687746d17"
+      "size": 2777,
+      "sha256": "ef667b1c768b2f257a8595f0e530de0c84c69323f80a6549d00198f185f5486e"
     },
     {
       "path": "docs/RELEASE-CHECKLIST.md",
@@ -102,7 +137,12 @@
     {
       "path": "docs/RELEASING.md",
       "size": 2664,
-      "sha256": "8f45a957435fb5587d97809909b098b14124609ed5172dd6dedd3b2a620aa0c2"
+      "sha256": "637070341d012df25643c02e26e89974c60171904ff77518e421ce5dd62b27ed"
+    },
+    {
+      "path": "docs/REMOTE-SESSIONS.md",
+      "size": 3865,
+      "sha256": "a4d5f5d4d552bb9e9577bc4089f438e55fde61d3b8e1d8f3f9321e2219d79bca"
     },
     {
       "path": "docs/SECURITY.md",
@@ -116,8 +156,18 @@
     },
     {
       "path": "docs/VALIDATION.md",
-      "size": 6394,
-      "sha256": "597be0089ef992b1933abb1565f53ee781a11aae569553c14780beaae8524262"
+      "size": 6742,
+      "sha256": "b3d0d459d35c51d36bab2436ffaeb6e7b9c5a797936505af5b78d4893c970858"
+    },
+    {
+      "path": "docs/evidence/local-2026-10-21/receipt.json",
+      "size": 8114,
+      "sha256": "8b07615e67dad077078ab7477296f2afe6fe6006be6cb702678eed210729df3a"
+    },
+    {
+      "path": "docs/evidence/local-2026-10-21/side-camera.jpg",
+      "size": 84345,
+      "sha256": "3d482381aa77be70475a5b07d521c7b7afc9e6cd0c73f99b7fc6a69238909c3d"
     },
     {
       "path": "installer/Build-Release.ps1",
@@ -130,19 +180,9 @@
       "sha256": "c5d99110ff54076ccfad7d565144ab52d02ba522b1144c85929689b02ee76bdf"
     },
     {
-      "path": "installer/diagnose.cmd",
-      "size": 158,
-      "sha256": "d79d442846d49fc8ccb8c7896e64220937c39b7558c76d437462a5b0d8a49222"
-    },
-    {
       "path": "installer/Install-OmniStream.ps1",
-      "size": 27191,
-      "sha256": "4a81a8a5a8bca4eda3b748628f86d39567352df25106f6c4a37a4df5a1598ba1"
-    },
-    {
-      "path": "installer/install.cmd",
-      "size": 378,
-      "sha256": "baf2d57a3844b9c0e99342bc1cf6569f3371c8eb903413ca12826c6e07627d89"
+      "size": 27639,
+      "sha256": "2b1545cfe3e336114ba6a4ea0cad30db6d3d427904426e9d9ed4fffd92a0351b"
     },
     {
       "path": "installer/README.md",
@@ -150,19 +190,9 @@
       "sha256": "cd8433aa381d9ce4cc1309cd33829095e48d15e23e9375dc8fdedf75f7b5c367"
     },
     {
-      "path": "installer/repair.cmd",
-      "size": 206,
-      "sha256": "57c02a6e0f132cce336b508535749d06abb112f86825e6ac090f382da16d2a65"
-    },
-    {
       "path": "installer/Test-OmniStream.ps1",
       "size": 3925,
       "sha256": "248204a21a4f0499d0ac30f1734fe2f0af958cb5a274bb94e3f12fe0c715732d"
-    },
-    {
-      "path": "installer/test.cmd",
-      "size": 154,
-      "sha256": "29df9840e13c1f6af3269f8d1219550e59bc46330b2d05180b422362a90bba62"
     },
     {
       "path": "installer/Uninstall-OmniStream.ps1",
@@ -170,9 +200,34 @@
       "sha256": "2a47345319a77f228f491fdd97799e7708bdbac0486f18caf9f817c703112fe4"
     },
     {
+      "path": "installer/diagnose.cmd",
+      "size": 158,
+      "sha256": "d79d442846d49fc8ccb8c7896e64220937c39b7558c76d437462a5b0d8a49222"
+    },
+    {
+      "path": "installer/install.cmd",
+      "size": 378,
+      "sha256": "baf2d57a3844b9c0e99342bc1cf6569f3371c8eb903413ca12826c6e07627d89"
+    },
+    {
+      "path": "installer/repair.cmd",
+      "size": 206,
+      "sha256": "57c02a6e0f132cce336b508535749d06abb112f86825e6ac090f382da16d2a65"
+    },
+    {
+      "path": "installer/test.cmd",
+      "size": 154,
+      "sha256": "29df9840e13c1f6af3269f8d1219550e59bc46330b2d05180b422362a90bba62"
+    },
+    {
       "path": "installer/uninstall.cmd",
       "size": 159,
       "sha256": "1bbd182f12befcf57971352c0ec78ea278b0d9bc1e3dbafcc4a1ee3df90d2209"
+    },
+    {
+      "path": "mcp/LoopbackTlsRelay.cs",
+      "size": 4250,
+      "sha256": "88bbcf75f1a6e8a4c4a64e007bdece652a55c9dd60e96b7961a1dff33b7b9a55"
     },
     {
       "path": "mcp/control-rpc.mjs",
@@ -195,19 +250,29 @@
       "sha256": "682394cf6682d96f1b737b4bd0eb8cb9b953f2507f609712d5afbdc2e12e7ec2"
     },
     {
+      "path": "mcp/local-signaling.mjs",
+      "size": 7816,
+      "sha256": "b2c283c16b5c43342b53e26f0f91d32c445c01c90751d2f0e2bdb23a85702bf2"
+    },
+    {
+      "path": "mcp/loopback-tls.mjs",
+      "size": 3587,
+      "sha256": "d2f73dd13f50ffb77f4f67d732776f6cfbb05dadb5f7a964f06202c863252222"
+    },
+    {
       "path": "mcp/operation-queue.mjs",
       "size": 3588,
       "sha256": "2e8a6438c529ab08095eaf55ee0530f40f5c4d1ad8930838bafe8e06540154b9"
     },
     {
       "path": "mcp/panel-runtime-harness.mjs",
-      "size": 8543,
-      "sha256": "6c14f910fcad6d25823bbfca9a0041e687bbc4221acfd6dc4f642b405248924d"
+      "size": 8663,
+      "sha256": "530a0dfe3fd889c40ceec421a8ecbed801740991fac167977810452f24c27154"
     },
     {
       "path": "mcp/paths.mjs",
-      "size": 2860,
-      "sha256": "ac2d084b91cd761c682c38f8a61795cacf88d1fdd3780d4e022d68fb98fc4377"
+      "size": 3000,
+      "sha256": "13c7e9109916b0b58d4482ad4db9081ce868de0c3fe6202b63905560ece5af90"
     },
     {
       "path": "mcp/prepare-stop-retry.mjs",
@@ -220,19 +285,29 @@
       "sha256": "876990b9b4fa36d31698b13735c56e232dca10c9886ec9f06608254d743bc197"
     },
     {
+      "path": "mcp/remote-sessions.mjs",
+      "size": 10224,
+      "sha256": "03d1638d8dbe3f9490427c8846c446082c1f740d8c7aa3b2869b2c0079a1f941"
+    },
+    {
       "path": "mcp/scene-tools.mjs",
       "size": 9054,
       "sha256": "56228d1c1c448f1dfdb064f7fba758d5b89ab4abd89e63fb4d03e8248cf9bee6"
     },
     {
       "path": "mcp/server.mjs",
-      "size": 90118,
-      "sha256": "593e8ba6415954655f8f8504d7a143ec6dc39e20f0ba21186f1ba3f6338edd7a"
+      "size": 101520,
+      "sha256": "d55d7b61c4efb2959984870b7dcf917b5a1a06ecb6d9de9544663ddc2d15e26e"
     },
     {
       "path": "mcp/stage-path-policy.mjs",
       "size": 5948,
       "sha256": "3454629aa916b2ee90d677764feaa5c85d7452e4df76d391556e2dabcdd30414"
+    },
+    {
+      "path": "mcp/start-loopback-tls.ps1",
+      "size": 3005,
+      "sha256": "26274d401118215afeac64d4a80d0c74d44334e2004d1e96cdf1c1b84eaccd4d"
     },
     {
       "path": "mcp/stream-stop-wait.mjs",
@@ -241,8 +316,8 @@
     },
     {
       "path": "mcp/test-runtime.mjs",
-      "size": 21336,
-      "sha256": "37aa11006f3247f7640c41cff09bf14462834f09e55a15ea40d7e8b7878dec48"
+      "size": 21714,
+      "sha256": "c9e0d70534c2895d2d7151d1fda238b631e9933a0d983a59455fed8c8d0fd827"
     },
     {
       "path": "mcp/test-scene.mjs",
@@ -251,28 +326,18 @@
     },
     {
       "path": "mcp/test-server.mjs",
-      "size": 38273,
-      "sha256": "36f222f2118e3f24da474dde4232f0618047fe4ad2a9f17dada0f4dd0858bacd"
+      "size": 43503,
+      "sha256": "74df06184b874a529ea853477d4f148fa9e418bd1a4784befb903c6f42302b79"
     },
     {
       "path": "package.json",
-      "size": 2579,
-      "sha256": "907b6582d4d5f514b94b275eb9fc27355e6aa19d1e33622e557035d390ecdbc5"
-    },
-    {
-      "path": "QA-REPORT.md",
-      "size": 7522,
-      "sha256": "093c29732133d8830202e6d38f429036ab90c59800afb1234a2a14ec5166a1df"
-    },
-    {
-      "path": "README.md",
-      "size": 7376,
-      "sha256": "f33768c3bcec5aa5c18aa0506aa94098043baa8c37982da0d6afb79612497b48"
+      "size": 2946,
+      "sha256": "817cc3e11c7af2173503db0fa650b4c9f021ccc003c3471b17139945354fc8b1"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/config/extension.toml",
       "size": 377,
-      "sha256": "e44af44b229b1bde4ff59a59befbf7575b4f07b7804c9bba7ab7f040beb3c277"
+      "sha256": "1624a354fd10c75c0ab458a63e91bf5a2e1033c7c21bb5039eb5c4f05407041a"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/__init__.py",
@@ -321,13 +386,18 @@
     },
     {
       "path": "scripts/doctor.mjs",
-      "size": 6383,
-      "sha256": "c9ae0ddaf3dbc2f1dfda9532cca554c8d862e80ccae8b3e23e242b56e6d0e298"
+      "size": 7244,
+      "sha256": "4c285c41d50c89346ff088b7fdd0f6ba5dbdbe2221daa75ca49fa9e76b1d76a5"
     },
     {
       "path": "scripts/publication-audit.mjs",
-      "size": 5282,
-      "sha256": "48155c78ba7341d9ea04383cc921e14f8c58fa0f8e16d39729329ca3f548f9de"
+      "size": 5519,
+      "sha256": "8bf1409cfeb0a9e32abd924deee5fc3c5bccc4f287669671dc409bb30a0ec9c7"
+    },
+    {
+      "path": "scripts/test-panel-state.mjs",
+      "size": 996,
+      "sha256": "7b9fe616770648c20e5ae1eaf249b26607176823473556e035a0876bf05be6ea"
     },
     {
       "path": "scripts/test-web.mjs",
@@ -341,8 +411,13 @@
     },
     {
       "path": "skills/omnistream-for-codex/SKILL.md",
-      "size": 8034,
-      "sha256": "837048b0a1dbb1d2f620bd459065ea50beec16e0e0e2b73269719d68279840b5"
+      "size": 9079,
+      "sha256": "40fa39d62f2edbf89548614a41f00cbd0b22270a4ccdd144d5c9c4f55ec7455e"
+    },
+    {
+      "path": "tests/fixtures/local-qualification.usda",
+      "size": 2208,
+      "sha256": "2c5e0dbe1460b873b8eb515361afe256840c12dc3708dcadf9462c61ff96e756"
     },
     {
       "path": "tests/fixtures/omnistream-smoke.usda",
@@ -355,24 +430,44 @@
       "sha256": "ae8213095321757802ca63f534439531f931047845517b52836d73d8890e1e5e"
     },
     {
+      "path": "tests/test_doctor.mjs",
+      "size": 2229,
+      "sha256": "5eb3650445c3f4f04be3b7a6b70213df40d8d7738cd786e019b89887e0d73788"
+    },
+    {
+      "path": "tests/test_local_signaling.mjs",
+      "size": 4645,
+      "sha256": "ce846259ca97476b910de82bee5a135d912f25afd012bd2918c7a79529defc6a"
+    },
+    {
+      "path": "tests/test_loopback_tls.mjs",
+      "size": 2514,
+      "sha256": "1924c45b7fd8e08c0cb799dd980f933c2c2e442be8d7a53517fefd470a919397"
+    },
+    {
       "path": "tests/test_public_contract.mjs",
-      "size": 4917,
-      "sha256": "9c14092393728c3dedcb41daf4f7585fe1bccdf5dbd6faf5e5b0ddc5dc34be40"
+      "size": 5833,
+      "sha256": "b7ed6610d8af0d3394fcc17ac41cdc6bfb67f7a46614e505f3b6d062922faf32"
     },
     {
       "path": "tests/test_release.mjs",
-      "size": 7662,
-      "sha256": "3165a06e86a15df5140c42dbf9c80a435c2afb2d42c16411cc0d3e6d5b7b4c0c"
+      "size": 10217,
+      "sha256": "7df79626ddfa3f53e357758033ac3cf14817d05cc6e308060adb9600ebde8867"
+    },
+    {
+      "path": "tests/test_remote_protocol.mjs",
+      "size": 4453,
+      "sha256": "0b34e8c31fff4307e5c3a2b2086992068972373d23b55aaeb8990a082110066f"
+    },
+    {
+      "path": "tests/test_remote_sessions.mjs",
+      "size": 7868,
+      "sha256": "c916ef695863a9c7e9bdda83d6349f436d11b894129e17131daa31d8e3a4adad"
     },
     {
       "path": "tests/test_scene.py",
       "size": 16569,
       "sha256": "8ef0216aa9d1342828aff32b4d7b107ed5b53166fb26691f027572453c2dadc9"
-    },
-    {
-      "path": "THIRD_PARTY.md",
-      "size": 1112,
-      "sha256": "860eae60b167400f3b2003c2f35a75adf8fcb498087e022f9cae3818fb650102"
     },
     {
       "path": "web/.npmrc",
@@ -387,12 +482,12 @@
     {
       "path": "web/package-lock.json",
       "size": 72276,
-      "sha256": "129b36594c011a4d2651c01a074578af9d9b6dba73a043c1d910f98026950fe2"
+      "sha256": "4ba9a17a62a9ecc0a7526bf16dc98b0cee339941af2fc4d0af7ca92e354f8b6a"
     },
     {
       "path": "web/package.json",
       "size": 981,
-      "sha256": "b8d9c4046c91d8c66748ff946aeea005d77d8e693714aad8d3be1b9cfcedad12"
+      "sha256": "ce80a8dfdc2dfb9138407042ebde85a4f99d01f7d57a6838227128d150224358"
     },
     {
       "path": "web/src/Confirmation.tsx",
@@ -410,19 +505,9 @@
       "sha256": "5a2c6cce2eeeb0ee38bdad73ac3408d93aa0a7cc5603207a52f389214e874bd3"
     },
     {
-      "path": "web/src/index.css",
-      "size": 25814,
-      "sha256": "7d6c5636d6c03dc8b0cd6d52ed367a6dd2b517705bfbd60923a93127813e764e"
-    },
-    {
-      "path": "web/src/main.tsx",
-      "size": 104540,
-      "sha256": "e9e8338a3d3812cb508f1d94d65d1db236b1a67d3bd136eff0ea457a312fb389"
-    },
-    {
-      "path": "web/src/scene.css",
-      "size": 8189,
-      "sha256": "142d7b18d32b66ae0706cf1ae55f0b6fdd5debe00f5390462ff0e5c87fb2aff5"
+      "path": "web/src/RemoteSessions.tsx",
+      "size": 16522,
+      "sha256": "2cd3220fa1c8d5d11d4a9b7bc4e3c353f8165a61856150c9ec288b18ab37f163"
     },
     {
       "path": "web/src/SceneWorkbench.tsx",
@@ -430,14 +515,59 @@
       "sha256": "74b48dd994bb76d82610f992147458d557318acbd311c6ed30a9b0dd6bd67c74"
     },
     {
+      "path": "web/src/index.css",
+      "size": 26509,
+      "sha256": "3254fcb55b20b91fd82e19e64252bb7e95ea3d42f3de068f615cda9829f51f8d"
+    },
+    {
+      "path": "web/src/main.tsx",
+      "size": 108011,
+      "sha256": "2028fda5ff02f75aa010632d9468fe12f741d2b230587b518f1c6cf61845c9e9"
+    },
+    {
+      "path": "web/src/mcp-signaling.ts",
+      "size": 10821,
+      "sha256": "bfeb1ff7109261c417e9c691940f84bcdbdd9bb2099e0f48d76662655b854e3f"
+    },
+    {
+      "path": "web/src/scene.css",
+      "size": 8189,
+      "sha256": "142d7b18d32b66ae0706cf1ae55f0b6fdd5debe00f5390462ff0e5c87fb2aff5"
+    },
+    {
+      "path": "web/src/session-preparation.ts",
+      "size": 9554,
+      "sha256": "cdb55d67e5aabcf9e27df798e4b4684dc951dcb7d1253325a4a97f454c0b1b3b"
+    },
+    {
+      "path": "web/src/signaling-probe.ts",
+      "size": 1908,
+      "sha256": "daf9f924ce8b766bbb174b044286b3e17e53229524e22fdfd18d2b098abd8b89"
+    },
+    {
       "path": "web/src/tool-result.mjs",
-      "size": 1522,
-      "sha256": "1d89623272bf7c9c1f2613dc2b44acb7f17dad51277612e274eea1da93f6fc53"
+      "size": 2213,
+      "sha256": "1c6969085790bb22726a42f10c8f09704605915773691c015b9678369bf9bfb5"
+    },
+    {
+      "path": "web/tests/mcp-signaling.test.mjs",
+      "size": 6402,
+      "sha256": "c45520bc5bdeccc2dbe46c37964881b5c8e4bcc23eb87e58d471226ec7e32e43"
     },
     {
       "path": "web/tests/panel-contract.mjs",
-      "size": 12059,
-      "sha256": "e1aa6de4682afeca638018e5d86a04923c60139ad86ff1aaabc3c8aea473b10b"
+      "size": 12116,
+      "sha256": "317b010ccc83ae0e61e7c80a4498b4f434b7546ad437ef2a3ad28c6fb27b684e"
+    },
+    {
+      "path": "web/tests/session-preparation.test.mjs",
+      "size": 9304,
+      "sha256": "0d13f8889e70741ec2e61c8283ae0b4fed43c050fb5fe30f4d99748906e49468"
+    },
+    {
+      "path": "web/tests/signaling-probe.test.mjs",
+      "size": 2482,
+      "sha256": "ede69b00b0f25ddba2efce152186b37d60ee8c011a23145ecf42e015e688cadc"
     },
     {
       "path": "web/tsconfig.app.json",

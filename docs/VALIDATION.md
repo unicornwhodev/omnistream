@@ -2,6 +2,11 @@
 
 OmniStream separates **source qualification**, **installed-runtime qualification**, and **visible Codex evidence**. No single process ID, port, build, or unit test is presented as evidence for all three.
 
+The [October 21 local run](QUALIFICATION-LOCAL-2026-10-21.md) passed the complete
+automatic gate without skip switches, native OpenUSD/PhysX and actual browser
+video/input. The Codex panel opening gate remains blocked in that run. Use
+[Local setup](LOCAL-SETUP.md) for its reproducible procedure and evidence limits.
+
 ## Source gate
 
 After obtaining the `web` dependencies on Windows:
@@ -59,7 +64,7 @@ The runtime smoke command is available locally, but no self-hosted GitHub Action
 
 ## RC-to-stable promotion gate
 
-`1.0.0-rc3` must remain an RC until all of the following are true on the intended target machine:
+`1.0.0-rc4` must remain an RC until all of the following are true on the intended target machine:
 
 - `installer\test.cmd` passes with **no skip flags**;
 - a decoded RTX/WebRTC frame is visible in the Codex panel;
@@ -74,7 +79,7 @@ Only after that evidence should the version be promoted to `1.0.0`.
 
 Automated runtime tests still do not prove that a particular Codex Desktop build rendered the embedded video. Verify that:
 
-1. `ui://omnistream-for-codex/panel.html` loads after the local panel build.
+1. `ui://omnistream-for-codex/panel-rc4-mcp.html` loads after the local panel build and controller reload.
 2. Config validation does not start Kit.
 3. Launch reaches ready states for the managed process, signaling, authenticated bridge, and selected stage.
 4. Supervision updates while runtime/timeline state changes.

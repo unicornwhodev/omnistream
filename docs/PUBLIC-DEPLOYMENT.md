@@ -1,4 +1,4 @@
-# Public distribution — RC3
+# Public distribution — RC4
 
 ## Target for this release
 
@@ -31,7 +31,7 @@ The studio distinguishes session configuration, runtime, USD content, playback t
 | Windows install/resume/repair/uninstall | Scripts reviewed, not run here |
 | Public licence and any catalogue submission | Rights holder decision/action; not done |
 
-The code remains `1.0.0-rc3` and `UNLICENSED`. Do not present this archive as certified stable, open source, or a plugin already accepted into a catalogue.
+The code remains `1.0.0-rc4` and `UNLICENSED`. Do not present this archive as certified stable, open source, or a plugin already accepted into a catalogue.
 
 ## Validation record to retain
 

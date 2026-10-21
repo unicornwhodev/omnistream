@@ -21,9 +21,13 @@ Call `configure_omniverse_simulation` with a bounded workspace and an existing U
 
 Configuration is validated and retained in the MCP session. It does **not** start Kit and does not write USD.
 
+In RC4 the panel preserves a separate editable draft. Every edit invalidates its previous preflight and success notice; validate again before launching. The launch summary uses one complete snapshot, and background observations never replace user input. A controller without configuration identities is explicitly incompatible with the RC4 panel.
+
 ### 2. Launch
 
 Call `launch_omniverse_simulation` after configuration. Launch is one serialized orchestration operation:
+
+Run preflight for that validated configuration first. New callers pass its `configurationId` as `expectedConfigurationId`; the RC4 panel always does so. A changed identity is refused before Kit side effects. Legacy empty-argument launch calls remain supported.
 
 1. start the managed hidden Kit runtime when necessary;
 2. wait until the owned process, WebRTC signaling and authenticated bridge are ready;

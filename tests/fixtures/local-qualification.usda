@@ -1,0 +1,71 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    upAxis = "Y"
+    metersPerUnit = 1
+    startTimeCode = 0
+    endTimeCode = 240
+    timeCodesPerSecond = 24
+)
+
+# Explicit qualification fixture, never installed into the operator workspace.
+def Xform "World"
+{
+    def DistantLight "KeyLight"
+    {
+        float inputs:intensity = 3000
+        double3 xformOp:rotateXYZ = (-45, 25, 0)
+        uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+    }
+    def DomeLight "FillLight"
+    {
+        float inputs:intensity = 500
+        color3f inputs:color = (0.7, 0.8, 1)
+    }
+    def Camera "FrontCamera"
+    {
+        float focalLength = 30
+        float horizontalAperture = 36
+        double3 xformOp:translate = (0, 4, 12)
+        double3 xformOp:rotateXYZ = (-15, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+    }
+    def Camera "SideCamera"
+    {
+        float focalLength = 30
+        float horizontalAperture = 36
+        double3 xformOp:translate = (9, 5, 10)
+        double3 xformOp:rotateXYZ = (-20, 40, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+    }
+    def Cube "Ground"
+    {
+        double size = 1
+        color3f[] primvars:displayColor = [(0.16, 0.2, 0.25)]
+        double3 xformOp:translate = (0, -0.7, 0)
+        double3 xformOp:scale = (12, 0.2, 8)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "GreenCube"
+    {
+        double size = 1.5
+        color3f[] primvars:displayColor = [(0.3, 0.75, 0.12)]
+        double3 xformOp:translate = (-2, 0.15, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Sphere "BlueSphere"
+    {
+        double radius = 0.8
+        color3f[] primvars:displayColor = [(0.1, 0.4, 0.95)]
+        double3 xformOp:translate = (0, 0.2, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cube "OrangeCube"
+    {
+        double size = 1.2
+        color3f[] primvars:displayColor = [(1, 0.35, 0.06)]
+        double3 xformOp:translate = (2, 0, 0)
+        double3 xformOp:rotateXYZ = (0, 25, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+    }
+}

@@ -3,15 +3,26 @@ name: omnistream-for-codex
 description: Operate the current local Omniverse scene in Codex: hidden Kit/WebRTC, bounded simulation and animation authoring, live telemetry, structural diagnosis and reversible corrections.
 ---
 
-# OmniStream for Codex — RC3
+# OmniStream for Codex — RC4
 
 Use this plugin for a local Omniverse scene rendered by NVIDIA Kit/RTX and displayed inside Codex. The browser is NOT a replacement renderer. The compatible Kit process stays windowless in the background; never substitute a visible desktop window or fake stream.
 
 ## First decide whether a scene is already open
 
+For an explicitly requested existing remote session, use
+`list_omniverse_remote_sessions` and select the operator-configured profile with
+`attach_omniverse_remote_stream`. Do not launch a local Kit for that request.
+The remote viewer supports video and native viewport input only; local USD
+control tools do not act on the remote stage. Disconnect using the exact
+`attachmentId`; this never stops the external Kit or cloud resource. Never print
+private remote SDK/ICE metadata or treat attachment/signaling as decoded-video
+proof. See `docs/REMOTE-SESSIONS.md` for network requirements and recovery.
+
 Read `supervise_omniverse_simulation`. If there is an open stage in the managed runtime, use `inspect_omniverse_scene` and `attach_omniverse_stream` as needed. **Do not call launch/load again just to configure or correct an open scene.** The managed runtime is the one owned by the current MCP process, not any unrelated Omniverse application already running.
 
 Only for a new session: `open_omniverse_simulation_studio` → choose a bounded workspace and USD → `configure_omniverse_simulation` → `preflight_omniverse_simulation` → `launch_omniverse_simulation`. Configuration does not launch Kit; launch loads the selected USD. Secrets in private widget metadata are for the panel only, never print or repeat them.
+
+RC4 gives each configuration an opaque configurationId. Check that preflight returns the same configuration identity, then pass expectedConfigurationId when launching. On simulation_configuration_changed, inspect/validate/preflight again before another launch. The panel requires revalidation after every draft edit, and blocks a mixed-version controller that does not supply this identity. Legacy empty-argument tool calls remain compatible.
 
 ## Current-scene workflow
 
@@ -58,7 +69,7 @@ The bridge is authenticated loopback. USD entry paths/exports are bounded, but r
 
 ## Installation and proof
 
-Use the bundled Windows installer; NVIDIA runtime, extensions, WebRTC SDK and generated bundles are obtained on the target machine, never redistributed in the source archive. RC3 remains a candidate until target checks pass. `npm run test:runtime` covers native animation/session control. `npm run test:physics` additionally requires an observed physical displacement through USD. Neither certifies the actual Codex widget's video or input; verify those visibly.
+Use the bundled Windows installer; NVIDIA runtime, extensions, WebRTC SDK and generated bundles are obtained on the target machine, never redistributed in the source archive. RC4 remains a candidate until target checks pass. `npm run test:runtime` covers native animation/session control. `npm run test:physics` additionally requires an observed physical displacement through USD. Neither certifies the actual Codex widget's video or input; verify those visibly.
 
 See `docs/LIVE-SCENE.md` and `QA-REPORT.md` for exact scope and current evidence.
 

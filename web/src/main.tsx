@@ -13,8 +13,12 @@ import "./index.css";
 import { Icon, type IconName } from "./Icon";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { ConfirmationProvider, useConfirm } from "./Confirmation";
-import { parseToolResult, observedState } from "./tool-result.mjs";
+import { parseToolResult, observedState, privateToolMetadata } from "./tool-result.mjs";
 import { SceneWorkbench, LiveSceneStrip, useLiveScene } from "./SceneWorkbench";
+import { SessionPreparation, initialPreparation, parseConfiguration, type SimulationConfiguration } from "./session-preparation";
+import { probeSignaling } from "./signaling-probe";
+import { installMcpSignaling } from "./mcp-signaling";
+import { ConnectionStudio, useLocalConnectionLock } from "./RemoteSessions";
 
 declare global {
   interface Window {
@@ -46,6 +50,7 @@ type RuntimeStatus = {
   message?: string;
   signalingHost?: string;
   signalingPort?: number;
+  browserSignaling?: { host: string; port: number; secure: boolean; ready: boolean; transport?: "mcp" | "websocket" };
   mediaPort?: number;
   requiresBearerAuthentication?: boolean;
   networkBoundary?: string;
@@ -108,20 +113,6 @@ type SimulationState = Record<string, unknown> & {
   message?: string;
 };
 
-type SimulationConfiguration = {
-  name: string;
-  workspaceRoot: string;
-  stagePath: string;
-  kitRoot?: string;
-  initialTimeSeconds: number;
-  rateMultiplier: number;
-  loop: boolean;
-  playEveryFrame: boolean;
-  autoPlay: boolean;
-  cameraPath?: string;
-  configuredAt?: string;
-};
-
 type SupervisionSnapshot = {
   configuration?: SimulationConfiguration | null;
   run?: {
@@ -136,18 +127,6 @@ type SupervisionSnapshot = {
   simulationError?: string;
 };
 
-type PreflightCheck = {
-  id: string;
-  ok: boolean;
-  label: string;
-  detail: string;
-  severity?: string;
-};
-type PreflightSnapshot = {
-  ready: boolean;
-  checks: PreflightCheck[];
-  failed: string[];
-};
 type RuntimeLogResult = {
   available?: boolean;
   file?: string;
@@ -222,36 +201,12 @@ function toolData(response: unknown): Record<string, unknown> {
   return parseToolResult(response);
 }
 
-function metadataFromEnvelope(value: unknown): Record<string, unknown> {
-  const root = asRecord(value);
-  if (!root) return {};
-  const envelopes = [
-    root,
-    asRecord(root.result),
-    asRecord(root.mcp_tool_result),
-    asRecord(root.call_tool_result),
-    asRecord(root.tool_result),
-  ].filter((candidate): candidate is Record<string, unknown> =>
-    Boolean(candidate),
-  );
-
-  for (const envelope of envelopes) {
-    const metadata = asRecord(envelope._meta) ?? asRecord(envelope.metadata);
-    if (metadata) return metadata;
-  }
-  return root;
-}
-
 function responseMeta(response: unknown): Record<string, unknown> {
-  const fallback = metadataFromEnvelope(response);
-  const canonical = metadataFromEnvelope(window.openai?.toolResponseMetadata);
-  return { ...fallback, ...canonical };
+  return privateToolMetadata(response, window.openai?.toolResponseMetadata);
 }
 
-function privateWidgetMetadata(): Record<string, unknown> {
-  // The reattach bearer is intentionally accepted only from the host's
-  // canonical private metadata slot, never from the tool result envelope.
-  return metadataFromEnvelope(window.openai?.toolResponseMetadata);
+function privateWidgetMetadata(response: unknown): Record<string, unknown> {
+  return responseMeta(response);
 }
 
 async function callHostTool(name: string, args: Record<string, unknown>) {
@@ -279,6 +234,7 @@ function isManagedActiveRuntime(runtime: RuntimeStatus) {
     runtime.processOwnership === "owned" &&
     runtime.streamListening === true &&
     runtime.controlBridgeConnected === true
+    && (!runtime.browserSignaling?.secure || runtime.browserSignaling.ready === true)
   );
 }
 
@@ -397,6 +353,7 @@ function ToggleControl({
 }
 
 function App() {
+  const setLocalConnectionLock = useLocalConnectionLock();
   const confirm = useConfirm();
   const [hostReady, setHostReady] = useState(Boolean(window.openai?.callTool));
   const [hostError, setHostError] = useState("");
@@ -410,6 +367,8 @@ function App() {
     hostReady,
   );
   const streamer = useRef<AppStreamer | null>(null);
+  const signalingRoute = useRef<ReturnType<typeof installMcpSignaling> | null>(null);
+  const signalingRoutePort = useRef<number | null>(null);
   const streamEpoch = useRef(0);
   const connectInFlight = useRef<{
     epoch: number;
@@ -420,6 +379,7 @@ function App() {
   const pendingSdkRetirement = useRef<Promise<void> | null>(null);
   const sessionFlowEpoch = useRef(0);
   const initialAttachAttempted = useRef(false);
+  const attachInFlight = useRef(false);
   const runtimeWatchdog = useRef<number | null>(null);
   const runtimeWatchdogEpoch = useRef(0);
   const runtimeWatchdogBusy = useRef(false);
@@ -456,7 +416,11 @@ function App() {
   const [configuredSimulation, setConfiguredSimulation] =
     useState<SimulationConfiguration | null>(null);
   const [supervision, setSupervision] = useState<SupervisionSnapshot>({});
-  const [preflight, setPreflight] = useState<PreflightSnapshot | null>(null);
+  const [preparationState, setPreparationState] = useState(initialPreparation);
+  const preparationRef = useRef<SessionPreparation | null>(null);
+  if (!preparationRef.current) preparationRef.current = new SessionPreparation(setPreparationState);
+  const preparation = preparationRef.current;
+  const preflight = preparationState.preflight;
   const [runtimeLogs, setRuntimeLogs] = useState<RuntimeLogsSnapshot | null>(
     null,
   );
@@ -508,6 +472,16 @@ function App() {
     setJournal((previous) => [...previous.slice(-39), entry]);
   };
 
+  useEffect(() => {
+    const observePolicy = (event: SecurityPolicyViolationEvent) => {
+      if (event.effectiveDirective !== "connect-src" && event.effectiveDirective !== "worker-src") return;
+      // Never retain a blocked URL: it may contain a session credential.
+      report(`Connexion vidéo refusée par la politique de l’hôte (${event.effectiveDirective}, ${event.disposition}).`, "error");
+    };
+    document.addEventListener("securitypolicyviolation", observePolicy);
+    return () => document.removeEventListener("securitypolicyviolation", observePolicy);
+  }, []);
+
   const mergeSimulation = (data: Record<string, unknown>) => {
     const camera = asRecord(data.camera);
     const returnedCameraPath =
@@ -531,39 +505,14 @@ function App() {
   };
 
   const syncConfiguration = (value: unknown) => {
-    const config = asRecord(value);
-    if (
-      !config ||
-      typeof config.workspaceRoot !== "string" ||
-      typeof config.stagePath !== "string"
-    )
-      return;
-    const normalized: SimulationConfiguration = {
-      name: typeof config.name === "string" ? config.name : "Simulation",
-      workspaceRoot: config.workspaceRoot,
-      stagePath: config.stagePath,
-      kitRoot: typeof config.kitRoot === "string" ? config.kitRoot : "",
-      initialTimeSeconds:
-        typeof config.initialTimeSeconds === "number"
-          ? config.initialTimeSeconds
-          : 0,
-      rateMultiplier:
-        typeof config.rateMultiplier === "number" ? config.rateMultiplier : 1,
-      loop: config.loop === true,
-      playEveryFrame: config.playEveryFrame === true,
-      autoPlay: config.autoPlay === true,
-      cameraPath:
-        typeof config.cameraPath === "string" ? config.cameraPath : "",
-      configuredAt:
-        typeof config.configuredAt === "string"
-          ? config.configuredAt
-          : undefined,
-    };
+    const normalized = parseConfiguration(value);
+    if (!normalized) return;
+    preparation.finishHydration();
     setConfiguredSimulation(normalized);
     setSimulationName(normalized.name);
     setWorkspaceRoot(normalized.workspaceRoot);
     setStagePath(normalized.stagePath);
-    if (normalized.kitRoot) setKitRoot(normalized.kitRoot);
+    setKitRoot(normalized.kitRoot || "");
     setInitialTime(String(normalized.initialTimeSeconds));
     setRateMultiplier(String(normalized.rateMultiplier));
     setLoopEnabled(normalized.loop);
@@ -585,7 +534,19 @@ function App() {
     ...(launchCameraPath.trim() ? { cameraPath: launchCameraPath.trim() } : {}),
   });
 
-  const applySupervision = (data: Record<string, unknown>) => {
+  const editDraft = (change: () => void) => {
+    preparation.edit();
+    report("Configuration modifiée. Validez de nouveau avant de lancer.", "neutral");
+    change();
+  };
+
+  const applySupervision = (data: Record<string, unknown>, observationVersion?: number) => {
+    if (observationVersion !== undefined) {
+      const previousIssue = preparation.state.issue;
+      preparation.observe(data.configuration, observationVersion);
+      if (preparation.state.issue && preparation.state.issue !== previousIssue)
+        report(preparation.state.issue, "neutral");
+    }
     const runtimeData = asRecord(data.runtime);
     const simulationData = asRecord(data.simulation);
     if (runtimeData)
@@ -646,17 +607,17 @@ function App() {
     setLastObservedAt(Date.now());
     setHostError("");
     if (
-      !kitRoot.trim() &&
+      preparation.canHydrate() && !kitRoot.trim() &&
       typeof current.kitRoot === "string" &&
       current.kitRoot.trim()
     )
-      setKitRoot(current.kitRoot);
+      setKitRoot((previous) => previous.trim() ? previous : current.kitRoot!);
     if (
-      !workspaceRoot.trim() &&
+      preparation.canHydrate() && !workspaceRoot.trim() &&
       typeof current.defaultWorkspaceRoot === "string" &&
       current.defaultWorkspaceRoot.trim()
     ) {
-      setWorkspaceRoot(current.defaultWorkspaceRoot);
+      setWorkspaceRoot((previous) => previous.trim() ? previous : current.workspaceRoot || current.defaultWorkspaceRoot!);
     }
     return current;
   };
@@ -783,6 +744,13 @@ function App() {
   const hasPendingSdkNegotiation = () =>
     pendingSdkConnect.current !== null || pendingSdkRetirement.current !== null;
 
+  useEffect(() => {
+    const update = () => setLocalConnectionLock(Boolean(runtime.processAlive || streamer.current || pendingSdkConnect.current || pendingSdkRetirement.current));
+    update();
+    const timer = window.setInterval(update, 500);
+    return () => { window.clearInterval(timer); setLocalConnectionLock(false); };
+  }, [runtime.processAlive, setLocalConnectionLock]);
+
   const retireStreamer = (candidate: AppStreamer | null) => {
     if (!candidate) return Promise.resolve();
     if (pendingSdkRetirement.current) return pendingSdkRetirement.current;
@@ -834,6 +802,7 @@ function App() {
     setStats("");
     viewportGuardCleanup.current?.();
     viewportGuardCleanup.current = null;
+    signalingRoute.current?.closeAll();
     if (previousStreamer) void retireStreamer(previousStreamer);
   };
 
@@ -936,11 +905,16 @@ function App() {
     const attempt = (async () => {
       setConnectionTone("working");
       report("Connexion au flux RTX local…", "working");
+      const mcpSignaling = currentRuntime.browserSignaling?.transport === "mcp";
+      const tlsSignaling = !mcpSignaling && currentRuntime.browserSignaling?.secure === true;
+      if (tlsSignaling && (currentRuntime.browserSignaling?.host !== "localhost" || !currentRuntime.browserSignaling?.ready)) {
+        throw new Error("Le relais vidéo TLS localhost n’est pas prêt.");
+      }
       const config: DirectConfig = {
         videoElementId: "remote-video",
-        signalingServer: loopbackHost(currentRuntime.signalingHost),
+        signalingServer: tlsSignaling ? "localhost" : loopbackHost(currentRuntime.signalingHost),
         signalingPort:
-          typeof currentRuntime.signalingPort === "number"
+          tlsSignaling ? currentRuntime.browserSignaling!.port : typeof currentRuntime.signalingPort === "number"
             ? currentRuntime.signalingPort
             : 49100,
         mediaServer: "127.0.0.1",
@@ -952,6 +926,7 @@ function App() {
         height: 720,
         fps: 30,
         authenticate: true,
+        forceWSS: tlsSignaling,
         accessToken: streamAccessToken,
         nativeTouchEvents: false,
         maxReconnects: 5,
@@ -1051,6 +1026,29 @@ function App() {
 
       let connectTimeout: number | undefined;
       try {
+        if (mcpSignaling) {
+          const port = config.signalingPort!;
+          if (!signalingRoute.current || signalingRoutePort.current !== port) {
+            signalingRoute.current?.dispose();
+            signalingRoute.current = installMcpSignaling(window, port, async (name, args) => {
+              const response = await callHostTool(name, args);
+              toolData(response);
+              const payload = privateToolMetadata(response)["omnistream/signalingPayload"];
+              if (!payload || typeof payload !== "object" || Array.isArray(payload))
+                throw new Error("Le contrôleur n'a pas renvoyé la signalisation privée requise.");
+              return payload as Record<string, unknown>;
+            }, code => report(`Signalisation MCP locale : ${code}.`, code.startsWith("packet_") || code.startsWith("options_") ? "neutral" : "error"), new URLSearchParams(window.location.search).get("signaling-diagnostics") === "1");
+            signalingRoutePort.current = port;
+          }
+          report("Négociation WebRTC via le contrôleur MCP local…", "working");
+        } else {
+          signalingRoute.current?.dispose(); signalingRoute.current = null;
+          signalingRoutePort.current = null;
+          report("Vérification du canal WebSocket vidéo local…", "working");
+          await probeSignaling(config.signalingServer!, config.signalingPort!, streamAccessToken, 5_000, tlsSignaling);
+        }
+        if (!isCurrentStream()) return;
+        report(mcpSignaling ? "Négociation du média RTX par le canal MCP local…" : "Canal WebSocket accessible ; négociation du média RTX…", "working");
         const sdkConnection = currentStreamer.connect({
           streamSource: StreamType.DIRECT,
           streamConfig: config,
@@ -1108,15 +1106,29 @@ function App() {
   const attachExistingRuntime = async (
     current: RuntimeStatus,
     flowEpoch: number,
+    retry = false,
   ) => {
     if (
-      initialAttachAttempted.current ||
+      (!retry && initialAttachAttempted.current) ||
+      attachInFlight.current ||
       sessionFlowEpoch.current !== flowEpoch ||
       !isManagedActiveRuntime(current)
     )
       return;
 
+    // A manual attach to the already decoded, owned stream is idempotent.
+    // Starting another SDK instance here can leave the original video alive
+    // while the second peer times out and replaces its status with an error.
+    if (
+      streamer.current && connectionIsLive.current && videoFrameSeen.current &&
+      runtime.processId === current.processId
+    ) {
+      report("Flux RTX de Kit déjà actif ; aucune reconnexion nécessaire.", "success");
+      return;
+    }
+
     initialAttachAttempted.current = true;
+    attachInFlight.current = true;
     setBusyAction("attach-runtime");
     setConnectionTone("working");
     report(
@@ -1137,7 +1149,7 @@ function App() {
           "Le runtime Kit existant n'est plus prêt pour une reconnexion WebRTC sécurisée.",
         );
       }
-      const meta = privateWidgetMetadata();
+      const meta = privateWidgetMetadata(response);
       const streamAccessToken = meta["omnistream/streamAccessToken"];
       if (typeof streamAccessToken !== "string" || !streamAccessToken) {
         throw new Error(
@@ -1155,6 +1167,7 @@ function App() {
       setConnectionTone("error");
       report(errorText(error), "error");
     } finally {
+      attachInFlight.current = false;
       setBusyAction((active) => (active === "attach-runtime" ? null : active));
     }
   };
@@ -1185,7 +1198,7 @@ function App() {
       "Scène USD chargée.",
     );
     if (data && typeof data.stagePath === "string")
-      setStagePath(data.stagePath);
+      editDraft(() => setStagePath(data.stagePath as string));
   };
 
   const start = async () => {
@@ -1258,6 +1271,7 @@ function App() {
     try {
       stopRuntimeWatchdog();
       invalidateStream();
+      signalingRoute.current?.dispose(); signalingRoute.current = null;
       const current = toolData(
         await callHostTool("stop_omniverse_stream", {}),
       ) as RuntimeStatus;
@@ -1336,69 +1350,29 @@ function App() {
   };
 
   const useAssetSource = (source: AssetSource) => {
-    setWorkspaceRoot(source.path);
-    setStagePath("");
+    editDraft(() => { setWorkspaceRoot(source.path); setStagePath(""); });
     setStages([]);
     setAssets([]);
     void findStages(source.path);
   };
 
-  const preflightSimulation = async (announce = true) => {
-    if (announce) {
-      setBusyAction("preflight-simulation");
-      report("Vérification du préflight de simulation…", "working");
-    }
+  const preflightSimulation = async () => {
+    if (busy || preparation.state.operation) return null;
+    setBusyAction("preflight-simulation");
+    report("Vérification du préflight de simulation…", "working");
     try {
-      const data = toolData(
-        await callHostTool(TOOL_NAMES.preflightSimulation, {}),
+      const snapshot = await preparation.verify(async (name, args) => toolData(await callHostTool(name, args)));
+      if (snapshot) report(
+        snapshot.ready ? "Préflight validé : la simulation peut être lancée."
+          : `Préflight bloqué : ${snapshot.failed.length} contrôle(s) à corriger.`,
+        snapshot.ready ? "success" : "error",
       );
-      const checks = Array.isArray(data.checks)
-        ? data.checks.flatMap((item) => {
-            const row = asRecord(item);
-            return row &&
-              typeof row.id === "string" &&
-              typeof row.ok === "boolean" &&
-              typeof row.label === "string" &&
-              typeof row.detail === "string"
-              ? [
-                  {
-                    id: row.id,
-                    ok: row.ok,
-                    label: row.label,
-                    detail: row.detail,
-                    severity:
-                      typeof row.severity === "string"
-                        ? row.severity
-                        : undefined,
-                  },
-                ]
-              : [];
-          })
-        : [];
-      const snapshot: PreflightSnapshot = {
-        ready: data.ready === true,
-        checks,
-        failed: Array.isArray(data.failed)
-          ? data.failed.filter(
-              (item): item is string => typeof item === "string",
-            )
-          : [],
-      };
-      setPreflight(snapshot);
-      if (announce)
-        report(
-          snapshot.ready
-            ? "Préflight validé : la simulation peut être lancée."
-            : `Préflight bloqué : ${snapshot.failed.length} contrôle(s) à corriger.`,
-          snapshot.ready ? "success" : "error",
-        );
       return snapshot;
     } catch (error) {
-      setPreflight(null);
-      if (announce) report(errorText(error), "error");
+      report(errorText(error), "error");
       return null;
     } finally {
-      if (announce) setBusyAction(null);
+      setBusyAction(null);
     }
   };
 
@@ -1427,32 +1401,23 @@ function App() {
   };
 
   const configureSimulation = async () => {
+    if (busy || preparation.state.operation) return null;
     if (!workspaceRoot.trim() || !stagePath.trim()) {
-      report(
-        "Un workspace et une scène USD sont nécessaires pour configurer une simulation.",
-        "error",
-      );
+      report("Un workspace et une scène USD sont nécessaires pour configurer une simulation.", "error");
       setActiveTab("configure");
       return null;
     }
     setBusyAction("configure-simulation");
     report("Validation de la configuration de simulation…", "working");
     try {
-      const data = toolData(
-        await callHostTool(
-          TOOL_NAMES.configureSimulation,
-          currentConfigurationArgs(),
-        ),
-      );
-      syncConfiguration(data.configuration);
-      const checked = await preflightSimulation(false);
-      report(
-        checked?.ready
-          ? "Configuration et préflight validés. La simulation peut être lancée."
+      const checked = await preparation.validate(currentConfigurationArgs(),
+        async (name, args) => toolData(await callHostTool(name, args)), syncConfiguration);
+      if (checked) report(
+        checked.preflight.ready ? "Configuration et préflight validés. La simulation peut être lancée."
           : "Configuration validée, mais le préflight signale encore des prérequis à corriger.",
-        checked?.ready ? "success" : "error",
+        checked.preflight.ready ? "success" : "error",
       );
-      return asRecord(data.configuration);
+      return checked?.configuration ?? null;
     } catch (error) {
       report(errorText(error), "error");
       return null;
@@ -1462,60 +1427,40 @@ function App() {
   };
 
   const launchSimulation = async () => {
-    if (!workspaceRoot.trim() || !stagePath.trim()) {
-      report("Configurez d'abord le workspace et la scène USD.", "error");
+    if (preparation.state.operation) return;
+    const available = !busy && hostReady && !hostError && !runtime.processAlive;
+    if (!preparation.canLaunch(available)) {
+      report(preparation.state.issue || "Validez la configuration actuelle et son préflight avant de lancer.", "neutral");
       setActiveTab("configure");
       return;
     }
-    sessionFlowEpoch.current += 1;
-    stopRuntimeWatchdog();
-    invalidateStream();
-    setBusyAction("launch-simulation");
-    setConnectionTone("working");
-    report("Préparation et lancement de la simulation…", "working");
     try {
-      if (hasPendingSdkNegotiation())
-        throw new Error(APP_STREAM_PENDING_NEGOTIATION_ERROR);
-      const configuredData = toolData(
-        await callHostTool(
-          TOOL_NAMES.configureSimulation,
-          currentConfigurationArgs(),
-        ),
-      );
-      syncConfiguration(configuredData.configuration);
-      const checked = await preflightSimulation(false);
-      if (!checked?.ready) {
-        setPreflight(checked);
-        setActiveTab("launch");
-        throw new Error(
-          `Préflight bloqué : ${checked?.failed.length ?? 1} contrôle(s) requis ne sont pas validés.`,
-        );
-      }
-      const response = await callHostTool(TOOL_NAMES.launchSimulation, {});
-      const data = toolData(response);
-      const meta = responseMeta(response);
-      applySupervision(data);
-      const runtimeData = asRecord(data.runtime) as RuntimeStatus | null;
-      const streamAccessToken = meta["omnistream/streamAccessToken"];
-      if (
-        !runtimeData ||
-        typeof streamAccessToken !== "string" ||
-        !streamAccessToken
-      ) {
-        throw new Error(
-          "La simulation a démarré sans métadonnées WebRTC utilisables par le panneau.",
-        );
-      }
-      setRuntime((previous) => ({ ...previous, ...runtimeData }));
-      startRuntimeWatchdog();
-      await connect(streamAccessToken, runtimeData);
-      setActiveTab("monitor");
-      report(
-        videoFrameSeen.current
+      await preparation.launch(available, async (_configuration, launchArgs) => {
+        if (hasPendingSdkNegotiation()) throw new Error(APP_STREAM_PENDING_NEGOTIATION_ERROR);
+        sessionFlowEpoch.current += 1;
+        stopRuntimeWatchdog();
+        invalidateStream();
+        setBusyAction("launch-simulation");
+        setConnectionTone("working");
+        report("Lancement de la configuration validée…", "working");
+        const response = await callHostTool(TOOL_NAMES.launchSimulation, launchArgs);
+        const data = toolData(response);
+        const meta = responseMeta(response);
+        applySupervision(data);
+        const runtimeData = asRecord(data.runtime) as RuntimeStatus | null;
+        const streamAccessToken = meta["omnistream/streamAccessToken"];
+        if (!runtimeData || typeof streamAccessToken !== "string" || !streamAccessToken)
+          throw new Error("La simulation a démarré sans métadonnées WebRTC utilisables par le panneau.");
+        setRuntime((previous) => ({ ...previous, ...runtimeData }));
+        startRuntimeWatchdog();
+        await connect(streamAccessToken, runtimeData);
+        setActiveTab("monitor");
+        report(videoFrameSeen.current
           ? "Simulation lancée ; une image du flux RTX a été reçue."
           : "Simulation lancée ; transport négocié, en attente de la première image RTX.",
-        videoFrameSeen.current ? "success" : "working",
-      );
+          videoFrameSeen.current ? "success" : "working");
+        return data;
+      });
     } catch (error) {
       stopRuntimeWatchdog();
       if (!connectionIsLive.current) invalidateStream();
@@ -1529,6 +1474,7 @@ function App() {
   const superviseSimulation = async (announce = true) => {
     if (supervisionBusy.current) return null;
     supervisionBusy.current = true;
+    const observationVersion = preparation.state.version;
     if (announce) {
       setBusyAction("supervise-simulation");
       report("Lecture de la supervision de simulation…", "working");
@@ -1537,7 +1483,7 @@ function App() {
       const data = toolData(
         await callHostTool(TOOL_NAMES.superviseSimulation, {}),
       );
-      applySupervision(data);
+      applySupervision(data, observationVersion);
       setLastObservedAt(Date.now());
       setHostError("");
       if (
@@ -1682,7 +1628,7 @@ function App() {
     void (async () => {
       const current = await refreshRuntime(false);
       const initial = await superviseSimulation(false);
-      if (initial?.configuration) syncConfiguration(initial.configuration);
+      if (initial?.configuration && preparation.canHydrate()) syncConfiguration(initial.configuration);
       await attachExistingRuntime(current, initialFlowEpoch);
     })();
     void discoverLocalAssets();
@@ -1691,6 +1637,7 @@ function App() {
       stopRuntimeWatchdog();
       setViewportInputActive(false);
       invalidateStream();
+      signalingRoute.current?.dispose(); signalingRoute.current = null;
     };
     window.addEventListener("beforeunload", onUnload);
     return () => {
@@ -1699,6 +1646,7 @@ function App() {
       stopRuntimeWatchdog();
       setViewportInputActive(false);
       invalidateStream();
+      signalingRoute.current?.dispose(); signalingRoute.current = null;
     };
   }, [hostReady]);
 
@@ -1719,21 +1667,6 @@ function App() {
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [hostReady, busy]);
-
-  useEffect(() => {
-    setPreflight(null);
-  }, [
-    simulationName,
-    kitRoot,
-    workspaceRoot,
-    stagePath,
-    initialTime,
-    rateMultiplier,
-    loopEnabled,
-    playEveryFrame,
-    autoPlay,
-    launchCameraPath,
-  ]);
 
   const numericSeek = numberOr(seekTime, -1);
   const numericRate = numberOr(rateMultiplier, -1);
@@ -1789,14 +1722,10 @@ function App() {
     numberOr(initialTime, -1) >= 0,
   );
 
-  const configurationCurrent = Boolean(
-    configuredSimulation &&
-    Object.entries(currentConfigurationArgs()).every(
-      ([key, value]) =>
-        (configuredSimulation as unknown as Record<string, unknown>)[key] ===
-        value,
-    ),
-  );
+  const configurationCurrent = preparation.current;
+  const launchReady = preparation.canLaunch(!busy && hostReady && !hostError && !runtime.processAlive);
+  const launchSummary = configurationCurrent && preparationState.validated
+    ? preparationState.validated : currentConfigurationArgs();
   const navigate = (tab: PanelTab) => {
     setActiveTab(tab);
     if (window.matchMedia("(max-width: 1150px)").matches)
@@ -1827,7 +1756,7 @@ function App() {
               : observed
                 ? "Contrôleur local"
                 : "Vérification du contrôleur"}
-          <span className="version-tag">RC3</span>
+          <span className="version-tag">RC4</span>
         </div>
         <div className="header-health" aria-label="État de la simulation">
           <StatusPill
@@ -2203,7 +2132,7 @@ function App() {
                 <small>
                   {configurationCurrent
                     ? "Validée par le contrôleur"
-                    : configuredSimulation
+                    : preparationState.requiresValidation
                       ? "Modifications non validées"
                       : "Brouillon"}
                 </small>
@@ -2218,7 +2147,7 @@ function App() {
                 <input
                   id="simulation-name"
                   value={simulationName}
-                  onChange={(event) => setSimulationName(event.target.value)}
+                  onChange={(event) => editDraft(() => setSimulationName(event.target.value))}
 
                   disabled={busy}
                 />
@@ -2228,7 +2157,7 @@ function App() {
                   id="kit-root"
                   aria-describedby="kit-root-help"
                   value={kitRoot}
-                  onChange={(event) => setKitRoot(event.target.value)}
+                  onChange={(event) => editDraft(() => setKitRoot(event.target.value))}
 
                   spellCheck={false}
                   disabled={busy || runtime.processAlive}
@@ -2252,7 +2181,7 @@ function App() {
                 <input
                   id="workspace-root"
                   value={workspaceRoot}
-                  onChange={(event) => setWorkspaceRoot(event.target.value)}
+                  onChange={(event) => editDraft(() => setWorkspaceRoot(event.target.value))}
 
                   spellCheck={false}
                   disabled={busy || runtime.processAlive}
@@ -2273,7 +2202,7 @@ function App() {
                   id="stage-path"
                   list="usd-stages"
                   value={stagePath}
-                  onChange={(event) => setStagePath(event.target.value)}
+                  onChange={(event) => editDraft(() => setStagePath(event.target.value))}
 
                   spellCheck={false}
                   disabled={busy}
@@ -2290,7 +2219,7 @@ function App() {
                 <input
                   id="launch-camera"
                   value={launchCameraPath}
-                  onChange={(event) => setLaunchCameraPath(event.target.value)}
+                  onChange={(event) => editDraft(() => setLaunchCameraPath(event.target.value))}
 
                   spellCheck={false}
                   disabled={busy}
@@ -2329,7 +2258,7 @@ function App() {
                     min="0"
                     step="0.01"
                     value={initialTime}
-                    onChange={(event) => setInitialTime(event.target.value)}
+                    onChange={(event) => editDraft(() => setInitialTime(event.target.value))}
                     disabled={busy}
                   />
                 </div>
@@ -2342,7 +2271,7 @@ function App() {
                     max="8"
                     step="0.05"
                     value={rateMultiplier}
-                    onChange={(event) => setRateMultiplier(event.target.value)}
+                    onChange={(event) => editDraft(() => setRateMultiplier(event.target.value))}
                     disabled={busy}
                   />
                 </div>
@@ -2353,21 +2282,21 @@ function App() {
                   label="Boucle"
                   detail="Répéter la timeline pendant cette session"
                   checked={loopEnabled}
-                  onChange={setLoopEnabled}
+                  onChange={(value) => editDraft(() => setLoopEnabled(value))}
                   disabled={busy}
                 />
                 <ToggleControl
                   label="Chaque frame"
                   detail="Éviter le frame skipping pendant la lecture"
                   checked={playEveryFrame}
-                  onChange={setPlayEveryFrame}
+                  onChange={(value) => editDraft(() => setPlayEveryFrame(value))}
                   disabled={busy}
                 />
                 <ToggleControl
                   label="Auto-play"
                   detail="Démarrer la timeline une fois le stage prêt"
                   checked={autoPlay}
-                  onChange={setAutoPlay}
+                  onChange={(value) => editDraft(() => setAutoPlay(value))}
                   disabled={busy}
                 />
               </div>
@@ -2390,7 +2319,7 @@ function App() {
                   <span>02</span>
                   <h3 id="launch-title">Lancement</h3>
                 </div>
-                <small>{runtime.processAlive ? "runtime actif" : "prêt"}</small>
+                <small>{preparation.label(runtime.processAlive === true, hostReady && !hostError)}</small>
               </div>
               <p className="view-intro">
                 OmniStream lance Kit sans fenêtre native, charge le stage
@@ -2398,30 +2327,42 @@ function App() {
                 viewport WebRTC.
               </p>
 
+              <p className="field-help">
+                {configurationCurrent ? "Instantané validé pour le lancement." : "Brouillon à valider avant lancement."}
+              </p>
+              {preparationState.issue && <p role="alert">{preparationState.issue}</p>}
               <div className="launch-summary">
                 <div>
                   <span>Simulation</span>
                   <strong>
-                    {configuredSimulation?.name || simulationName || "—"}
+                    {launchSummary.name || "—"}
                   </strong>
                 </div>
                 <div>
                   <span>Stage</span>
-                  <strong title={stagePath}>{compactPath(stagePath)}</strong>
+                  <strong title={launchSummary.stagePath}>{compactPath(launchSummary.stagePath)}</strong>
                 </div>
                 <div>
                   <span>Workspace</span>
-                  <strong title={workspaceRoot}>
-                    {compactPath(workspaceRoot)}
+                  <strong title={launchSummary.workspaceRoot}>
+                    {compactPath(launchSummary.workspaceRoot)}
                   </strong>
                 </div>
                 <div>
                   <span>Démarrage</span>
                   <strong>
-                    {autoPlay ? "Auto-play" : "En pause"} ·{" "}
-                    {loopEnabled ? "Loop" : "1 passage"}
+                    {launchSummary.autoPlay ? "Auto-play" : "En pause"} ·{" "}
+                    {launchSummary.loop ? "Loop" : "1 passage"}
                   </strong>
                 </div>
+              </div>
+
+              <div className="launch-summary">
+                <div><span>Runtime Kit</span><strong title={launchSummary.kitRoot}>{compactPath(launchSummary.kitRoot || "Détection installateur")}</strong></div>
+                <div><span>Temps initial</span><strong>{launchSummary.initialTimeSeconds} s</strong></div>
+                <div><span>Cadence cible</span><strong>{launchSummary.rateMultiplier}×</strong></div>
+                <div><span>Lecture de chaque frame</span><strong>{launchSummary.playEveryFrame ? "Oui" : "Non"}</strong></div>
+                <div><span>Caméra initiale</span><strong title={launchSummary.cameraPath}>{launchSummary.cameraPath || "Caméra du stage"}</strong></div>
               </div>
 
               <div
@@ -2450,7 +2391,7 @@ function App() {
                     type="button"
                     className="text-button"
                     onClick={() => void preflightSimulation()}
-                    disabled={busy || !configuredSimulation}
+                    disabled={busy || !configurationCurrent}
                   >
                     Vérifier
                   </button>
@@ -2481,7 +2422,7 @@ function App() {
                 className="launch-button"
                 type="button"
                 onClick={() => void launchSimulation()}
-                disabled={busy || !configurationReady || runtime.processAlive}
+                disabled={!launchReady}
               >
                 <span className="launch-icon" aria-hidden="true">
                   ▶
@@ -2549,6 +2490,7 @@ function App() {
                       void attachExistingRuntime(
                         runtime,
                         sessionFlowEpoch.current,
+                        true,
                       )
                     }
                     disabled={busy || !isManagedActiveRuntime(runtime)}
@@ -2696,7 +2638,7 @@ function App() {
                   <div className="event-journal">
                     {[...journal]
                       .reverse()
-                      .slice(0, 12)
+                      .slice(0, new URLSearchParams(window.location.search).get("signaling-diagnostics") === "1" ? 50 : 12)
                       .map((entry) => (
                         <div key={entry.id} data-tone={entry.tone}>
                           <time>{entry.at}</time>
@@ -2860,7 +2802,7 @@ function App() {
                       step="0.05"
                       value={rateMultiplier}
                       onChange={(event) =>
-                        setRateMultiplier(event.target.value)
+                        editDraft(() => setRateMultiplier(event.target.value))
                       }
                       disabled={busy || !controlAvailable}
                     />
@@ -2880,7 +2822,7 @@ function App() {
                 detail="Appliquée immédiatement à la simulation active"
                 checked={simulation.loop ?? loopEnabled}
                 onChange={(value) => {
-                  setLoopEnabled(value);
+                  editDraft(() => setLoopEnabled(value));
                   void controlSimulation("set_loop", { loop: value });
                 }}
                 disabled={busy || !controlAvailable}
@@ -3061,7 +3003,7 @@ function App() {
             ●
           </span>
           <span>
-            OmniStream {runtime.pluginVersion || "1.0.0-rc3"} ·{" "}
+            OmniStream {runtime.pluginVersion || "1.0.0-rc4"} ·{" "}
             {runtime.runtimeChannel || "runtime local"} · workspace borné ·
             bridge loopback authentifié · aucun runtime NVIDIA redistribué.
           </span>
@@ -3074,7 +3016,7 @@ function App() {
 createRoot(document.getElementById("root")!).render(
   <ErrorBoundary>
     <ConfirmationProvider>
-      <App />
+      <ConnectionStudio><App /></ConnectionStudio>
     </ConfirmationProvider>
   </ErrorBoundary>,
 );

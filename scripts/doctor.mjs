@@ -2,6 +2,8 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { loadOmniStreamConfig } from "../mcp/paths.mjs";
+import { loopbackTlsConfiguration } from "../mcp/loopback-tls.mjs";
+import { parseRemoteProfiles } from "../mcp/remote-sessions.mjs";
 
 const pluginRoot = path.resolve(import.meta.dirname, "..");
 const strict = process.argv.includes("--strict");
@@ -71,10 +73,24 @@ add("Bridge OmniStream", fileExists(path.join(pluginRoot, "runtime", "bridge", "
 add("Configuration locale", fileExists(config.paths.configFile), config.paths.configFile, strict);
 if (rawConfig) {
   add("Schéma configuration v2", rawConfig.schemaVersion === 2, `schemaVersion=${String(rawConfig.schemaVersion ?? "absent")}`, strict);
-  const knownKeys = new Set(["schemaVersion", "kitRoot", "workspaceRoot", "assetRoots", "streamKitRelativePath", "signalingPort", "mediaPort", "runtimeChannel"]);
+  const configSchema = safeJson(path.join(pluginRoot, "config", "omnistream.schema.json"));
+  const knownKeys = new Set(Object.keys(configSchema?.properties || {}));
   const unknownKeys = Object.keys(rawConfig).filter((key) => !knownKeys.has(key));
   add("Clés configuration connues", unknownKeys.length === 0, unknownKeys.length ? `inconnues: ${unknownKeys.join(", ")}` : "OK", strict);
   add("Canal runtime", ["Production", "Feature", "Existing"].includes(rawConfig.runtimeChannel), String(rawConfig.runtimeChannel || "absent"), strict);
+  add("Transport signaling panneau", rawConfig.panelSignalingTransport === undefined || ["websocket", "mcp"].includes(rawConfig.panelSignalingTransport), "websocket ou mcp", strict);
+  try {
+    loopbackTlsConfiguration(rawConfig.signalingTls, config.signalingPort ?? 49100);
+    add("Configuration TLS locale", true, "valide ou absente ; confiance vérifiée au preflight", strict);
+  } catch {
+    add("Configuration TLS locale", false, "configuration invalide", strict);
+  }
+  try {
+    parseRemoteProfiles(rawConfig.remoteSessions);
+    add("Profils distants", true, "structure valide ; réseau et identifiants non testés", strict);
+  } catch {
+    add("Profils distants", false, "configuration invalide", strict);
+  }
 }
 add("OMNISTREAM_HOME", dirExists(config.paths.home), config.paths.home, strict);
 add("Workspace", dirExists(config.workspaceRoot), config.workspaceRoot || "non configuré", strict);

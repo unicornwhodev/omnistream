@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-21",
+  "product": "omnistream-for-codex",
+  "version": "1.0.0-rc4",
+  "verdict": "local-existing-runtime-qualified-codex-host-opening-blocked",
+  "baseCommit": "02d9fac248d85b76fdbd93bd18bac2bf33be7732",
+  "target": {
+    "platform": "Windows x64",
+    "gpu": "NVIDIA GeForce RTX 5070 Ti",
+    "vramMiB": 16303,
+    "driver": "616.56",
+    "node": "24.14.0",
+    "npm": "11.9.0",
+    "nvidiaWebRtc": "6.6.0",
+    "vite": "6.4.5",
+    "runtimeChannel": "Existing",
+    "signaling": "mcp",
+    "media": "native NVIDIA WebRTC",
+    "windows": "Windows 11 x64 10.0.26200"
+  },
+  "automaticProductGate": {
+    "ok": true,
+    "startedAt": "2026-10-21T11:22:37.5995089Z",
+    "finishedAt": "2026-10-21T11:23:58.2343520Z",
+    "kitTestsSkipped": false,
+    "runtimeSmokeSkipped": false,
+    "checks": [
+      {
+        "name": "Contrats source / TypeScript",
+        "ok": true,
+        "durationMs": 2895
+      },
+      {
+        "name": "Tests MCP et sÃ©curitÃ©",
+        "ok": true,
+        "durationMs": 12546
+      },
+      {
+        "name": "Build et contrats du panneau",
+        "ok": true,
+        "durationMs": 9610
+      },
+      {
+        "name": "Reconstruction finale du panneau",
+        "ok": true,
+        "durationMs": 2151
+      },
+      {
+        "name": "Diagnostic strict",
+        "ok": true,
+        "durationMs": 280
+      },
+      {
+        "name": "Tests NVIDIA Kit project",
+        "ok": true,
+        "durationMs": 19623
+      },
+      {
+        "name": "Smoke-test RTX / Kit / WebRTC / bridge / USD",
+        "ok": true,
+        "durationMs": 33454
+      }
+    ]
+  },
+  "nodeTests": {
+    "passed": 102,
+    "failed": 0,
+    "skipped": 1,
+    "skipReason": "Windows symlink privilege test"
+  },
+  "openUsdTests": {
+    "passed": 34,
+    "failed": 0,
+    "skipped": 0,
+    "requireUsd": true
+  },
+  "physics": {
+    "ok": true,
+    "evidence": "actual falling-body displacement read from USD; source unchanged"
+  },
+  "dependencyAudit": {
+    "totalVulnerabilities": 0,
+    "scope": "complete web dependency tree",
+    "measuredOn": "2026-10-21"
+  },
+  "browser": {
+    "host": "Chrome through developer-only loopback harness",
+    "actualCodexHost": false,
+    "firstCycleVideoSamples": [
+      {
+        "capturedAt": "2026-10-21T11:26:37.349Z",
+        "readyState": 4,
+        "width": 1280,
+        "height": 720,
+        "time": 24.130668,
+        "totalVideoFrames": 2915,
+        "droppedVideoFrames": 39
+      },
+      {
+        "capturedAt": "2026-10-21T11:27:00.359Z",
+        "readyState": 4,
+        "width": 1280,
+        "height": 720,
+        "time": 47.141027,
+        "totalVideoFrames": 5640,
+        "droppedVideoFrames": 40
+      }
+    ],
+    "nativePointer": "Ground selected in Kit with visible contour/gizmo",
+    "nativeKeyboard": "F reframed selected Ground",
+    "controls": {
+      "seekSeconds": 1.25,
+      "afterOneFrameSeconds": 1.292,
+      "frameRate": 24,
+      "sideCamera": "/World/SideCamera"
+    },
+    "stopDialog": {
+      "initialFocus": "Cancel",
+      "tab": true,
+      "shiftTab": true,
+      "escapeCancel": true,
+      "focusReturn": true,
+      "nativeConfirmation": true
+    },
+    "finalAttachRegression": {
+      "before": {
+        "capturedAt": "2026-10-21T11:35:06.802Z",
+        "readyState": 4,
+        "time": 65.395011,
+        "totalVideoFrames": 7872
+      },
+      "after": {
+        "capturedAt": "2026-10-21T11:35:23.035Z",
+        "readyState": 4,
+        "time": 81.627891,
+        "totalVideoFrames": 9816
+      },
+      "message": "Flux RTX de Kit déjà actif ; aucune reconnexion nécessaire."
+    }
+  },
+  "codexHost": {
+    "openedTabObserved": false,
+    "operatorReportedPluginBug": true,
+    "cause": "undetermined",
+    "videoVerified": false,
+    "inputVerified": false,
+    "dialogsVerified": false
+  },
+  "workingTreeSourceHashes": {
+    "controller": "d55d7b61c4efb2959984870b7dcf917b5a1a06ecb6d9de9544663ddc2d15e26e",
+    "panelBeforeAttachFix": "8fb6b9eb4b729ae607689e8f73f7130aac0fdfa4e3b63ee9a82236c4c2dffd2f",
+    "panelFinal": "2028fda5ff02f75aa010632d9468fe12f741d2b230587b518f1c6cf61845c9e9",
+    "builtPanelFinal": "5598f597ded39c399bf97aad5de5573da1524fcabd7419d0c53dfa08d459a1d0",
+    "fixture": "2c5e0dbe1460b873b8eb515361afe256840c12dc3708dcadf9462c61ff96e756"
+  },
+  "logs": [
+    {
+      "name": "product-validation",
+      "startedAt": "2026-10-21T11:22:37.377Z",
+      "finishedAt": "2026-10-21T11:24:02.592Z",
+      "exitCode": 0,
+      "localLog": "product-validation.log",
+      "sha256": "d6bcd96388d0afe59f4dbf928bf0ac054d86de073a95612376781e81d1979784"
+    },
+    {
+      "name": "openusd-current",
+      "startedAt": "2026-10-21T11:24:02.594Z",
+      "finishedAt": "2026-10-21T11:24:03.377Z",
+      "exitCode": 0,
+      "localLog": "openusd-current.log",
+      "sha256": "8464910e766f7f31b79e597d4abb8986251f1446e9ec8e58524727e550b4b1dc"
+    },
+    {
+      "name": "physics-current",
+      "startedAt": "2026-10-21T11:24:03.378Z",
+      "finishedAt": "2026-10-21T11:24:41.128Z",
+      "exitCode": 0,
+      "localLog": "physics-current.log",
+      "sha256": "ab8d109f2cab4e0804721b3397f6f49d64467f9f5f28f846f062f4328b67417e"
+    },
+    {
+      "name": "npm-audit-current",
+      "startedAt": "2026-10-21T11:24:41.129Z",
+      "finishedAt": "2026-10-21T11:24:42.142Z",
+      "exitCode": 0,
+      "localLog": "npm-audit-current.log",
+      "sha256": "ec83103c507e523ddef94a1bd5e8182e1e8bd31ea5da357cb80901a95c920086"
+    },
+    {
+      "name": "check",
+      "startedAt": "2026-10-21T11:32:02.679Z",
+      "finishedAt": "2026-10-21T11:32:05.985Z",
+      "exitCode": 0,
+      "localLog": "final-check.log",
+      "sha256": "a181c1c8b46e010cf13fe65fc2e38c9812c46110f473269d965457cd2ee3c341"
+    },
+    {
+      "name": "test",
+      "startedAt": "2026-10-21T11:32:05.988Z",
+      "finishedAt": "2026-10-21T11:32:18.587Z",
+      "exitCode": 0,
+      "localLog": "final-test.log",
+      "sha256": "8994b5f98c3a5b6819e99b727df1a06296f44613f072f034ffbafe37767a778b"
+    },
+    {
+      "name": "test:web",
+      "startedAt": "2026-10-21T11:32:18.587Z",
+      "finishedAt": "2026-10-21T11:32:27.703Z",
+      "exitCode": 0,
+      "localLog": "final-test-web.log",
+      "sha256": "a82e981045442135b7285731dbd6df997e2614d633b5a50fd03d3945db3be974"
+    },
+    {
+      "name": "build:web",
+      "startedAt": "2026-10-21T11:32:27.704Z",
+      "finishedAt": "2026-10-21T11:32:29.761Z",
+      "exitCode": 0,
+      "localLog": "final-build-web.log",
+      "sha256": "4d4c5652f21628640f91c253e1e6a070526010916bacbdcb6658d32cfb897cce"
+    },
+    {
+      "name": "final-source-tests-including-private-marker-regression",
+      "localLog": "final-source-tests.log",
+      "sha256": "610e1e87d9adfff97bd949cdf5f9d50fb0205c20a6e449694b595e1bacb60b49"
+    }
+  ],
+  "publishedCapture": {
+    "path": "side-camera.jpg",
+    "sha256": "3d482381aa77be70475a5b07d521c7b7afc9e6cd0c73f99b7fc6a69238909c3d",
+    "phase": "second browser cycle after attach correction",
+    "reviewedForPersonalData": true
+  },
+  "limits": [
+    "Codex embedded panel not opened",
+    "Existing runtime reused; no fresh Production installation",
+    "No complete repair/uninstall lifecycle test",
+    "No injected network-loss reconnect test",
+    "No remote/cloud qualification",
+    "Small scene only; no latency/soak benchmark"
+  ],
+  "privacy": {
+    "rawLogsAndFullScreenshotsExcluded": true,
+    "configurationAndCredentialsExcluded": true,
+    "privateMarkerValuesExcluded": true,
+    "commitIdentityPolicy": "public GitHub no-reply identity",
+    "manualEmailReview": "One synthetic credential URL under gpu.example.test in a rejection test; no personal email in source."
+  },
+  "firstCycleStop": {
+    "processAbsent": true,
+    "signalingListeners": 0,
+    "sourceUnchanged": true
+  },
+  "secondCycleStop": {
+    "capturedAt": "2026-10-21T13:38:17.8246364+02:00",
+    "kitProcessCount": 0,
+    "signalingListeners": 0,
+    "sourceUnchanged": true
+  },
+  "sourceBytePolicy": "Execution hashes describe working-tree bytes; release-manifest describes canonical Git LF source bytes."
+}

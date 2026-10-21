@@ -1443,3 +1443,12 @@ summary span {
   line-height: 1.7;
   color: var(--muted);
 }
+.connection-modes { display: flex; gap: 8px; padding: 10px 20px; border-bottom: 1px solid var(--border); }
+.connection-modes [aria-pressed="true"] { color: var(--accent); border-color: currentColor; }
+.remote-studio { max-width: 1440px; margin: auto; padding: 24px; }
+.remote-studio header p, .remote-studio section > p { color: var(--muted); margin: 12px 0; line-height: 1.6; }
+.remote-connection { padding: 20px 0; }
+.remote-connection label { display: block; margin-bottom: 8px; }
+.remote-connection select { width: min(100%, 560px); margin-bottom: 12px; }
+.remote-viewer .viewport-frame { min-height: 280px; aspect-ratio: 16 / 9; }
+.remote-viewer .viewport-overlay { pointer-events: none; }

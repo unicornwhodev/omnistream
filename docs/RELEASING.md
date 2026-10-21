@@ -2,9 +2,9 @@
 
 ## Version identity
 
-The current version is `1.0.0-rc3`. It must remain consistent across `package.json`, `web/package.json`, `.codex-plugin/plugin.json`, the OmniStream Bridge extension, and `release-manifest.json`. The `-rc3` suffix denotes a candidate, not stable certification.
+The current version is `1.0.0-rc4`. It must remain consistent across `package.json`, `web/package.json`, `.codex-plugin/plugin.json`, the OmniStream Bridge extension, and `release-manifest.json`. The `-rc4` suffix denotes a candidate, not stable certification.
 
-Git tags use the form `v<version>`, for example `v1.0.0-rc3`. A tag must point to the commit reviewed and qualified for that version. The [release checklist](RELEASE-CHECKLIST.md) defines the checks required before a candidate tag or promotion to `1.0.0`.
+Git tags use the form `v<version>`, for example `v1.0.0-rc4`. A tag must point to the commit reviewed and qualified for that version. The [release checklist](RELEASE-CHECKLIST.md) defines the checks required before a candidate tag or promotion to `1.0.0`.
 
 Status checked on October 1, 2026: the repository has no GitHub tag or GitHub Release. The npm package remains unpublished (`private: true`). Candidate archives are built and verified locally; this document does not present those local artifacts as public downloads.
 

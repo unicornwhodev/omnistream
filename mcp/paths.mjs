@@ -67,6 +67,9 @@ export function loadOmniStreamConfig(env = process.env) {
       streamKitRelativePath: nonEmpty(raw.streamKitRelativePath),
       signalingPort: safeInteger(raw.signalingPort, 1024, 65535),
       mediaPort: safeInteger(raw.mediaPort, 1024, 65535),
+      signalingTls: raw.signalingTls,
+      panelSignalingTransport: raw.panelSignalingTransport,
+      remoteSessions: raw.remoteSessions,
       runtimeChannel: ["Production", "Feature", "Existing"].includes(raw.runtimeChannel) ? raw.runtimeChannel : undefined
     };
   } catch {

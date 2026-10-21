@@ -2,7 +2,10 @@ import { existsSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
 import { openSync, readSync, closeSync, fstatSync } from "node:fs";
 import { sceneTools, sceneRoutes, liveTool, validateSchema } from "./scene-tools.mjs";
 import { LiveEventStore } from "./live-events.mjs";
-import { randomBytes } from "node:crypto";
+import { LocalSignalingRelay } from "./local-signaling.mjs";
+import { RemoteSessions, RemoteSessionError } from "./remote-sessions.mjs";
+import { randomBytes, randomUUID } from "node:crypto";
+import { loopbackTlsConfiguration, browserSignalingEndpoint, validateLoopbackTls, startLoopbackTls } from "./loopback-tls.mjs";
 import net from "node:net";
 import path from "node:path";
 import { spawn } from "node:child_process";
@@ -33,7 +36,7 @@ import {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pluginRoot = path.resolve(__dirname, "..");
 const manifest = JSON.parse(readFileSync(path.join(pluginRoot, ".codex-plugin", "plugin.json"), "utf8"));
-const widgetUri = "ui://omnistream-for-codex/panel.html";
+const widgetUri = "ui://omnistream-for-codex/panel-rc4-mcp.html";
 const widgetAccessTokenMetaKey = "omnistream/streamAccessToken";
 const localConfig = loadOmniStreamConfig();
 const runtimePaths = ensureOmniStreamRuntimeDirs();
@@ -49,6 +52,12 @@ const streamKitRelativePath = process.env.OMNISTREAM_STREAM_KIT_RELATIVE_PATH?.t
 const streamSettingsPrefix = "--/exts/omnistream_codex_bridge/";
 const signalingPort = Number(process.env.OMNISTREAM_SIGNALING_PORT || localConfig.signalingPort || 49100);
 const mediaPort = Number(process.env.OMNISTREAM_MEDIA_PORT || localConfig.mediaPort || 47998);
+const signalingTls = loopbackTlsConfiguration(localConfig.signalingTls, signalingPort);
+const panelSignalingTransport = localConfig.panelSignalingTransport ?? "websocket";
+if (!["mcp", "websocket"].includes(panelSignalingTransport)) throw new Error("Invalid panelSignalingTransport.");
+const browserSignaling = panelSignalingTransport === "mcp"
+  ? { host: "127.0.0.1", port: signalingPort, secure: false }
+  : browserSignalingEndpoint(signalingTls, signalingPort);
 const hiddenKitLauncher = path.join(__dirname, "launch-hidden-kit.ps1");
 const windowsPowerShellExe = path.join(process.env.SystemRoot || "C:\\Windows", "System32", "WindowsPowerShell", "v1.0", "powershell.exe");
 const controlMethod = Object.freeze({
@@ -95,6 +104,7 @@ const widgetResourceMeta = {
     prefersBorder: true,
     csp: {
       connectDomains: [
+        ...(signalingTls ? [`wss://localhost:${signalingTls.port}`] : []),
         `http://127.0.0.1:${signalingPort}`,
         `ws://127.0.0.1:${signalingPort}`,
         `http://localhost:${signalingPort}`,
@@ -115,6 +125,13 @@ let shutdownPromise = null;
 let shutdownRecoveryReported = false;
 let stopRecovery = null;
 let stopOperation = null;
+const localSignaling = new LocalSignalingRelay({
+  port: signalingPort,
+  getSession: () => runtimeSession && !shutdownRequested && alive(runtimeSession.processIdentity?.pid) &&
+    !streamStopPendingStates.has(runtimeSession.streamStopState) && runtimeSession.controlServer?.isConnected
+    ? { identity: runtimeSession, token: runtimeSession.streamAccessToken } : null
+});
+const remoteSessions = new RemoteSessions({ profiles: localConfig.remoteSessions });
 const sideEffectQueue = new SerialOperationQueue({
   onActiveChange(operation) {
     lifecyclePhase = operation ? operation.name : (runtimeSession ? "running" : "stopped");
@@ -208,6 +225,44 @@ const simulationControlInputSchema = schema({
 
 const tools = [
   ...sceneTools, liveTool,
+  tool("list_omniverse_remote_sessions", "List Remote Omniverse Sessions",
+    "List explicitly configured external Kit stream profiles. This does not contact a provider or prove video availability.", schema({}), true),
+  tool("attach_omniverse_remote_stream", "Attach Remote Omniverse Stream",
+    "Select an existing external Kit stream by configured profile ID. Does not start Kit, a notebook or a cloud resource. Video remains unverified until a decoded frame arrives.",
+    schema({ profileId: { type: "string", pattern: "^[A-Za-z0-9_-]{1,64}$" } }, ["profileId"]), false),
+  tool("detach_omniverse_remote_stream", "Disconnect Remote Omniverse Stream",
+    "Release this exact remote attachment and its signaling sockets. Never stops the external runtime or cloud resource.",
+    schema({ attachmentId: { type: "string", minLength: 1, maxLength: 64 } }, ["attachmentId"]), false),
+  ...["open", "exchange", "close"].map(action => tool(`${action}_omniverse_remote_signaling`, "Remote Kit Signaling",
+    "Panel-only bounded signaling to the selected, explicitly configured remote Kit. No caller-selected URL, port or credential.",
+    schema({ attachmentId: { type: "string", minLength: 1, maxLength: 64 },
+      ...(action === "open" ? {
+        peerId: { type: "string", pattern: "^[A-Za-z0-9_-]{1,128}$" },
+        pairingId: { type: "string", pattern: "^[A-Za-z0-9_-]{1,128}$" },
+        sessionId: { type: "string", pattern: "^[A-Za-z0-9_-]{1,128}$" }, reconnect: { type: "boolean" }
+      } : { channelId: { type: "string", minLength: 1, maxLength: 64 } }),
+      ...(action === "exchange" ? {
+        afterSequence: { type: "integer", minimum: 0 }, waitMs: { type: "integer", minimum: 0, maximum: 1000 },
+        messages: { type: "array", maxItems: 16, items: schema({ sequence: { type: "integer", minimum: 1 }, data: { type: "string", maxLength: 131072 } }, ["sequence", "data"]) }
+      } : {})
+    }, ["attachmentId", ...(action === "open" ? ["peerId"] : ["channelId"]), ...(action === "exchange" ? ["afterSequence", "messages"] : [])]),
+    true, { ui: { visibility: ["app"] } })),
+  tool("open_omniverse_signaling", "Open Local Kit Signaling",
+    "Panel-only WebRTC signaling to this controller's owned Kit. No arbitrary endpoint or credential is accepted.",
+    schema({ peerId: { type: "string", pattern: "^[A-Za-z0-9_-]{1,128}$" }, pairingId: { type: "string", pattern: "^[A-Za-z0-9_-]{1,128}$" }, sessionId: { type: "string", pattern: "^[A-Za-z0-9_-]{1,128}$" }, reconnect: { type: "boolean" } }, ["peerId"]), true,
+    { ui: { visibility: ["app"] } }),
+  tool("exchange_omniverse_signaling", "Exchange Local Kit Signaling",
+    "Panel-only bounded exchange of private WebRTC negotiation messages; it does not carry video frames or scene commands.",
+    schema({
+      channelId: { type: "string", minLength: 1, maxLength: 64 },
+      afterSequence: { type: "integer", minimum: 0 },
+      waitMs: { type: "integer", minimum: 0, maximum: 1000 },
+      messages: { type: "array", maxItems: 16, items: schema({ sequence: { type: "integer", minimum: 1 }, data: { type: "string", maxLength: 131072 } }, ["sequence", "data"]) }
+    }, ["channelId", "afterSequence", "messages"]), true, { ui: { visibility: ["app"] } }),
+  tool("close_omniverse_signaling", "Close Local Kit Signaling",
+    "Panel-only close of one owned local WebRTC signaling channel. Does not stop Kit or modify USD.",
+    schema({ channelId: { type: "string", minLength: 1, maxLength: 64 } }, ["channelId"]), true,
+    { ui: { visibility: ["app"] } }),
   tool(
     "open_omniverse_simulation_studio",
     "Open OmniStream for Codex",
@@ -238,7 +293,9 @@ const tools = [
     "launch_omniverse_simulation",
     "Launch Configured Omniverse Simulation",
     "Launch the configured local Kit runtime, load the configured USD stage, apply session-only simulation settings, and optionally begin playback.",
-    schema({}),
+    schema({
+      expectedConfigurationId: { type: "string", minLength: 1, maxLength: 128, description: "Optional validated configuration identity. Refuse launch before side effects if the controller configuration changed." }
+    }),
     false
   ),
   tool(
@@ -557,6 +614,7 @@ function asOperationToolError(error) {
 
 async function runExternalSideEffect(name, work, { clientTimeoutMs = standardMutationClientTimeoutMs } = {}) {
   if (shutdownRequested) throw toolError("The Omniverse MCP server is shutting down.", "server_shutting_down");
+  if (remoteSessions.current) throw toolError("Disconnect the remote stream before using the local runtime.", "remote_stream_attached");
   if (sideEffectQueue.busy) {
     throw toolError("An Omniverse operation is already in progress: " + (sideEffectQueue.activeName || "queued operation") + ".", "operation_in_progress");
   }
@@ -583,6 +641,8 @@ function enqueueLifecycleSideEffect(name, work) {
 
 function disposeSessionNow(session) {
   if (!session) return;
+  localSignaling.closeAll();
+  void session.tlsRelay?.stop().catch(() => {});
   void session.controlServer?.close().catch(() => {});
 }
 
@@ -674,6 +734,9 @@ async function confirmStreamStoppedAndReleaseSession(session) {
     );
   }
   session.streamStopState = "stopped";
+  localSignaling.closeAll();
+  try { await session.tlsRelay?.stop(); }
+  catch { session.streamStopState = "stream_stop_timeout"; throw toolError("The owned TLS signaling relay has not stopped; this session remains reserved.", "stream_stop_timeout"); }
   await session.controlServer.close();
   if (runtimeSession === session) runtimeSession = null;
   if (!shutdownRequested) sideEffectQueue.openAdmission();
@@ -704,6 +767,7 @@ async function stopTrackedSession(session, { timeoutMs = trackedProcessExitTimeo
   // helper. Kit atomically closes control admission and confirms every
   // WebRTC/JSONL mutation is idle through runtime.prepare_stop.
   await prepareKitStop(session);
+  localSignaling.closeAll();
   // Mark this before native termination so a concurrent status read cannot
   // discard the session in the short interval between PID exit and the
   // signaling-port probe below.
@@ -815,6 +879,7 @@ async function runtimeStatus(kitRootValue) {
     streamListening,
     signalingHost: "127.0.0.1",
     signalingPort,
+    browserSignaling: { ...browserSignaling, transport: panelSignalingTransport, ready: panelSignalingTransport === "mcp" ? streamListening : signalingTls ? Boolean(session?.tlsRelay?.isAlive()) : streamListening },
     mediaPort,
     requiresBearerAuthentication: true,
     controlBridge: session ? (session.controlServer.isConnected ? "connected" : "waiting") : "stopped",
@@ -1071,12 +1136,15 @@ async function startRuntimeLocked(args) {
   ];
   let processIdentity;
   let provisionalSession = null;
+  let tlsRelay = null;
   const streamAccessToken = randomBytes(32).toString("base64url");
   try {
+    if (signalingTls && panelSignalingTransport !== "mcp") tlsRelay = await startLoopbackTls(signalingTls, signalingPort, windowsPowerShellExe);
     processIdentity = await startHiddenKit(current, launchArgs, logs, control.token);
     provisionalSession = {
       pid: processIdentity.pid,
       processIdentity,
+      tlsRelay,
       processOwnership: "launching",
       workspaceRoot,
       stagePath,
@@ -1146,6 +1214,7 @@ async function startRuntimeLocked(args) {
         throw toolError("The hidden Kit runtime did not complete startup and remains tracked. Stop it before retrying.", "startup_rollback_failed");
       }
     } else {
+      await tlsRelay?.stop();
       await controlServer.close();
     }
     if (error instanceof ToolError) throw error;
@@ -1373,13 +1442,21 @@ function simulationPreflightChecks(configuration, runtime) {
 
 async function preflightSimulation(rawArgs) {
   assertEmptyArgs(rawArgs);
-  const runtime = await runtimeStatus(simulationDraft?.kitRoot);
-  const checks = simulationPreflightChecks(simulationDraft, runtime);
+  const configuration = simulationDraft ? { ...simulationDraft } : null;
+  const runtime = await runtimeStatus(configuration?.kitRoot);
+  const checks = simulationPreflightChecks(configuration, runtime);
+  if (signalingTls && panelSignalingTransport !== "mcp") {
+    let certificateReady = true;
+    try { await validateLoopbackTls(signalingTls, signalingPort, windowsPowerShellExe); } catch { certificateReady = false; }
+    checks.push({ id: "signalingTlsCertificate", ok: certificateReady, label: "Certificat localhost", detail: certificateReady ? "Certificat serveur valide et reconnu par Windows." : "Le relais TLS exige un certificat localhost valide, non-CA et reconnu par Windows.", severity: "required" });
+    const tlsPortReady = runtime.processAlive ? runtime.browserSignaling.ready : !(await probeTcp(signalingTls.port));
+    checks.push({ id: "signalingTlsPort", ok: tlsPortReady, label: "Signaling WSS local", detail: tlsPortReady ? "Relais détenu ou port libre." : "Le port TLS est occupé ou le relais géré est indisponible.", severity: "required" });
+  }
   const required = checks.filter((item) => item.severity === "required");
   const ready = required.every((item) => item.ok);
   return result({
     ready,
-    configuration: simulationDraft,
+    configuration,
     runtime,
     checks,
     failed: checks.filter((item) => !item.ok).map((item) => item.id)
@@ -1431,18 +1508,30 @@ async function configureSimulation(rawArgs) {
   if (active && active.workspaceRoot !== configuration.workspaceRoot) {
     throw toolError("The active Kit session is bound to a different workspaceRoot. Stop that runtime before configuring a simulation in another workspace.", "workspace_mismatch");
   }
-  simulationDraft = { ...configuration, configuredAt: new Date().toISOString() };
+  simulationDraft = { ...configuration, configurationId: randomUUID(), configuredAt: new Date().toISOString() };
   return result({ configuration: simulationDraft }, "Simulation configuration validated and stored for this Codex session.");
 }
 
 async function launchConfiguredSimulation(rawArgs) {
-  assertEmptyArgs(rawArgs);
+  const args = assertOnlyKeys(rawArgs, new Set(["expectedConfigurationId"]));
+  const expectedConfigurationId = args.expectedConfigurationId === undefined
+    ? undefined : assertNonEmptyString(args.expectedConfigurationId, "expectedConfigurationId", 128);
   if (!simulationDraft) throw toolError("Configure a simulation before launching it.", "simulation_not_configured");
+  const assertExpectedConfiguration = () => {
+    if (expectedConfigurationId !== undefined && expectedConfigurationId !== simulationDraft?.configurationId) {
+      throw toolError("The simulation configuration changed. Validate and preflight it again before launching.", "simulation_configuration_changed");
+    }
+  };
+  assertExpectedConfiguration();
   // Snapshot the validated draft before entering the serial side-effect queue.
   // Configure/launch therefore cannot observe a half-updated simulation plan.
   const configuration = { ...simulationDraft };
   return runExternalSideEffect("simulation.launch", async () => {
+    // Queue admission and runtime reconciliation can yield to another configure
+    // request. Recheck before each lifecycle or stage side effect.
+    assertExpectedConfiguration();
     let session = await reconcileRuntimeSession();
+    assertExpectedConfiguration();
     if (session && session.workspaceRoot !== configuration.workspaceRoot) {
       throw toolError("The managed Kit runtime is bound to another workspace. Stop it before launching this configured simulation.", "workspace_mismatch");
     }
@@ -1463,6 +1552,7 @@ async function launchConfiguredSimulation(rawArgs) {
       throw toolError("The managed Kit session changed while the simulation was launching.", "runtime_changed");
     }
 
+    assertExpectedConfiguration();
     const stagePath = validateStagePath(session.workspaceRoot, configuration.stagePath);
     session.simulationRun = null;
     session.stageLoadState = "loading";
@@ -1549,8 +1639,8 @@ async function controlSimulation(rawArgs) {
   const params = parseSimulationControl(rawArgs);
   const session = await activeControlSession();
   const response = await runKitMutation("simulation.control", session, controlMethod.simulationControl, params);
-  if (simulationDraft && params.action === "set_rate") simulationDraft = { ...simulationDraft, rateMultiplier: params.rateMultiplier };
-  if (simulationDraft && params.action === "set_loop") simulationDraft = { ...simulationDraft, loop: params.loop };
+  if (simulationDraft && params.action === "set_rate" && simulationDraft.rateMultiplier !== params.rateMultiplier) simulationDraft = { ...simulationDraft, rateMultiplier: params.rateMultiplier, configurationId: randomUUID() };
+  if (simulationDraft && params.action === "set_loop" && simulationDraft.loop !== params.loop) simulationDraft = { ...simulationDraft, loop: params.loop, configurationId: randomUUID() };
   return result({
     run: session.simulationRun || null,
     configuration: simulationDraft,
@@ -1713,7 +1803,7 @@ function result(structuredContent, text, meta = {}) {
 }
 
 function publicErrorMessage(error) {
-  if (error instanceof ToolError || error instanceof ControlRpcError) return redactText(error.message);
+  if (error instanceof ToolError || error instanceof ControlRpcError || error instanceof RemoteSessionError) return redactText(error.message);
   return "The Omniverse operation could not be completed. Check the non-secret local runtime status and try again.";
 }
 
@@ -1721,8 +1811,8 @@ function respond(id, value) {
   process.stdout.write(JSON.stringify({ jsonrpc: "2.0", id, result: value }) + "\n");
 }
 
-function fail(id, code, message) {
-  process.stdout.write(JSON.stringify({ jsonrpc: "2.0", id, error: { code, message: redactText(message) } }) + "\n");
+function fail(id, code, message, data) {
+  process.stdout.write(JSON.stringify({ jsonrpc: "2.0", id, error: { code, message: redactText(message), ...(data ? { data } : {}) } }) + "\n");
 }
 
 async function handle(message) {
@@ -1763,6 +1853,28 @@ async function handle(message) {
     if (message.method !== "tools/call") return fail(id, -32601, "Unknown method: " + message.method);
     const name = message.params?.name;
     const args = message.params?.arguments ?? {};
+    if (name === "list_omniverse_remote_sessions") {
+      assertEmptyArgs(args);
+      return respond(id, result(remoteSessions.list(), "Configured external stream profiles; video is not verified by this listing."));
+    }
+    if (["attach_omniverse_remote_stream", "detach_omniverse_remote_stream", "open_omniverse_remote_signaling", "exchange_omniverse_remote_signaling", "close_omniverse_remote_signaling"].includes(name)) {
+      if (shutdownRequested) throw toolError("The Omniverse MCP server is shutting down.", "server_shutting_down");
+      validateSchema(args, tools.find(item => item.name === name).inputSchema);
+      // Serialize attachment admission against local launch/stop and scene mutations.
+      if (name === "attach_omniverse_remote_stream") return respond(id, await enqueueLifecycleSideEffect("attaching_remote", async () => {
+        await reconcileRuntimeSession();
+        if (runtimeSession) throw toolError("Arrêtez la session Kit locale avant de rattacher un flux distant.", "local_runtime_active");
+        const attached = remoteSessions.attach(args.profileId);
+        return result(attached.attachment, "External stream selected; no decoded frame or remote process ownership is asserted.", { "omnistream/remoteStreamConfiguration": attached.privateConfiguration });
+      }));
+      if (name === "detach_omniverse_remote_stream") return respond(id, result(remoteSessions.detach(args.attachmentId), "Remote viewer disconnected; external runtime left running."));
+      const payload = name === "open_omniverse_remote_signaling" ? await remoteSessions.open(args)
+        : name === "exchange_omniverse_remote_signaling" ? await remoteSessions.exchange(args) : remoteSessions.close(args);
+      return respond(id, result({ ok: true, state: payload.state }, "Remote signaling updated.", { "omnistream/signalingPayload": payload }));
+    }
+    if (remoteSessions.current && (sceneRoutes.has(name) || ["start_omniverse_stream", "launch_omniverse_simulation", "stop_omniverse_stream", "load_omniverse_stage", "control_omniverse_simulation", "control_omniverse_timeline", "select_omniverse_camera", "navigate_omniverse_camera", "save_omniverse_camera", "attach_omniverse_stream", "open_omniverse_signaling"].includes(name))) {
+      throw toolError("Un flux distant est rattaché. Déconnectez-le avant d'utiliser le contrôleur local. Les commandes USD distantes nécessitent un bridge distinct.", "remote_stream_attached");
+    }
     if (name === liveTool.name) {
       validateSchema(args, liveTool.inputSchema);
       const data = runtimeSession?.liveEvents?.read(args, runtimeSession.controlServer.isConnected)
@@ -1785,6 +1897,17 @@ async function handle(message) {
     if (name === "open_omniverse_simulation_studio") {
       assertEmptyArgs(args);
       return respond(id, result(await runtimeStatus(), "OmniStream control studio opened.", { "openai/outputTemplate": widgetUri }));
+    }
+    if (["open_omniverse_signaling", "exchange_omniverse_signaling", "close_omniverse_signaling"].includes(name)) {
+      validateSchema(args, tools.find(item => item.name === name).inputSchema);
+      let payload;
+      if (name === "open_omniverse_signaling") {
+        await activeControlSession();
+        payload = await localSignaling.open(args.peerId, args);
+      } else if (name === "exchange_omniverse_signaling") payload = await localSignaling.exchange(args);
+      else payload = localSignaling.close(args.channelId);
+      // SDP and ICE credentials belong to the app, never public model output.
+      return respond(id, result({ ok: true, state: payload.state }, "Local Kit signaling updated.", { "omnistream/signalingPayload": payload }));
     }
     if (name === "inspect_omniverse_stream_runtime") {
       const inspected = assertOnlyKeys(args, new Set(["kitRoot"]));
@@ -1821,13 +1944,17 @@ async function handle(message) {
     if (name === "save_omniverse_camera") return respond(id, await saveCamera(args));
     return fail(id, -32602, "Unknown tool: " + name);
   } catch (error) {
-    return fail(id, -32000, publicErrorMessage(error));
+    return fail(id, -32000, publicErrorMessage(error),
+      error instanceof ToolError && error.code === "simulation_configuration_changed"
+        ? { code: error.code } : undefined);
   }
 }
 
 function shutdownServer() {
   if (shutdownPromise) return shutdownPromise;
   shutdownRequested = true;
+  localSignaling.closeAll();
+  remoteSessions.dispose();
   // The shutdown operation is allowed into the serial queue after closing
   // admission. It can therefore wait for a client-timed-out save/load to
   // reach a definite result, then asks Kit itself to atomically prepare stop

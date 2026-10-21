@@ -6,21 +6,41 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 const root=path.resolve(import.meta.dirname,'..');
-function audit(arrange) {
+function audit(arrange, env = {}) {
  const dir=mkdtempSync(path.join(tmpdir(),'omnistream-release-audit-'));
  try {
   mkdirSync(path.join(dir,'scripts'));copyFileSync(path.join(root,'scripts/publication-audit.mjs'),path.join(dir,'scripts/publication-audit.mjs'));
   writeFileSync(path.join(dir,'README.md'),'Source-only release');arrange?.(dir);
-  return spawnSync(process.execPath,[path.join(dir,'scripts/publication-audit.mjs')],{encoding:'utf8'});
+  return spawnSync(process.execPath,[path.join(dir,'scripts/publication-audit.mjs')],{encoding:'utf8',env:{...process.env,...env}});
  } finally {rmSync(dir,{recursive:true,force:true});}
 }
 test('publication audit accepts clean source tree',()=>assert.equal(audit().status,0));
+test('publication audit rejects local private markers without echoing them',()=>{
+ const marker='private-qualification-marker';
+ const r=audit(d=>writeFileSync(path.join(d,'README.md'),marker.toUpperCase()),{OMNISTREAM_AUDIT_PRIVATE_MARKERS:marker});
+ assert.equal(r.status,1);assert.match(r.stderr,/private operator marker/);assert.doesNotMatch(r.stderr,new RegExp(marker,'i'));
+});
 test('publication audit refuses native executable instead of ignoring it',()=>{const r=audit(d=>writeFileSync(path.join(d,'runtime.exe'),'binary'));assert.equal(r.status,1);assert.match(r.stderr,/runtime\.exe/);});
 test('publication audit refuses hidden binary bytes with a text extension',()=>{const r=audit(d=>writeFileSync(path.join(d,'payload.mjs'),Buffer.from([0,1,2,3])));assert.equal(r.status,1);assert.match(r.stderr,/binary data/);});
 test('publication audit refuses nested dependencies',()=>{const r=audit(d=>{mkdirSync(path.join(d,'node_modules'));});assert.equal(r.status,1);});
 test('publication audit refuses unreviewed oversized text',()=>{const r=audit(d=>writeFileSync(path.join(d,'large.js'),'a'.repeat(2*1024*1024+1)));assert.equal(r.status,1);});
 test('publication audit refuses symlinks', {skip:process.platform==='win32'?'Symlink privileges vary on Windows; clean tree validation still checks links':false},()=>{const r=audit(d=>symlinkSync(path.join(d,'README.md'),path.join(d,'alias.md')));assert.equal(r.status,1);});
 test('Windows release script keeps plugin dotfiles in archive and verifies entries',()=>{const source=readFileSync(path.join(root,'installer/Build-Release.ps1'),'utf8');assert.match(source,/ZipFile\]::CreateFromDirectory/);assert.match(source,/\.codex-plugin\/plugin\.json/);assert.doesNotMatch(source,/^Compress-Archive /m);});
+test('Windows repair preserves configured signaling and remote profiles', {skip:process.platform!=='win32'},()=>{
+ const source=readFileSync(path.join(root,'installer/Install-OmniStream.ps1'),'utf8');
+ const save=source.slice(source.indexOf('function Save-Configuration {'),source.indexOf('function Validate-Installation'))
+  .replace(/^.*\[Environment\]::SetEnvironmentVariable.*$/m,'');
+ const dir=mkdtempSync(path.join(tmpdir(),'omnistream-repair-config-'));
+ try {
+  const script=`$ErrorActionPreference='Stop'\nfunction Write-Step {}\nfunction Resolve-StreamKitRelativePath {}\nfunction Save-InstallState {}\nfunction Get-ObjectProperty($object,$key) { if ($null -ne $object -and $object.PSObject.Properties[$key]) { return $object.$key } }\n$OmniStreamHome=$env:OMNISTREAM_TEST_ROOT\n$ConfigDir=Join-Path $OmniStreamHome 'config'\n$ConfigFile=Join-Path $ConfigDir 'omnistream.json'\n$StateDir=Join-Path $OmniStreamHome 'state'\n$ExternalRoot=Join-Path $OmniStreamHome 'external'\n$WorkspaceRoot=Join-Path $OmniStreamHome 'workspace'\n$AssetRoot=Join-Path $OmniStreamHome 'assets'\n$KitRoot=Join-Path $OmniStreamHome 'kit'\n$RuntimeChannel='Existing'\n$script:StreamKitRelativePath='apps/test_streaming.kit'\n$ExistingConfig=('{"panelSignalingTransport":"mcp","signalingTls":{"port":49101,"certificateThumbprint":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},"remoteSessions":[{"id":"qa","streamTokenEnv":"OMNISTREAM_REMOTE_QA"}]}') | ConvertFrom-Json\n${save}\nSave-Configuration\n`;
+  const result=spawnSync('powershell.exe',['-NoLogo','-NoProfile','-EncodedCommand',Buffer.from(script,'utf16le').toString('base64')],{encoding:'utf8',env:{...process.env,OMNISTREAM_TEST_ROOT:dir},timeout:30000,windowsHide:true});
+  assert.equal(result.status,0,result.stderr || result.error?.message);
+  const config=JSON.parse(readFileSync(path.join(dir,'config/omnistream.json'),'utf8'));
+  assert.equal(config.panelSignalingTransport,'mcp');
+  assert.equal(config.signalingTls.port,49101);
+  assert.deepEqual(config.remoteSessions,[{id:'qa',streamTokenEnv:'OMNISTREAM_REMOTE_QA'}]);
+ } finally {rmSync(dir,{recursive:true,force:true});}
+});
 test('Windows installer probes actual prerequisite versions', {skip:process.platform!=='win32'},()=>{
  const source=readFileSync(path.join(root,'installer/Install-OmniStream.ps1'),'utf8');
  const functions=source.slice(source.indexOf('function Refresh-ProcessPath'),source.indexOf('function Wait-ForExternalInstall'));

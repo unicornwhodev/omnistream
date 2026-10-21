@@ -13,6 +13,42 @@
     "streamKitRelativePath": { "type": "string", "pattern": "^(?![A-Za-z]:)(?![/\\\\])(?!.*\\.\\.).+\\.kit$" },
     "signalingPort": { "type": "integer", "minimum": 1024, "maximum": 65535 },
     "mediaPort": { "type": "integer", "minimum": 1024, "maximum": 65535 },
-    "runtimeChannel": { "type": "string", "enum": ["Production", "Feature", "Existing"] }
+    "runtimeChannel": { "type": "string", "enum": ["Production", "Feature", "Existing"] },
+    "panelSignalingTransport": { "type": "string", "enum": ["websocket", "mcp"] },
+    "signalingTls": {
+      "type": "object", "additionalProperties": false,
+      "required": ["port", "certificateThumbprint"],
+      "properties": {
+        "port": { "type": "integer", "minimum": 1024, "maximum": 65535 },
+        "certificateThumbprint": { "type": "string", "pattern": "^[A-Fa-f0-9]{40}$" }
+      }
+    },
+    "remoteSessions": {
+      "type": "array", "maxItems": 16,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "label", "provider", "signalingUrl", "mediaServer", "mediaPort", "mediaConnectivity"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$" },
+          "label": { "type": "string", "minLength": 1, "maxLength": 80 },
+          "provider": { "enum": ["generic", "runpod", "colab"] },
+          "signalingUrl": { "type": "string", "format": "uri", "pattern": "^wss?://" },
+          "mediaServer": { "type": "string", "minLength": 1, "maxLength": 253 },
+          "mediaPort": { "type": "integer", "minimum": 1, "maximum": 65535 },
+          "mediaConnectivity": { "enum": ["direct", "relay", "tailscale"] },
+          "streamTokenEnv": { "type": "string", "pattern": "^OMNISTREAM_REMOTE_[A-Z0-9_]{1,80}$" },
+          "iceServersEnv": { "type": "string", "pattern": "^OMNISTREAM_REMOTE_[A-Z0-9_]{1,80}$" },
+          "serverIceConfigured": { "type": "boolean" }
+        },
+        "allOf": [
+          { "if": { "properties": { "mediaConnectivity": { "const": "relay" } } },
+            "then": { "required": ["iceServersEnv", "serverIceConfigured"], "properties": { "serverIceConfigured": { "const": true } } } },
+          { "if": { "properties": { "mediaConnectivity": { "enum": ["direct", "relay"] } } },
+            "then": { "required": ["streamTokenEnv"], "properties": { "signalingUrl": { "pattern": "^wss://" } } } },
+          { "if": { "properties": { "provider": { "enum": ["runpod", "colab"] } } },
+            "then": { "properties": { "mediaConnectivity": { "enum": ["relay", "tailscale"] } } } }
+        ]
+      }
+    }
   }
 }

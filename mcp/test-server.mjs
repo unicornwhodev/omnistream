@@ -539,8 +539,13 @@ async function testMcpProtocol() {
       assert.equal(typeof item.annotations?.destructiveHint, "boolean", `${item.name} must declare destructiveHint.`);
     }
     const openTool = listedTools.result.tools.find((item) => item.name === "open_omniverse_simulation_studio");
-    assert.equal(openTool._meta.ui.resourceUri, "ui://omnistream-for-codex/panel.html");
-    assert.equal(openTool._meta["openai/outputTemplate"], "ui://omnistream-for-codex/panel.html");
+    for (const name of ["open_omniverse_signaling", "exchange_omniverse_signaling", "close_omniverse_signaling"]) {
+      const signalingTool = listedTools.result.tools.find(item => item.name === name);
+      assert.deepEqual(signalingTool?._meta.ui.visibility, ["app"], "Private signaling tools must not be advertised to the model.");
+      assert.equal(signalingTool.inputSchema.additionalProperties, false);
+    }
+    assert.equal(openTool._meta.ui.resourceUri, "ui://omnistream-for-codex/panel-rc4-mcp.html");
+    assert.equal(openTool._meta["openai/outputTemplate"], "ui://omnistream-for-codex/panel-rc4-mcp.html");
     assert.equal(openTool._meta["openai/widgetAccessible"], true);
     assert.ok(listedTools.result.tools.filter((item) => item.name !== "read_omniverse_live_telemetry").every((item) => item.annotations.openWorldHint === true), "Kit can resolve USD dependencies beyond the requested root, so its MCP tools must not claim a closed-world boundary.");
     assert.equal(listedTools.result.tools.find((item) => item.name === "save_omniverse_camera").annotations.destructiveHint, true);
@@ -563,9 +568,9 @@ async function testMcpProtocol() {
     assert.match(attachTool.description, /never starts Kit or changes USD/i);
 
     const resources = await request(3, "resources/list");
-    assert.equal(resources.result.resources[0].uri, "ui://omnistream-for-codex/panel.html");
+    assert.equal(resources.result.resources[0].uri, "ui://omnistream-for-codex/panel-rc4-mcp.html");
 
-    const resource = await request(4, "resources/read", { uri: "ui://omnistream-for-codex/panel.html" });
+    const resource = await request(4, "resources/read", { uri: "ui://omnistream-for-codex/panel-rc4-mcp.html" });
     if (expectPanelBundle) {
       const html = resource.result.contents[0].text;
       assert.match(html, /remote-video/);
@@ -577,8 +582,10 @@ async function testMcpProtocol() {
     }
 
     const open = await request(5, "tools/call", { name: "open_omniverse_simulation_studio", arguments: {} });
-    assert.equal(open.result._meta["openai/outputTemplate"], "ui://omnistream-for-codex/panel.html");
+    assert.equal(open.result._meta["openai/outputTemplate"], "ui://omnistream-for-codex/panel-rc4-mcp.html");
 
+    const legacyLaunch = await request(19, "tools/call", { name: "launch_omniverse_simulation", arguments: {} });
+    assert.match(legacyLaunch.error.message, /Configure a simulation before launching/, "Legacy empty arguments are still accepted.");
     const simulationRoot = mkdtempSync(path.join(os.tmpdir(), "omnistream-simulation-config-"));
     const configuredStage = path.join(simulationRoot, "configured.usda");
     writeFileSync(configuredStage, "#usda 1.0\n");
@@ -598,8 +605,11 @@ async function testMcpProtocol() {
     assert.equal(configured.result.structuredContent.configuration.name, "Contract simulation");
     assert.equal(configured.result.structuredContent.configuration.loop, true);
     assert.equal(configured.result.structuredContent.configuration.playEveryFrame, true);
+    const configurationId = configured.result.structuredContent.configuration.configurationId;
+    assert.match(configurationId, /^[0-9a-f-]{36}$/);
     const simulationPreflight = await request(22, "tools/call", { name: "preflight_omniverse_simulation", arguments: {} });
     assert.equal(simulationPreflight.result.structuredContent.configuration.name, "Contract simulation");
+    assert.equal(simulationPreflight.result.structuredContent.configuration.configurationId, configurationId);
     assert.ok(Array.isArray(simulationPreflight.result.structuredContent.checks));
     assert.ok(simulationPreflight.result.structuredContent.checks.some((item) => item.id === "stage" && item.ok === true));
     assert.ok(simulationPreflight.result.structuredContent.checks.some((item) => item.id === "workspace" && item.ok === true));
@@ -611,6 +621,60 @@ async function testMcpProtocol() {
     assert.equal(supervised.result.structuredContent.configuration.name, "Contract simulation");
     assert.equal(supervised.result.structuredContent.runtime.processAlive, false);
     assert.equal(supervised.result.structuredContent.health.simulation, "offline");
+    assert.equal(supervised.result.structuredContent.configuration.configurationId, configurationId);
+    const replaced = await request(24, "tools/call", {
+      name: "configure_omniverse_simulation",
+      arguments: { name: "Replacement", workspaceRoot: simulationRoot, stagePath: configuredStage }
+    });
+    assert.notEqual(replaced.result.structuredContent.configuration.configurationId, configurationId);
+    const staleLaunch = await request(25, "tools/call", {
+      name: "launch_omniverse_simulation", arguments: { expectedConfigurationId: configurationId }
+    });
+    assert.match(staleLaunch.error.message, /simulation configuration changed/i);
+    assert.equal(staleLaunch.error.data.code, "simulation_configuration_changed");
+    const stateAfterStaleLaunch = await request(26, "tools/call", { name: "get_omniverse_stream_status", arguments: {} });
+    assert.equal(stateAfterStaleLaunch.result.structuredContent.processAlive, false);
+    assert.equal(stateAfterStaleLaunch.result.structuredContent.processId, null, "A stale launch must not start a process.");
+    const endpoint = stateAfterStaleLaunch.result.structuredContent.browserSignaling;
+    assert.equal(typeof endpoint.secure, "boolean");
+    assert.equal(endpoint.host, endpoint.secure ? "localhost" : "127.0.0.1");
+    if (endpoint.secure) {
+      assert.equal(endpoint.ready, false, "An idle controller must not report a managed TLS relay as ready.");
+      assert.ok(simulationPreflight.result.structuredContent.checks.some(item => item.id === "signalingTlsCertificate" && item.severity === "required"));
+      assert.ok(simulationPreflight.result.structuredContent.checks.some(item => item.id === "signalingTlsPort" && item.severity === "required"));
+      if (expectPanelBundle) assert.ok(resource.result.contents[0]._meta.ui.csp.connectDomains.includes(`wss://localhost:${endpoint.port}`));
+    } else {
+      assert.equal(endpoint.ready, stateAfterStaleLaunch.result.structuredContent.streamListening,
+        "Direct signaling reports the observed port; a separate controller can already own Kit.");
+    }
+    // Deliver both requests in one stdin batch so configuration replacement
+    // runs while the launch awaits runtime reconciliation, before Kit effects.
+    child.stdin.cork();
+    const racingLaunch = request(27, "tools/call", {
+      name: "launch_omniverse_simulation",
+      arguments: { expectedConfigurationId: replaced.result.structuredContent.configuration.configurationId }
+    });
+    const racingConfiguration = request(28, "tools/call", {
+      name: "configure_omniverse_simulation",
+      arguments: { name: "Changed during admission", workspaceRoot: simulationRoot, stagePath: configuredStage }
+    });
+    child.stdin.uncork();
+    const [raceRejected, raceReplacement] = await Promise.all([racingLaunch, racingConfiguration]);
+    assert.equal(raceRejected.error?.data?.code, "simulation_configuration_changed", "Replacement during launch admission must refuse before Kit effects.");
+    child.stdin.cork();
+    const racingPreflight = request(29, "tools/call", { name: "preflight_omniverse_simulation", arguments: {} });
+    const nextConfiguration = request(30, "tools/call", {
+      name: "configure_omniverse_simulation",
+      arguments: { name: "Changed during preflight", workspaceRoot: simulationRoot, stagePath: configuredStage }
+    });
+    child.stdin.uncork();
+    const [coherentPreflight, nextConfigured] = await Promise.all([racingPreflight, nextConfiguration]);
+    assert.equal(coherentPreflight.result.structuredContent.configuration.configurationId, raceReplacement.result.structuredContent.configuration.configurationId);
+    assert.notEqual(coherentPreflight.result.structuredContent.configuration.configurationId, nextConfigured.result.structuredContent.configuration.configurationId);
+    assert.equal(coherentPreflight.result.structuredContent.configuration.name, "Changed during admission", "Async preflight must retain its initial complete snapshot.");
+    const stateAfterRace = await request(31, "tools/call", { name: "get_omniverse_stream_status", arguments: {} });
+    assert.equal(stateAfterRace.result.structuredContent.processAlive, false);
+    assert.equal(stateAfterRace.result.structuredContent.processId, null);
     rmSync(simulationRoot, { recursive: true, force: true });
 
     const noManagedSession = await request(50, "tools/call", { name: "attach_omniverse_stream", arguments: {} });

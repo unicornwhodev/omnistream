@@ -2,10 +2,20 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync, existsSync, readdirSync} from 'node:fs';
 import path from 'node:path';
-import {parseToolResult, observedState} from '../web/src/tool-result.mjs';
+import {parseToolResult, observedState, privateToolMetadata} from '../web/src/tool-result.mjs';
 import {sceneRoutes, sceneTools, liveTool, validateSchema} from '../mcp/scene-tools.mjs';
 const root=path.resolve(import.meta.dirname,'..');
 const read=(s)=>readFileSync(path.join(root,s),'utf8');
+
+test('current private MCP metadata takes precedence over stale host metadata',()=>{
+ assert.deepEqual(privateToolMetadata({_meta:{credential:'current'}},{credential:'old'}),{credential:'current'});
+ assert.deepEqual(privateToolMetadata({result:{_meta:{credential:'current'}}},{_meta:{credential:'old'}}),{credential:'current'});
+});
+test('private metadata supports MCP Apps envelopes without accepting public credential fields',()=>{
+ for(const key of ['mcp_tool_result','call_tool_result','tool_result'])assert.deepEqual(privateToolMetadata({[key]:{_meta:{credential:'private'}}}),{credential:'private'});
+ for(const response of [{credential:'public'},{structuredContent:{credential:'public'}},{result:{credential:'public'}}])assert.deepEqual(privateToolMetadata(response),{});
+ assert.deepEqual(privateToolMetadata(undefined,{credential:'legacy-private'}),{credential:'legacy-private'});
+});
 
 test('incomplete tool output cannot masquerade as success',()=>{
  for(const data of [undefined,null,{},{structuredContent:{}},[],{content:[{type:'text',text:'success'}]},{result:{}},{structuredContent:[]}])assert.throws(()=>parseToolResult(data),/incomplète/);

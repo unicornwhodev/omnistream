@@ -24,6 +24,33 @@ Scene edits remain in memory until exported or discarded. The separate `save_omn
 
 ## High-level workflow
 
+### Existing external streams
+
+`list_omniverse_remote_sessions` lists operator-configured profiles and the
+current attachment. `attach_omniverse_remote_stream({profileId})` selects one
+existing external stream. Its private SDK/ICE configuration is returned only
+in app metadata; public output never certifies video.
+`detach_omniverse_remote_stream({attachmentId})` releases that exact viewer
+attachment and leaves the external Kit/GPU running. A stale identity is refused.
+
+`open_omniverse_remote_signaling`, `exchange_omniverse_remote_signaling` and
+`close_omniverse_remote_signaling` are app-only bounded transport operations.
+The controller fixes the endpoint to the selected profile. Local Kit mutation
+tools are blocked while an external attachment exists. No remote USD bridge or
+cloud provisioning is implied. See [Remote sessions](REMOTE-SESSIONS.md).
+
+### App-only local signaling
+
+With `panelSignalingTransport: "mcp"`, the panel uses
+`open_omniverse_signaling`, `exchange_omniverse_signaling` and
+`close_omniverse_signaling`. Their visibility is `app`; they are transport
+operations rather than model scene-authoring tools. Normal structured output
+contains only success/state. Channel IDs and SDP/ICE responses are returned
+through private app metadata and must not be printed or copied into reports.
+The controller fixes the endpoint to its owned authenticated loopback Kit
+session. Channels cannot survive a runtime identity change. See
+[Configuration](CONFIGURATION.md#local-mcp-signaling-for-an-embedded-host).
+
 ### `preflight_omniverse_simulation`
 
 Read-only. No arguments.
@@ -41,6 +68,8 @@ Key output:
 ```
 
 Do not launch when `ready` is false.
+
+RC4 returns the snapshotted configuration, including its opaque `configurationId`. The configuration used for the checks is captured before asynchronous runtime inspection.
 
 ### `configure_omniverse_simulation`
 
@@ -79,7 +108,9 @@ Example:
 
 ### `launch_omniverse_simulation`
 
-No arguments. Mutating/serialized.
+Mutating/serialized. Optional argument: `expectedConfigurationId` (non-empty string, at most 128 characters), obtained from the validated configuration and its matching preflight.
+
+RC4 renews `configurationId` on configuration replacement or changes to stored cadence/loop settings. A mismatched expected identity returns JSON-RPC error data `{"code":"simulation_configuration_changed"}` before starting or loading Kit. Observe the current configuration, validate and preflight again; do not retry the mutation automatically. Empty arguments remain supported for legacy callers. The RC4 panel always supplies the expected identity.
 
 Starts or reuses only the managed Kit session, waits for WebRTC + authenticated bridge readiness, opens the configured stage, applies session-only simulation settings and publishes a run ID only after the full transaction succeeds.
 
