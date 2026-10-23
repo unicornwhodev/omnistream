@@ -916,6 +916,7 @@ function App() {
       }
       const config: DirectConfig = {
         videoElementId: "remote-video",
+        audioElementId: "remote-audio",
         signalingServer: tlsSignaling ? "localhost" : loopbackHost(currentRuntime.signalingHost),
         signalingPort:
           tlsSignaling ? currentRuntime.browserSignaling!.port : typeof currentRuntime.signalingPort === "number"
@@ -1884,6 +1885,7 @@ function App() {
               id="remote-video"
               className="remote-video"
               autoPlay
+              muted
               playsInline
               tabIndex={0}
               aria-label="Flux vidéo interactif de la scène Omniverse"
@@ -1894,6 +1896,7 @@ function App() {
               onCanPlay={markVideoFrameReady}
               onPlaying={markVideoFrameReady}
             />
+            <audio id="remote-audio" autoPlay muted aria-hidden="true" />
             {!hasVideoFrame && (
               <div className="viewport-overlay">
                 <div className="viewport-glyph">

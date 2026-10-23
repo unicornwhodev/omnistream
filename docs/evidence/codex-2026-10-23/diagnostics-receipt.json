@@ -61,9 +61,43 @@
     "networkPermissionsExpanded": false,
     "browserRendererAdded": false
   },
-  "actualNewBundleHostTestVerified": false,
+  "actualNewBundleHostTestVerified": true,
   "actualNewBundleDecodedVideoVerified": false,
   "acceptedCodexSceneCaptures": 0,
   "operatorReportedControlsUsable": true,
-  "productionReady": false
+  "productionReady": false,
+  "hostObservation": {
+    "sourceCommit": "be266bc0e494b9ebe860400f704fec54d5ccc532",
+    "audioTrackObserved": true,
+    "videoTrackObserved": true,
+    "iceState": "connected",
+    "connectionState": "connected",
+    "firstInboundVideoSample": {
+      "bytesReceived": 0,
+      "framesDecoded": 0
+    },
+    "stopReported": {
+      "action": "stop",
+      "status": "error"
+    },
+    "acceptedSceneCaptures": 0,
+    "rawDomPublished": false,
+    "observations": [
+      {
+        "file": "12-diagnostic-instance.txt",
+        "sha256": "d6a6549a5cc4ebbdba22cd9a3de541ce117f26b504f033a3cc34741fdba05515",
+        "recordedAt": "2026-10-23T20:00:07.313Z"
+      },
+      {
+        "file": "13-diagnostic-journal.txt",
+        "sha256": "4d71e1ac891693eacf67fb19f747778108d227c4e32aabf7e5499f236482e2a4",
+        "recordedAt": "2026-10-23T20:00:27.404Z"
+      },
+      {
+        "file": "14-media-retry.txt",
+        "sha256": "ee7181fc667418cc74e041d9ddc9c9daf57deb89f2af7479bb9e52f9c0591f58",
+        "recordedAt": "2026-10-23T20:05:08.650Z"
+      }
+    ]
+  }
 }

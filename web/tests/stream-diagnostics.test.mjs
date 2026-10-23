@@ -22,6 +22,8 @@ test('SDK diagnosis never copies arbitrary info, but retains recognized error co
  const result=streamEventDiagnostic({action:'stop',status:'error',info:'NVST_R_INVALID_STATE 800b1000 https://private.example/?token=private-secret'});
  assert.match(result,/stop\/error.*NVST_R_INVALID_STATE 800b1000/);
  assert.doesNotMatch(result,/private|https/);
+ assert.equal(streamEventDiagnostic({action:'stop',status:'error',info:'Session stopped: NETWORK_ERROR'}),'SDK vidéo : stop/error [NETWORK_ERROR].');
+ assert.doesNotMatch(streamEventDiagnostic({info:'Session stopped: private-value'}),/private/);
  assert.equal(streamEventDiagnostic({action:'private-action',status:'private-status',info:Error('private-message')}),'SDK vidéo : event/unknown.');
 });
 

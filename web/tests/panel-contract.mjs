@@ -90,6 +90,8 @@ assert.match(source, /const DEFAULT_WORKSPACE = "";/, "Le dépôt public ne doit
 assert.match(source, /value=\{kitRoot\}/, "Le panneau doit permettre un Kit root portable sans chemin machine intégré.");
 assert.match(source, /kitRoot: kitRoot\.trim\(\)/, "Le Kit root saisi dans le panneau doit être transmis au démarrage.");
 assert.match(source, /onLoadedData=\{markVideoFrameReady\}/, "Le viewport doit confirmer les données vidéo décodées.");
+assert.match(source, /audioElementId: "remote-audio"/, "La configuration SDK doit identifier son élément audio existant.");
+assert.match(source, /<audio id="remote-audio" autoPlay muted/, "La piste audio SDK doit avoir un élément média muet.");
 assert.match(source, /!hasVideoFrame && \(/, "L’état hors ligne ne doit rester visible qu'avant la première frame vidéo.");
 assert.match(source, /startRuntimeWatchdog/, "Le panneau doit détecter l'arrêt externe du runtime Kit.");
 assert.match(source, /Le runtime Kit a été arrêté hors de ce panneau/, "L'arrêt externe doit être rendu visible au lieu de laisser une connexion bloquée.");

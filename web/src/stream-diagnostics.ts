@@ -28,7 +28,8 @@ export function streamEventDiagnostic(event: { action?: unknown; status?: unknow
   const status = ["success", "error", "warning", "inProgress", "canceled"].includes(String(event.status)) ? String(event.status) : "unknown";
   const info = typeof event.info === "string" ? event.info : event.info instanceof Error ? event.info.message : "";
   const code = info.match(/\b(?:0x[0-9a-fA-F]{8}|800[bB][0-9a-fA-F]{4}|NVST_[A-Z_]{1,48})\b/g)?.slice(0, 3).join(" ");
-  return `SDK vidéo : ${action}/${status}${code ? ` (${code})` : ""}.`;
+  const reason = info.match(/^Session stopped: (CLIENT_DISCONNECTED|SERVER_DISCONNECTED|NETWORK_ERROR|ERROR)$/)?.[1];
+  return `SDK vidéo : ${action}/${status}${code ? ` (${code})` : ""}${reason ? ` [${reason}]` : ""}.`;
 }
 
 /** Observe this panel's native peers. No SDP, ICE credentials, candidate

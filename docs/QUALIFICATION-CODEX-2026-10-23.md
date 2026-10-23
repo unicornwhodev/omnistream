@@ -189,7 +189,28 @@ Le [reçu des diagnostics](evidence/codex-2026-10-23/diagnostics-receipt.json)
 identifie ce nouveau bundle et ses contrôles automatiques. Il ne réattribue
 pas les observations de l’ancien bundle à cette nouvelle construction.
 Une nouvelle instance doit charger l’instrumentation avant de rattacher la
-vidéo au Kit existant. Son essai visuel reste en attente.
+vidéo au Kit existant. Son essai dans Codex confirme ensuite des pistes audio
+et vidéo reçues, puis les états ICE et connexion `connected`. Le premier
+relevé natif indique zéro octet vidéo et zéro image décodée ; la session
+s’arrête immédiatement avec `stop/error`. Le message de transport prêt
+n’établit donc pas la réception du rendu. Un second runtime géré reproduit
+cet échec. Aucune capture de scène Codex n’est acceptée.
+
+### Compléter les éléments média du client
+
+Le client omettait l’élément `remote-audio`, alors que le SDK le configure par
+défaut et reçoit effectivement une piste audio. Le panneau fournit maintenant
+les deux éléments média, audio et vidéo muets pour la lecture automatique,
+comme dans l’[exemple NVIDIA](https://github.com/NVIDIA-Omniverse/web-viewer-sample/blob/main/src/AppStream.tsx).
+Le diagnostic conserve aussi le motif d’arrêt SDK lorsqu’il appartient à
+l’énumération connue ; il ne copie pas de message arbitraire ou de jeton.
+
+Le [reçu du correctif média](evidence/codex-2026-10-23/media-elements-receipt.json)
+identifie les vérifications et le nouveau bundle. Cette correction du contrat
+d’intégration reste à retester dans l’hôte ; son effet sur l’échec vidéo n’est
+pas encore établi. L’ouverture est déclenchée par l’outil du plugin. Lors du
+dernier contrôle, aucun panneau n’est exposé au pilote après cette demande ;
+cela empêche actuellement de vérifier cette nouvelle construction dans Codex.
 
 La nouvelle ressource et l’accès latéral nécessitent un rechargement du
 catalogue MCP. L’outil de capture ne voit que les applications développées dans

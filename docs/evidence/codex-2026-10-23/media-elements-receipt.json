@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "product": "omnistream-for-codex",
+  "version": "1.0.0-rc4",
+  "recordedAt": "2026-10-23T20:14:27.724Z",
+  "baseCommit": "be266bc0e494b9ebe860400f704fec54d5ccc532",
+  "changes": {
+    "explicitAudioElement": true,
+    "explicitAudioElementId": true,
+    "mutedAutoplayElements": true,
+    "allowlistedSdkStopReason": true
+  },
+  "checks": [
+    {
+      "name": "check",
+      "exitCode": 0,
+      "sha256": "a181c1c8b46e010cf13fe65fc2e38c9812c46110f473269d965457cd2ee3c341",
+      "startedAt": "2026-10-23T20:11:25.394Z",
+      "finishedAt": "2026-10-23T20:11:28.675Z"
+    },
+    {
+      "name": "test",
+      "exitCode": 0,
+      "sha256": "1e3c46186e7c53f71d0f1a42e7f51173566f4d29d75034fe11c2dc443c30efb2",
+      "startedAt": "2026-10-23T20:11:28.677Z",
+      "finishedAt": "2026-10-23T20:11:42.938Z"
+    },
+    {
+      "name": "test:web",
+      "exitCode": 0,
+      "sha256": "3877613ac497c1461ee84caa4fcb549de842e988ca242531dd6514aae620ef29",
+      "startedAt": "2026-10-23T20:11:42.939Z",
+      "finishedAt": "2026-10-23T20:11:52.786Z"
+    },
+    {
+      "name": "build:web",
+      "exitCode": 0,
+      "sha256": "c020a748a813bea820c9cd299cadb7d2ca59c90de8734e1b6578f2af5ae4251f",
+      "startedAt": "2026-10-23T20:11:52.787Z",
+      "finishedAt": "2026-10-23T20:11:55.468Z"
+    }
+  ],
+  "nodeTests": {
+    "passed": 110,
+    "failed": 0,
+    "skipped": 1
+  },
+  "bundle": [
+    {
+      "file": "omniverse-panel.js",
+      "size": 1136573,
+      "sha256": "6dc26c48372d060f908c6714a8e5d3b28af1a16b4d394237e613b691c4c1dc40"
+    },
+    {
+      "file": "omniverse-panel.css",
+      "size": 27740,
+      "sha256": "38f5436b114dcb00f203fb56b1f07d83399f6c0b05b9df24e1efd39222bd964b"
+    }
+  ],
+  "actualNewBundleHostTestVerified": false,
+  "actualNewBundleDecodedVideoVerified": false,
+  "acceptedCodexSceneCaptures": 0,
+  "productionReady": false,
+  "privacy": {
+    "rawScreenshotsPublished": false,
+    "rawDomPublished": false,
+    "credentialsPublished": false
+  }
+}
