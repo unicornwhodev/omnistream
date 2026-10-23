@@ -570,9 +570,13 @@ async function testMcpProtocol() {
 
     const resources = await request(3, "resources/list");
     assert.equal(resources.result.resources[0].uri, "ui://omnistream-for-codex/panel-rc4-layout.html");
+    assert.deepEqual(resources.result.resources[0]._meta["openai/ui"], {
+      availableDisplayModes: ["inline", "fullscreen"], preferredDisplayMode: "fullscreen"
+    });
 
     const resource = await request(4, "resources/read", { uri: "ui://omnistream-for-codex/panel-rc4-layout.html" });
     if (expectPanelBundle) {
+      assert.equal(resource.result.contents[0]._meta["openai/ui"].preferredDisplayMode, "fullscreen");
       const html = resource.result.contents[0].text;
       assert.match(html, /remote-video/);
       assert.match(html, /<div id="root"><\/div>/);

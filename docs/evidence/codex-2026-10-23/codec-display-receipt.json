@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "product": "omnistream-for-codex",
+  "version": "1.0.0-rc4",
+  "recordedAt": "2026-10-23T20:54:09.486Z",
+  "baseCommit": "9609de62ab75faecf43e173dfb4942661b133ca1",
+  "changes": {
+    "localCodec": "H264",
+    "localCodecList": [
+      "H264"
+    ],
+    "externalSessionProfilesChanged": false,
+    "resourcePreferredDisplayMode": "fullscreen",
+    "appExpandedDisplayRequest": "once-after-initialization-bounded-nonfatal"
+  },
+  "checks": [
+    {
+      "name": "check",
+      "startedAt": "2026-10-23T20:50:04.836Z",
+      "finishedAt": "2026-10-23T20:50:25.917Z",
+      "exitCode": 0,
+      "sha256": "a181c1c8b46e010cf13fe65fc2e38c9812c46110f473269d965457cd2ee3c341"
+    },
+    {
+      "name": "test",
+      "startedAt": "2026-10-23T20:50:26.192Z",
+      "finishedAt": "2026-10-23T20:52:07.693Z",
+      "exitCode": 0,
+      "sha256": "c21d18313d56ec64d1fae12f5f42332c118857692c780a04d4105eb3a83e2ca1"
+    },
+    {
+      "name": "test:web",
+      "startedAt": "2026-10-23T20:52:07.693Z",
+      "finishedAt": "2026-10-23T20:52:18.332Z",
+      "exitCode": 0,
+      "sha256": "000cbe62c4c93be65abf3128cf2c0c095bd6cf4b84fb67387091da9a3cdb3b2f"
+    },
+    {
+      "name": "build:web",
+      "startedAt": "2026-10-23T20:52:18.332Z",
+      "finishedAt": "2026-10-23T20:52:21.240Z",
+      "exitCode": 0,
+      "sha256": "96a15bd207936ecc426ddc73cd866f41f117a20a4bd4246a5361b140be710b97"
+    }
+  ],
+  "nodeTests": {
+    "passed": 111,
+    "failed": 0,
+    "skipped": 1,
+    "skipReason": "Windows symlink privilege test"
+  },
+  "bundle": [
+    {
+      "file": "omniverse-panel.js",
+      "size": 1136913,
+      "sha256": "889ab445e9c350448824102e21cba74dc9a54538887d7cc1f0507abe6dd18263"
+    },
+    {
+      "file": "omniverse-panel.css",
+      "size": 27740,
+      "sha256": "38f5436b114dcb00f203fb56b1f07d83399f6c0b05b9df24e1efd39222bd964b"
+    }
+  ],
+  "differential": {
+    "host": "Chrome developer-only loopback harness",
+    "actualCodexHost": false,
+    "independentManagedKit": true,
+    "before": {
+      "explicitCodec": false,
+      "ice": "connected",
+      "connection": "connected",
+      "videoBytes": 0,
+      "decodedFrames": 0,
+      "sdkStopReason": "SERVER_DISCONNECTED"
+    },
+    "after": {
+      "explicitCodec": "H264",
+      "sameKitProcess": true,
+      "stageReloaded": false,
+      "videoBytes": 395720,
+      "decodedFrames": 203,
+      "width": 1280,
+      "height": 720,
+      "observedLongerThanOneMinute": true,
+      "actualRtxSceneVisuallyObserved": true
+    },
+    "sourceFixtureSha256": "2c5e0dbe1460b873b8eb515361afe256840c12dc3708dcadf9462c61ff96e756",
+    "sourceAndTestCopyUnchanged": true,
+    "privateDomSha256": "efee0adbe241eef38f403de66fc3297e8554276c02b92c6cc3f9495dc424256f",
+    "privateDiagnosticSceneImageSha256": "cf8d37500fd033534934a149f508a8cabadbf9a8a26a758981b1075900927983",
+    "diagnosticRuntimeStopped": true,
+    "diagnosticHarnessClosed": true
+  },
+  "codex": {
+    "openingToolInvoked": true,
+    "availableMcpAppTabs": 0,
+    "expandedDisplayObserved": false,
+    "actualNewBundleObserved": false,
+    "decodedVideoVerified": false,
+    "acceptedSceneCaptures": 0,
+    "managedKitPreserved": true,
+    "blocker": "No MCP App side-panel tab is exposed. The available pilot cannot create MCP App tabs, expand inline cards or reload the Codex MCP catalog."
+  },
+  "qualificationComplete": false,
+  "productionReady": false,
+  "privacy": {
+    "rawScreenshotsPublished": false,
+    "rawDomPublished": false,
+    "rawLogsPublished": false,
+    "credentialsPublished": false,
+    "privatePathsPublished": false
+  }
+}

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-23T20:14:48.344Z",
+  "generatedAt": "2026-10-23T20:54:44.339Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -76,8 +76,8 @@
     },
     {
       "path": "docs/LOCAL-SETUP.md",
-      "size": 8900,
-      "sha256": "d055fb44c019e1085c820d68e9bae54b84a1acd20224d32e2386bed0cd2d0dd3"
+      "size": 9595,
+      "sha256": "4bef89aef86b4ad58c0328695c5bfc3f601a9713d3c0dbcbd842e2e7442c84bf"
     },
     {
       "path": "docs/MCP-REFERENCE.md",
@@ -111,8 +111,8 @@
     },
     {
       "path": "docs/QUALIFICATION-CODEX-2026-10-23.md",
-      "size": 13388,
-      "sha256": "31f411cd6770a24f24807553f1d0cdb8faacce7b65e4b3b200345955084b5266"
+      "size": 16397,
+      "sha256": "04e82b31c3b140f139a0819669227582d7ff90ea4bd8004e3f2c3727b1c976cc"
     },
     {
       "path": "docs/QUALIFICATION-FIREVIEWER-RC4.md",
@@ -168,6 +168,11 @@
       "path": "docs/evidence/codex-2026-10-23/bridge-receipt.json",
       "size": 3206,
       "sha256": "09e918a310abea2e57c349aca4d0cb5f4880825d78572ad441264f5e9721d988"
+    },
+    {
+      "path": "docs/evidence/codex-2026-10-23/codec-display-receipt.json",
+      "size": 3595,
+      "sha256": "4b6d445cefdd32e83595a91590d27dc9fd25c8b023928aaf3ab86478b654e524"
     },
     {
       "path": "docs/evidence/codex-2026-10-23/diagnostics-receipt.json",
@@ -326,8 +331,8 @@
     },
     {
       "path": "mcp/server.mjs",
-      "size": 101599,
-      "sha256": "eb6a0cf87412bcbb9f9f2065df95f17869bf9bf65f035848995a9fc90d0967b2"
+      "size": 101713,
+      "sha256": "172b821d002bb4c97e6e4640e01947b80ab0297dffd30dd074215519436dc7fa"
     },
     {
       "path": "mcp/stage-path-policy.mjs",
@@ -356,8 +361,8 @@
     },
     {
       "path": "mcp/test-server.mjs",
-      "size": 43668,
-      "sha256": "33a78378034da874c6679b621442c388b27bf48aaf29069566151d0dc46cfdc7"
+      "size": 43942,
+      "sha256": "2a4eccd6478b8ef0703aa6859952ab69dea9f35333510fa9dcfbb2915d6155af"
     },
     {
       "path": "package.json",
@@ -546,8 +551,8 @@
     },
     {
       "path": "web/src/host-bridge.ts",
-      "size": 3547,
-      "sha256": "69394040d618263d4400f6876be6a4989e8875b996c018306bf74284123826d3"
+      "size": 4290,
+      "sha256": "4bc7692536c38cd9efd2ae1db6dd848d8f88eae62470e4fee72fb866370e0fe0"
     },
     {
       "path": "web/src/index.css",
@@ -556,8 +561,8 @@
     },
     {
       "path": "web/src/main.tsx",
-      "size": 108661,
-      "sha256": "53a827d1060e0e587c69394b329d74f330b432790a371cf33634b3c091dc881f"
+      "size": 108975,
+      "sha256": "79f2fe2c889734c12456536b4aa34ea0f21f73a66c63f237406777a154cf67d1"
     },
     {
       "path": "web/src/mcp-signaling.ts",
@@ -591,8 +596,8 @@
     },
     {
       "path": "web/tests/host-bridge.test.mjs",
-      "size": 4104,
-      "sha256": "4e713bd78943775a9926e2c64b1b0b491b8ec0660a42d9c652d7621d15be8da9"
+      "size": 5405,
+      "sha256": "f83f3ff2cece2462abd8f05d3884ffe0154100a8915f137d3448a86f70e0531a"
     },
     {
       "path": "web/tests/mcp-signaling.test.mjs",
@@ -601,8 +606,8 @@
     },
     {
       "path": "web/tests/panel-contract.mjs",
-      "size": 13955,
-      "sha256": "814afd3d65cee8b0002921425e8018def7c6a4cddc9c8cc2d593a87362f8c151"
+      "size": 14113,
+      "sha256": "ce9d8b3e83b7a8c1cd047e081abbc3bee02d1de318535803f102e4db7effe254"
     },
     {
       "path": "web/tests/session-preparation.test.mjs",

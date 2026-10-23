@@ -34,8 +34,11 @@ after UI changes. Reload the MCP controller when tool schemas, entrypoints or
 controller configuration change; the panel and controller must belong to the
 same candidate.
 
-The opening tool declares a conversation side-panel entrypoint. Use that entry
-or expand a newly opened card into the side panel. The current UI resource is
+The opening tool declares a conversation side-panel entrypoint. Its UI resource
+now prefers `fullscreen`, and the initialized Apps client makes one bounded
+request for that expanded host surface. A refused display request does not
+disable controller access. Actual opening still needs to be observed in Codex;
+these declarations alone do not certify it. The current UI resource is
 `ui://omnistream-for-codex/panel-rc4-layout.html`. Reload the plugin's MCP
 controller after an update so Codex discovers its current schema and entrypoint;
 close old cards before opening the new resource. The inline layout uses content
@@ -147,7 +150,7 @@ evidence and must be labelled accordingly.
 The October 23 report tracks the Codex integration gate after the opening and
 height fixes. The corrected panel has completed its Apps handshake and launched
 Kit from the real Codex UI. Scene supervision and telemetry work in that run,
-but video stops before a decoded frame is verified. The panel reports a
+but video initially stops before a decoded frame is verified. The panel reports a
 `connect-src` violation and Kit logs `NVST_R_INVALID_STATE`; their causal link
 has not been established. Screenshot automation also fails, then UI automation
 stops responding while the operator reports the panel remains usable. Record
@@ -157,6 +160,13 @@ their own proof.
 If no MCP Apps tab opens, record the host error and candidate identity; do not
 interpret the text “studio opened” as proof that the UI rendered. Browser
 harness evidence and automatic native tests remain separate results.
+
+A subsequent isolated comparison reproduces the video disconnection in Chrome
+with the same client. Restricting the local DirectConfig to H.264 then decodes
+the real RTX scene without restarting that diagnostic Kit. Local streams now
+request H.264 explicitly; automatic AV1/HEVC selection is not qualified. This
+does not change external session profiles. The updated client still requires
+an observed Codex panel run before the integrated video gate can pass.
 
 Use `installer\diagnose.cmd`, inspect bounded runtime logs, and rerun preflight.
 Repair preserves operator-configured `panelSignalingTransport`, `signalingTls`

@@ -100,6 +100,10 @@ const cameraNavigationModes = new Set(["orbit", "pan", "dolly"]);
 const streamStopPendingStates = new Set(["safe_stop_pending", "awaiting_runtime_exit", "waiting_for_signaling", "stream_stop_timeout"]);
 const sensitiveKeyPattern = /(?:token|secret|credential|authorization|password)/i;
 const widgetResourceMeta = {
+  "openai/ui": {
+    availableDisplayModes: ["inline", "fullscreen"],
+    preferredDisplayMode: "fullscreen"
+  },
   ui: {
     prefersBorder: true,
     csp: {

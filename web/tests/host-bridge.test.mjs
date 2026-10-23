@@ -1,7 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {App} from '@modelcontextprotocol/ext-apps';
-import {createHostBridge} from '../node_modules/.cache/omnistream-bridge-tests/host-bridge.js';
+import {createHostBridge,requestExpandedDisplay} from '../node_modules/.cache/omnistream-bridge-tests/host-bridge.js';
+
+test('expanded display is requested only when supported, and denial leaves the controller usable', async () => {
+  const requests=[];
+  const app={getHostContext:()=>({displayMode:'inline',availableDisplayModes:['inline','fullscreen']}),
+    requestDisplayMode:async params=>{requests.push(params);throw Error('host retained inline');}};
+  await requestExpandedDisplay(app);
+  assert.deepEqual(requests,[{mode:'fullscreen'}]);
+  app.getHostContext=()=>({displayMode:'fullscreen',availableDisplayModes:['inline','fullscreen']});
+  await requestExpandedDisplay(app);
+  app.getHostContext=()=>({displayMode:'inline',availableDisplayModes:['inline']});
+  await requestExpandedDisplay(app);
+  assert.equal(requests.length,1);
+  app.getHostContext=()=>({});
+  await requestExpandedDisplay(app);
+  assert.equal(requests.length,2, 'Older hosts may omit display context; the request remains bounded and optional.');
+});
 
 test('embedded panel gates tools on one completed handshake even when the legacy alias is present', async () => {
   let finish, connects=0, sdkCalls=0, legacyCalls=0;
@@ -52,8 +68,11 @@ test('real Apps SDK sends initialize and initialized before tools/call and prese
       if(message.method==='ui/initialize') {
         queueMicrotask(()=>this.onmessage?.({jsonrpc:'2.0',id:message.id,result:{
           protocolVersion:message.params.protocolVersion,hostInfo:{name:'strict-fixture',version:'1'},
-          hostCapabilities:{serverTools:{}},hostContext:{theme:'dark',displayMode:'inline'},
+          hostCapabilities:{serverTools:{}},hostContext:{theme:'dark',displayMode:'inline',availableDisplayModes:['inline','fullscreen']},
         }}));
+      } else if(message.method==='ui/request-display-mode') {
+        assert.ok(messages.some(m=>m.method==='ui/notifications/initialized'));
+        queueMicrotask(()=>this.onmessage?.({jsonrpc:'2.0',id:message.id,result:{mode:'fullscreen'}}));
       } else if(message.method==='tools/call') {
         assert.ok(messages.some(m=>m.method==='ui/notifications/initialized'));
         queueMicrotask(()=>this.onmessage?.({jsonrpc:'2.0',id:message.id,result:{
@@ -64,11 +83,11 @@ test('real Apps SDK sends initialize and initialized before tools/call and prese
   };
   const app=new App({name:'OmniStream handshake test',version:'1'}, {}, {autoResize:false,strict:true});
   t.after(()=>app.close());
-  const bridge=createHostBridge({connect:()=>app.connect(transport,{timeout:1000}),
+  const bridge=createHostBridge({connect:async()=>{await app.connect(transport,{timeout:1000});await requestExpandedDisplay(app);},
     callServerTool:params=>app.callServerTool(params,{timeout:1000})},{embedded:true});
   assert.equal(await bridge.start(),true);
   const result=await bridge.callTool('supervise_omniverse_simulation',{});
-  assert.deepEqual(messages.map(m=>m.method),['ui/initialize','ui/notifications/initialized','tools/call']);
+  assert.deepEqual(messages.map(m=>m.method),['ui/initialize','ui/notifications/initialized','ui/request-display-mode','tools/call']);
   assert.deepEqual(result.structuredContent,{ok:true});
   assert.equal(result._meta.fixtureOnly,'private-response-metadata');
 });

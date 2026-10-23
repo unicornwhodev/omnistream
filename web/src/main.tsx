@@ -4,6 +4,7 @@ import {
   EventStatus,
   StreamStatus,
   StreamType,
+  VideoCodec,
   type DirectConfig,
   type StreamEvent,
 } from "@nvidia/ov-web-rtc";
@@ -917,6 +918,11 @@ function App() {
       const config: DirectConfig = {
         videoElementId: "remote-video",
         audioElementId: "remote-audio",
+        // Keep the local Kit contract stable across browser codec changes.
+        // Automatic selection disconnected before the first frame on the
+        // qualified runtime; explicit H.264 decoded with the same Kit process.
+        codec: VideoCodec.H264,
+        codecList: [VideoCodec.H264],
         signalingServer: tlsSignaling ? "localhost" : loopbackHost(currentRuntime.signalingHost),
         signalingPort:
           tlsSignaling ? currentRuntime.browserSignaling!.port : typeof currentRuntime.signalingPort === "number"

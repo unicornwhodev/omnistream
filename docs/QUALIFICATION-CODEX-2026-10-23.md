@@ -222,3 +222,50 @@ Les journaux complets, sauvegardes des fichiers installés, chemins locaux et
 captures brutes restent dans `release/`, ignoré par Git. Seuls les reçus
 expurgés et captures inspectées peuvent être ajoutés au dépôt après audit de
 l’index et vérification de l’identité publique du commit.
+
+## Suite du diagnostic : codec et affichage développé
+
+Le client avec ses deux éléments média reproduit l’arrêt dans un harness Chrome
+isolé, sur des ports distincts et avec son propre runtime géré. Le SDK indique
+`SERVER_DISCONNECTED` après ICE/connexion `connected`, avec zéro octet vidéo
+et zéro image décodée. L’échec vidéo ne dépend donc pas uniquement du panneau
+Codex ou de sa violation CSP.
+
+La configuration locale est ensuite bornée à `VideoCodec.H264` et
+`codecList: [VideoCodec.H264]`. Un nouveau client se rattache au **même processus
+Kit de diagnostic**, sans rechargement du USD. La vraie scène RTX s’affiche ; le
+relevé natif passe de zéro à **395 720 octets vidéo et 203 images décodées**.
+Le panneau indique ensuite **1280 × 720**, et le rendu reste visible plus
+d’une minute. La capture locale montre le sol, deux cubes et une sphère de la
+fixture, dans l’interface Kit réellement transmise par WebRTC. Aucun rendu de
+substitution n’est introduit. Le codec précis choisi auparavant par la sélection
+automatique n’a pas été mesuré ; cet essai ne qualifie ni AV1 ni HEVC.
+
+Le runtime de comparaison est arrêté par son propre contrôleur authentifié.
+Le Kit de la session Codex est conservé. La capture Chrome reste un diagnostic
+local : elle ne compte pas parmi les preuves de scène Codex et n’est pas publiée
+comme telle.
+
+Un second défaut est identifié dans le contrat d’ouverture : la ressource ne
+déclarait pas de préférence d’affichage, ce qui conserve le comportement inline
+par défaut décrit dans la [spécification OpenAI](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#display-modes).
+Elle annonce maintenant `inline` et `fullscreen`, avec préférence `fullscreen`.
+Le client Apps annonce ces mêmes modes et demande une fois l’affichage développé
+après initialisation. La demande est bornée et son refus ne rend pas le
+contrôleur inutilisable. Les tests couvrent le protocole SDK réel, les hôtes
+qui omettent le contexte d’affichage et le refus d’une demande.
+
+Ces changements sont installés dans les copies locales du plugin. Cependant,
+les appels d’ouverture de cette reprise laissent l’inventaire MCP Apps vide.
+Le pilote disponible ne peut ni créer un onglet MCP Apps, ni développer une
+carte inline, ni recharger le catalogue MCP de Codex. L’absence de panneau
+empêche donc encore l’essai intégré de cette nouvelle construction. Le rôle
+exact du catalogue et du cache de ressource dans cette absence reste à vérifier.
+**La qualification visuelle Codex demeure ouverte, avec zéro capture de scène
+Codex acceptée.** Le correctif H.264 qualifié dans le diagnostic ne suffit pas
+à clore ce critère.
+
+Le [reçu codec et affichage](evidence/codex-2026-10-23/codec-display-receipt.json)
+sépare les tests automatiques, l’essai RTX Chrome réellement observé et le
+critère Codex non acquis. Les preuves antérieures gardent leur propre identité
+de bundle.

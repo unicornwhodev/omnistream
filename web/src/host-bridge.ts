@@ -8,6 +8,16 @@ type Client = {
   callServerTool: (params: { name: string; arguments: ToolArguments }) => Promise<unknown>;
 };
 
+/** Request the expanded host surface once after initialization. A rejected
+ * display request must not disable scene control or the Apps handshake. */
+export async function requestExpandedDisplay(app: Pick<McpApp, 'getHostContext' | 'requestDisplayMode'>) {
+  const context = app.getHostContext();
+  if (context?.displayMode === 'fullscreen' ||
+      (context?.availableDisplayModes && !context.availableDisplayModes.includes('fullscreen'))) return;
+  try { await app.requestDisplayMode({ mode: 'fullscreen' }, { timeout: 5_000 }); }
+  catch { /* Hosts may keep the current surface; controller readiness is independent. */ }
+}
+
 /** App hosts require the Apps handshake before any tool call.
  * Only the explicitly marked standalone developer harness keeps its shim. */
 export function createHostBridge(client: Client, environment: {
@@ -45,12 +55,16 @@ function hostBridge() {
   const standaloneHarness = hostWindow.__OMNISTREAM_PANEL_HARNESS__ === true && window.parent === window;
   const embedded = !standaloneHarness;
   const legacyCallTool = hostWindow.openai?.callTool?.bind(hostWindow.openai);
-  const app = embedded ? new McpApp({ name: 'OmniStream for Codex', version: '1.0.0-rc4' }, {}, { autoResize: true, strict: true }) : null;
+  const app = embedded ? new McpApp({ name: 'OmniStream for Codex', version: '1.0.0-rc4' }, { availableDisplayModes: ['inline', 'fullscreen'] }, { autoResize: true, strict: true }) : null;
   // Register before connect. Initial output is followed by authoritative reads
   // once the handshake has made the controller ready.
   if (app) app.ontoolresult = () => {};
   shared = createHostBridge({
-    connect: () => app ? app.connect(undefined, { timeout: 15_000 }) : Promise.resolve(),
+    connect: async () => {
+      if (!app) return;
+      await app.connect(undefined, { timeout: 15_000 });
+      void requestExpandedDisplay(app);
+    },
     callServerTool: params => {
       if (!app) return Promise.reject(new Error('Contrôleur MCP Apps indisponible.'));
       // Cold Kit startup can outlast the SDK's default request timeout.
