@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "product": "omnistream-for-codex",
+  "version": "1.0.0-rc4",
+  "capturedAt": "2026-10-23T18:49:18.064Z",
+  "baseCommit": "eb4efaf27a10f5afe639cbba9fe176c087f96ef3",
+  "uiResource": "ui://omnistream-for-codex/panel-rc4-layout.html",
+  "defect": {
+    "hostError": "MCP app initialization timed out",
+    "beforeSourceInitializedApps": false,
+    "operatorObservedBlankPanel": true,
+    "initialScreenshotFailed": true
+  },
+  "bridge": {
+    "sdk": "@modelcontextprotocol/ext-apps",
+    "version": "2.0.3",
+    "embeddedHandshakeRequired": true,
+    "nativeTopLevelWebViewHandshake": true,
+    "handshakeTimeoutMs": 15000,
+    "toolTimeoutMs": 180000,
+    "standaloneHarnessCompatibility": true,
+    "embeddedLegacyFallback": false
+  },
+  "checks": [
+    {
+      "command": "npm run check",
+      "exitCode": 0,
+      "startedAt": "2026-10-23T18:47:37.113Z",
+      "finishedAt": "2026-10-23T18:47:40.126Z",
+      "logSha256": "a181c1c8b46e010cf13fe65fc2e38c9812c46110f473269d965457cd2ee3c341"
+    },
+    {
+      "command": "npm run test",
+      "exitCode": 0,
+      "startedAt": "2026-10-23T18:47:40.127Z",
+      "finishedAt": "2026-10-23T18:47:55.092Z",
+      "logSha256": "fa164a0ed618600db471e50728aed72d0fb65d809025a63f52f31a1c4ccbf536"
+    },
+    {
+      "command": "npm run test:web",
+      "exitCode": 0,
+      "startedAt": "2026-10-23T18:47:55.092Z",
+      "finishedAt": "2026-10-23T18:48:05.080Z",
+      "logSha256": "ec5aa4cbdeaed9934301c025115076f66cee8fcc736526481555c1b807278025"
+    },
+    {
+      "command": "npm run build:web",
+      "exitCode": 0,
+      "startedAt": "2026-10-23T18:48:05.081Z",
+      "finishedAt": "2026-10-23T18:48:07.628Z",
+      "logSha256": "dea7da4bd5b7d15bccaff701b7091f648c03534f2d1f9bd37cef907b8ff22899"
+    }
+  ],
+  "nodeTests": {
+    "total": 108,
+    "passed": 107,
+    "failed": 0,
+    "skipped": 1,
+    "skipReason": "Windows symlink privileges"
+  },
+  "sdkProtocolTest": {
+    "initializationBeforeToolsVerified": true,
+    "initializedNotificationVerified": true,
+    "privateResultMetadataPreserved": true,
+    "fixtureVideoStream": false
+  },
+  "installedProtocol": {
+    "exitCode": 0,
+    "logSha256": "6c90a62a4778ada2e3d5d246f019aa1dc02c2c977dd69fd6f79d6662fd1e2e04"
+  },
+  "npmAudit": {
+    "totalVulnerabilities": 0,
+    "logSha256": "3947471ef2c8e3458af2e44b4cc064c450baf8970a2221028f708656c067e69a"
+  },
+  "bundle": [
+    {
+      "file": "omniverse-panel.js",
+      "size": 1133331,
+      "sha256": "2357403eda59e913310875c9d9c11539243143dd0b91d94157aa0998eefc4df8"
+    },
+    {
+      "file": "omniverse-panel.css",
+      "size": 27740,
+      "sha256": "38f5436b114dcb00f203fb56b1f07d83399f6c0b05b9df24e1efd39222bd964b"
+    }
+  ],
+  "installedCopies": {
+    "targets": 3,
+    "sourceAndBundleVerified": true
+  },
+  "codexHost": {
+    "newBundleObserved": false,
+    "handshakeReady": false,
+    "stableObservationSeconds": 0,
+    "screenshotCaptured": false,
+    "decodedVideoVerified": false,
+    "controlsVerified": false,
+    "nativePointerKeyboardVerified": false
+  },
+  "productionReady": false,
+  "privacy": {
+    "rawHostLogsPublished": false,
+    "localPathsPublished": false,
+    "credentialsPublished": false
+  }
+}

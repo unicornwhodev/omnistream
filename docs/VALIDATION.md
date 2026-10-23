@@ -79,7 +79,7 @@ Only after that evidence should the version be promoted to `1.0.0`.
 
 Automated runtime tests still do not prove that a particular Codex Desktop build rendered the embedded video. Verify that:
 
-1. `ui://omnistream-for-codex/panel-rc4-layout.html` loads after the local panel build and controller reload. The studio declares a conversation side-panel entrypoint. Its inline intrinsic height must settle instead of growing after every host resize; only the fullscreen video uses viewport-height units.
+1. `ui://omnistream-for-codex/panel-rc4-layout.html` loads after the local panel build and controller reload. The studio declares a conversation side-panel entrypoint. Its inline intrinsic height must settle instead of growing after every host resize; only the fullscreen video uses viewport-height units. The embedded app must finish `ui/initialize` and `ui/notifications/initialized` before any tool call; the legacy `window.openai` alias alone is not readiness. Verify that the real panel remains visible past initialization and responds to controls.
 2. Config validation does not start Kit.
 3. Launch reaches ready states for the managed process, signaling, authenticated bridge, and selected stage.
 4. Supervision updates while runtime/timeline state changes.

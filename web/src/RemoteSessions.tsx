@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useRef, useState, type ReactNode 
 import { AppStreamer, EventStatus, StreamStatus, StreamType, type DirectConfig } from '@nvidia/ov-web-rtc';
 import { parseToolResult, privateToolMetadata } from './tool-result.mjs';
 import { installMcpSignaling } from './mcp-signaling';
+import { callHostTool } from './host-bridge';
 
 type Profile = { id: string; label: string; provider: string; signalingOrigin: string; mediaConnectivity: string; accessConfigured: boolean };
 type Attachment = { attachmentId: string; profileId: string; label: string; provider: string };
@@ -11,8 +12,7 @@ const LocalConnectionLock = createContext<(value: boolean) => void>(() => {});
 export const useLocalConnectionLock = () => useContext(LocalConnectionLock);
 
 async function invoke(name: string, args: Record<string, unknown>) {
-  if (!window.openai?.callTool) throw new Error('Le contrôleur Codex est indisponible.');
-  const response = await window.openai.callTool(name, args);
+  const response = await callHostTool(name, args);
   return { data: parseToolResult(response), meta: privateToolMetadata(response) };
 }
 

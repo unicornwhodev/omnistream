@@ -19,6 +19,7 @@ import { SessionPreparation, initialPreparation, parseConfiguration, type Simula
 import { probeSignaling } from "./signaling-probe";
 import { installMcpSignaling } from "./mcp-signaling";
 import { ConnectionStudio, useLocalConnectionLock } from "./RemoteSessions";
+import { callHostTool as invokeHostTool, isHostBridgeReady, startHostBridge } from "./host-bridge";
 
 declare global {
   interface Window {
@@ -210,12 +211,7 @@ function privateWidgetMetadata(response: unknown): Record<string, unknown> {
 }
 
 async function callHostTool(name: string, args: Record<string, unknown>) {
-  const callTool = window.openai?.callTool;
-  if (!callTool)
-    throw new Error(
-      "Le pont d'outils Codex n'est pas disponible dans ce panneau.",
-    );
-  return callTool.call(window.openai, name, args);
+  return invokeHostTool(name, args);
 }
 
 function isSuccessful(event: StreamEvent) {
@@ -355,7 +351,7 @@ function ToggleControl({
 function App() {
   const setLocalConnectionLock = useLocalConnectionLock();
   const confirm = useConfirm();
-  const [hostReady, setHostReady] = useState(Boolean(window.openai?.callTool));
+  const [hostReady, setHostReady] = useState(isHostBridgeReady);
   const [hostError, setHostError] = useState("");
   const [lastObservedAt, setLastObservedAt] = useState<number | null>(null);
   const supervisionBusy = useRef(false);
@@ -1613,12 +1609,15 @@ function App() {
   };
 
   useEffect(() => {
-    const check = () => setHostReady(Boolean(window.openai?.callTool));
+    const check = () => setHostReady(isHostBridgeReady());
+    void startHostBridge().then(check);
     const timer = window.setInterval(check, 1000);
     window.addEventListener("openai:set_globals", check);
+    window.addEventListener("omnistream:host-bridge", check);
     return () => {
       window.clearInterval(timer);
       window.removeEventListener("openai:set_globals", check);
+      window.removeEventListener("omnistream:host-bridge", check);
     };
   }, []);
 

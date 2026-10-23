@@ -7,6 +7,7 @@ const pluginRoot = resolve(webRoot, "..");
 // Normalize layout whitespace only; source contracts are not substitutes for a built-bundle check.
 const source = readFileSync(resolve(webRoot, "src", "main.tsx"), "utf8").replace(/\s+/g, " ");
 const css = readFileSync(resolve(webRoot, "src", "index.css"), "utf8").replace(/\s+/g, " ");
+const hostBridge = readFileSync(resolve(webRoot, "src", "host-bridge.ts"), "utf8");
 const bundlePath = resolve(pluginRoot, "mcp", "web-dist", "assets", "omniverse-panel.js");
 const attachSource = source.slice(source.indexOf("const attachExistingRuntime"), source.indexOf("const loadStage"));
 const invalidateSource = source.slice(source.indexOf("const invalidateStream"), source.indexOf("const startRuntimeWatchdog"));
@@ -47,6 +48,11 @@ assert.match(css, /\.health-grid/, "La supervision doit avoir une grille de sant
 assert.match(css, /\.transport-main/, "Le contrôle doit avoir un transport de simulation dédié.");
 
 assert.match(source, /toolResponseMetadata/, "Le panneau doit prioriser les métadonnées canoniques du widget.");
+assert.match(source, /void startHostBridge\(\)\.then\(check\)/, "Le panneau doit initialiser le protocole MCP Apps au montage.");
+assert.match(source, /setHostReady\(isHostBridgeReady\(\)\)/, "La disponibilité du contrôleur doit attendre la négociation MCP Apps.");
+assert.doesNotMatch(source, /Boolean\(window\.openai\?\.callTool\)/, "La seule présence de l’alias historique ne confirme pas l’initialisation de l’hôte.");
+assert.match(hostBridge, /__OMNISTREAM_PANEL_HARNESS__ === true/, "Seul le harness explicite peut éviter la négociation MCP Apps.");
+assert.doesNotMatch(hostBridge, /const embedded = window\.parent !== window/, "Une WebView native de premier niveau doit aussi initialiser MCP Apps.");
 assert.match(source, /privateToolMetadata/, "Le panneau doit accepter les enveloppes privées MCP Apps de métadonnées.");
 assert.match(source, /installViewportFocusGuard/, "Le focus du viewport doit être restauré après le SDK.");
 assert.match(source, /attributeFilter: \["tabindex", "style"\]/, "Un MutationObserver doit réparer les mutations SDK du viewport.");
@@ -106,6 +112,8 @@ assert.doesNotMatch(css, /html, body, #root\s*\{[^}]*min-height:\s*100%/, "Le do
 assert.match(css, /\.asset-source-list/, "La liste des bibliothèques détectées doit recevoir un style lisible.");
 
 matchBundle(/setViewportInputActive/, "Le bundle servi doit contenir le garde d'entrée viewport.");
+matchBundle(/ui\/initialize/, "Le bundle servi doit inclure l’initialisation standard MCP Apps.");
+matchBundle(/ui\/notifications\/initialized/, "Le bundle servi doit confirmer la fin de la négociation à l’hôte.");
 matchBundle(/attach_omniverse_stream/, "Le bundle servi doit pouvoir reattach le runtime Kit déjà géré.");
 matchBundle(/toolResponseMetadata/, "Le bundle servi doit lire les métadonnées widget canoniques.");
 matchBundle(/data-viewport-focus-guard/, "Le bundle servi doit contenir la surface focusable du viewport.");

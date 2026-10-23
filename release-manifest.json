@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-23T18:17:18.070Z",
+  "generatedAt": "2026-10-23T18:49:24.210Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -76,8 +76,8 @@
     },
     {
       "path": "docs/LOCAL-SETUP.md",
-      "size": 7814,
-      "sha256": "ae15daa844bc2be061a519427cfd0f77e7fe28f2d7170a128efe1edbc34f006c"
+      "size": 8347,
+      "sha256": "01669ff82ad6dfa864195b40f37ac82e52006496e3868e92f316510c6ce678c0"
     },
     {
       "path": "docs/MCP-REFERENCE.md",
@@ -111,8 +111,8 @@
     },
     {
       "path": "docs/QUALIFICATION-CODEX-2026-10-23.md",
-      "size": 5232,
-      "sha256": "c634891a43e0e4e75d543d436db2e96d89c8121c5faa29d903ef04d6d37b7ec7"
+      "size": 7726,
+      "sha256": "dbf08bbd02f589cd52097a7bc5d62fee7904e9527e70bdba88d1f31f6e2cc39d"
     },
     {
       "path": "docs/QUALIFICATION-FIREVIEWER-RC4.md",
@@ -161,8 +161,13 @@
     },
     {
       "path": "docs/VALIDATION.md",
-      "size": 6941,
-      "sha256": "bbfe0642c93ee28f919ae3dffe80cdf68e09abc7cb17876f180a34f09d700ed8"
+      "size": 7189,
+      "sha256": "b5dc8a32d88e0afe9db7b1fc24d84e1781e51e10df52a2ae479453f09ae1b059"
+    },
+    {
+      "path": "docs/evidence/codex-2026-10-23/bridge-receipt.json",
+      "size": 3208,
+      "sha256": "8e83ffb486de68ed11cb9789fc10b11cdad251a97e3fc97f2f9c946cf3fe2d11"
     },
     {
       "path": "docs/evidence/codex-2026-10-23/receipt.json",
@@ -276,8 +281,8 @@
     },
     {
       "path": "mcp/panel-runtime-harness.mjs",
-      "size": 8663,
-      "sha256": "530a0dfe3fd889c40ceec421a8ecbed801740991fac167977810452f24c27154"
+      "size": 8709,
+      "sha256": "35d1c5454b14b2db205566760b47f7de1ec6030fa7d19ebbfcceb3db82911e73"
     },
     {
       "path": "mcp/paths.mjs",
@@ -406,8 +411,8 @@
     },
     {
       "path": "scripts/test-panel-state.mjs",
-      "size": 996,
-      "sha256": "7b9fe616770648c20e5ae1eaf249b26607176823473556e035a0876bf05be6ea"
+      "size": 1687,
+      "sha256": "e0e524586fa58c60a94616a148ad249f2ff97a884137d3f9d8615a5db91e52d3"
     },
     {
       "path": "scripts/test-web.mjs",
@@ -491,13 +496,13 @@
     },
     {
       "path": "web/package-lock.json",
-      "size": 72276,
-      "sha256": "4ba9a17a62a9ecc0a7526bf16dc98b0cee339941af2fc4d0af7ca92e354f8b6a"
+      "size": 79169,
+      "sha256": "3e8c563e2c225d62f4bb8c44d39ec9b9ca70b068c306a238bf6ef2c9b61c56db"
     },
     {
       "path": "web/package.json",
-      "size": 981,
-      "sha256": "ce80a8dfdc2dfb9138407042ebde85a4f99d01f7d57a6838227128d150224358"
+      "size": 1028,
+      "sha256": "98a666ef503cd351459314cb26c79103435c75416c8a9bf3d3f44e7d409d1533"
     },
     {
       "path": "web/src/Confirmation.tsx",
@@ -516,13 +521,18 @@
     },
     {
       "path": "web/src/RemoteSessions.tsx",
-      "size": 16522,
-      "sha256": "2cd3220fa1c8d5d11d4a9b7bc4e3c353f8165a61856150c9ec288b18ab37f163"
+      "size": 16467,
+      "sha256": "162352cdb98e44eed2f83896932ef8846d7011611969db717eb68d8f016a0c8e"
     },
     {
       "path": "web/src/SceneWorkbench.tsx",
       "size": 41389,
       "sha256": "74b48dd994bb76d82610f992147458d557318acbd311c6ed30a9b0dd6bd67c74"
+    },
+    {
+      "path": "web/src/host-bridge.ts",
+      "size": 3547,
+      "sha256": "69394040d618263d4400f6876be6a4989e8875b996c018306bf74284123826d3"
     },
     {
       "path": "web/src/index.css",
@@ -531,8 +541,8 @@
     },
     {
       "path": "web/src/main.tsx",
-      "size": 108011,
-      "sha256": "2028fda5ff02f75aa010632d9468fe12f741d2b230587b518f1c6cf61845c9e9"
+      "size": 108079,
+      "sha256": "e51c3be5c8c798d1fceff103b61a15b1e1f984f87158026778b93f40b77ead3a"
     },
     {
       "path": "web/src/mcp-signaling.ts",
@@ -560,14 +570,19 @@
       "sha256": "1c6969085790bb22726a42f10c8f09704605915773691c015b9678369bf9bfb5"
     },
     {
+      "path": "web/tests/host-bridge.test.mjs",
+      "size": 4104,
+      "sha256": "4e713bd78943775a9926e2c64b1b0b491b8ec0660a42d9c652d7621d15be8da9"
+    },
+    {
       "path": "web/tests/mcp-signaling.test.mjs",
       "size": 6402,
       "sha256": "c45520bc5bdeccc2dbe46c37964881b5c8e4bcc23eb87e58d471226ec7e32e43"
     },
     {
       "path": "web/tests/panel-contract.mjs",
-      "size": 12678,
-      "sha256": "e9d44246c2f8e7ca7945288d4fd5be85ca8fcf0bc7a16f39597a713bf36ed3df"
+      "size": 13705,
+      "sha256": "307eece7890c79053190ff0b21e1a35fc14acca9afc507cfd0777e2b25a1130c"
     },
     {
       "path": "web/tests/session-preparation.test.mjs",

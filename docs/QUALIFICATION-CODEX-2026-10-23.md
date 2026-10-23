@@ -6,7 +6,8 @@ Les corrections source, le protocole MCP et le bundle construit sont vérifiés.
 La régression de hauteur est reproduite avant correction et ne se reproduit
 plus après correction aux trois largeurs mesurées. La qualification visuelle
 complète dans le vrai panneau Codex reste ouverte tant que la vidéo et les
-commandes n’y ont pas été observées.
+commandes n’y ont pas été observées. Un second essai a identifié un défaut
+d’initialisation MCP Apps, corrigé et testé avec le SDK officiel.
 
 Ce rapport complète la [qualification locale du 21 octobre](QUALIFICATION-LOCAL-2026-10-21.md).
 Les résultats Chrome/Kit antérieurs restent attachés à leur environnement.
@@ -76,12 +77,50 @@ ancien document. Le guide [setup et utilisation](LOCAL-SETUP.md) décrit les
 
 ## Observation dans Codex et limites
 
+### Initialisation MCP Apps manquante
+
+Après rechargement, Codex détecte le panneau, mais une capture échoue puis sa
+cible devient inaccessible. L’opérateur observe que son contenu devient vide.
+Les journaux de l’hôte contiennent `MCP app initialization timed out` et un échec
+d’initialisation de la sandbox OmniStream. Le source utilisait directement
+`window.openai.callTool` sans effectuer le handshake `ui/initialize`.
+
+Le panneau utilise désormais `@modelcontextprotocol/ext-apps` 2.0.3 pour
+initialiser sa connexion puis appeler les outils avec `callServerTool`.
+Les commandes attendent la fin de la négociation, même si l’alias historique
+existe déjà. L’échec d’une initialisation embarquée ne déclenche pas de repli
+vers cet alias. Le harness de développement autonome garde sa passerelle
+locale explicite, puisqu’il n’a pas d’hôte parent. La négociation est bornée à
+15 secondes ; les appels permettent un démarrage Kit à froid plus long.
+Le harness se déclare explicitement : une WebView native de premier niveau
+doit aussi initialiser MCP Apps, même si `window.parent === window`.
+
+Cinq tests supplémentaires couvrent l’ordre des appels, l’initialisation unique,
+les échecs, le harness autonome et une négociation avec le vrai SDK. Ce dernier
+envoie `ui/initialize`, puis `ui/notifications/initialized`, avant `tools/call`.
+Le test vérifie aussi que les métadonnées privées de la réponse sont conservées.
+Le build servi est contrôlé pour contenir le protocole d’initialisation.
+L’audit npm de cette nouvelle dépendance ne signale aucune vulnérabilité.
+
+Cette correction suit le [contrat UI officiel OpenAI](https://developers.openai.com/plugins/build/chatgpt-ui)
+et le [guide MCP Apps](https://modelcontextprotocol.io/extensions/apps/build).
+Le succès du test de protocole ne remplace pas la vérification du nouveau
+bundle dans l’hôte réel.
+
+Le [reçu de cette seconde correction](evidence/codex-2026-10-23/bridge-receipt.json)
+identifie le SDK, le bundle installé et les journaux retenus. La suite courante
+compte **107 tests Node réussis**, un skip de privilège symlink Windows, et
+aucun échec. Le reçu initial conserve les mesures de hauteur et l’identité du
+bundle du premier correctif ; il n’est pas réattribué au nouveau bundle.
+
+### État visuel
+
 L’interface réelle a été ouverte dans le panneau latéral et lue par
 l’automatisation : navigation, contrôleur local et paramètres de session sont
 présents. Elle est ensuite devenue inaccessible à l’outil de capture.
-L’opérateur confirme qu’elle s’est fermée seule et l’a rouverte. La cause de
-cette fermeture n’est pas établie ; elle ne peut pas être attribuée au CSS sur
-la seule base de cet événement.
+L’opérateur confirme qu’elle s’est fermée seule et l’a rouverte. L’erreur
+d’initialisation ci-dessus établit un défaut distinct de la boucle CSS ; le
+retest visuel du bundle avec handshake doit confirmer la disparition du vide.
 
 La nouvelle ressource et l’accès latéral nécessitent un rechargement du
 catalogue MCP. L’outil de capture ne voit que les applications développées dans

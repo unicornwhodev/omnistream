@@ -97,6 +97,7 @@ function browserShim() {
     return payload;
   };
   window.openai = { toolResponseMetadata: null, callTool: request };
+  window.__OMNISTREAM_PANEL_HARNESS__ = true;
 })();`;
 }
 

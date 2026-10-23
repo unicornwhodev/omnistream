@@ -11,6 +11,15 @@ const compiled = spawnSync(process.execPath, [
   "--outDir", output, "src/session-preparation.ts", "src/signaling-probe.ts", "src/mcp-signaling.ts",
 ], { cwd: path.join(root, "web"), stdio: "inherit" });
 if (compiled.status !== 0) process.exit(compiled.status ?? 1);
-const tests = spawnSync(process.execPath, ["--test", "./web/tests/session-preparation.test.mjs", "./web/tests/signaling-probe.test.mjs", "./web/tests/mcp-signaling.test.mjs"],
+// Keep the bridge output under the web dependency tree so Node resolves the
+// same SDK dependency that Vite bundles, without copying third-party sources.
+const bridgeCompiled = spawnSync(process.execPath, [
+  path.join(root, "web/node_modules/typescript/bin/tsc"),
+  "--target", "ES2023", "--module", "ESNext", "--moduleResolution", "bundler",
+  "--skipLibCheck", "--strict", "--erasableSyntaxOnly", "--noEmitOnError",
+  "--outDir", path.join(root, "web/node_modules/.cache/omnistream-bridge-tests"), "src/host-bridge.ts",
+], { cwd: path.join(root, "web"), stdio: "inherit" });
+if (bridgeCompiled.status !== 0) process.exit(bridgeCompiled.status ?? 1);
+const tests = spawnSync(process.execPath, ["--test", "./web/tests/session-preparation.test.mjs", "./web/tests/signaling-probe.test.mjs", "./web/tests/mcp-signaling.test.mjs", "./web/tests/host-bridge.test.mjs"],
   { cwd: root, stdio: "inherit" });
 process.exit(tests.status ?? 1);

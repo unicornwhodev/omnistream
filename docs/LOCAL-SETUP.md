@@ -29,9 +29,10 @@ compatible Kit project. NVIDIA login and licence acceptance remain operator
 steps. This run reused Existing; it does not certify a fresh Production install.
 
 The default plugin location is `%LOCALAPPDATA%\OmniStream\plugin`. Load that
-folder as a local plugin in Codex. Reopen the panel and reload its MCP controller
-after updating source, bundle, or configuration; the panel and controller must
-belong to the same candidate.
+folder as a local plugin in Codex. Rebuild the bundle and open a new panel instance
+after UI changes. Reload the MCP controller when tool schemas, entrypoints or
+controller configuration change; the panel and controller must belong to the
+same candidate.
 
 The opening tool declares a conversation side-panel entrypoint. Use that entry
 or expand a newly opened card into the side panel. The current UI resource is
@@ -39,6 +40,13 @@ or expand a newly opened card into the side panel. The current UI resource is
 controller after an update so Codex discovers its current schema and entrypoint;
 close old cards before opening the new resource. The inline layout uses content
 height and must stop resizing once its contents have settled.
+
+The embedded panel must complete the standard MCP Apps initialization before
+calling tools. The official Apps SDK performs this handshake and retains private
+tool-response metadata. The presence of `window.openai` alone does not establish
+readiness. An initialization timeout in the Codex host logs is a failed host
+integration, even if the interface was briefly visible. Keep a new panel open
+past the initialization period and verify its controls and decoded video.
 
 ## Local transport
 
