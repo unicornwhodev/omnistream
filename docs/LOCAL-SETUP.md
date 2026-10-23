@@ -2,7 +2,8 @@
 
 This guide applies to the Windows `1.0.0-rc4` candidate. See the
 [October 21 local qualification](QUALIFICATION-LOCAL-2026-10-21.md) for measured
-results and the remaining Codex integration gate. Remote sessions are outside
+results, and the [October 23 Codex fixes](QUALIFICATION-CODEX-2026-10-23.md)
+for the opening/layout regression and current host evidence. Remote sessions are outside
 this local qualification.
 
 ## Prerequisites and installation
@@ -31,6 +32,13 @@ The default plugin location is `%LOCALAPPDATA%\OmniStream\plugin`. Load that
 folder as a local plugin in Codex. Reopen the panel and reload its MCP controller
 after updating source, bundle, or configuration; the panel and controller must
 belong to the same candidate.
+
+The opening tool declares a conversation side-panel entrypoint. Use that entry
+or expand a newly opened card into the side panel. The current UI resource is
+`ui://omnistream-for-codex/panel-rc4-layout.html`. Reload the plugin's MCP
+controller after an update so Codex discovers its current schema and entrypoint;
+close old cards before opening the new resource. The inline layout uses content
+height and must stop resizing once its contents have settled.
 
 ## Local transport
 
@@ -128,7 +136,8 @@ evidence and must be labelled accordingly.
 
 ## Current limits and recovery
 
-The October 21 Codex panel-opening problem remains an explicit integration gate.
+The October 23 report tracks the Codex integration gate after the opening and
+height fixes. Real host video, interactions and stability require their own proof.
 If no MCP Apps tab opens, record the host error and candidate identity; do not
 interpret the text “studio opened” as proof that the UI rendered. Browser
 harness evidence and automatic native tests remain separate results.

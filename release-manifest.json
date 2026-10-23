@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-21T11:40:55.052Z",
+  "generatedAt": "2026-10-23T18:17:18.070Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -76,8 +76,8 @@
     },
     {
       "path": "docs/LOCAL-SETUP.md",
-      "size": 7190,
-      "sha256": "07f3da7fbf2ff963c010e5b454177bb469824a8c4996661f0da58a748ce372ca"
+      "size": 7814,
+      "sha256": "ae15daa844bc2be061a519427cfd0f77e7fe28f2d7170a128efe1edbc34f006c"
     },
     {
       "path": "docs/MCP-REFERENCE.md",
@@ -108,6 +108,11 @@
       "path": "docs/QUALIFICATION-2026-10-11-RC4.md",
       "size": 17243,
       "sha256": "59e0a37c2e6105a41cf063ac617348efc838a7e072d50c107379f19e172baf74"
+    },
+    {
+      "path": "docs/QUALIFICATION-CODEX-2026-10-23.md",
+      "size": 5232,
+      "sha256": "c634891a43e0e4e75d543d436db2e96d89c8121c5faa29d903ef04d6d37b7ec7"
     },
     {
       "path": "docs/QUALIFICATION-FIREVIEWER-RC4.md",
@@ -156,8 +161,13 @@
     },
     {
       "path": "docs/VALIDATION.md",
-      "size": 6742,
-      "sha256": "b3d0d459d35c51d36bab2436ffaeb6e7b9c5a797936505af5b78d4893c970858"
+      "size": 6941,
+      "sha256": "bbfe0642c93ee28f919ae3dffe80cdf68e09abc7cb17876f180a34f09d700ed8"
+    },
+    {
+      "path": "docs/evidence/codex-2026-10-23/receipt.json",
+      "size": 9311,
+      "sha256": "7684234c8a59fe70b821e9618e35de7643067603f61545a8c7b91382e6bf178d"
     },
     {
       "path": "docs/evidence/local-2026-10-21/receipt.json",
@@ -296,8 +306,8 @@
     },
     {
       "path": "mcp/server.mjs",
-      "size": 101520,
-      "sha256": "d55d7b61c4efb2959984870b7dcf917b5a1a06ecb6d9de9544663ddc2d15e26e"
+      "size": 101599,
+      "sha256": "eb6a0cf87412bcbb9f9f2065df95f17869bf9bf65f035848995a9fc90d0967b2"
     },
     {
       "path": "mcp/stage-path-policy.mjs",
@@ -326,8 +336,8 @@
     },
     {
       "path": "mcp/test-server.mjs",
-      "size": 43503,
-      "sha256": "74df06184b874a529ea853477d4f148fa9e418bd1a4784befb903c6f42302b79"
+      "size": 43668,
+      "sha256": "33a78378034da874c6679b621442c388b27bf48aaf29069566151d0dc46cfdc7"
     },
     {
       "path": "package.json",
@@ -516,8 +526,8 @@
     },
     {
       "path": "web/src/index.css",
-      "size": 26509,
-      "sha256": "3254fcb55b20b91fd82e19e64252bb7e95ea3d42f3de068f615cda9829f51f8d"
+      "size": 26408,
+      "sha256": "f4549bebe35a5a0feb138068dc61cdf3b90987270e83b8be5a32f42c34269dba"
     },
     {
       "path": "web/src/main.tsx",
@@ -556,8 +566,8 @@
     },
     {
       "path": "web/tests/panel-contract.mjs",
-      "size": 12116,
-      "sha256": "317b010ccc83ae0e61e7c80a4498b4f434b7546ad437ef2a3ad28c6fb27b684e"
+      "size": 12678,
+      "sha256": "e9d44246c2f8e7ca7945288d4fd5be85ca8fcf0bc7a16f39597a713bf36ed3df"
     },
     {
       "path": "web/tests/session-preparation.test.mjs",

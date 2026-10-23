@@ -33,7 +33,6 @@ body,
 #root {
   margin: 0;
   min-width: 320px;
-  min-height: 100%;
 }
 body {
   font-size: 14px;
@@ -236,7 +235,8 @@ pre {
   display: grid;
   grid-template-columns: 86px minmax(0, 1fr) 406px;
   grid-template-rows: 76px minmax(0, 1fr);
-  min-height: 100dvh;
+  /* Codex sizes inline apps from their content. Viewport-relative heights here
+     add the connection bar on every resize and create an unbounded feedback loop. */
 }
 .studio-header {
   grid-column: 1 / -1;
@@ -1175,16 +1175,6 @@ summary span {
   }
 }
 @media (min-width: 1151px) {
-  .studio-shell {
-    height: 100dvh;
-    overflow: hidden;
-  }
-  .deck-body,
-  .viewer-column {
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #49535e transparent;
-  }
   .controls-panel {
     min-height: 0;
   }
@@ -1238,7 +1228,6 @@ summary span {
     position: sticky;
     top: 0;
     align-self: start;
-    height: calc(100dvh - 76px);
   }
   .viewer-column {
     grid-column: 2;

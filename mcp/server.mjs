@@ -36,7 +36,7 @@ import {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pluginRoot = path.resolve(__dirname, "..");
 const manifest = JSON.parse(readFileSync(path.join(pluginRoot, ".codex-plugin", "plugin.json"), "utf8"));
-const widgetUri = "ui://omnistream-for-codex/panel-rc4-mcp.html";
+const widgetUri = "ui://omnistream-for-codex/panel-rc4-layout.html";
 const widgetAccessTokenMetaKey = "omnistream/streamAccessToken";
 const localConfig = loadOmniStreamConfig();
 const runtimePaths = ensureOmniStreamRuntimeDirs();
@@ -184,6 +184,7 @@ const timelineInputSchema = schema({
 });
 
 const cameraNavigateInputSchema = {
+  type: "object",
   oneOf: [
     schema({
       mode: { type: "string", enum: ["orbit", "pan"], description: "Temporary orbit or pan mode." },
@@ -271,6 +272,7 @@ const tools = [
     true,
     {
       ui: { resourceUri: widgetUri },
+      "openai/ui": { entrypoints: [{ type: "thread" }] },
       "openai/outputTemplate": widgetUri,
       "openai/widgetAccessible": true
     }

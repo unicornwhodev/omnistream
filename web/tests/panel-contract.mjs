@@ -98,6 +98,11 @@ assert.match(css, /\.remote-video:focus-visible[\s\S]*!important/, "Le focus vis
 assert.match(css, /\.remote-video[\s\S]*object-fit: contain/, "Le viewport conserve son ratio sans recadrage.");
 assert.match(css, /\.viewport-frame[\s\S]*aspect-ratio: 16 \/ 9/, "Le catalogue d'assets ne doit pas étirer verticalement le viewport.");
 assert.match(css, /\.remote-video[\s\S]*position: absolute[\s\S]*inset: 0/, "La vidéo doit remplir le cadre 16:9 stable.");
+// The host resizes inline apps to their intrinsic height. A viewport-height
+// child plus the connection bar must never feed the host's height back into it.
+const intrinsicCss = css.replace(/\.viewport-frame:fullscreen\s*\{[^}]*\}/g, "");
+assert.doesNotMatch(intrinsicCss, /\b\d*(?:\.\d+)?(?:dvh|svh|lvh|vh)\b/, "La hauteur intrinsèque du panneau ne doit pas dépendre de la hauteur de son iframe Codex.");
+assert.doesNotMatch(css, /html, body, #root\s*\{[^}]*min-height:\s*100%/, "Le document auto-dimensionné ne doit pas imposer la hauteur de son hôte.");
 assert.match(css, /\.asset-source-list/, "La liste des bibliothèques détectées doit recevoir un style lisible.");
 
 matchBundle(/setViewportInputActive/, "Le bundle servi doit contenir le garde d'entrée viewport.");

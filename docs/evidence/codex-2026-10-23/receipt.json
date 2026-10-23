@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 1,
+  "product": "omnistream-for-codex",
+  "version": "1.0.0-rc4",
+  "capturedAt": "2026-10-23T18:16:36.274Z",
+  "baseCommit": "bebb855e6cf505f8724e38597812c786b4dc7410",
+  "uiResource": "ui://omnistream-for-codex/panel-rc4-layout.html",
+  "entrypoints": [
+    {
+      "type": "thread"
+    }
+  ],
+  "defects": {
+    "toolSchemaRootType": "object",
+    "intrinsicLayoutUsesViewportHeight": false,
+    "fullscreenVideoUsesViewportHeight": true
+  },
+  "checks": [
+    {
+      "command": "npm run check",
+      "exitCode": 0,
+      "startedAt": "2026-10-23T18:13:53.424Z",
+      "finishedAt": "2026-10-23T18:13:56.374Z",
+      "logSha256": "a181c1c8b46e010cf13fe65fc2e38c9812c46110f473269d965457cd2ee3c341"
+    },
+    {
+      "command": "npm run test",
+      "exitCode": 0,
+      "startedAt": "2026-10-23T18:13:56.376Z",
+      "finishedAt": "2026-10-23T18:14:15.747Z",
+      "logSha256": "a1c16040c7fab49f212ddfde5b65145a253ad1741c65d76411fb98f894fad7a3"
+    },
+    {
+      "command": "npm run test:web",
+      "exitCode": 0,
+      "startedAt": "2026-10-23T18:14:15.747Z",
+      "finishedAt": "2026-10-23T18:14:25.206Z",
+      "logSha256": "65b32f56c78d192a0aea818bf956103cd6c5ec81fef0c31ffabf37d1f20166fd"
+    },
+    {
+      "command": "npm run build:web",
+      "exitCode": 0,
+      "startedAt": "2026-10-23T18:14:25.206Z",
+      "finishedAt": "2026-10-23T18:14:27.234Z",
+      "logSha256": "bd0ba4d7f4b1d711654340884cf99d23d24e7ca77c2e2eba7486373a35177220"
+    }
+  ],
+  "nodeTests": {
+    "total": 103,
+    "passed": 102,
+    "failed": 0,
+    "skipped": 1,
+    "skipReason": "Windows symlink privileges"
+  },
+  "installedProtocol": {
+    "exitCode": 0,
+    "logSha256": "6c90a62a4778ada2e3d5d246f019aa1dc02c2c977dd69fd6f79d6662fd1e2e04"
+  },
+  "bundle": [
+    {
+      "file": "omniverse-panel.js",
+      "size": 892999,
+      "sha256": "5598f597ded39c399bf97aad5de5573da1524fcabd7419d0c53dfa08d459a1d0"
+    },
+    {
+      "file": "omniverse-panel.css",
+      "size": 27740,
+      "sha256": "38f5436b114dcb00f203fb56b1f07d83399f6c0b05b9df24e1efd39222bd964b"
+    }
+  ],
+  "layoutFixture": {
+    "controllerConnected": false,
+    "videoStream": false,
+    "method": "Eight passes setting iframe height to intrinsic root height at fixed width.",
+    "runs": [
+      {
+        "version": "before",
+        "width": 1440,
+        "stable": false,
+        "samples": [
+          {
+            "pass": 0,
+            "viewport": 600,
+            "intrinsicHeight": 656,
+            "scrollHeight": 656
+          },
+          {
+            "pass": 1,
+            "viewport": 656,
+            "intrinsicHeight": 713,
+            "scrollHeight": 713
+          },
+          {
+            "pass": 2,
+            "viewport": 713,
+            "intrinsicHeight": 770,
+            "scrollHeight": 769
+          },
+          {
+            "pass": 3,
+            "viewport": 770,
+            "intrinsicHeight": 827,
+            "scrollHeight": 826
+          },
+          {
+            "pass": 4,
+            "viewport": 826,
+            "intrinsicHeight": 883,
+            "scrollHeight": 883
+          },
+          {
+            "pass": 5,
+            "viewport": 883,
+            "intrinsicHeight": 940,
+            "scrollHeight": 940
+          },
+          {
+            "pass": 6,
+            "viewport": 940,
+            "intrinsicHeight": 997,
+            "scrollHeight": 996
+          },
+          {
+            "pass": 7,
+            "viewport": 997,
+            "intrinsicHeight": 1053,
+            "scrollHeight": 1053
+          }
+        ]
+      },
+      {
+        "version": "before",
+        "width": 900,
+        "stable": false,
+        "samples": [
+          {
+            "pass": 0,
+            "viewport": 600,
+            "intrinsicHeight": 2153,
+            "scrollHeight": 2153
+          },
+          {
+            "pass": 1,
+            "viewport": 2153,
+            "intrinsicHeight": 2210,
+            "scrollHeight": 2210
+          },
+          {
+            "pass": 2,
+            "viewport": 2210,
+            "intrinsicHeight": 2267,
+            "scrollHeight": 2266
+          },
+          {
+            "pass": 3,
+            "viewport": 2267,
+            "intrinsicHeight": 2324,
+            "scrollHeight": 2323
+          },
+          {
+            "pass": 4,
+            "viewport": 2323,
+            "intrinsicHeight": 2380,
+            "scrollHeight": 2380
+          },
+          {
+            "pass": 5,
+            "viewport": 2380,
+            "intrinsicHeight": 2437,
+            "scrollHeight": 2437
+          },
+          {
+            "pass": 6,
+            "viewport": 2437,
+            "intrinsicHeight": 2494,
+            "scrollHeight": 2493
+          },
+          {
+            "pass": 7,
+            "viewport": 2494,
+            "intrinsicHeight": 2550,
+            "scrollHeight": 2550
+          }
+        ]
+      },
+      {
+        "version": "after",
+        "width": 1440,
+        "stable": true,
+        "samples": [
+          {
+            "pass": 0,
+            "viewport": 600,
+            "intrinsicHeight": 1358,
+            "scrollHeight": 1357
+          },
+          {
+            "pass": 1,
+            "viewport": 1358,
+            "intrinsicHeight": 1358,
+            "scrollHeight": 1357
+          },
+          {
+            "pass": 2,
+            "viewport": 1358,
+            "intrinsicHeight": 1358,
+            "scrollHeight": 1357
+          },
+          {
+            "pass": 3,
+            "viewport": 1358,
+            "intrinsicHeight": 1358,
+            "scrollHeight": 1357
+          },
+          {
+            "pass": 4,
+            "viewport": 1358,
+            "intrinsicHeight": 1358,
+            "scrollHeight": 1357
+          },
+          {
+            "pass": 5,
+            "viewport": 1358,
+            "intrinsicHeight": 1358,
+            "scrollHeight": 1357
+          },
+          {
+            "pass": 6,
+            "viewport": 1358,
+            "intrinsicHeight": 1358,
+            "scrollHeight": 1357
+          },
+          {
+            "pass": 7,
+            "viewport": 1358,
+            "intrinsicHeight": 1358,
+            "scrollHeight": 1357
+          }
+        ]
+      },
+      {
+        "version": "after",
+        "width": 900,
+        "stable": true,
+        "samples": [
+          {
+            "pass": 0,
+            "viewport": 600,
+            "intrinsicHeight": 2153,
+            "scrollHeight": 2153
+          },
+          {
+            "pass": 1,
+            "viewport": 2153,
+            "intrinsicHeight": 2153,
+            "scrollHeight": 2153
+          },
+          {
+            "pass": 2,
+            "viewport": 2153,
+            "intrinsicHeight": 2153,
+            "scrollHeight": 2153
+          },
+          {
+            "pass": 3,
+            "viewport": 2153,
+            "intrinsicHeight": 2153,
+            "scrollHeight": 2153
+          },
+          {
+            "pass": 4,
+            "viewport": 2153,
+            "intrinsicHeight": 2153,
+            "scrollHeight": 2153
+          },
+          {
+            "pass": 5,
+            "viewport": 2153,
+            "intrinsicHeight": 2153,
+            "scrollHeight": 2153
+          },
+          {
+            "pass": 6,
+            "viewport": 2153,
+            "intrinsicHeight": 2153,
+            "scrollHeight": 2153
+          },
+          {
+            "pass": 7,
+            "viewport": 2153,
+            "intrinsicHeight": 2153,
+            "scrollHeight": 2153
+          }
+        ]
+      },
+      {
+        "version": "after",
+        "width": 390,
+        "stable": true,
+        "samples": [
+          {
+            "pass": 0,
+            "viewport": 600,
+            "intrinsicHeight": 2152,
+            "scrollHeight": 2151
+          },
+          {
+            "pass": 1,
+            "viewport": 2152,
+            "intrinsicHeight": 2113,
+            "scrollHeight": 2112
+          },
+          {
+            "pass": 2,
+            "viewport": 2113,
+            "intrinsicHeight": 2113,
+            "scrollHeight": 2112
+          },
+          {
+            "pass": 3,
+            "viewport": 2113,
+            "intrinsicHeight": 2113,
+            "scrollHeight": 2112
+          },
+          {
+            "pass": 4,
+            "viewport": 2113,
+            "intrinsicHeight": 2113,
+            "scrollHeight": 2112
+          },
+          {
+            "pass": 5,
+            "viewport": 2113,
+            "intrinsicHeight": 2113,
+            "scrollHeight": 2112
+          },
+          {
+            "pass": 6,
+            "viewport": 2113,
+            "intrinsicHeight": 2113,
+            "scrollHeight": 2112
+          },
+          {
+            "pass": 7,
+            "viewport": 2113,
+            "intrinsicHeight": 2113,
+            "scrollHeight": 2112
+          }
+        ]
+      }
+    ]
+  },
+  "installedCopies": {
+    "targets": 3,
+    "sourceAndBundleVerified": true
+  },
+  "codexHost": {
+    "meaningfulDomObserved": true,
+    "originalPanelClosedItself": true,
+    "newResourceVisualValidation": "pending",
+    "screenshotCaptured": false,
+    "decodedVideoVerified": false,
+    "nativePointerKeyboardVerified": false
+  },
+  "productionReady": false,
+  "privacy": {
+    "rawLogsPublished": false,
+    "localPathsPublished": false,
+    "credentialsPublished": false,
+    "rawEvidenceExcludedByGit": true
+  }
+}
