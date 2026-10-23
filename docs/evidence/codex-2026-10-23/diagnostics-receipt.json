@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "product": "omnistream-for-codex",
+  "version": "1.0.0-rc4",
+  "recordedAt": "2026-10-23T19:36:43.340Z",
+  "baseCommit": "ed00d1e5430c2e77552c442495ccd9a7a6878759",
+  "purpose": "Diagnose the actual Kit WebRTC failure in the Codex panel",
+  "checks": [
+    {
+      "name": "check",
+      "exitCode": 0,
+      "sha256": "a181c1c8b46e010cf13fe65fc2e38c9812c46110f473269d965457cd2ee3c341",
+      "startedAt": "2026-10-23T19:29:06.959Z",
+      "finishedAt": "2026-10-23T19:29:09.994Z"
+    },
+    {
+      "name": "test",
+      "exitCode": 0,
+      "sha256": "54844f79b3910239c57ca7b007ff49bd20bdc6112f1e46ab5d934c1faa7730da",
+      "startedAt": "2026-10-23T19:29:09.996Z",
+      "finishedAt": "2026-10-23T19:29:23.826Z"
+    },
+    {
+      "name": "test:web",
+      "exitCode": 0,
+      "sha256": "10d29b406e946a5a4ef70dcbbb23b5803ab991f1be4a4327e5d6e4e4e1662524",
+      "startedAt": "2026-10-23T19:29:23.826Z",
+      "finishedAt": "2026-10-23T19:29:33.914Z"
+    },
+    {
+      "name": "build:web",
+      "exitCode": 0,
+      "sha256": "5097d26e9c5d38415f8305370808e153088341f92e204ec5df2f6975ae051c91",
+      "startedAt": "2026-10-23T19:29:33.914Z",
+      "finishedAt": "2026-10-23T19:29:36.593Z"
+    }
+  ],
+  "nodeTests": {
+    "passed": 110,
+    "failed": 0,
+    "skipped": 1
+  },
+  "bundle": [
+    {
+      "file": "omniverse-panel.js",
+      "size": 1136320,
+      "sha256": "07d4c445a87091498ea0e2038b280c56628df6e8a39fc19347637a7b228af0ce"
+    },
+    {
+      "file": "omniverse-panel.css",
+      "size": 27740,
+      "sha256": "38f5436b114dcb00f203fb56b1f07d83399f6c0b05b9df24e1efd39222bd964b"
+    }
+  ],
+  "instrumentation": {
+    "cspResourceClassification": true,
+    "rawBlockedUrlsStored": false,
+    "nativeRtcStateObservation": true,
+    "receivedVideoBytesAndDecodedFrames": true,
+    "iceAddressesOrSdpStored": false,
+    "networkPermissionsExpanded": false,
+    "browserRendererAdded": false
+  },
+  "actualNewBundleHostTestVerified": false,
+  "actualNewBundleDecodedVideoVerified": false,
+  "acceptedCodexSceneCaptures": 0,
+  "operatorReportedControlsUsable": true,
+  "productionReady": false
+}

@@ -18,6 +18,7 @@ import { SceneWorkbench, LiveSceneStrip, useLiveScene } from "./SceneWorkbench";
 import { SessionPreparation, initialPreparation, parseConfiguration, type SimulationConfiguration } from "./session-preparation";
 import { probeSignaling } from "./signaling-probe";
 import { installMcpSignaling } from "./mcp-signaling";
+import { installRtcDiagnostics, policyDiagnostic, streamEventDiagnostic } from "./stream-diagnostics";
 import { ConnectionStudio, useLocalConnectionLock } from "./RemoteSessions";
 import { callHostTool as invokeHostTool, isHostBridgeReady, startHostBridge } from "./host-bridge";
 
@@ -365,6 +366,7 @@ function App() {
   const streamer = useRef<AppStreamer | null>(null);
   const signalingRoute = useRef<ReturnType<typeof installMcpSignaling> | null>(null);
   const signalingRoutePort = useRef<number | null>(null);
+  const rtcDiagnostics = useRef<ReturnType<typeof installRtcDiagnostics> | null>(null);
   const streamEpoch = useRef(0);
   const connectInFlight = useRef<{
     epoch: number;
@@ -470,9 +472,8 @@ function App() {
 
   useEffect(() => {
     const observePolicy = (event: SecurityPolicyViolationEvent) => {
-      if (event.effectiveDirective !== "connect-src" && event.effectiveDirective !== "worker-src") return;
-      // Never retain a blocked URL: it may contain a session credential.
-      report(`Connexion vidéo refusée par la politique de l’hôte (${event.effectiveDirective}, ${event.disposition}).`, "error");
+      const message = policyDiagnostic(event);
+      if (message) report(message, "error");
     };
     document.addEventListener("securitypolicyviolation", observePolicy);
     return () => document.removeEventListener("securitypolicyviolation", observePolicy);
@@ -799,6 +800,7 @@ function App() {
     viewportGuardCleanup.current?.();
     viewportGuardCleanup.current = null;
     signalingRoute.current?.closeAll();
+    rtcDiagnostics.current?.dispose(); rtcDiagnostics.current = null;
     if (previousStreamer) void retireStreamer(previousStreamer);
   };
 
@@ -896,6 +898,12 @@ function App() {
     const epoch = ++streamEpoch.current;
     const currentStreamer = new AppStreamer();
     streamer.current = currentStreamer;
+    rtcDiagnostics.current?.dispose();
+    rtcDiagnostics.current = installRtcDiagnostics(window, message => {
+      setJournal(previous => [...previous.slice(-39), {
+        id: ++journalCounter.current, at: new Date().toLocaleTimeString(), tone: "neutral", message,
+      }]);
+    });
     const isCurrentStream = () =>
       streamEpoch.current === epoch && streamer.current === currentStreamer;
     const attempt = (async () => {
@@ -951,8 +959,9 @@ function App() {
             );
           }
         },
-        onStop: () => {
+        onStop: (event) => {
           if (!isCurrentStream()) return;
+          report(streamEventDiagnostic(event), "error");
           connectionIsLive.current = false;
           videoFrameSeen.current = false;
           setHasVideoFrame(false);
@@ -962,8 +971,9 @@ function App() {
             "error",
           );
         },
-        onTerminate: () => {
+        onTerminate: (event) => {
           if (!isCurrentStream()) return;
+          report(streamEventDiagnostic(event), "error");
           connectionIsLive.current = false;
           videoFrameSeen.current = false;
           setHasVideoFrame(false);

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-23T19:17:37.843Z",
+  "generatedAt": "2026-10-23T19:37:09.899Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -111,8 +111,8 @@
     },
     {
       "path": "docs/QUALIFICATION-CODEX-2026-10-23.md",
-      "size": 10234,
-      "sha256": "25897a3c1be4d4f53f19f3054af3aa112f0f94747911521384ab1809bfc0b08d"
+      "size": 11926,
+      "sha256": "876504bbca5333824c340586b433fe727fd68907c67e1a67e19fb9b762cf8791"
     },
     {
       "path": "docs/QUALIFICATION-FIREVIEWER-RC4.md",
@@ -168,6 +168,11 @@
       "path": "docs/evidence/codex-2026-10-23/bridge-receipt.json",
       "size": 3206,
       "sha256": "09e918a310abea2e57c349aca4d0cb5f4880825d78572ad441264f5e9721d988"
+    },
+    {
+      "path": "docs/evidence/codex-2026-10-23/diagnostics-receipt.json",
+      "size": 2131,
+      "sha256": "e67531e2249ae2f5f1d8249fdbcd838c64bbb7d845d0f351678efc102ec8ad26"
     },
     {
       "path": "docs/evidence/codex-2026-10-23/host-smoke.json",
@@ -416,8 +421,8 @@
     },
     {
       "path": "scripts/test-panel-state.mjs",
-      "size": 1687,
-      "sha256": "e0e524586fa58c60a94616a148ad249f2ff97a884137d3f9d8615a5db91e52d3"
+      "size": 1759,
+      "sha256": "86a0cf07733ac4f91fe2d28ff0f3acf433db97a3fd7313ee41d60fcf302d856e"
     },
     {
       "path": "scripts/test-web.mjs",
@@ -546,8 +551,8 @@
     },
     {
       "path": "web/src/main.tsx",
-      "size": 108079,
-      "sha256": "e51c3be5c8c798d1fceff103b61a15b1e1f984f87158026778b93f40b77ead3a"
+      "size": 108527,
+      "sha256": "0304da21b54072b9bfa4d6f518ca3db0ea85bb67e2a876ae13068082dc6ac012"
     },
     {
       "path": "web/src/mcp-signaling.ts",
@@ -568,6 +573,11 @@
       "path": "web/src/signaling-probe.ts",
       "size": 1908,
       "sha256": "daf9f924ce8b766bbb174b044286b3e17e53229524e22fdfd18d2b098abd8b89"
+    },
+    {
+      "path": "web/src/stream-diagnostics.ts",
+      "size": 5715,
+      "sha256": "02f808215803b3528e04c4dca379e89679aa96f8b6a1f1efaca9e5a63431328a"
     },
     {
       "path": "web/src/tool-result.mjs",
@@ -598,6 +608,11 @@
       "path": "web/tests/signaling-probe.test.mjs",
       "size": 2482,
       "sha256": "ede69b00b0f25ddba2efce152186b37d60ee8c011a23145ecf42e015e688cadc"
+    },
+    {
+      "path": "web/tests/stream-diagnostics.test.mjs",
+      "size": 3030,
+      "sha256": "a98348bb1a8b104f9f2c12334bb5f08dd601788934f9a33bcf1f9d28a3f8752a"
     },
     {
       "path": "web/tsconfig.app.json",

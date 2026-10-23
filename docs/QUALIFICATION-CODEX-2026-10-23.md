@@ -6,7 +6,7 @@ Les corrections source, le protocole MCP et le bundle construit sont vérifiés.
 Le nouveau panneau termine son initialisation MCP Apps dans le vrai hôte Codex :
 configuration, scan, préflight et lancement de Kit ont été effectués depuis
 son interface. Le bridge, la scène et la télémétrie répondent. La vidéo échoue
-pendant cet essai et aucune capture d’écran Codex n’a pu être obtenue.
+pendant cet essai et aucune capture du rendu Kit dans Codex n’est validée.
 La qualification complète reste donc **partielle**.
 
 La régression de hauteur est reproduite avant correction et ne se reproduit
@@ -134,6 +134,9 @@ bridge et scène prêts, et le panneau reçoit une télémétrie fraîche.
 L’onglet **Contrôler** s’ouvre et affiche la timeline et les caméras.
 
 L’opérateur confirme que le panneau reste utilisable après l’échec de capture.
+Il confirme ensuite pouvoir utiliser les commandes. Une lecture indépendante
+du contrôleur indique une simulation en pause à 10 secondes. Cette confirmation
+manuelle ne certifie pas l’ensemble des commandes ni leur fonctionnement vidéo.
 La fermeture et le vide observés avant le handshake ne se reproduisent pas
 pendant les lectures réussies de ce nouvel essai. Cela ne certifie ni une
 stabilité prolongée ni la hauteur du panneau dans l’hôte réel.
@@ -155,7 +158,8 @@ L’outil de capture d’écran ne renvoie aucune image. Ensuite, une commande d
 lecture et de nouvelles lectures DOM expirent, y compris un essai borné à
 40 secondes. La commande de lecture n’est pas comptée comme réussie : l’état
 relu via MCP reste arrêté à zéro. L’automatisation est interrompue sur cette
-instance pour éviter les répétitions bloquantes. Le fait que le panneau soit
+instance pour éviter les répétitions bloquantes. Une lecture ultérieure répond
+de nouveau ; le canal présente donc aussi un défaut intermittent. Le fait que le panneau soit
 utilisable par l’opérateur et que son canal d’automatisation ne réponde plus
 est consigné séparément.
 
@@ -164,6 +168,28 @@ d’écran et le clavier/souris natif restent à qualifier. Les contrôles backe
 et les images Chrome antérieurs ne comblent pas ces lacunes. La cause exacte
 du refus CSP et de la transition streaming doit être isolée avant de modifier
 les autorisations réseau ou de déclarer le produit validé dans Codex.
+
+L’opérateur fournit trois captures de l’interface qui affichent la vidéo hors
+ligne et la simulation en lecture. Elles sont conservées uniquement comme
+diagnostic local : elles ne montrent pas le rendu de la scène et aucune n’est
+ajoutée comme preuve visuelle de qualification. L’acceptation exige une image
+réelle RTX transmise depuis Kit et affichée dans le panneau Codex.
+
+### Instrumentation de l’échec média
+
+Une version instrumentée classe les violations CSP (donnée embarquée, objet
+local, origine loopback, réseau externe masqué) sans conserver les chemins,
+requêtes ni identifiants. Elle observe les états natifs WebRTC, les pistes,
+les octets vidéo reçus et le compteur d’images décodées, ainsi que les codes
+d’erreur SDK reconnus. Les compteurs proviennent de `RTCPeerConnection.getStats`.
+Les écoutes et relevés sont bornés et nettoyés ; aucun rendu de remplacement
+n’est fourni et les autorisations CSP ne sont pas élargies.
+
+Le [reçu des diagnostics](evidence/codex-2026-10-23/diagnostics-receipt.json)
+identifie ce nouveau bundle et ses contrôles automatiques. Il ne réattribue
+pas les observations de l’ancien bundle à cette nouvelle construction.
+Une nouvelle instance doit charger l’instrumentation avant de rattacher la
+vidéo au Kit existant. Son essai visuel reste en attente.
 
 La nouvelle ressource et l’accès latéral nécessitent un rechargement du
 catalogue MCP. L’outil de capture ne voit que les applications développées dans
