@@ -145,7 +145,15 @@ evidence and must be labelled accordingly.
 ## Current limits and recovery
 
 The October 23 report tracks the Codex integration gate after the opening and
-height fixes. Real host video, interactions and stability require their own proof.
+height fixes. The corrected panel has completed its Apps handshake and launched
+Kit from the real Codex UI. Scene supervision and telemetry work in that run,
+but video stops before a decoded frame is verified. The panel reports a
+`connect-src` violation and Kit logs `NVST_R_INVALID_STATE`; their causal link
+has not been established. Screenshot automation also fails, then UI automation
+stops responding while the operator reports the panel remains usable. Record
+these as separate failures. Do not widen CSP permissions without identifying
+the blocked destination. Real host video, interactions and stability require
+their own proof.
 If no MCP Apps tab opens, record the host error and candidate identity; do not
 interpret the text “studio opened” as proof that the UI rendered. Browser
 harness evidence and automatic native tests remain separate results.

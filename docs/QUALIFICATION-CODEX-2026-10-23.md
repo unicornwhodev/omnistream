@@ -3,11 +3,15 @@
 ## État de la qualification
 
 Les corrections source, le protocole MCP et le bundle construit sont vérifiés.
+Le nouveau panneau termine son initialisation MCP Apps dans le vrai hôte Codex :
+configuration, scan, préflight et lancement de Kit ont été effectués depuis
+son interface. Le bridge, la scène et la télémétrie répondent. La vidéo échoue
+pendant cet essai et aucune capture d’écran Codex n’a pu être obtenue.
+La qualification complète reste donc **partielle**.
+
 La régression de hauteur est reproduite avant correction et ne se reproduit
-plus après correction aux trois largeurs mesurées. La qualification visuelle
-complète dans le vrai panneau Codex reste ouverte tant que la vidéo et les
-commandes n’y ont pas été observées. Un second essai a identifié un défaut
-d’initialisation MCP Apps, corrigé et testé avec le SDK officiel.
+plus après correction aux trois largeurs mesurées dans la reproduction locale.
+Un second défaut d’initialisation MCP Apps est corrigé avec le SDK officiel.
 
 Ce rapport complète la [qualification locale du 21 octobre](QUALIFICATION-LOCAL-2026-10-21.md).
 Les résultats Chrome/Kit antérieurs restent attachés à leur environnement.
@@ -113,21 +117,59 @@ compte **107 tests Node réussis**, un skip de privilège symlink Windows, et
 aucun échec. Le reçu initial conserve les mesures de hauteur et l’identité du
 bundle du premier correctif ; il n’est pas réattribué au nouveau bundle.
 
-### État visuel
+### Essai dans le vrai panneau après correction
 
-L’interface réelle a été ouverte dans le panneau latéral et lue par
-l’automatisation : navigation, contrôleur local et paramètres de session sont
-présents. Elle est ensuite devenue inaccessible à l’outil de capture.
-L’opérateur confirme qu’elle s’est fermée seule et l’a rouverte. L’erreur
-d’initialisation ci-dessus établit un défaut distinct de la boucle CSS ; le
-retest visuel du bundle avec handshake doit confirmer la disparition du vide.
+Le [reçu de l’essai hôte](evidence/codex-2026-10-23/host-smoke.json) distingue
+les observations du panneau et les résultats des tests automatiques. Il
+identifie les six captures DOM brutes par leur hash, sans publier leur contenu
+privé. Ces captures textuelles ne sont pas des captures d’écran.
+
+Le panneau latéral expose la phase d’initialisation `mcp`. L’automatisation
+remplit les champs avec une copie isolée de la fixture de qualification,
+scanne le workspace, valide la configuration et le préflight, puis lance Kit.
+Le scan trouve une scène USD et un asset. La vérification des processus
+confirme que configurer et valider n’ont pas démarré Kit. Après lancement,
+le processus géré n’a pas de fenêtre native ; la supervision indique runtime,
+bridge et scène prêts, et le panneau reçoit une télémétrie fraîche.
+L’onglet **Contrôler** s’ouvre et affiche la timeline et les caméras.
+
+L’opérateur confirme que le panneau reste utilisable après l’échec de capture.
+La fermeture et le vide observés avant le handshake ne se reproduisent pas
+pendant les lectures réussies de ce nouvel essai. Cela ne certifie ni une
+stabilité prolongée ni la hauteur du panneau dans l’hôte réel.
+
+### Échec vidéo et limite de capture
+
+Le panneau annonce le démarrage du transport puis affiche **Flux vidéo non
+connecté**. Aucun décodage RTX n’est attesté. Deux diagnostics sont conservés :
+
+- Une violation `connect-src`, disposition `enforce`, est signalée dans le
+  journal du panneau. L’instrumentation actuelle omet la destination bloquée
+  pour ne pas conserver d’URL contenant un jeton. Son rôle causal dans
+  l’échec vidéo n’est pas établi.
+- Le journal Kit signale `800b1000`, `NVST_R_INVALID_STATE`, transition de
+  l’état `1005` vers `1004`, pendant la création de session streaming. Le
+  processus Kit et le contrôle de scène restent actifs après ce message.
+
+L’outil de capture d’écran ne renvoie aucune image. Ensuite, une commande de
+lecture et de nouvelles lectures DOM expirent, y compris un essai borné à
+40 secondes. La commande de lecture n’est pas comptée comme réussie : l’état
+relu via MCP reste arrêté à zéro. L’automatisation est interrompue sur cette
+instance pour éviter les répétitions bloquantes. Le fait que le panneau soit
+utilisable par l’opérateur et que son canal d’automatisation ne réponde plus
+est consigné séparément.
+
+La vidéo Codex, le cycle lecture/pause depuis son interface, les captures
+d’écran et le clavier/souris natif restent à qualifier. Les contrôles backend
+et les images Chrome antérieurs ne comblent pas ces lacunes. La cause exacte
+du refus CSP et de la transition streaming doit être isolée avant de modifier
+les autorisations réseau ou de déclarer le produit validé dans Codex.
 
 La nouvelle ressource et l’accès latéral nécessitent un rechargement du
 catalogue MCP. L’outil de capture ne voit que les applications développées dans
 un panneau latéral ; les cartes restées dans la conversation ne sont pas
 accessibles. Le succès textuel de l’outil d’ouverture n’est pas une preuve
-visuelle. Aucune vidéo Codex, aucun clavier/souris natif Codex ni stabilité
-prolongée ne sont certifiés par les tests de mise en page.
+visuelle.
 
 Les journaux complets, sauvegardes des fichiers installés, chemins locaux et
 captures brutes restent dans `release/`, ignoré par Git. Seuls les reçus

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "capturedAt": "2026-10-23T18:49:18.064Z",
+  "capturedAt": "2026-10-23T19:16:50.752Z",
   "baseCommit": "eb4efaf27a10f5afe639cbba9fe176c087f96ef3",
   "uiResource": "ui://omnistream-for-codex/panel-rc4-layout.html",
   "defect": {
@@ -89,8 +89,8 @@
     "sourceAndBundleVerified": true
   },
   "codexHost": {
-    "newBundleObserved": false,
-    "handshakeReady": false,
+    "newBundleObserved": true,
+    "handshakeReady": true,
     "stableObservationSeconds": 0,
     "screenshotCaptured": false,
     "decodedVideoVerified": false,

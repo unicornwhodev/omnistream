@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-23T18:49:24.210Z",
+  "generatedAt": "2026-10-23T19:17:37.843Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -76,8 +76,8 @@
     },
     {
       "path": "docs/LOCAL-SETUP.md",
-      "size": 8347,
-      "sha256": "01669ff82ad6dfa864195b40f37ac82e52006496e3868e92f316510c6ce678c0"
+      "size": 8900,
+      "sha256": "d055fb44c019e1085c820d68e9bae54b84a1acd20224d32e2386bed0cd2d0dd3"
     },
     {
       "path": "docs/MCP-REFERENCE.md",
@@ -111,8 +111,8 @@
     },
     {
       "path": "docs/QUALIFICATION-CODEX-2026-10-23.md",
-      "size": 7726,
-      "sha256": "dbf08bbd02f589cd52097a7bc5d62fee7904e9527e70bdba88d1f31f6e2cc39d"
+      "size": 10234,
+      "sha256": "25897a3c1be4d4f53f19f3054af3aa112f0f94747911521384ab1809bfc0b08d"
     },
     {
       "path": "docs/QUALIFICATION-FIREVIEWER-RC4.md",
@@ -166,8 +166,13 @@
     },
     {
       "path": "docs/evidence/codex-2026-10-23/bridge-receipt.json",
-      "size": 3208,
-      "sha256": "8e83ffb486de68ed11cb9789fc10b11cdad251a97e3fc97f2f9c946cf3fe2d11"
+      "size": 3206,
+      "sha256": "09e918a310abea2e57c349aca4d0cb5f4880825d78572ad441264f5e9721d988"
+    },
+    {
+      "path": "docs/evidence/codex-2026-10-23/host-smoke.json",
+      "size": 3357,
+      "sha256": "d40519342f7e2c42e53946d81a1dec637f579131b0914751f06e39607a870302"
     },
     {
       "path": "docs/evidence/codex-2026-10-23/receipt.json",

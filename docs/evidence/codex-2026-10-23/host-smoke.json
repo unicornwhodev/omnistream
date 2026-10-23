@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "product": "omnistream-for-codex",
+  "version": "1.0.0-rc4",
+  "recordedAt": "2026-10-23T19:16:06.084Z",
+  "sourceCommit": "c2cd697a7d3d787f1b015204f3c862e1b52dda98",
+  "environment": {
+    "host": "Codex desktop MCP Apps side panel",
+    "platform": "Windows x64",
+    "kitSetup": "Existing",
+    "signaling": "mcp",
+    "remoteSession": false
+  },
+  "fixture": {
+    "file": "tests/fixtures/local-qualification.usda",
+    "sha256": "2c5e0dbe1460b873b8eb515361afe256840c12dc3708dcadf9462c61ff96e756",
+    "sourceAndCopyUnchanged": true
+  },
+  "actualHost": {
+    "appsHandshakePhase": "mcp",
+    "configurationFieldsFilled": true,
+    "workspaceScan": {
+      "usdScenes": 1,
+      "assets": 1
+    },
+    "configurationAndPreflightPassed": true,
+    "configurationDidNotStartKit": true,
+    "kitLaunchedFromPanel": true,
+    "nativeKitWindowAbsent": true,
+    "loadedSceneAndControlBridgeReady": true,
+    "liveTelemetryRead": true,
+    "controlTabOpened": true,
+    "playPauseAutomaticallyVerified": false,
+    "operatorPlayPauseResult": "not-recorded",
+    "safeStopVerified": false
+  },
+  "media": {
+    "transportStartReported": true,
+    "decodedFrameVerified": false,
+    "viewportReported": "Flux vidéo non connecté",
+    "csp": {
+      "effectiveDirective": "connect-src",
+      "disposition": "enforce",
+      "blockedDestinationCaptured": false,
+      "causalLinkToVideoFailureConfirmed": false
+    },
+    "kitError": {
+      "code": "800b1000",
+      "name": "NVST_R_INVALID_STATE",
+      "transition": {
+        "from": 1005,
+        "to": 1004
+      }
+    }
+  },
+  "capture": {
+    "rasterScreenshots": 0,
+    "domSnapshots": 6,
+    "automationReadTimedOut": true,
+    "lastReadTimeoutMs": 40000,
+    "nativePointerKeyboardVerified": false,
+    "continuousStabilityVerified": false
+  },
+  "rawEvidence": [
+    {
+      "name": "01-configuration.txt",
+      "size": 4328,
+      "sha256": "2a376272f30265a4b83f5a1d3d09fdfc8081ae1afbb746882e03e759c936f269",
+      "recordedAt": "2026-10-23T19:04:27.979Z"
+    },
+    {
+      "name": "02-validated.txt",
+      "size": 5901,
+      "sha256": "212d654adf8fc32f346a385ba18e725575abd514a086f48e815953551e4d03d3",
+      "recordedAt": "2026-10-23T19:04:44.481Z"
+    },
+    {
+      "name": "03-launching.txt",
+      "size": 5912,
+      "sha256": "4b28ed831203fd3a14c6159df0adb88a4c32f78a9594185ec70d78bc2a75d0e0",
+      "recordedAt": "2026-10-23T19:05:06.597Z"
+    },
+    {
+      "name": "04-runtime.txt",
+      "size": 5912,
+      "sha256": "4b28ed831203fd3a14c6159df0adb88a4c32f78a9594185ec70d78bc2a75d0e0",
+      "recordedAt": "2026-10-23T19:05:37.779Z"
+    },
+    {
+      "name": "05-after-start.txt",
+      "size": 4762,
+      "sha256": "d21ab23e9596bb69c915e3e2118fb40c618e728669bbc78b2b8b6ec32f0a70e0",
+      "recordedAt": "2026-10-23T19:06:22.014Z"
+    },
+    {
+      "name": "06-controls-before.txt",
+      "size": 4160,
+      "sha256": "885d2ed0f778f427b3c256419e44b05c6cba673158b4bb9544d2b9362797441f",
+      "recordedAt": "2026-10-23T19:10:37.675Z"
+    }
+  ],
+  "kitErrorLogSha256": "c55572af5f636d8507ad439c838d0ee85af0f3fb110c0a734f5904b0d4e3f618",
+  "productionReady": false,
+  "privacy": {
+    "rawDomPublished": false,
+    "rawHostLogsPublished": false,
+    "localPathsPublished": false,
+    "sessionIdsPublished": false,
+    "credentialsPublished": false
+  }
+}
