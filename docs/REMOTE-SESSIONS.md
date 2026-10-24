@@ -7,7 +7,11 @@ viewer leaves the remote scene and GPU running.
 
 The controller and panel must both include the remote-session tools. Declare up
 to 16 operator-owned profiles in `remoteSessions` in the existing local
-`omnistream.json`, then reload the controller. Tools accept profile identities;
+`omnistream.json`. The controller rereads and validates these profiles on listing,
+attachment and signaling requests. Changing or removing an attached profile
+closes its signaling channels and invalidates the attachment; reconnect explicitly
+to the updated profile. Invalid configuration fails closed. Other runtime settings
+still require a controller reload. Tools accept profile identities;
 they cannot select an arbitrary URL or supply credentials.
 
 ## Private Tailscale network

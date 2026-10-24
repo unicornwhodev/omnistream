@@ -99,3 +99,41 @@ test('an unavailable or replaced private peer opens no signaling socket',async t
   await assert.rejects(remote.open({attachmentId:id,peerId:'private-peer'}),/changed/);
   assert.equal(Socket.instances.length,count);
 });
+
+test('operator profile updates are revalidated without a controller reload',async t=>{
+  let configured=[{...profile}];
+  const remote=new RemoteSessions({getProfiles:()=>configured,env,WebSocketClass:Socket});t.after(()=>remote.dispose());
+  const first=remote.attach(profile.id).attachment.attachmentId;
+  const {channelId}=await remote.open({attachmentId:first,peerId:'before-update'});const socket=Socket.instances.at(-1);
+  configured=[{...profile,label:'Replacement GPU',signalingUrl:'wss://replacement.example.test/sign_in',mediaServer:'replacement.example.test'}];
+  const listed=remote.list();assert.equal(listed.profiles[0].label,'Replacement GPU');assert.equal(listed.attachment,null);assert.equal(socket.closed,true);
+  await assert.rejects(remote.exchange({attachmentId:first,channelId,messages:[]}),/changed/);
+  const second=remote.attach(profile.id).attachment.attachmentId;assert.notEqual(second,first);
+  await remote.open({attachmentId:second,peerId:'after-update'});
+  assert.match(Socket.instances.at(-1).url,/^wss:\/\/replacement\.example\.test\/sign_in\?/);
+  assert.doesNotMatch(JSON.stringify(listed),/private-fixture/);
+});
+
+test('removed and invalid operator profiles close old channels without disclosing source errors',async t=>{
+  let configured=[profile];let unavailable=false;
+  const remote=new RemoteSessions({getProfiles:()=>{if(unavailable)throw new Error('private-fixture-source-error');return configured;},env,WebSocketClass:Socket});t.after(()=>remote.dispose());
+  const first=remote.attach(profile.id).attachment.attachmentId;await remote.open({attachmentId:first,peerId:'removed'});const socket=Socket.instances.at(-1);
+  configured=[];assert.equal(remote.list().attachment,null);assert.equal(socket.closed,true);assert.throws(()=>remote.attach(profile.id),/Unknown/);
+  configured=[profile];const second=remote.attach(profile.id).attachment.attachmentId;await remote.open({attachmentId:second,peerId:'invalid'});const nextSocket=Socket.instances.at(-1);
+  configured=[{...profile,signalingUrl:'https://not-a-stream.example.test/'}];
+  await assert.rejects(remote.exchange({attachmentId:second,messages:[]}),/configuration is unavailable or invalid/);
+  assert.equal(nextSocket.closed,true);assert.equal(remote.describe(),null);
+  unavailable=true;assert.throws(()=>remote.list(),error=>!error.message.includes('private-fixture'));
+});
+
+test('unchanged operator profiles retain attachments and a private peer change during verification opens no socket',async t=>{
+  const privateProfile={...profile,provider:'colab',mediaConnectivity:'tailscale',signalingUrl:'ws://100.78.12.34:49100/sign_in',mediaServer:'100.78.12.34'};
+  let configured=[privateProfile];
+  const remote=new RemoteSessions({getProfiles:()=>configured,env,WebSocketClass:Socket,verifyPrivatePeer:async()=>{
+    configured=[{...privateProfile,signalingUrl:'ws://100.78.12.35:49100/sign_in',mediaServer:'100.78.12.35'}];
+  }});t.after(()=>remote.dispose());
+  const id=remote.attach(privateProfile.id).attachment.attachmentId;
+  configured=JSON.parse(JSON.stringify(configured));assert.equal(remote.list().attachment.attachmentId,id);assert.equal(remote.attach(privateProfile.id).attachment.attachmentId,id);
+  const before=Socket.instances.length;await assert.rejects(remote.open({attachmentId:id,peerId:'changed-during-check'}),/changed/);
+  assert.equal(Socket.instances.length,before);assert.equal(remote.describe(),null);
+});

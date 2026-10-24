@@ -76,8 +76,9 @@ function privateIce(profile, env) {
 }
 
 export class RemoteSessions {
-  constructor({ profiles = [], env = process.env, WebSocketClass = WebSocket, verifyPrivatePeer = verifyTailscalePeer } = {}) {
-    this.profiles = parseRemoteProfiles(profiles);
+  constructor({ profiles = [], getProfiles, env = process.env, WebSocketClass = WebSocket, verifyPrivatePeer = verifyTailscalePeer } = {}) {
+    this.getProfiles = getProfiles;
+    this.profiles = parseRemoteProfiles(getProfiles ? getProfiles() : profiles);
     this.env = env;
     this.verifyPrivatePeer = verifyPrivatePeer;
     this.current = null;
@@ -87,7 +88,21 @@ export class RemoteSessions {
       // Validated immutable configuration only, never a URL supplied to a tool.
       getEndpoint: () => this.current?.profile.signalingUrl });
   }
+  refreshProfiles() {
+    if (!this.getProfiles) return;
+    let next;
+    try { next = parseRemoteProfiles(this.getProfiles()); }
+    catch {
+      this.relay.closeAll(); this.current = null;
+      invalid('Remote profile configuration is unavailable or invalid.');
+    }
+    if (this.current && JSON.stringify(next.find(profile => profile.id === this.current.profile.id)) !== JSON.stringify(this.current.profile)) {
+      this.relay.closeAll(); this.current = null;
+    }
+    this.profiles = next;
+  }
   list() {
+    this.refreshProfiles();
     return { profiles: this.profiles.map(profile => {
       let accessConfigured = true;
       try { this.credentials(profile); } catch { accessConfigured = false; }
@@ -109,6 +124,7 @@ export class RemoteSessions {
       ownership: 'external', video: 'unverified', controlBridgeAvailable: false };
   }
   attach(profileId) {
+    this.refreshProfiles();
     const profile = this.profiles.find(item => item.id === profileId);
     if (!profile) invalid('Unknown remote session profile.');
     const credentials = this.credentials(profile);
@@ -120,6 +136,7 @@ export class RemoteSessions {
       ...(credentials.ice ? { iceServerConfiguration: credentials.ice } : {}) } };
   }
   require(id) {
+    this.refreshProfiles();
     if (!this.current || this.current.id !== id) invalid('The remote attachment changed. Reconnect explicitly.');
   }
   detach(id) {

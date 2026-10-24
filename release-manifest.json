@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-24T11:15:44.293Z",
+  "generatedAt": "2026-10-24T11:56:21.786Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/REMOTE-SESSIONS.md",
-      "size": 3865,
-      "sha256": "a4d5f5d4d552bb9e9577bc4089f438e55fde61d3b8e1d8f3f9321e2219d79bca"
+      "size": 4178,
+      "sha256": "267e8232fe9b193aba35493a980c64ce737af48c85c548d3a4e83e1127d1c07f"
     },
     {
       "path": "docs/SECURITY.md",
@@ -346,8 +346,8 @@
     },
     {
       "path": "mcp/remote-sessions.mjs",
-      "size": 10224,
-      "sha256": "03d1638d8dbe3f9490427c8846c446082c1f740d8c7aa3b2869b2c0079a1f941"
+      "size": 10891,
+      "sha256": "b3264d49922c3b7543ccc9fc956c5a4542e8cdd94ce3e3227cc58f490eb830fb"
     },
     {
       "path": "mcp/scene-tools.mjs",
@@ -356,8 +356,8 @@
     },
     {
       "path": "mcp/server.mjs",
-      "size": 102051,
-      "sha256": "84a5c54c809b25c527f3cb9b97b1b65e38288626045e54bcf282257bcfc1d4d3"
+      "size": 102071,
+      "sha256": "d9f98e5eb5c19524dac1bc84e75a6afe188f730d43700e7734e3ddf2d4125622"
     },
     {
       "path": "mcp/stage-path-policy.mjs",
@@ -721,8 +721,8 @@
     },
     {
       "path": "tests/test_remote_sessions.mjs",
-      "size": 7868,
-      "sha256": "c916ef695863a9c7e9bdda83d6349f436d11b894129e17131daa31d8e3a4adad"
+      "size": 11307,
+      "sha256": "d6372196c51363b3cc6fa02d086d71058234238ea8ea71e0c973366f047ee938"
     },
     {
       "path": "tests/test_scene.py",

@@ -136,7 +136,7 @@ const localSignaling = new LocalSignalingRelay({
     !streamStopPendingStates.has(runtimeSession.streamStopState) && runtimeSession.controlServer?.isConnected
     ? { identity: runtimeSession, token: runtimeSession.streamAccessToken } : null
 });
-const remoteSessions = new RemoteSessions({ profiles: localConfig.remoteSessions });
+const remoteSessions = new RemoteSessions({ getProfiles: () => loadOmniStreamConfig().remoteSessions });
 const sideEffectQueue = new SerialOperationQueue({
   onActiveChange(operation) {
     lifecyclePhase = operation ? operation.name : (runtimeSession ? "running" : "stopped");
