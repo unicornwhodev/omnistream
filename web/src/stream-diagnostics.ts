@@ -1,4 +1,17 @@
 type PolicyEvent = { effectiveDirective: string; disposition: string; blockedURI: string };
+// Same fidelity policy for both transports. 60 Mb/s is an upper bound, not a
+// promised or constant rate. Native captures remain independent of WebRTC.
+export const STUDIO_STREAM_PROFILE = {
+  width:1920, height:1080, fps:30, fitStreamResolution:false,
+  maxBitrateKbps:60_000, dynamicStreamingMode:0,
+} as const;
+
+/** SDK units: Mb/s and milliseconds. Never label a cumulative loss count as a percentage. */
+export function formatStreamStats(stats: { codec?: string; streamingResolutionWidth?: number; streamingResolutionHeight?: number; fps?: number; currentBitrate?: number; rtd?: number; packetLoss?: number }): string {
+  const number = (value: number | undefined, decimals=0) => typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value.toFixed(decimals) : '—';
+  const codec = ['H264','H265','AV1','VP8','VP9'].includes(stats.codec || '') ? ` · ${stats.codec}` : '';
+  return `${number(stats.streamingResolutionWidth)} × ${number(stats.streamingResolutionHeight)} · ${number(stats.fps)} fps · ${number(stats.currentBitrate,1)} Mb/s · RTT ${number(stats.rtd)} ms · ${number(stats.packetLoss)} paquets perdus${codec}`;
+}
 
 /** Public browser capability names only, never SDP or device identifiers. */
 export function supportedVideoCodecs(receiver?: Pick<typeof RTCRtpReceiver, 'getCapabilities'>): string[] {
@@ -55,6 +68,7 @@ export function installRtcDiagnostics(target: { RTCPeerConnection: typeof RTCPee
       const id = ++nextPeer;
       let timer: ReturnType<typeof setInterval> | undefined;
       let samples = 0, reading = false, received = false, decoded = false;
+      let pairSummary = '';
       const listeners: Array<[string, EventListener]> = [];
       const emit = (text: string) => { if (!disposed) report(`WebRTC ${id} : ${text}`); };
       const listen = (type: string, handler: EventListener) => { peer.addEventListener(type, handler); listeners.push([type, handler]); };
@@ -66,11 +80,18 @@ export function installRtcDiagnostics(target: { RTCPeerConnection: typeof RTCPee
           const stats = await peer.getStats();
           if (disposed) return;
           let bytes = 0, frames = 0;
+          const pairs: string[] = [];
           stats.forEach(stat => {
+            if (stat.type === 'candidate-pair' && ['in-progress', 'succeeded', 'failed'].includes(stat.state)) {
+              const count = (value: unknown) => Number.isSafeInteger(value) && Number(value) >= 0 ? Number(value) : 0;
+              pairs.push(`${stat.state}, requêtes ${count(stat.requestsSent)}, réponses ${count(stat.responsesReceived)}`);
+            }
             if (stat.type !== "inbound-rtp" || (stat.kind !== "video" && stat.mediaType !== "video")) return;
             if (Number.isSafeInteger(stat.bytesReceived) && stat.bytesReceived >= 0) bytes += stat.bytesReceived;
             if (Number.isSafeInteger(stat.framesDecoded) && stat.framesDecoded >= 0) frames += stat.framesDecoded;
           });
+          const summary = pairs.slice(0, 4).join(' ; ');
+          if (summary && summary !== pairSummary) { emit(`trajets ICE : ${summary}.`); pairSummary = summary; }
           if (samples === 0 || (!received && bytes > 0) || (!decoded && frames > 0))
             emit(`vidéo reçue ${bytes} octets, ${frames} images décodées.`);
           received ||= bytes > 0; decoded ||= frames > 0;
@@ -84,7 +105,12 @@ export function installRtcDiagnostics(target: { RTCPeerConnection: typeof RTCPee
         }
         if (["closed", "failed"].includes(peer.connectionState)) clearTimer();
       });
-      listen("iceconnectionstatechange", () => emit(`ICE ${peer.iceConnectionState}.`));
+      listen("iceconnectionstatechange", () => {
+        emit(`ICE ${peer.iceConnectionState}.`);
+        if (peer.iceConnectionState === 'checking' && timer === undefined && samples < 15) {
+          void sample(); timer = setInterval(() => { void sample(); }, 2_000);
+        }
+      });
       listen("signalingstatechange", () => emit(`signalisation ${peer.signalingState}.`));
       listen("track", event => {
         const kind = (event as RTCTrackEvent).track.kind;

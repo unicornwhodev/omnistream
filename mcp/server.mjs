@@ -124,6 +124,7 @@ const widgetResourceMeta = {
 
 let runtimeSession = null;
 let simulationDraft = null;
+let remoteSimulation = null;
 let lifecyclePhase = "stopped";
 let shutdownRequested = false;
 let shutdownPromise = null;
@@ -250,7 +251,8 @@ const tools = [
       ...(action === "exchange" ? {
         afterSequence: { type: "integer", minimum: 0 }, waitMs: { type: "integer", minimum: 0, maximum: 1000 },
         messages: { type: "array", maxItems: 16, items: schema({ sequence: { type: "integer", minimum: 1 }, data: { type: "string", maxLength: 131072 } }, ["sequence", "data"]) }
-      } : {})
+      } : {}),
+      ...(action === "close" ? { code: { type: "integer", anyOf: [{ const: 1000 }, { minimum: 3000, maximum: 4999 }] } } : {})
     }, ["attachmentId", ...(action === "open" ? ["peerId"] : ["channelId"]), ...(action === "exchange" ? ["afterSequence", "messages"] : [])]),
     true, { ui: { visibility: ["app"] } })),
   tool("open_omniverse_signaling", "Open Local Kit Signaling",
@@ -625,9 +627,10 @@ function asOperationToolError(error) {
   return error;
 }
 
-async function runExternalSideEffect(name, work, { clientTimeoutMs = standardMutationClientTimeoutMs } = {}) {
+async function runExternalSideEffect(name, work, { clientTimeoutMs = standardMutationClientTimeoutMs, remoteAttachmentId } = {}) {
   if (shutdownRequested) throw toolError("The Omniverse MCP server is shutting down.", "server_shutting_down");
-  if (remoteSessions.current) throw toolError("Disconnect the remote stream before using the local runtime.", "remote_stream_attached");
+  if (remoteAttachmentId !== undefined) remoteSessions.require(remoteAttachmentId);
+  else if (remoteSessions.current) throw toolError("Disconnect the remote stream before using the local runtime.", "remote_stream_attached");
   if (sideEffectQueue.busy) {
     throw toolError("An Omniverse operation is already in progress: " + (sideEffectQueue.activeName || "queued operation") + ".", "operation_in_progress");
   }
@@ -1685,6 +1688,86 @@ async function getSimulationState(rawArgs) {
   return result(await callKitRead(controlMethod.simulationState, {}), "Omniverse session state read.");
 }
 
+async function remoteControlTool(name, args) {
+  const current = remoteSessions.current;
+  if (!current || !(current.profile.controlTokenEnv || current.profile.controlTokenFile)) return null;
+  const attachmentId = current.id;
+  const read = async (method, params = {}) => {
+    remoteSessions.require(attachmentId);
+    return normalizedBridgeResult(await remoteSessions.control(method, params));
+  };
+  const mutate = (method, params) => runExternalSideEffect(`remote:${method}`, () => read(method, params), { clientTimeoutMs: 20_000, remoteAttachmentId: attachmentId });
+  const remoteDraft = () => remoteSimulation?.attachmentId === attachmentId ? remoteSimulation.configuration : null;
+  const nativeConfiguration = configuration => Object.fromEntries(Object.entries(configuration).filter(([key]) => !['configurationId', 'configuredAt'].includes(key)));
+  const runtimeFor = simulation => ({ processAlive: true, processOwnership: 'external', runtimeReady: true, controlBridgeConnected: true, controlBridge: 'connected', remote: true, sessionId: attachmentId, stagePath: simulation.stagePath, workspaceRoot: simulation.workspaceRoot });
+  if (name === 'configure_omniverse_simulation') {
+    validateSchema(args, tools.find(item => item.name === name).inputSchema);
+    const preflight = await read('simulation.preflight', args);
+    if (preflight.ready !== true) throw toolError('The target Kit rejected this configuration.', 'simulation_configuration_invalid');
+    const configuration = { ...preflight.configuration, configurationId: randomUUID(), configuredAt: new Date().toISOString() };
+    remoteSimulation = { attachmentId, configuration, run: null };
+    return result({ configuration }, 'Simulation draft validated on its actual Kit host; scene and clock unchanged.');
+  }
+  if (name === 'preflight_omniverse_simulation') {
+    assertEmptyArgs(args); const configuration = remoteDraft();
+    if (!configuration) throw toolError('Validate the simulation configuration first.', 'simulation_not_configured');
+    const preflight = await read('simulation.preflight', nativeConfiguration(configuration));
+    if (remoteDraft()?.configurationId !== configuration.configurationId) throw toolError('The configuration changed during preflight.', 'simulation_configuration_changed');
+    return result({ ...preflight, configuration, configurationId: configuration.configurationId }, 'Preflight completed on the target Kit.');
+  }
+  if (name === 'launch_omniverse_simulation') {
+    const input = assertOnlyKeys(args, new Set(['configurationId'])); const configuration = remoteDraft();
+    if (!configuration || input.configurationId !== configuration.configurationId) throw toolError('Validate and preflight this configuration before launch.', 'simulation_configuration_changed');
+    return runExternalSideEffect('remote:simulation.launch', async () => {
+      const sameDraft = () => { remoteSessions.require(attachmentId); if (remoteDraft()?.configurationId !== configuration.configurationId) throw toolError('Configuration changed before applying it.', 'simulation_configuration_changed'); };
+      sameDraft(); await read('simulation.preflight', nativeConfiguration(configuration)); sameDraft();
+      const previous = await read('simulation.state'); sameDraft();
+      if (previous.stagePath !== configuration.stagePath) { await read('stage.open', { path: configuration.stagePath }); sameDraft(); }
+      const params = Object.fromEntries(['initialTimeSeconds','rateMultiplier','loop','playEveryFrame','autoPlay','cameraPath'].filter(key => configuration[key] !== undefined).map(key => [key, configuration[key]]));
+      const simulation = await read('simulation.configure', params);
+      const run = { runId: randomUUID(), name: configuration.name, startedAt: new Date().toISOString() };
+      remoteSimulation = { attachmentId, configuration, run };
+      return result({ configuration, run, simulation, runtime: runtimeFor(simulation) }, 'Simulation configured in the existing target Kit; no new runtime or GPU was started.');
+    }, { clientTimeoutMs: 180_000, remoteAttachmentId: attachmentId });
+  }
+  const route = sceneRoutes.get(name);
+  if (route) {
+    validateSchema(args, route.inputSchema);
+    return result(await (route.readOnlyHint ? read(route.method, args) : mutate(route.method, args)), `${name} completed on the authenticated external Kit.`);
+  }
+  if (name === liveTool.name) { validateSchema(args, liveTool.inputSchema); return result(await read('telemetry.read', args), 'Remote Kit telemetry; inspect freshness and dropped events.'); }
+  if (name === 'get_omniverse_simulation_state') { assertEmptyArgs(args); return result(await read('simulation.state'), 'External Kit state read.'); }
+  if (name === 'list_omniverse_cameras') { assertEmptyArgs(args); return result(await read('camera.list'), 'External Kit cameras read.'); }
+  if (name === 'read_omnistream_runtime_logs') {
+    const input = assertOnlyKeys(args, new Set(['stream', 'lines']));
+    const stream = input.stream ?? 'both'; const lines = input.lines ?? 120;
+    if (!['stdout', 'stderr', 'both'].includes(stream) || !Number.isInteger(lines) || lines < 10 || lines > 500) throw toolError('Invalid remote log selection.');
+    return result({ stream, lineLimit: lines, runtimeActive: true, remote: true, logs: {}, available: false }, 'External Kit file logs are not exposed by this bridge; local PC logs are excluded.');
+  }
+  if (name === 'control_omniverse_timeline') return result(await mutate('timeline.control', parseTimelineArgs(args)), 'External Kit timeline updated.');
+  if (name === 'control_omniverse_simulation') return result({ simulation: await mutate('simulation.control', parseSimulationControl(args)), configuration: remoteDraft(), run: remoteSimulation?.attachmentId === attachmentId ? remoteSimulation.run : null }, 'External Kit simulation updated.');
+  if (name === 'navigate_omniverse_camera') return result(await mutate('camera.navigate', parseNavigationArgs(args)), 'External Kit camera navigation updated temporarily.');
+  if (name === 'select_omniverse_camera') {
+    const input = assertOnlyKeys(args, new Set(['cameraPath']));
+    const cameraPath = assertNonEmptyString(input.cameraPath, 'cameraPath', 1024);
+    if (!cameraPath.startsWith('/')) throw toolError('An absolute USD camera path is required.');
+    return result(await mutate('camera.select', { cameraPath }), 'External Kit camera selected.');
+  }
+  if (name === 'save_omniverse_camera') { assertEmptyArgs(args); return result(await mutate('camera.save', {}), 'Explicit camera save requested on the remote workspace.'); }
+  if (name === 'load_omniverse_stage') {
+    const input = assertOnlyKeys(args, new Set(['stagePath']));
+    return result(await mutate('stage.open', { path: assertNonEmptyString(input.stagePath, 'stagePath', 2048) }), 'Remote stage load requested within its native allowed workspace.');
+  }
+  if (['supervise_omniverse_simulation', 'get_omniverse_stream_status', 'inspect_omniverse_stream_runtime'].includes(name)) {
+    assertEmptyArgs(args);
+    const simulation = await read('simulation.state');
+    const runtime = runtimeFor(simulation);
+    return result(name === 'supervise_omniverse_simulation' ? { runtime, simulation, configuration: remoteDraft(), run: remoteSimulation?.attachmentId === attachmentId ? remoteSimulation.run : null,
+      health: {runtime:'ready',bridge:'ready',stage:simulation.stagePath?'ready':'empty',simulation:simulation.state,stream:'unverified'} } : runtime, 'Authenticated external Kit observed; video must be verified separately.');
+  }
+  return null;
+}
+
 function parseTimelineArgs(rawArgs) {
   const args = assertOnlyKeys(rawArgs, new Set(["action", "timeSeconds", "rateMultiplier"]));
   const action = assertNonEmptyString(args.action, "action", 64);
@@ -1885,6 +1968,8 @@ async function handle(message) {
         : name === "exchange_omniverse_remote_signaling" ? await remoteSessions.exchange(args) : remoteSessions.close(args);
       return respond(id, result({ ok: true, state: payload.state }, "Remote signaling updated.", { "omnistream/signalingPayload": payload }));
     }
+    const controlledRemoteResult = await remoteControlTool(name, args);
+    if (controlledRemoteResult) return respond(id, controlledRemoteResult);
     if (remoteSessions.current && (sceneRoutes.has(name) || ["start_omniverse_stream", "launch_omniverse_simulation", "stop_omniverse_stream", "load_omniverse_stage", "control_omniverse_simulation", "control_omniverse_timeline", "select_omniverse_camera", "navigate_omniverse_camera", "save_omniverse_camera", "attach_omniverse_stream", "open_omniverse_signaling"].includes(name))) {
       throw toolError("Un flux distant est rattaché. Déconnectez-le avant d'utiliser le contrôleur local. Les commandes USD distantes nécessitent un bridge distinct.", "remote_stream_attached");
     }

@@ -91,9 +91,12 @@ assert.match(source, /value=\{kitRoot\}/, "Le panneau doit permettre un Kit root
 assert.match(source, /kitRoot: kitRoot\.trim\(\)/, "Le Kit root saisi dans le panneau doit être transmis au démarrage.");
 assert.match(source, /onLoadedData=\{markVideoFrameReady\}/, "Le viewport doit confirmer les données vidéo décodées.");
 assert.match(source, /audioElementId: "remote-audio"/, "La configuration SDK doit identifier son élément audio existant.");
-assert.match(source, /codec: VideoCodec\.H264, codecList: \[VideoCodec\.H264\]/, "Le flux Kit local doit conserver le codec H.264 qualifié explicitement.");
+assert.match(source, /codec: sessionConnection\.videoCodec, codecList: \[sessionConnection\.videoCodec\]/, "Le flux Kit local doit utiliser le même choix explicite de codec que la session distante.");
+const connectionSource = readFileSync(resolve(webRoot, 'src', 'RemoteSessions.tsx'), 'utf8');
+assert.match(connectionSource, /useState\(VideoCodec\.H264\)/, 'H.264 doit rester le choix initial de compatibilité.');
+assert.match(connectionSource, /codec: videoCodec, codecList: \[videoCodec\]/, 'Le codec choisi doit atteindre le vrai SDK distant.');
 assert.match(source, /<audio id="remote-audio" autoPlay muted/, "La piste audio SDK doit avoir un élément média muet.");
-assert.match(source, /!hasVideoFrame && \(/, "L’état hors ligne ne doit rester visible qu'avant la première frame vidéo.");
+assert.match(source, /!sessionHasVideoFrame && \(/, "L’état hors ligne partagé ne doit rester visible qu'avant la première frame vidéo de la session choisie.");
 assert.match(source, /startRuntimeWatchdog/, "Le panneau doit détecter l'arrêt externe du runtime Kit.");
 assert.match(source, /Le runtime Kit a été arrêté hors de ce panneau/, "L'arrêt externe doit être rendu visible au lieu de laisser une connexion bloquée.");
 assert.match(source, /current\.processAlive && current\.controlBridgeConnected/, "Les commandes de simulation doivent attendre le bridge authentifié.");

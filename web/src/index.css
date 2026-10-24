@@ -1436,16 +1436,16 @@ summary span {
   line-height: 1.7;
   color: var(--muted);
 }
-.connection-modes { display: flex; gap: 8px; padding: 10px 20px; border-bottom: 1px solid var(--border); }
-.connection-modes [aria-pressed="true"] { color: var(--accent); border-color: currentColor; }
 /* Expanded Apps have a fixed host viewport. Keep their scrolling inside the
    app; inline cards must retain intrinsic sizing to avoid a resize loop. */
 html[data-omnistream-display-mode="fullscreen"] { overflow: hidden; }
 html[data-omnistream-display-mode="fullscreen"] #root { height: 100dvh; overflow-y: auto; }
-.remote-studio { max-width: 1440px; margin: auto; padding: 24px; }
-.remote-studio header p, .remote-studio section > p { color: var(--muted); margin: 12px 0; line-height: 1.6; }
-.remote-connection { padding: 20px 0; }
-.remote-connection label { display: block; margin-bottom: 8px; }
-.remote-connection select { width: min(100%, 560px); margin-bottom: 12px; }
-.remote-viewer .viewport-frame { min-height: 280px; aspect-ratio: 16 / 9; }
-.remote-viewer .viewport-overlay { pointer-events: none; }
+.session-connection { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+.session-connection label { color:var(--muted); font-size:12px; }
+.session-connection select { flex:1; min-width:140px; max-width:460px; }
+.session-connection button { padding:9px 12px; }
+.session-details { position:relative; color:var(--muted); font-size:12px; }
+.session-details[open] { flex-basis:100%; border:1px solid var(--line); padding:12px; border-radius:8px; }
+.session-details p { margin-top:8px; line-height:1.5; }
+.remote-viewport-content { position:absolute; inset:0; }
+.remote-viewport-content .viewport-overlay { pointer-events:none; }

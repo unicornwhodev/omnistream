@@ -1,6 +1,6 @@
 # OmniStream for Codex — 1.0.0-rc4
 
-Existing remote Kit sessions can also be attached through an explicit private-network or WSS profile. See [Remote sessions](docs/REMOTE-SESSIONS.md); remote video/input does not expose local USD controls or provision a cloud GPU.
+Existing remote Kit sessions can also be attached through an explicit private-network or WSS profile. The same studio, viewport and scene/camera/simulation tools serve both targets. Authenticated remote commands require a separately configured Kit control bridge. See [Remote sessions](docs/REMOTE-SESSIONS.md). Attaching a session does not provision a cloud GPU.
 
 A local studio for controlling **a real NVIDIA Omniverse Kit scene** from Codex: configure a session, launch the runtime without a native window, inspect and edit USD, control animation and rigid bodies, observe telemetry, and diagnose errors. The browser receives the WebRTC render; it does not replace it with a local 3D scene.
 

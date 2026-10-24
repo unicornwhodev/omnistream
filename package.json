@@ -28,7 +28,7 @@
     "node": ">=20.18.1"
   },
   "scripts": {
-    "test": "node ./mcp/test-server.mjs && node --test ./mcp/test-scene.mjs ./tests/test_loopback_tls.mjs ./tests/test_local_signaling.mjs ./tests/test_remote_sessions.mjs ./tests/test_remote_protocol.mjs && npm run test:public && npm run test:panel-source && npm run test:panel-state && npm run test:release",
+    "test": "node ./mcp/test-server.mjs && node --test ./mcp/test-scene.mjs ./tests/test_loopback_tls.mjs ./tests/test_local_signaling.mjs ./tests/test_remote_sessions.mjs ./tests/test_remote_protocol.mjs ./tests/test_remote_control_client.mjs ./tests/test_remote_control_host.mjs && npm run test:public && npm run test:panel-source && npm run test:panel-state && npm run test:release",
     "check": "node --check ./mcp/server.mjs && node --check ./mcp/paths.mjs && node --check ./mcp/loopback-tls.mjs && node --check ./mcp/local-signaling.mjs && node --check ./mcp/remote-sessions.mjs && node --check ./mcp/control-rpc.mjs && node --check ./mcp/operation-queue.mjs && node --check ./mcp/process-identity.mjs && node --check ./mcp/prepare-stop-retry.mjs && node --check ./mcp/stream-stop-wait.mjs && node --check ./mcp/stage-path-policy.mjs && node --check ./mcp/test-server.mjs && node --check ./mcp/test-runtime.mjs && node --check ./mcp/panel-runtime-harness.mjs && node --check ./scripts/build-web.mjs && node --check ./scripts/test-web.mjs && node --check ./scripts/publication-audit.mjs && node --check ./scripts/doctor.mjs && node --check ./mcp/scene-tools.mjs && node --check ./mcp/live-events.mjs && node --check ./mcp/test-scene.mjs && npm --prefix ./web run typecheck",
     "test:runtime": "node ./mcp/test-runtime.mjs",
     "serve:panel-harness": "node ./mcp/panel-runtime-harness.mjs",
@@ -42,7 +42,7 @@
     "test:physics": "node ./mcp/test-runtime.mjs --physics",
     "verify:release": "node ./scripts/verify-release.mjs",
     "test:public": "node --test ./tests/test_public_contract.mjs",
-    "test:panel-source": "node ./web/tests/panel-contract.mjs --source-only",
+    "test:panel-source": "node ./web/tests/panel-contract.mjs --source-only && node --test ./tests/test_stream_quality_adapter.mjs",
     "test:panel-state": "node ./scripts/test-panel-state.mjs",
     "test:release": "node --test ./tests/test_release.mjs ./tests/test_doctor.mjs ./tests/test_panel_resource.mjs"
   }

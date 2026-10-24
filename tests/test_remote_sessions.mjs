@@ -11,7 +11,7 @@ class Socket extends EventTarget {
   static instances=[];
   constructor(url, protocols) { super(); this.url=url;this.protocols=protocols;this.sent=[];Socket.instances.push(this);queueMicrotask(()=>this.dispatchEvent(new Event('open'))); }
   send(data) {this.sent.push(data);}
-  close(){if(this.closed)return;this.closed=true;this.dispatchEvent(new Event('close'));}
+  close(code){if(this.closed)return;this.closed=true;this.closeCode=code;this.dispatchEvent(new Event('close'));}
 }
 const setup=(t,profiles=[profile])=>{const remote=new RemoteSessions({profiles,env,WebSocketClass:Socket});t.after(()=>remote.dispose());return remote;};
 
@@ -44,6 +44,21 @@ test('WSS signaling uses only the selected immutable endpoint and backend creden
   assert.equal(socket.url,'wss://gpu.example.test/kit/sign_in?peer_id=peer-1&version=2&peer_role=1');
   assert.deepEqual(socket.protocols,['authorization.bearer.'+env.OMNISTREAM_REMOTE_STREAM_TOKEN]);
   assert.equal(opened.state,'open');assert.equal(opened.video,undefined);
+});
+
+test('remote signaling preserves NVIDIA handoff codes instead of terminating live media',async t=>{
+  const remote=setup(t);const attachmentId=remote.attach(profile.id).attachment.attachmentId;
+  for(const code of [3001,4000,undefined]) {
+    const {channelId}=await remote.open({attachmentId,peerId:'handoff-peer'});
+    const socket=Socket.instances.at(-1);
+    assert.deepEqual(remote.close({attachmentId,channelId,...(code===undefined?{}:{code})}),{state:'closed'});
+    assert.equal(socket.closeCode,code??1000);
+    assert.equal(remote.describe().attachmentId,attachmentId);
+  }
+  const {channelId}=await remote.open({attachmentId,peerId:'invalid-close-peer'});
+  const socket=Socket.instances.at(-1);
+  assert.throws(()=>remote.close({attachmentId,channelId,code:1006}),/Invalid signaling close code/);
+  assert.equal(socket.closed,undefined);
 });
 test('reopen retains the attachment but switching profiles needs explicit disconnect',t=>{
   const remote=setup(t,[profile,{...profile,id:'another'}]);const first=remote.attach(profile.id);

@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { forwardDirectStreamQuality } from "./sdk/ov-web-rtc-quality.mjs";
 
 function stripOvWebRtcDevelopmentShortcut() {
   return {
@@ -15,7 +16,7 @@ function stripOvWebRtcDevelopmentShortcut() {
         throw new Error("Le raccourci de développement ov-web-rtc n'a pas été trouvé pour être désactivé au build.");
       }
       return {
-        code: `${code.slice(0, start)}static _registerKeyboardShortcut(){}${code.slice(end)}`,
+        code: forwardDirectStreamQuality(`${code.slice(0, start)}static _registerKeyboardShortcut(){}${code.slice(end)}`),
         map: null
       };
     }

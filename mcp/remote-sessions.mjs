@@ -3,6 +3,7 @@ import { isIP } from 'node:net';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { LocalSignalingRelay } from './local-signaling.mjs';
+import { remoteControlCredential, requestRemoteControl } from './remote-control-client.mjs';
 
 const envName = /^OMNISTREAM_REMOTE_[A-Z0-9_]{1,80}$/;
 const identifier = /^[a-zA-Z0-9_-]{1,64}$/;
@@ -36,13 +37,16 @@ export function parseRemoteProfiles(value = []) {
   return value.map(raw => {
     if (!object(raw) || !identifier.test(raw.id) || ids.has(raw.id)) invalid('Invalid or duplicate remote session identity.');
     ids.add(raw.id);
-    const allowed = ['id', 'label', 'provider', 'signalingUrl', 'mediaServer', 'mediaPort', 'streamTokenEnv', 'iceServersEnv', 'mediaConnectivity', 'serverIceConfigured'];
+    const allowed = ['id', 'label', 'provider', 'signalingUrl', 'mediaServer', 'mediaPort', 'streamTokenEnv', 'iceServersEnv', 'mediaConnectivity', 'serverIceConfigured', 'controlTokenEnv', 'controlTokenFile'];
     if (Object.keys(raw).some(key => !allowed.includes(key))) invalid('Unknown remote session field; credentials must use environment references.');
     if (typeof raw.label !== 'string' || !raw.label.trim() || raw.label.length > 80 || /[\r\n\x00-\x1f]/.test(raw.label)) invalid('Invalid remote session label.');
     if (!['generic', 'runpod', 'colab'].includes(raw.provider)) invalid('Invalid remote session provider.');
     let url;
     try { url = new URL(raw.signalingUrl); } catch { invalid('A WSS Kit signaling URL is required, not a notebook link.'); }
     const privateNetwork = raw.mediaConnectivity === 'tailscale';
+    if (raw.controlTokenEnv !== undefined && !envName.test(raw.controlTokenEnv)) invalid('Invalid remote control credential reference.');
+    if (raw.controlTokenFile !== undefined && (typeof raw.controlTokenFile !== 'string' || raw.controlTokenFile.length > 1024 || /[\x00-\x1f]/.test(raw.controlTokenFile) || !/^(?:[A-Za-z]:[\\/]|\/)/.test(raw.controlTokenFile))) invalid('An absolute private control credential file is required.');
+    if ((raw.controlTokenEnv || raw.controlTokenFile) && (!privateNetwork || (raw.controlTokenEnv && raw.controlTokenFile))) invalid('Remote control requires one separate credential reference and the private overlay.');
     if ((!privateNetwork && url.protocol !== 'wss:') || (privateNetwork && !['ws:', 'wss:'].includes(url.protocol)) || url.username || url.password || url.search || url.hash ||
       !hostName(url.hostname) || !/^(?:\/[A-Za-z0-9_-]+)*\/sign_in$/.test(url.pathname) ||
       /(?:^|\.)colab\.research\.google\.com$/i.test(url.hostname)) invalid('Use a credential-free WSS Kit signaling endpoint ending in /sign_in.');
@@ -108,7 +112,7 @@ export class RemoteSessions {
       try { this.credentials(profile); } catch { accessConfigured = false; }
       return { id: profile.id, label: profile.label, provider: profile.provider,
         signalingOrigin: new URL(profile.signalingUrl).origin, mediaConnectivity: profile.mediaConnectivity,
-        accessConfigured, controlBridgeAvailable: false };
+        accessConfigured, controlConfigured: Boolean(profile.controlTokenEnv || profile.controlTokenFile), controlBridgeAvailable: this.current?.profile.id === profile.id && this.current.controlReady === true };
     }), attachment: this.describe(), mode: 'existing-stream-only' };
   }
   credentials(profile) {
@@ -121,7 +125,7 @@ export class RemoteSessions {
     if (!this.current) return null;
     return { attachmentId: this.current.id, profileId: this.current.profile.id,
       label: this.current.profile.label, provider: this.current.profile.provider,
-      ownership: 'external', video: 'unverified', controlBridgeAvailable: false };
+      ownership: 'external', video: 'unverified', controlConfigured: Boolean(this.current.profile.controlTokenEnv || this.current.profile.controlTokenFile), controlBridgeAvailable: this.current.controlReady === true };
   }
   attach(profileId) {
     this.refreshProfiles();
@@ -151,6 +155,17 @@ export class RemoteSessions {
     return this.relay.open(args.peerId, args);
   }
   async exchange(args) { this.require(args.attachmentId); return this.relay.exchange(args); }
-  close(args) { this.require(args.attachmentId); return this.relay.close(args.channelId); }
+  close(args) { this.require(args.attachmentId); return this.relay.close(args.channelId, args.code); }
+  async control(method, params = {}) {
+    if (!this.current) invalid('Select an existing remote Kit session before controlling it.');
+    const selected = this.current;
+    const token = remoteControlCredential(selected.profile, this.env);
+    await this.verifyPrivatePeer(selected.profile.mediaServer);
+    this.require(selected.id);
+    try {
+      const value = await requestRemoteControl(selected.profile, token, method, params);
+      this.require(selected.id); selected.controlReady = true; return value;
+    } catch (error) { selected.controlReady = false; throw error; }
+  }
   dispose() { this.relay.dispose(); this.current = null; }
 }

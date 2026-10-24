@@ -24,6 +24,8 @@ test('real MCP boundary separates remote attachment, private ICE, and local runt
   await request('initialize',{protocolVersion:'2025-06-18',capabilities:{},clientInfo:{name:'remote-contract-test',version:'1'}});
   const tools=await request('tools/list',{});
   for(const action of ['open','exchange','close'])assert.deepEqual(tools.result.tools.find(item=>item.name===`${action}_omniverse_remote_signaling`)._meta.ui.visibility,['app']);
+  const closeSchema=tools.result.tools.find(item=>item.name==='close_omniverse_remote_signaling').inputSchema;
+  assert.ok(closeSchema.properties.code,'NVIDIA application close codes must cross the actual MCP boundary');
   const listed=await call('list_omniverse_remote_sessions');assert.equal(listed.result.structuredContent.profiles[0].accessConfigured,true);
   const unknown=await call('attach_omniverse_remote_stream',{profileId:'unknown'});assert.ok(unknown.error);
   const attached=await call('attach_omniverse_remote_stream',{profileId:'external-test'});

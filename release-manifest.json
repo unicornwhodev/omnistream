@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-24T11:56:21.786Z",
+  "generatedAt": "2026-10-24T17:47:46.254Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -36,8 +36,8 @@
     },
     {
       "path": "README.md",
-      "size": 7870,
-      "sha256": "f7272d2ded73b2d0d5f70b9ef9bf9428f16dd71cc61776f2a9eeb55e8aa8f29c"
+      "size": 8004,
+      "sha256": "1eb0fe306f5fc46622b4bade1fff12293768228dfcd6d2c56ff1d8eebdc65e37"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -63,6 +63,16 @@
       "path": "docs/CONFIGURATION.md",
       "size": 5687,
       "sha256": "ca76e1ada08fd3c38ad7ec52c5e3cb6852667111c893b0cbb701f9290fbae86d"
+    },
+    {
+      "path": "docs/FIDELITY-QUALIFICATION.md",
+      "size": 5806,
+      "sha256": "1ef02b90a1e787a3243b31d1c4c4c8f68d7dff7654e4fec77375d674ce3688d1"
+    },
+    {
+      "path": "docs/FIREVIEWER-PREPARATION.md",
+      "size": 5857,
+      "sha256": "0304a044fcc1dfbe3fda0e22dc9a99fc6051ed9163a7a916974e21715949f36a"
     },
     {
       "path": "docs/INSTALLATION.md",
@@ -151,8 +161,8 @@
     },
     {
       "path": "docs/REMOTE-SESSIONS.md",
-      "size": 4178,
-      "sha256": "267e8232fe9b193aba35493a980c64ce737af48c85c548d3a4e83e1127d1c07f"
+      "size": 7688,
+      "sha256": "39131762d699d7042036bcbf5f0962d0f8549627c4fa6a52d765037997039a5c"
     },
     {
       "path": "docs/SECURITY.md",
@@ -345,9 +355,19 @@
       "sha256": "876990b9b4fa36d31698b13735c56e232dca10c9886ec9f06608254d743bc197"
     },
     {
+      "path": "mcp/remote-control-client.mjs",
+      "size": 3370,
+      "sha256": "1f28a429c40df369d40d0eef13da23d4b858af354c335a6568c8bd1e904fc601"
+    },
+    {
+      "path": "mcp/remote-control-host.mjs",
+      "size": 7264,
+      "sha256": "d33b5b6bde7d30d56f094d5881e8454b5f92a96722136ad2c9f7cf319166e2bb"
+    },
+    {
       "path": "mcp/remote-sessions.mjs",
-      "size": 10891,
-      "sha256": "b3264d49922c3b7543ccc9fc956c5a4542e8cdd94ce3e3227cc58f490eb830fb"
+      "size": 12562,
+      "sha256": "8bc5acde17f012e7d3a4a12758de69b8151aff6f1eed54a35efdc49d742d9cc4"
     },
     {
       "path": "mcp/scene-tools.mjs",
@@ -356,8 +376,8 @@
     },
     {
       "path": "mcp/server.mjs",
-      "size": 102071,
-      "sha256": "d9f98e5eb5c19524dac1bc84e75a6afe188f730d43700e7734e3ddf2d4125622"
+      "size": 110088,
+      "sha256": "90e36b895b800bf060357d2de53d1896999628edee9a5d3747d1470b6d314e59"
     },
     {
       "path": "mcp/stage-path-policy.mjs",
@@ -391,8 +411,8 @@
     },
     {
       "path": "package.json",
-      "size": 2978,
-      "sha256": "e4149981d54316ca99f97e03dd833197d47563d1f78fd6bd870c57d358b7830a"
+      "size": 3109,
+      "sha256": "1078b4ad59125a257f614b511bd4336bb6212b96acc83243bb5bab2898753122"
     },
     {
       "path": "pipelines/event_capture/README.md",
@@ -565,9 +585,29 @@
       "sha256": "724770e286ad5c16f99f20e6eedafeec973dbdd4b4ec02e0f91c9f556a6b252f"
     },
     {
+      "path": "pipelines/event_capture/tools/compare_pilot_fidelity.py",
+      "size": 10260,
+      "sha256": "1963cec7247fadcb51dbf0e512c9b7ba18cd2feab80f8c7e48e97895e3e6b4d7"
+    },
+    {
       "path": "pipelines/event_capture/tools/prepare_geographic_cameras.py",
       "size": 3839,
       "sha256": "0a01a29b8b793aecd414dcd795eb4bfe9cb8dd43951cd164d225198cbace96e0"
+    },
+    {
+      "path": "pipelines/event_capture/tools/prepare_pilot_scope.py",
+      "size": 8557,
+      "sha256": "c8c0eaefa65fb8dad5101470eb860e0d996534ad217766e9f8d21de1c85e1c7b"
+    },
+    {
+      "path": "pipelines/event_capture/tools/prepare_pilot_view_lods.py",
+      "size": 5071,
+      "sha256": "761203737b6554ddfa8b818811fc34226bfa29e41d0b8734da752212ab9da074"
+    },
+    {
+      "path": "pipelines/event_capture/tools/qualify_geographic_pilot.py",
+      "size": 9476,
+      "sha256": "67264bfb4afccac36fb11cf94869653082b18d39f6315bfc32e3cd5b4ac187cc"
     },
     {
       "path": "pipelines/event_capture/tools/qualify_in_isaacsim.py",
@@ -591,13 +631,13 @@
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/extension.py",
-      "size": 30104,
-      "sha256": "654a4c308a814b8f807223fada0fe3ef7bbedfcf653d9e5daf174f79dab04bb0"
+      "size": 35118,
+      "sha256": "9fcc692e6f9dc49e9f8d51b4628e3409b9088f32710166994c795cf872e5535e"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/geographic_streaming.py",
-      "size": 6611,
-      "sha256": "ee46b074c424f2c7f4492e4780d7ad478ddeef095aedffb5e9c6641dd583e0dc"
+      "size": 16995,
+      "sha256": "b660edc872a6ea8ef0d5bf1f3c621543d93e1488c05db715dcfce7a7ef2e1c3b"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/scene_policy.py",
@@ -686,8 +726,8 @@
     },
     {
       "path": "tests/test_geographic_streaming.py",
-      "size": 5179,
-      "sha256": "ab806f22feef76808b24c1371b0612b65145d1e6e71809229df7b44f400f1eaf"
+      "size": 10774,
+      "sha256": "267d6622d03e45425e5d853075f9743bafe1690fef19ce1b6b8a961be403a02e"
     },
     {
       "path": "tests/test_local_signaling.mjs",
@@ -715,19 +755,59 @@
       "sha256": "7df79626ddfa3f53e357758033ac3cf14817d05cc6e308060adb9600ebde8867"
     },
     {
+      "path": "tests/test_remote_control_client.mjs",
+      "size": 2976,
+      "sha256": "cbeb85bd8ca9d161b498da9d986c54f6578bc942dddb8e0230b8e1b7c89d5d75"
+    },
+    {
+      "path": "tests/test_remote_control_host.mjs",
+      "size": 3039,
+      "sha256": "141f0f8efad8b1f6efcd6e45753286f6f5728231c4e72e9c309cdb3b132a6fc5"
+    },
+    {
+      "path": "tests/test_remote_preflight.py",
+      "size": 2942,
+      "sha256": "1f663863597a5dbc70d685089ac7ea3192c950f85bff2cf36e9740b3f9b1485e"
+    },
+    {
       "path": "tests/test_remote_protocol.mjs",
-      "size": 4453,
-      "sha256": "0b34e8c31fff4307e5c3a2b2086992068972373d23b55aaeb8990a082110066f"
+      "size": 4674,
+      "sha256": "9dc5705ea2b095e533c6c273a7b433048fe0e8055fb54bbc9ca3344614ab2f85"
     },
     {
       "path": "tests/test_remote_sessions.mjs",
-      "size": 11307,
-      "sha256": "d6372196c51363b3cc6fa02d086d71058234238ea8ea71e0c973366f047ee938"
+      "size": 12187,
+      "sha256": "fd35564013fda0b4b1d16e896339ee2df37d8542e7715eda90ef624c1e22d7db"
     },
     {
       "path": "tests/test_scene.py",
       "size": 16569,
       "sha256": "8ef0216aa9d1342828aff32b4d7b107ed5b53166fb26691f027572453c2dadc9"
+    },
+    {
+      "path": "tests/test_stream_quality_adapter.mjs",
+      "size": 2643,
+      "sha256": "ae6427e0f809c2c693b55e7e2193b25b772b2b3bc0d66fe02572dc624a2576c9"
+    },
+    {
+      "path": "tools/private-stream-relay/go.mod",
+      "size": 2495,
+      "sha256": "bd6aada16ebe6b1e8458cea9629915b89612956e3ac3c367025463821ca49bf7"
+    },
+    {
+      "path": "tools/private-stream-relay/go.sum",
+      "size": 22751,
+      "sha256": "7f4e35831fb87aa5349250b8d2e3d6ed31754d689f7c96f24f9fe430e68d13fb"
+    },
+    {
+      "path": "tools/private-stream-relay/main.go",
+      "size": 9029,
+      "sha256": "f0d020cffbce3ec475edd2609dee0e1a97eeed472d900b45fcd97533dd46e67e"
+    },
+    {
+      "path": "tools/private-stream-relay/main_test.go",
+      "size": 4190,
+      "sha256": "b5c86f11158ac2d6813b8fdf19f912bece7cc5bd659c6f72efead4c8d2393f37"
     },
     {
       "path": "web/.npmrc",
@@ -750,6 +830,16 @@
       "sha256": "98a666ef503cd351459314cb26c79103435c75416c8a9bf3d3f44e7d409d1533"
     },
     {
+      "path": "web/sdk/ov-web-rtc-quality.d.mts",
+      "size": 66,
+      "sha256": "79a21941d157fbc6fbb777d9cca5857d718930ac4fb496779f0eddcc389bd307"
+    },
+    {
+      "path": "web/sdk/ov-web-rtc-quality.mjs",
+      "size": 1368,
+      "sha256": "cf41bd9ebaad721ee2d52abe2f638b38bf8e4053a8218fc697ad5cecad618c41"
+    },
+    {
       "path": "web/src/Confirmation.tsx",
       "size": 2296,
       "sha256": "41723684576454ec40ee03257277f759bdc605c42d15e3a52564ac16b37e251e"
@@ -766,8 +856,8 @@
     },
     {
       "path": "web/src/RemoteSessions.tsx",
-      "size": 16467,
-      "sha256": "162352cdb98e44eed2f83896932ef8846d7011611969db717eb68d8f016a0c8e"
+      "size": 19533,
+      "sha256": "5d7bac33fe364f31b4b37fca66cfe50ca3739840b5567b46193a8dcd3604e572"
     },
     {
       "path": "web/src/SceneWorkbench.tsx",
@@ -781,13 +871,13 @@
     },
     {
       "path": "web/src/index.css",
-      "size": 26856,
-      "sha256": "e083970ad5bfd896317466c87cf53c9a458d42f963dd74130e3110019da55d92"
+      "size": 26816,
+      "sha256": "2d536b138307818c3e69d998187a9ffd92d6730a0e8cd62da49bd2e350934851"
     },
     {
       "path": "web/src/main.tsx",
-      "size": 109418,
-      "sha256": "bbb8367d5b0824166420925dba313c97aff8a4d56be0d03a273fe8769661f63c"
+      "size": 111527,
+      "sha256": "1ac6f988d473de0b909490ded96f33b3d4c25264a817d9711a3276715afbb27c"
     },
     {
       "path": "web/src/mcp-signaling.ts",
@@ -811,8 +901,8 @@
     },
     {
       "path": "web/src/stream-diagnostics.ts",
-      "size": 6300,
-      "sha256": "b4281fcdc19a0c7282225ceb356386d23e94f1de2af77f1c2327f42364d5b76e"
+      "size": 8260,
+      "sha256": "e8bc1675e0aeb6a43a61becb73215f7203fe3974c3f330efab172629a4f78c67"
     },
     {
       "path": "web/src/tool-result.mjs",
@@ -831,8 +921,8 @@
     },
     {
       "path": "web/tests/panel-contract.mjs",
-      "size": 14196,
-      "sha256": "e3f40ea39071bf99bb3924bb10c3d045b4854f12e22b29e87558976eac48db80"
+      "size": 14628,
+      "sha256": "3ad08ee648e5f4b985ec32fa95d9250cd3ecdde98cc593423cf76d0f9f56f905"
     },
     {
       "path": "web/tests/session-preparation.test.mjs",
@@ -866,8 +956,8 @@
     },
     {
       "path": "web/vite.config.ts",
-      "size": 1293,
-      "sha256": "323d268c0aa44e74712816bce5373578026c8b7159343fa37f3c48ce84060e9e"
+      "size": 1396,
+      "sha256": "2cf1887bce2d54ab1b97c4b2c96ba3d8739de90bb07c10a9cd4fb6abc848af7a"
     }
   ]
 }

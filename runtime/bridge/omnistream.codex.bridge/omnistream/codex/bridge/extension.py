@@ -1,5 +1,6 @@
 import asyncio
 import json
+import math
 import os
 import pathlib
 import socket
@@ -43,6 +44,7 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
         self._selected_camera = None
         self._camera_dirty = False
         self._geographic_streaming = None
+        self._geographic_refresh_task = None
         self._rate_multiplier = 1.0
         self._base_target_fps = None
         self._initial_time_seconds = 0.0
@@ -86,6 +88,9 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
         carb.log_info("OmniStream Codex control bridge starting on authenticated loopback channel.")
 
     def on_shutdown(self):
+        task = getattr(self, '_geographic_refresh_task', None)
+        if task and not task.done():
+            task.cancel()
         self._update_sub = None
         if getattr(self, "_scene_service", None):
             self._scene_service.close()
@@ -120,6 +125,22 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
         except Exception:
             return None
 
+    def adopt_current_geographic_scene(self, streaming):
+        """Reuse the already open geographic stage after normal authentication.
+
+        This attaches no new transport and never reloads or saves the stage.
+        The existing loopback worker and SceneService remain authoritative.
+        """
+        if not getattr(self, '_scene_service', None) or not self._token or not self._port:
+            raise RuntimeError('The authenticated loopback bridge must be initialized first')
+        stage = omni.usd.get_context().get_stage()
+        if not stage or streaming.stage != stage:
+            raise ValueError('Geographic residency must belong to the current USD stage')
+        self._geographic_streaming = streaming
+        viewport = get_active_viewport()
+        path = str(viewport.camera_path) if viewport else ''
+        camera = stage.GetPrimAtPath(path) if path else None
+        self._selected_camera = path if camera and camera.IsA(UsdGeom.Camera) else None
     def _validated_stage(self, value):
         if not isinstance(value, str) or not value.strip():
             raise ValueError("stage path is required")
@@ -240,6 +261,9 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
         if now < self._sample_at:
             return
         self._sample_at = now + 0.25
+        if self._geographic_streaming and (not self._geographic_refresh_task or self._geographic_refresh_task.done()):
+            self._geographic_refresh_task = asyncio.ensure_future(self._refresh_geographic_streaming(observed_camera=True))
+            self._geographic_refresh_task.add_done_callback(self._geographic_refresh_done)
         try:
             snapshot = self._scene_service.sample() if omni.usd.get_context().get_stage() else {"stageId": None}
             snapshot.update({"kitUpdateMs": round(self._update_ms, 2),
@@ -255,7 +279,7 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
     async def _dispatch(self, method, params):
         if not isinstance(params, dict):
             raise ValueError("params must be an object")
-        read_methods = {"simulation.state", "camera.list", "scene.inspect", "scene.prim", "scene.diagnose"}
+        read_methods = {"simulation.state", "simulation.preflight", "camera.list", "scene.inspect", "scene.prim", "scene.diagnose"}
         if getattr(self, "_quiescing", False) and method not in read_methods | {"runtime.prepare_stop"}:
             raise RuntimeError("runtime_quiescing: Mutations are blocked until this Kit session exits")
         scene_methods = {
@@ -278,6 +302,8 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
             return await self._open_stage(params)
         if method == "simulation.state":
             return self._simulation_state()
+        if method == "simulation.preflight":
+            return self._simulation_preflight(params)
         if method == "simulation.configure":
             result = self._simulation_configure(params)
             await self._refresh_geographic_streaming()
@@ -328,16 +354,28 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
         result.update({"stagePath": str(stage_path), "message": "USD stage loaded in Kit."})
         return result
 
-    async def _refresh_geographic_streaming(self):
+    def _geographic_refresh_done(self, task):
+        if not task.cancelled() and task.exception():
+            self._telemetry.emit('geographic_streaming_error', {'message': sanitize(task.exception())})
+
+    async def _refresh_geographic_streaming(self, observed_camera=False):
         streaming = self._geographic_streaming
-        if not streaming or not self._selected_camera:
+        if not streaming or (not observed_camera and not self._selected_camera):
             return
         stage = self._stage()
         if streaming.stage != stage:
             self._geographic_streaming = None
             return
-        prim = self._camera_prim()
+        if observed_camera:
+            viewport = get_active_viewport()
+            prim = stage.GetPrimAtPath(str(viewport.camera_path)) if viewport else None
+            if not prim or not prim.IsA(UsdGeom.Camera):
+                return
+        else:
+            prim = self._camera_prim()
         eye = UsdGeom.XformCache(Usd.TimeCode.Default()).GetLocalToWorldTransform(prim).ExtractTranslation()
+        if observed_camera and not streaming.needs_focus(tuple(float(v) for v in eye)):
+            return
         status = streaming.focus(tuple(float(v) for v in eye))
         await omni.kit.app.get_app().next_update_async()
         self._telemetry.emit("geographic_streaming", status)
@@ -393,7 +431,46 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
             "cameraDirty": bool(self._camera_dirty),
             "geographicStreaming": dict(self._geographic_streaming.status) if self._geographic_streaming else None,
             "controlBridgeConnected": True,
+            "workspaceRoot": str(self._allowed_root),
         }
+
+    def _simulation_preflight(self, params):
+        """Validate on the actual Kit host, without opening/reloading its scene."""
+        keys = {"name", "workspaceRoot", "stagePath", "kitRoot", "initialTimeSeconds", "rateMultiplier", "loop", "playEveryFrame", "autoPlay", "cameraPath"}
+        if set(params) - keys:
+            raise ValueError("Unknown simulation configuration field")
+        name = params.get("name", "Simulation")
+        if not isinstance(name, str) or not 1 <= len(name.strip()) <= 160 or any(ord(c) < 32 for c in name):
+            raise ValueError("Invalid simulation name")
+        workspace = params.get("workspaceRoot")
+        if not isinstance(workspace, str) or len(workspace) > 2048 or pathlib.Path(workspace).resolve(strict=True) != self._allowed_root:
+            raise ValueError("Simulation workspace differs from the authenticated Kit workspace")
+        path = self._validated_stage(params.get("stagePath"))
+        configuration = {"name": name.strip(), "workspaceRoot": str(self._allowed_root), "stagePath": str(path)}
+        for key, default, lower, upper in [("initialTimeSeconds", 0, 0, 1_000_000_000), ("rateMultiplier", 1, .05, 8)]:
+            value = params.get(key, default)
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not lower <= value <= upper:
+                raise ValueError("Invalid simulation timing value")
+            configuration[key] = value
+        for key in ["loop", "playEveryFrame", "autoPlay"]:
+            value = params.get(key, False)
+            if not isinstance(value, bool):
+                raise ValueError("Simulation flags must be booleans")
+            configuration[key] = value
+        camera = params.get("cameraPath")
+        if camera:
+            if not isinstance(camera, str) or len(camera) > 1024:
+                raise ValueError("Invalid configured camera path")
+            candidate = Usd.Stage.Open(str(path), load=Usd.Stage.LoadNone)
+            prim = candidate.GetPrimAtPath(camera) if candidate else None
+            if not prim or not prim.IsA(UsdGeom.Camera):
+                raise ValueError("Configured USD camera is missing")
+            configuration["cameraPath"] = camera
+        checks = [{"id": ident, "ok": True, "label": label, "detail": detail, "severity": "required"} for ident, label, detail in [
+            ("remoteWorkspace", "Workspace Kit", str(self._allowed_root)),
+            ("remoteStage", "Stage USD", str(path)),
+            ("remoteBridge", "Bridge authentifié", "Préflight exécuté dans le Kit cible, sans rechargement du stage")]]
+        return {"configuration": configuration, "ready": True, "checks": checks, "failed": []}
 
     def _set_rate_multiplier(self, timeline, multiplier):
         multiplier = float(multiplier)

@@ -4,7 +4,6 @@ import {
   EventStatus,
   StreamStatus,
   StreamType,
-  VideoCodec,
   type DirectConfig,
   type StreamEvent,
 } from "@nvidia/ov-web-rtc";
@@ -19,8 +18,8 @@ import { SceneWorkbench, LiveSceneStrip, useLiveScene } from "./SceneWorkbench";
 import { SessionPreparation, initialPreparation, parseConfiguration, type SimulationConfiguration } from "./session-preparation";
 import { probeSignaling } from "./signaling-probe";
 import { installMcpSignaling } from "./mcp-signaling";
-import { installRtcDiagnostics, policyDiagnostic, streamEventDiagnostic, supportedVideoCodecs } from "./stream-diagnostics";
-import { ConnectionStudio, useLocalConnectionLock } from "./RemoteSessions";
+import { installRtcDiagnostics, policyDiagnostic, streamEventDiagnostic, supportedVideoCodecs, formatStreamStats, STUDIO_STREAM_PROFILE } from "./stream-diagnostics";
+import { ConnectionStudio, useLocalConnectionLock, useRemoteControlTarget, useSessionConnection } from "./RemoteSessions";
 import { callHostTool as invokeHostTool, isHostBridgeReady, startHostBridge } from "./host-bridge";
 
 declare global {
@@ -352,6 +351,8 @@ function ToggleControl({
 
 function App() {
   const setLocalConnectionLock = useLocalConnectionLock();
+  const remoteControlTarget = useRemoteControlTarget();
+  const sessionConnection = useSessionConnection();
   const confirm = useConfirm();
   const [hostReady, setHostReady] = useState(isHostBridgeReady);
   const [hostError, setHostError] = useState("");
@@ -426,9 +427,10 @@ function App() {
   const [journal, setJournal] = useState<JournalEntry[]>([]);
   const journalCounter = useRef(0);
 
-  const busy = busyAction !== null || workbenchBusy || !hostReady;
+  const busy = busyAction !== null || workbenchBusy || !hostReady || (sessionConnection.isRemote && !sessionConnection.controlReady);
   const controlAvailable = Boolean(
     hostReady &&
+    (!sessionConnection.isRemote || sessionConnection.controlReady) &&
     !hostError &&
     runtime.processAlive === true &&
     runtime.controlBridgeConnected === true &&
@@ -924,8 +926,8 @@ function App() {
         // Keep the local Kit contract stable across browser codec changes.
         // Automatic selection disconnected before the first frame on the
         // qualified runtime; explicit H.264 decoded with the same Kit process.
-        codec: VideoCodec.H264,
-        codecList: [VideoCodec.H264],
+        codec: sessionConnection.videoCodec,
+        codecList: [sessionConnection.videoCodec],
         signalingServer: tlsSignaling ? "localhost" : loopbackHost(currentRuntime.signalingHost),
         signalingPort:
           tlsSignaling ? currentRuntime.browserSignaling!.port : typeof currentRuntime.signalingPort === "number"
@@ -936,9 +938,7 @@ function App() {
           typeof currentRuntime.mediaPort === "number"
             ? currentRuntime.mediaPort
             : 47998,
-        width: 1280,
-        height: 720,
-        fps: 30,
+        ...STUDIO_STREAM_PROFILE,
         authenticate: true,
         forceWSS: tlsSignaling,
         accessToken: streamAccessToken,
@@ -998,7 +998,7 @@ function App() {
           const data = event.data?.stats;
           if (data)
             setStats(
-              `${String(data.streamingResolutionWidth)} × ${String(data.streamingResolutionHeight)} · ${String(data.fps)} fps · ${String(Math.round(data.currentBitrate || 0))} Mbps`,
+              formatStreamStats(data),
             );
         },
         onCustomEvent: (event) => {
@@ -1444,7 +1444,7 @@ function App() {
 
   const launchSimulation = async () => {
     if (preparation.state.operation) return;
-    const available = !busy && hostReady && !hostError && !runtime.processAlive;
+    const available = !busy && hostReady && !hostError && (!runtime.processAlive || remoteControlTarget);
     if (!preparation.canLaunch(available)) {
       report(preparation.state.issue || "Validez la configuration actuelle et son préflight avant de lancer.", "neutral");
       setActiveTab("configure");
@@ -1452,6 +1452,13 @@ function App() {
     }
     try {
       await preparation.launch(available, async (_configuration, launchArgs) => {
+        if (remoteControlTarget) {
+          setBusyAction('launch-simulation');
+          const data = toolData(await callHostTool(TOOL_NAMES.launchSimulation,launchArgs));
+          applySupervision(data);setActiveTab('control');
+          report('Paramètres de simulation appliqués dans le Kit connecté.','success');
+          return data;
+        }
         if (hasPendingSdkNegotiation()) throw new Error(APP_STREAM_PENDING_NEGOTIATION_ERROR);
         sessionFlowEpoch.current += 1;
         stopRuntimeWatchdog();
@@ -1629,6 +1636,19 @@ function App() {
   };
 
   useEffect(() => {
+    sessionFlowEpoch.current += 1;
+    if (remoteControlTarget && !sessionConnection.controlReady) { setSupervision({}); setSimulation({}); setLastObservedAt(null); return; }
+    if (hostReady) void superviseSimulation().then(data => {
+      if (!remoteControlTarget || !data) return;
+      const state=asRecord(data.simulation);
+      if (typeof state?.workspaceRoot === 'string' && typeof state?.stagePath === 'string') {
+        setWorkspaceRoot(state.workspaceRoot);setStagePath(state.stagePath);setKitRoot('');
+        setSimulationName(sessionConnection.label || 'Simulation');preparation.edit();
+      }
+    });
+  }, [remoteControlTarget, sessionConnection.controlReady]);
+
+  useEffect(() => {
     const check = () => setHostReady(isHostBridgeReady());
     void startHostBridge().then(check);
     const timer = window.setInterval(check, 1000);
@@ -1642,7 +1662,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!hostReady) return;
+    if (!hostReady || remoteControlTarget) return;
     const initialFlowEpoch = sessionFlowEpoch.current;
     void (async () => {
       const current = await refreshRuntime(false);
@@ -1667,10 +1687,10 @@ function App() {
       invalidateStream();
       signalingRoute.current?.dispose(); signalingRoute.current = null;
     };
-  }, [hostReady]);
+  }, [hostReady, remoteControlTarget]);
 
   useEffect(() => {
-    if (!hostReady || busy) return;
+    if (!hostReady || busy || (remoteControlTarget && !sessionConnection.controlReady)) return;
     const poll = () => {
       if (document.visibilityState === "visible")
         void superviseSimulation(false);
@@ -1685,7 +1705,7 @@ function App() {
       window.clearInterval(timer);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [hostReady, busy]);
+  }, [hostReady, busy, remoteControlTarget, sessionConnection.controlReady]);
 
   const numericSeek = numberOr(seekTime, -1);
   const numericRate = numberOr(rateMultiplier, -1);
@@ -1742,9 +1762,10 @@ function App() {
   );
 
   const configurationCurrent = preparation.current;
-  const launchReady = preparation.canLaunch(!busy && hostReady && !hostError && !runtime.processAlive);
+  const launchReady = preparation.canLaunch(!busy && hostReady && !hostError && (!runtime.processAlive || remoteControlTarget));
   const launchSummary = configurationCurrent && preparationState.validated
     ? preparationState.validated : currentConfigurationArgs();
+  const sessionHasVideoFrame = sessionConnection.isRemote ? sessionConnection.live : hasVideoFrame;
   const navigate = (tab: PanelTab) => {
     setActiveTab(tab);
     if (window.matchMedia("(max-width: 1150px)").matches)
@@ -1773,7 +1794,7 @@ function App() {
             : hostError
               ? "Contrôleur indisponible"
               : observed
-                ? "Contrôleur local"
+                ? sessionConnection.isRemote ? "Contrôleur distant" : "Contrôleur local"
                 : "Vérification du contrôleur"}
           <span className="version-tag">RC4</span>
         </div>
@@ -1796,7 +1817,7 @@ function App() {
             value={
               !observed
                 ? "unknown"
-                : hasVideoFrame
+                : sessionHasVideoFrame
                   ? "ready"
                   : connectionTone === "working"
                     ? "starting"
@@ -1854,7 +1875,7 @@ function App() {
           </button>
         ))}
         <div className="rail-foot">
-          LOCAL
+          {remoteControlTarget ? 'DISTANT' : 'LOCAL'}
           <br />
           MCP
         </div>
@@ -1863,6 +1884,7 @@ function App() {
         className="viewer-column"
         aria-label="Scène Omniverse Kit en direct"
       >
+        {sessionConnection.selector}
         <div className="viewer-stage">
           <div className="viewer-titlebar">
             <div>
@@ -1871,7 +1893,7 @@ function App() {
                 aria-hidden="true"
               />
               <strong>
-                {run?.name ||
+                {sessionConnection.isRemote ? sessionConnection.label : run?.name ||
                   configuredSimulation?.name ||
                   "Viewport Omniverse"}
               </strong>
@@ -1890,7 +1912,7 @@ function App() {
             onPointerEnter={() => setViewportInputActive(true)}
             onPointerLeave={() => setViewportInputActive(false)}
           >
-            <video
+            {sessionConnection.isRemote ? sessionConnection.viewport : <><video
               id="remote-video"
               className="remote-video"
               autoPlay
@@ -1906,7 +1928,7 @@ function App() {
               onPlaying={markVideoFrameReady}
             />
             <audio id="remote-audio" autoPlay muted aria-hidden="true" />
-            {!hasVideoFrame && (
+            {!sessionHasVideoFrame && (
               <div className="viewport-overlay">
                 <div className="viewport-glyph">
                   <Icon name="offline" />
@@ -1956,7 +1978,8 @@ function App() {
               className="viewport-corner viewport-corner-bottom"
               aria-hidden="true"
             />
-            {hasVideoFrame && <span className="live-badge">RTX LIVE</span>}
+            {sessionHasVideoFrame && <span className="live-badge">RTX LIVE</span>}
+            </>}
           </div>
         </div>
 
@@ -1995,7 +2018,7 @@ function App() {
           </div>
           <div className="button-row">
             <span className="viewport-origin">
-              {hasVideoFrame ? "Vidéo reçue de Kit" : "Aucune vidéo reçue"}
+              {sessionHasVideoFrame ? "Vidéo reçue de Kit" : "Aucune vidéo reçue"}
             </span>
             <button
               aria-label="Agrandir le viewport"
@@ -2083,7 +2106,9 @@ function App() {
             <span className="notice-dot" aria-hidden="true" />
             <span>{status}</span>
           </div>
-          {stats && <p className="stream-stats">{stats}</p>}
+          {sessionConnection.isRemote && <p role="status">{sessionConnection.message}</p>}
+          {(sessionConnection.isRemote ? sessionConnection.stats : stats) && <p className="stream-stats">{sessionConnection.isRemote ? sessionConnection.stats : stats}</p>}
+          {sessionConnection.isRemote && sessionConnection.diagnostics}
         </div>
       </section>
 
@@ -2555,7 +2580,7 @@ function App() {
                   ],
                   [
                     "WebRTC",
-                    !observed ? "unknown" : hasVideoFrame ? "ready" : "offline",
+                    !observed ? "unknown" : sessionHasVideoFrame ? "ready" : "offline",
                   ],
                   [
                     "Bridge",
