@@ -32,10 +32,15 @@ def main(argv=None):
     v=sub.add_parser('validate-config');v.add_argument('config')
     v=sub.add_parser('verify-output');v.add_argument('directory')
     v=sub.add_parser('prepare-camera-layer');v.add_argument('config');v.add_argument('output')
+    v=sub.add_parser('prepare-entrypoint');v.add_argument('config');v.add_argument('output')
+    v.add_argument('--camera-layer',required=True);v.add_argument('--base-scene',required=True)
     a=p.parse_args(argv)
     if a.command=='verify-output':result=verify_output(a.directory)
     else:
         c=load_config(a.config);result={'config_sha256':config_identity(c),'cameras':len(c['cameras']),'zones':len(c['zones'])}
+        if a.command=='prepare-entrypoint':
+            from .usd_cameras import create_capture_entrypoint
+            result.update(create_capture_entrypoint(a.output,c,a.camera_layer,a.base_scene))
         if a.command=='prepare-camera-layer':
             from pxr import Usd,UsdGeom
             from .usd_cameras import create_configured_cameras

@@ -1,5 +1,8 @@
 import importlib.util
 import unittest
+import tempfile
+from pathlib import Path
+import hashlib
 import numpy as np
 from helpers import config,state,front
 from fireviewer_capture.benchmark import policy_plan
@@ -35,6 +38,37 @@ class PlanTests(unittest.IsolatedAsyncioTestCase):
 
 @unittest.skipUnless(importlib.util.find_spec('pxr'),'OpenUSD is required')
 class USDTests(unittest.TestCase):
+    def test_entrypoint_authors_metric_axis_clock_and_preserves_sources(self):
+        from pxr import Usd,UsdGeom
+        from fireviewer_capture.usd_cameras import create_configured_cameras,read_camera,create_capture_entrypoint
+        c=config(1)
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);base=root/'base.usda';cameras=root/'cameras.usda'
+            for path in [base,cameras]:
+                stage=Usd.Stage.CreateNew(str(path));UsdGeom.SetStageUpAxis(stage,'Z');UsdGeom.SetStageMetersPerUnit(stage,1)
+                stage.SetDefaultPrim(UsdGeom.Xform.Define(stage,'/World').GetPrim())
+                if path==cameras:create_configured_cameras(stage,c)
+                stage.GetRootLayer().Save()
+            before={p:hashlib.sha256(p.read_bytes()).hexdigest() for p in [base,cameras]}
+            receipt=create_capture_entrypoint(root/'capture_ready.usda',c,cameras,base)
+            stage=Usd.Stage.Open(receipt['entrypoint'],load=Usd.Stage.LoadNone)
+            self.assertEqual(UsdGeom.GetStageUpAxis(stage),'Z');self.assertEqual(UsdGeom.GetStageMetersPerUnit(stage),1)
+            self.assertEqual(stage.GetTimeCodesPerSecond(),1);self.assertEqual(stage.GetEndTimeCode(),1200)
+            self.assertAlmostEqual(read_camera(stage,c['cameras'][0],c)['focal_length_mm'],22,places=5)
+            self.assertEqual(before,{p:hashlib.sha256(p.read_bytes()).hexdigest() for p in before})
+            with self.assertRaises(ContractError):create_capture_entrypoint(root/'capture_ready.usda',c,cameras,base)
+
+    def test_camera_read_rejects_composed_root_with_default_units_and_axis(self):
+        from pxr import Usd,UsdGeom,Sdf
+        from fireviewer_capture.usd_cameras import create_configured_cameras,read_camera
+        c=config(1)
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);source=root/'metric.usda';stage=Usd.Stage.CreateNew(str(source))
+            UsdGeom.SetStageUpAxis(stage,'Z');UsdGeom.SetStageMetersPerUnit(stage,1);create_configured_cameras(stage,c);stage.GetRootLayer().Save()
+            layer=Sdf.Layer.CreateNew(str(root/'missing-root-metadata.usda'));layer.subLayerPaths=['./metric.usda'];layer.Save()
+            composed=Usd.Stage.Open(layer,load=Usd.Stage.LoadNone)
+            with self.assertRaises(ContractError):read_camera(composed,c['cameras'][0],c)
+
     def test_fifty_fixed_cameras_have_correct_metric_optics_and_pose(self):
         from pxr import Usd,UsdGeom
         from fireviewer_capture.usd_cameras import create_configured_cameras,read_camera

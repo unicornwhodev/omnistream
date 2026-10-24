@@ -1,0 +1,74 @@
+{
+  "schema": "fireviewer.sanitized-geographic-preview-qualification.v1",
+  "date_utc": "2026-10-24",
+  "runtime": "Isaac Sim 5.1.0.0, NVIDIA L4, driver 580.82.07",
+  "scene_is_geographic_justin": true,
+  "fixture_only": false,
+  "territory_extent_m": [
+    20000,
+    20000
+  ],
+  "restoration": {
+    "archives_verified": 37,
+    "archive_total_bytes": 20879250177,
+    "extracted_files_sha256_verified": 24851,
+    "drive_receipts_readback_verified": true
+  },
+  "entrypoint": {
+    "file": "capture_ready_v2.usda",
+    "sha256": "87b070eddc44b5a43ba6d1aeba60077f9ae9e1068403646c53b1638034032dd1",
+    "original_wrapper_preserved": true,
+    "source_layers_modified": false,
+    "native_composed_up_axis": "Z",
+    "native_composed_meters_per_unit": 1.0,
+    "time_codes_per_second": 1,
+    "duration_sim_s": 4060800
+  },
+  "source_regression_suite": {
+    "tests_passed": 38,
+    "openusd_version": "25.11"
+  },
+  "previews": [
+    {
+      "file": "territory-overview-20261024T110743Z.png",
+      "camera_path": "/World/Cameras/Territoire",
+      "simulation_time_s": 0.0,
+      "resolution_px": [
+        1280,
+        720
+      ],
+      "bytes": 2860414,
+      "sha256": "54fda21f443f43c50eff500e575acc97679ff87193c514e176f646f28638a956",
+      "terrain_tiles": 1600,
+      "near_detail_tiles": 0,
+      "near_vegetation_tiles": 0,
+      "near_building_tiles": 0,
+      "drive_copy_readback_verified": true
+    },
+    {
+      "file": "croix-real-detail-01-20261024T110743Z.png",
+      "camera_path": "/World/Cameras/Croix_Proche_Sud",
+      "simulation_time_s": 0.0,
+      "resolution_px": [
+        1280,
+        720
+      ],
+      "bytes": 2254785,
+      "sha256": "d73bed6f983502f194a1c16ff19fd4d7c4078699f38aa1e20c1291feee8b04cf",
+      "terrain_tiles": 1600,
+      "near_detail_tiles": 14,
+      "near_vegetation_tiles": 14,
+      "near_building_tiles": 3,
+      "drive_copy_readback_verified": true
+    }
+  ],
+  "visual_inspection": "Actual textured geographic relief and near-camera vegetation observed in the Colab notebook output",
+  "scientific_dataset_capture": false,
+  "complete_visible_asset_residency_validated": false,
+  "live_fire_smoke_adapter_available": false,
+  "annotations_provided": false,
+  "live_codex_scene_evidence": false,
+  "final_operational_acceptance": false,
+  "native_scene_pixels_exported_to_pc": false,
+  "final_scene_export_held": true
+}

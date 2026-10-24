@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-24T03:48:13.850Z",
+  "generatedAt": "2026-10-24T11:15:44.293Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -121,8 +121,8 @@
     },
     {
       "path": "docs/QUALIFICATION-JUSTIN-2026-10-24.md",
-      "size": 12151,
-      "sha256": "b93bdfcf8132b647cab9af8176f1190c90554d42521506092a343aff92b4ef77"
+      "size": 13251,
+      "sha256": "69022f6e676e599aea9e64115a085a32ef5f5a36960d939c768cddae93151819"
     },
     {
       "path": "docs/QUALIFICATION-LOCAL-2026-10-21.md",
@@ -213,6 +213,11 @@
       "path": "docs/evidence/local-2026-10-21/side-camera.jpg",
       "size": 84345,
       "sha256": "3d482381aa77be70475a5b07d521c7b7afc9e6cd0c73f99b7fc6a69238909c3d"
+    },
+    {
+      "path": "docs/evidence/native-2026-10-24/actual-terrain-preview.json",
+      "size": 2382,
+      "sha256": "ed3c2f00dc5bdf7ab9b4ef4058d34afa93399a7c3a5d6a065ba498ba2f73df89"
     },
     {
       "path": "docs/evidence/native-2026-10-24/fixture-summary.json",
@@ -401,13 +406,13 @@
     },
     {
       "path": "pipelines/event_capture/docs/EXECUTION.md",
-      "size": 3710,
-      "sha256": "0a9947aa5d3a154eca5d1d49bbeb79c2939f4723ff756940b2bd031daa5d53d6"
+      "size": 4320,
+      "sha256": "e67d44fe76d2dec1a97307dc759ab3d22e0df65a18a593edf87b79d7abf622d9"
     },
     {
       "path": "pipelines/event_capture/docs/QUALIFICATION.md",
-      "size": 6992,
-      "sha256": "513d4e5b20e369d5f7f8576ac1b049ac497ec497a13b34cb2f706c1513bbf74b"
+      "size": 8831,
+      "sha256": "d2ee4b14c1e0c124d149093b1311b5f44b52ad46cfd63cb604bc7b90c03ba81e"
     },
     {
       "path": "pipelines/event_capture/docs/WEATHER.md",
@@ -446,8 +451,8 @@
     },
     {
       "path": "pipelines/event_capture/src/fireviewer_capture/cli.py",
-      "size": 2954,
-      "sha256": "40c2094fc124b3f64b5df8e158058f13db37895edfdabe3a675edbc8320d70d3"
+      "size": 3343,
+      "sha256": "5845cef53cf3508e1ca4ab70b5b545c3f9b23875a2fb9f5117785ecf8ee9c145"
     },
     {
       "path": "pipelines/event_capture/src/fireviewer_capture/config.py",
@@ -516,8 +521,8 @@
     },
     {
       "path": "pipelines/event_capture/src/fireviewer_capture/usd_cameras.py",
-      "size": 2689,
-      "sha256": "d1a7e3a2467dbea8e18e610d0060a3905f39e776d020fac28468d889c7170ada"
+      "size": 5356,
+      "sha256": "3d26bc312205a2f5ca7082702d49b964629ad2ffb5390a39947ed7780f64d35c"
     },
     {
       "path": "pipelines/event_capture/src/fireviewer_capture/weather.py",
@@ -541,8 +546,8 @@
     },
     {
       "path": "pipelines/event_capture/tests/test_usd_and_benchmark.py",
-      "size": 3040,
-      "sha256": "4aae191a6e01556b092d0a02d5c8011d0cb88c43ef24945a74af14384e93c1be"
+      "size": 5480,
+      "sha256": "f31f3b0190f6eb57d059ddd902e600d1b775e718c4366374cadc817eaac48fba"
     },
     {
       "path": "pipelines/event_capture/tests/test_weather.py",

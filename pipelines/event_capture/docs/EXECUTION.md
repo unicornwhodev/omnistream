@@ -13,10 +13,18 @@ python -m pip install -e /content/event_capture
 python -m fireviewer_capture.cli validate-config examples/reference_50_cameras.json
 python -m unittest discover -s tests -v
 python -m fireviewer_capture.cli prepare-camera-layer configuration.json cameras.usda
+python -m fireviewer_capture.cli prepare-entrypoint configuration.json capture_ready.usda \
+  --camera-layer cameras.usda --base-scene ready.usda
 ```
 
-Compose `cameras.usda` as a stronger layer over the prepared scene. All camera
-positions use local scene metres, Z up. Virtual focal length and sensor size
+The entrypoint composes `cameras.usda` as a stronger layer over the prepared
+scene, and authors root-stage metres, Z up and a clock in simulated seconds.
+Stage-wide metadata must be authored on this root; metadata on sublayers is
+insufficient. Both source layers must already use metres and Z up. Preparation
+refuses overwrite and never converts or edits source geometry. An existing
+incomplete root needs a new filename, such as `capture_ready_v2.usda`.
+The capture reader rejects a composed stage with the wrong units or up axis.
+All camera positions use local scene metres, Z up. Virtual focal length and sensor size
 are specified in millimetres; the USD preparation converts them into tenths
 of scene units. The JSON example is not suitable for direct scientific use
 until camera heights, placement, visibility and scene revision are checked.

@@ -1,7 +1,8 @@
 # Qualification gates and benchmark
 
-The current 36 tests passed on Colab CPU on 2026-10-24, including six weather
-tests and a real OpenUSD check of the 50 camera poses and metric optics.
+The current 38 tests passed in Colab on 2026-10-24, including six weather
+tests, a real OpenUSD check of the 50 camera poses and metric optics, and two
+regressions for explicit metric root-stage metadata and source preservation.
 These use explicitly named CPU test doubles for rendered arrays. They are
 source-level evidence, not real scene captures or NVIDIA GPU acceptance.
 Later changes require a fresh test receipt before being marked checked.
@@ -114,3 +115,32 @@ available separately. A real fire/smoke adapter, exact producer freeze/restore,
 visibility-complete Justin assets, visual ghosting checks, scientific terrain
 acceptance and actual decoded Justin frames in Codex are outstanding gates.
 **Keep final scene export held.**
+
+## Actual geographic scene, 2026-10-24
+
+The L4 restored the 37 authorized archives (20,879,250,177 bytes), verifying
+24,851 extracted files by SHA-256. This is a separate restoration from the
+geometric fixture. Data and native scene pixels remain in Colab/Drive.
+
+Opening the actual composed capture root exposed missing stage-wide metadata:
+the original wrapper omitted units, up axis and the simulation clock. The
+new `prepare-entrypoint` command creates an additional root with metres, Z up,
+one time code per simulated second and the 4,060,800-second period. It preserves
+the original wrapper and source layers. Actual Kit 5.1 confirmed the corrected
+composed units/axis before rendering.
+
+Two actual 1280 × 720 RTX viewport PNGs were decoded, hashed, copied to Drive
+and verified by readback: the territory overview and `Croix_Proche_Sud`.
+Simulation time remained 0.0 seconds for both. The overview loaded all 1,600
+terrain tiles; the near view loaded 14 detail/vegetation tiles and three building
+tiles. This interactive residency policy does not prove that all distant visible
+assets are resident. The native viewport capture future preceded the PNG's
+asynchronous disk write in an initial attempt; the retained preview worker now
+waits for a stable, decodable PNG and keeps the stage open if capture fails.
+
+Visual inspection in the Colab notebook shows the actual textured relief and
+near-camera vegetation. These are static geographic previews, without a fire
+solver, flame/smoke labels, scientific visibility acceptance or decoded Codex
+video evidence. The [sanitized receipt](../../../docs/evidence/native-2026-10-24/actual-terrain-preview.json)
+records the exact image and entrypoint hashes. Final operational acceptance
+and export remain held.

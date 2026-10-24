@@ -162,7 +162,7 @@ unités, dates UTC, CSV sources et empreintes sont conservés. Le champ de vent
 en relief et l’humidité du combustible ne sont pas calibrés par ces données.
 Voir le [contrat météo](../pipelines/event_capture/docs/WEATHER.md).
 
-Les 36 tests CPU/OpenUSD du pipeline sont passés dans Colab. Ils ne constituent
+Les 38 tests CPU/OpenUSD du pipeline sont passés dans Colab. Ils ne constituent
 pas une qualification du rendu de Justin. Le moteur d’incendie et de fumée doit
 fournir un adaptateur réel pour l’état, les événements, le gel de tous les
 producteurs et la reprise ; cet adaptateur est explicitement manquant. Les
@@ -178,9 +178,24 @@ Le notebook de préparation météo/caméras a également été sauvegardé puis
 dans Colab : quatre cellules de code, zéro erreur. Ses sorties indiquent
 explicitement l’absence de qualification GPU et le maintien de l’export suspendu.
 
-Le point d’entrée préparé est `capture_ready.usda`. La scène, ses données et
-son calcul restent dans Colab/Drive. **L’export vers le PC reste suspendu**
-jusqu’à la fin de ces préparations et validations.
+La restauration L4 a vérifié les 37 archives, soit 20 879 250 177 octets, puis
+24 851 fichiers extraits. L’ouverture native a détecté que le premier wrapper
+`capture_ready.usda` omettait les métadonnées de scène globales. Le nouveau
+`capture_ready_v2.usda` définit explicitement le mètre, l’axe Z vertical et une
+horloge de 4 060 800 secondes simulées ; les sources et l’ancien wrapper sont
+conservés. Kit 5.1 confirme ces unités sur la scène composée.
+
+Deux PNG RTX réels à 1 280 × 720 sont vérifiés et sauvegardés sur Drive : la vue
+du territoire et `Croix_Proche_Sud`, à temps simulé nul. L’inspection du notebook
+montre le relief texturé et la végétation proche. Les 1 600 tuiles de terrain
+sont chargées ; la vue proche ajoute 14 tuiles de détail/végétation et trois de
+bâtiments. Cette politique interactive ne garantit pas la présence de tous les
+assets visibles au loin. Ces aperçus ne valident ni le moteur d’incendie, ni
+les annotations, ni l’affichage vidéo dans le panneau Codex. Les empreintes et
+limites sont dans le [reçu des aperçus réels](evidence/native-2026-10-24/actual-terrain-preview.json).
+
+La scène, ses données, les PNG natifs et le calcul restent dans Colab/Drive.
+**L’export vers le PC reste suspendu** jusqu’à la fin des validations.
 
 ## Sources
 
