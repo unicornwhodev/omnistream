@@ -14,6 +14,13 @@ import time
 
 async def run(stage, residency, pilot_root, snapshot, settle, view='observation100m'):
     try:
+        if view == 'render_throughput':
+            import importlib.util
+            path = Path(__file__).with_name('benchmark_pilot_rendering.py')
+            spec = importlib.util.spec_from_file_location('pilot_render_throughput', str(path))
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            return await module.run(stage, residency, pilot_root)
         return await _run(stage, residency, pilot_root, snapshot, settle, view)
     except Exception:
         import traceback

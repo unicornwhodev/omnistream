@@ -3,7 +3,7 @@ import { AppStreamer, EventStatus, StreamStatus, StreamType, VideoCodec, type Di
 import { parseToolResult, privateToolMetadata } from './tool-result.mjs';
 import { installMcpSignaling } from './mcp-signaling';
 import { callHostTool, startHostBridge } from './host-bridge';
-import { installRtcDiagnostics, streamEventDiagnostic, formatStreamStats, STUDIO_STREAM_PROFILE, supportedVideoCodecs } from './stream-diagnostics';
+import { installRtcDiagnostics, streamEventDiagnostic, formatStreamStats, studioStreamProfile, supportedVideoCodecs, type StreamResolution } from './stream-diagnostics';
 
 type Profile = { id: string; label: string; provider: string; signalingOrigin: string; mediaConnectivity: string; accessConfigured: boolean; controlConfigured?: boolean };
 type Attachment = { attachmentId: string; profileId: string; label: string; provider: string };
@@ -11,8 +11,8 @@ type Configuration = { attachmentId: string; profileId: string; mediaServer: str
 const wait = (ms: number) => new Promise<void>(resolve => window.setTimeout(resolve, ms));
 const LocalConnectionLock = createContext<(value: boolean) => void>(() => {});
 const RemoteControlTarget = createContext(false);
-type SessionConnection = { isRemote: boolean; controlReady: boolean; live: boolean; videoCodec: VideoCodec; label: string; message: string; stats: string; selector: ReactNode; viewport: ReactNode; diagnostics: ReactNode };
-const SessionConnectionContext = createContext<SessionConnection>({ isRemote:false, controlReady:false, live:false, videoCodec:VideoCodec.H264,label:'',message:'',stats:'',selector:null,viewport:null,diagnostics:null });
+type SessionConnection = { isRemote: boolean; controlReady: boolean; live: boolean; videoCodec: VideoCodec; streamResolution: StreamResolution; label: string; message: string; stats: string; selector: ReactNode; viewport: ReactNode; diagnostics: ReactNode };
+const SessionConnectionContext = createContext<SessionConnection>({ isRemote:false, controlReady:false, live:false, videoCodec:VideoCodec.H264,streamResolution:'1080p',label:'',message:'',stats:'',selector:null,viewport:null,diagnostics:null });
 export const useLocalConnectionLock = () => useContext(LocalConnectionLock);
 export const useRemoteControlTarget = () => useContext(RemoteControlTarget);
 export const useSessionConnection = () => useContext(SessionConnectionContext);
@@ -27,6 +27,7 @@ async function invoke(name: string, args: Record<string, unknown>) {
 export function ConnectionStudio({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<'local' | 'remote'>('local');
   const [videoCodec, setVideoCodec] = useState(VideoCodec.H264);
+  const [streamResolution, setStreamResolution] = useState<StreamResolution>('1080p');
   const [browserCodecs] = useState(() => supportedVideoCodecs(window.RTCRtpReceiver));
   const [locked, setLocked] = useState(false);
   const [localLocked, setLocalLocked] = useState(false);
@@ -171,7 +172,7 @@ export function ConnectionStudio({ children }: { children: ReactNode }) {
         codec: videoCodec, codecList: [videoCodec],
         videoElementId: 'remote-session-video', signalingServer: '127.0.0.1', signalingPort: 49100,
         mediaServer: config.mediaServer, mediaPort: config.mediaPort, authenticate: false, forceWSS: false,
-        iceServerConfiguration: config.iceServerConfiguration, ...STUDIO_STREAM_PROFILE,
+        iceServerConfiguration: config.iceServerConfiguration, ...studioStreamProfile(streamResolution),
         mic: false, nativeTouchEvents: false, maxReconnects: 2, reconnectDelay: 1500, connectivityTimeout: 10000,
         onStart: event => { if (current()) { report(streamEventDiagnostic(event)); if (event.status === EventStatus.ERROR) stopped(); } },
         onStop: event => { if (current()) report(streamEventDiagnostic(event)); stopped(); },
@@ -242,6 +243,13 @@ export function ConnectionStudio({ children }: { children: ReactNode }) {
         <button disabled={busy || (!attachment && !streamer.current)} onClick={() => void disconnect()}>Déconnecter</button>
       </>}
       <details className="session-details"><summary>Connexion</summary>
+        <label htmlFor="session-video-resolution">Définition vidéo</label>
+        <select id="session-video-resolution" value={streamResolution} disabled={busy || locked || localLocked} onChange={event => {
+          if (event.target.value === '1080p' || event.target.value === '4k') setStreamResolution(event.target.value);
+        }}>
+          <option value="1080p">1920 × 1080</option>
+          <option value="4k">4K · 3840 × 2160</option>
+        </select>
         <label htmlFor="session-video-codec">Compression vidéo</label>
         <select id="session-video-codec" value={videoCodec} disabled={busy || locked || localLocked} onChange={event => {
           if ([VideoCodec.H264, VideoCodec.H265, VideoCodec.AV1].includes(event.target.value as VideoCodec)) setVideoCodec(event.target.value as VideoCodec);
@@ -265,7 +273,7 @@ export function ConnectionStudio({ children }: { children: ReactNode }) {
         {live && <span className="live-badge">RTX LIVE</span>}
     </div>;
   const diagnosticView = diagnostics.length > 0 ? <details><summary>Diagnostic de la connexion</summary><ol aria-label="Journal de la connexion distante">{diagnostics.map((entry,index)=><li key={index}>{entry}</li>)}</ol></details> : null;
-  return <SessionConnectionContext.Provider value={{isRemote:mode === 'remote',controlReady:remoteControlReady,live,videoCodec,label:attachment?.label || selectedProfile?.label || '',message,stats,selector,viewport:remoteViewport,diagnostics:diagnosticView}}>
+  return <SessionConnectionContext.Provider value={{isRemote:mode === 'remote',controlReady:remoteControlReady,live,videoCodec,streamResolution,label:attachment?.label || selectedProfile?.label || '',message,stats,selector,viewport:remoteViewport,diagnostics:diagnosticView}}>
     <RemoteControlTarget.Provider value={mode === 'remote'}>
       <LocalConnectionLock.Provider value={mode === 'local' ? setLocalLocked : noLocalLock}>{children}</LocalConnectionLock.Provider>
     </RemoteControlTarget.Provider>

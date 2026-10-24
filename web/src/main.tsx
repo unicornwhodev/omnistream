@@ -18,7 +18,7 @@ import { SceneWorkbench, LiveSceneStrip, useLiveScene } from "./SceneWorkbench";
 import { SessionPreparation, initialPreparation, parseConfiguration, type SimulationConfiguration } from "./session-preparation";
 import { probeSignaling } from "./signaling-probe";
 import { installMcpSignaling } from "./mcp-signaling";
-import { installRtcDiagnostics, policyDiagnostic, streamEventDiagnostic, supportedVideoCodecs, formatStreamStats, STUDIO_STREAM_PROFILE } from "./stream-diagnostics";
+import { installRtcDiagnostics, policyDiagnostic, streamEventDiagnostic, supportedVideoCodecs, formatStreamStats, studioStreamProfile } from "./stream-diagnostics";
 import { ConnectionStudio, useLocalConnectionLock, useRemoteControlTarget, useSessionConnection } from "./RemoteSessions";
 import { callHostTool as invokeHostTool, isHostBridgeReady, startHostBridge } from "./host-bridge";
 
@@ -938,7 +938,7 @@ function App() {
           typeof currentRuntime.mediaPort === "number"
             ? currentRuntime.mediaPort
             : 47998,
-        ...STUDIO_STREAM_PROFILE,
+        ...studioStreamProfile(sessionConnection.streamResolution),
         authenticate: true,
         forceWSS: tlsSignaling,
         accessToken: streamAccessToken,

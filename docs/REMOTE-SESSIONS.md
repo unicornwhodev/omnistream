@@ -137,3 +137,9 @@ AV1 appear only when the browser advertises them; the Kit host must also support
 the selected codec. Disconnect video before changing it. A requested format is
 not proof of successful decoding: verify the codec reported with received video
 statistics. A failed negotiation does not silently fall back or claim success.
+
+The same connection details expose **Définition vidéo**: 1920 × 1080 or
+3840 × 2160. Disconnect video before changing it. This requests the same
+dimensions from the local or remote streaming SDK; verify the received video
+dimensions and the native Kit viewport separately. A 4K stream cannot establish
+4K scientific capture quality or an acceptable simulation throughput.

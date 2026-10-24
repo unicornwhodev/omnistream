@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-24T17:47:46.254Z",
+  "generatedAt": "2026-10-24T18:56:58.303Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -66,8 +66,8 @@
     },
     {
       "path": "docs/FIDELITY-QUALIFICATION.md",
-      "size": 5806,
-      "sha256": "1ef02b90a1e787a3243b31d1c4c4c8f68d7dff7654e4fec77375d674ce3688d1"
+      "size": 11318,
+      "sha256": "ca4a2adc8d8d643064c7576bf77794bee4d3ef7c79f5e4aef898adf337086ccd"
     },
     {
       "path": "docs/FIREVIEWER-PREPARATION.md",
@@ -161,8 +161,8 @@
     },
     {
       "path": "docs/REMOTE-SESSIONS.md",
-      "size": 7688,
-      "sha256": "39131762d699d7042036bcbf5f0962d0f8549627c4fa6a52d765037997039a5c"
+      "size": 8065,
+      "sha256": "34842bbcbae44ad5a71a9204b2fca4f88238875a9ea964dade18dcb51886f7f2"
     },
     {
       "path": "docs/SECURITY.md",
@@ -183,6 +183,11 @@
       "path": "docs/VALIDATION.md",
       "size": 7189,
       "sha256": "b5dc8a32d88e0afe9db7b1fc24d84e1781e51e10df52a2ae479453f09ae1b059"
+    },
+    {
+      "path": "docs/evidence/4k-throughput-2026-10-24.json",
+      "size": 15028,
+      "sha256": "b830815ebf799bd779821408ad2855f7f880e64d39b6e09b5175c952c0952da3"
     },
     {
       "path": "docs/evidence/codex-2026-10-23/bridge-receipt.json",
@@ -575,6 +580,11 @@
       "sha256": "b0f2b9ba3644cec349bbb062b8e246255bd94b6de9d718746c8f171718246644"
     },
     {
+      "path": "pipelines/event_capture/tools/benchmark_pilot_rendering.py",
+      "size": 15663,
+      "sha256": "e72b41e7765520267ab83d3edf3a305120e9e7d79180e38ff01b5225d18462a1"
+    },
+    {
       "path": "pipelines/event_capture/tools/benchmark_plan.py",
       "size": 1225,
       "sha256": "68310ada9c93eed6f5c982326041adc0498a508b04d4a64a1d2ec4528fabe143"
@@ -586,8 +596,8 @@
     },
     {
       "path": "pipelines/event_capture/tools/compare_pilot_fidelity.py",
-      "size": 10260,
-      "sha256": "1963cec7247fadcb51dbf0e512c9b7ba18cd2feab80f8c7e48e97895e3e6b4d7"
+      "size": 10675,
+      "sha256": "9d5a4734cbd16903b1d33089bf5a0d0769b7360af6ff8590f3fd71050fa13953"
     },
     {
       "path": "pipelines/event_capture/tools/prepare_geographic_cameras.py",
@@ -786,8 +796,8 @@
     },
     {
       "path": "tests/test_stream_quality_adapter.mjs",
-      "size": 2643,
-      "sha256": "ae6427e0f809c2c693b55e7e2193b25b772b2b3bc0d66fe02572dc624a2576c9"
+      "size": 2670,
+      "sha256": "0a39486d5a068655f71e7b82521ef097a68649882b11fad71a224d6d4eaf962d"
     },
     {
       "path": "tools/private-stream-relay/go.mod",
@@ -856,8 +866,8 @@
     },
     {
       "path": "web/src/RemoteSessions.tsx",
-      "size": 19533,
-      "sha256": "5d7bac33fe364f31b4b37fca66cfe50ca3739840b5567b46193a8dcd3604e572"
+      "size": 20204,
+      "sha256": "89f16c220ee7e1f9dca1f1d11d2c99229b0facf333535fa8747788915303399f"
     },
     {
       "path": "web/src/SceneWorkbench.tsx",
@@ -876,8 +886,8 @@
     },
     {
       "path": "web/src/main.tsx",
-      "size": 111527,
-      "sha256": "1ac6f988d473de0b909490ded96f33b3d4c25264a817d9711a3276715afbb27c"
+      "size": 111559,
+      "sha256": "defd6890ece845d77e068cf7d3c634e089cf54b779dec76d3e4f8c5b7bb7994b"
     },
     {
       "path": "web/src/mcp-signaling.ts",
@@ -901,8 +911,8 @@
     },
     {
       "path": "web/src/stream-diagnostics.ts",
-      "size": 8260,
-      "sha256": "e8bc1675e0aeb6a43a61becb73215f7203fe3974c3f330efab172629a4f78c67"
+      "size": 8496,
+      "sha256": "ca65b11ea67996b13ded7e8ba4aa58c3f0414a94746f01f965962b17fc2af503"
     },
     {
       "path": "web/src/tool-result.mjs",

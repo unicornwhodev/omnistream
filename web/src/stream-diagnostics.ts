@@ -6,6 +6,13 @@ export const STUDIO_STREAM_PROFILE = {
   maxBitrateKbps:60_000, dynamicStreamingMode:0,
 } as const;
 
+export type StreamResolution = '1080p' | '4k';
+export function studioStreamProfile(resolution: StreamResolution) {
+  return resolution === '4k'
+    ? { ...STUDIO_STREAM_PROFILE, width:3840, height:2160 }
+    : STUDIO_STREAM_PROFILE;
+}
+
 /** SDK units: Mb/s and milliseconds. Never label a cumulative loss count as a percentage. */
 export function formatStreamStats(stats: { codec?: string; streamingResolutionWidth?: number; streamingResolutionHeight?: number; fps?: number; currentBitrate?: number; rtd?: number; packetLoss?: number }): string {
   const number = (value: number | undefined, decimals=0) => typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value.toFixed(decimals) : '—';

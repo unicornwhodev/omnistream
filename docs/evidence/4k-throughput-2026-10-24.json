@@ -1,0 +1,438 @@
+{
+  "schema": "fireviewer.preserved-native-throughput.v1",
+  "date_utc": "2026-10-24",
+  "scope": {
+    "kind": "pilot-l4-16tiles",
+    "area_km2": 4,
+    "terrain_tiles": 16,
+    "canopy_instances": 106335,
+    "shared_tree_models": 18,
+    "cameras_per_group": 5,
+    "groups_measured": 1,
+    "full_case_area_km2": 400,
+    "full_case_measured": false
+  },
+  "reproducibility": {
+    "seed": 20260624,
+    "configuration_sha256": "6cebddf28ffdc92614e2bd42557c88d48173b10adf26dce843d2e56efc866b79",
+    "tool_sha256": "e72b41e7765520267ab83d3edf3a305120e9e7d79180e38ff01b5225d18462a1",
+    "aa_mode": 4,
+    "renderer": "RTX RayTracedLighting",
+    "runtime": "Isaac Sim 5.1.0",
+    "gpu": "NVIDIA L4",
+    "production_adapter": "missing",
+    "physical_fire_calibrated": false
+  },
+  "native_images_verified": 22,
+  "drive_copy_readback_verified": true,
+  "native_media_exported_to_pc": false,
+  "trials": [
+    {
+      "run": "20261024T183410Z",
+      "report_sha256": "c9e87d64c1edc8f18ba793d6db177cbf2d77cb91cbd7211678a9089d3cf762e5",
+      "completed": false,
+      "restored": false,
+      "error": "Diagnostic exceeded its reserved memory budget",
+      "resolution_px": [
+        3840,
+        2160
+      ],
+      "simulation_time_s": 12.0,
+      "scientific_acceptance": false,
+      "flow_grid_readback_qualified": false,
+      "gpu_execution_time_s": null,
+      "simulation_execution_time_s": null,
+      "resources": {
+        "peak_device_vram_bytes": 21896822784,
+        "peak_process_rss_bytes": 16502665216,
+        "sample_count": 102,
+        "device_memory_scope": "whole GPU, including live transport"
+      },
+      "remaining_products": 0,
+      "unsolicited_writer_callbacks": 0,
+      "cross_strategy_numeric_comparisons": null,
+      "repeated_16_subframes_numeric": null,
+      "phases": [
+        {
+          "label": "rebuild-1-subframes",
+          "frames": 2,
+          "group_wall_s": 25.70820563599773,
+          "render_readback_wall_s": 17.352432431001944,
+          "write_verify_wall_s": 3.0803437850008777,
+          "binding_wall_s": 0.24164243699851795,
+          "prepare_wall_s": 0.20753659699767013,
+          "aa_mode": null,
+          "frame_sha256": [
+            "3137d384b2c28a6116312d781b70de7fa8abce49490808b3ca9e1fc0d70e180f",
+            "18bc4dced4f56db81b807174e930b513684a1b7282cd057494c2e6a1ea2dfb38"
+          ]
+        }
+      ]
+    },
+    {
+      "run": "20261024T183608Z",
+      "report_sha256": "3e253d217ca0ecb084845c71fb7c95581105ca6185dc9a5058594094c1caa766",
+      "completed": false,
+      "restored": false,
+      "error": "Diagnostic exceeded its reserved memory budget",
+      "resolution_px": [
+        3840,
+        2160
+      ],
+      "simulation_time_s": 12.0,
+      "scientific_acceptance": false,
+      "flow_grid_readback_qualified": false,
+      "gpu_execution_time_s": null,
+      "simulation_execution_time_s": null,
+      "resources": {
+        "peak_device_vram_bytes": 22002466816,
+        "peak_process_rss_bytes": 16631586816,
+        "sample_count": 24,
+        "device_memory_scope": "whole GPU, including live transport"
+      },
+      "remaining_products": 0,
+      "unsolicited_writer_callbacks": 0,
+      "cross_strategy_numeric_comparisons": null,
+      "repeated_16_subframes_numeric": null,
+      "phases": [
+        {
+          "label": "rebuild-1-subframes",
+          "frames": 0,
+          "group_wall_s": 5.696417821000068,
+          "render_readback_wall_s": 0,
+          "write_verify_wall_s": 0,
+          "binding_wall_s": 0,
+          "prepare_wall_s": 0,
+          "aa_mode": null,
+          "frame_sha256": []
+        }
+      ]
+    },
+    {
+      "run": "20261024T183812Z",
+      "report_sha256": "25fda66ed8bf25d368820d5e10e097beafcc6c7922e5c4aafd3b7c9e3288c1ed",
+      "completed": false,
+      "restored": true,
+      "error": "Diagnostic exceeded its reserved memory budget",
+      "resolution_px": [
+        3840,
+        2160
+      ],
+      "simulation_time_s": 12.0,
+      "scientific_acceptance": false,
+      "flow_grid_readback_qualified": false,
+      "gpu_execution_time_s": null,
+      "simulation_execution_time_s": null,
+      "resources": {
+        "peak_device_vram_bytes": 22025732096,
+        "peak_process_rss_bytes": 16749166592,
+        "sample_count": 24,
+        "device_memory_scope": "whole GPU, including live transport"
+      },
+      "remaining_products": 0,
+      "unsolicited_writer_callbacks": 0,
+      "cross_strategy_numeric_comparisons": null,
+      "repeated_16_subframes_numeric": null,
+      "phases": [
+        {
+          "label": "retarget-1-subframes",
+          "frames": 0,
+          "group_wall_s": 5.664660377999098,
+          "render_readback_wall_s": 0,
+          "write_verify_wall_s": 0,
+          "binding_wall_s": 0,
+          "prepare_wall_s": 0,
+          "aa_mode": 4,
+          "frame_sha256": []
+        }
+      ]
+    },
+    {
+      "run": "20261024T184550Z",
+      "report_sha256": "6b86d21b5e0469c0b4f8c7a828437649f42b598fb02f5d109a8dfad589821ef3",
+      "completed": true,
+      "restored": true,
+      "error": null,
+      "resolution_px": [
+        3840,
+        2160
+      ],
+      "simulation_time_s": 12.0,
+      "scientific_acceptance": false,
+      "flow_grid_readback_qualified": false,
+      "gpu_execution_time_s": null,
+      "simulation_execution_time_s": null,
+      "resources": {
+        "peak_device_vram_bytes": 17251696640,
+        "peak_process_rss_bytes": 16217542656,
+        "sample_count": 1221,
+        "device_memory_scope": "whole GPU, including live transport"
+      },
+      "remaining_products": 0,
+      "unsolicited_writer_callbacks": 0,
+      "cross_strategy_numeric_comparisons": [
+        {
+          "camera_id": "pilot_zone_01_cam_01",
+          "candidate": "retarget-1-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 3.959535389338992,
+          "p99_absolute_error": 27.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_01",
+          "candidate": "retarget-4-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 4.517786538708847,
+          "p99_absolute_error": 31.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_02",
+          "candidate": "retarget-1-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 5.4589279112011315,
+          "p99_absolute_error": 39.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_02",
+          "candidate": "retarget-4-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 4.751100702481996,
+          "p99_absolute_error": 33.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_03",
+          "candidate": "retarget-1-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 5.774758793081276,
+          "p99_absolute_error": 38.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_03",
+          "candidate": "retarget-4-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 5.0445305668081275,
+          "p99_absolute_error": 33.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_04",
+          "candidate": "retarget-1-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 5.412368666409465,
+          "p99_absolute_error": 37.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_04",
+          "candidate": "retarget-4-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 4.933116118505659,
+          "p99_absolute_error": 33.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_05",
+          "candidate": "retarget-1-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 0.2220603861239712,
+          "p99_absolute_error": 2.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": true
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_05",
+          "candidate": "retarget-4-subframes",
+          "reference": "retarget-16-subframes",
+          "mean_absolute_error": 0.1834696502057613,
+          "p99_absolute_error": 2.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": true
+        }
+      ],
+      "repeated_16_subframes_numeric": [
+        {
+          "camera_id": "pilot_zone_01_cam_01",
+          "mean_absolute_error": 3.8895710358796296,
+          "p99_absolute_error": 26.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_02",
+          "mean_absolute_error": 3.97632712030607,
+          "p99_absolute_error": 27.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_03",
+          "mean_absolute_error": 4.324664793917181,
+          "p99_absolute_error": 28.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_04",
+          "mean_absolute_error": 4.13191635320216,
+          "p99_absolute_error": 27.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": false
+        },
+        {
+          "camera_id": "pilot_zone_01_cam_05",
+          "mean_absolute_error": 0.13443246849279836,
+          "p99_absolute_error": 2.0,
+          "thresholds": {
+            "mean": 2,
+            "p99": 12
+          },
+          "numeric_thresholds_passed": true
+        }
+      ],
+      "phases": [
+        {
+          "label": "retarget-1-subframes",
+          "frames": 5,
+          "group_wall_s": 51.50813084800029,
+          "render_readback_wall_s": 43.97195565599759,
+          "write_verify_wall_s": 7.035252360001323,
+          "binding_wall_s": 0.13744801000575535,
+          "prepare_wall_s": 0.2228677660023095,
+          "aa_mode": 4,
+          "frame_sha256": [
+            "985c8b6c4fe48f14205872090a09cc05b230facaa668a02f5253bf2097716be9",
+            "e33df254b75651b727fd9b1030254d00eb30b45e26852419f9ff17e5326c8aca",
+            "7c714af6fa4e7a04bfbda4285c51928590c59a6640cce86b626f26e69ee45f55",
+            "93c74ecdbc5aae8fc161bb67ca57665ef7f97c86d1060a45e600f55e50cc97d9",
+            "736a628da09ea803758f7f9324055fd380b0733f0bfebdd57ea77de6b8df294f"
+          ]
+        },
+        {
+          "label": "retarget-4-subframes",
+          "frames": 5,
+          "group_wall_s": 53.71523514799992,
+          "render_readback_wall_s": 46.47344501100815,
+          "write_verify_wall_s": 6.994556503002968,
+          "binding_wall_s": 0.004584147001878591,
+          "prepare_wall_s": 0.0469043490011245,
+          "aa_mode": 4,
+          "frame_sha256": [
+            "5a1ca213f53baacc0fead8d8c92d5aed492e453ee24936b5c1f9149e00b747f5",
+            "2b887d5d35b6391aeddd3abdd41b7852fd8de8b437c0efcd61968f777a13136c",
+            "393ae354bbf408012b37a087ef2cc188a8d62afb2f5f3c003de7f5270d5e52fb",
+            "8525983426526d349419cb25882afda7d3e9f9c127455079402482a22bcd9983",
+            "5c139b3ca742b694d13a69347ce3fdeee286ce23d8be93741b058ed8c6fcde2d"
+          ]
+        },
+        {
+          "label": "retarget-16-subframes",
+          "frames": 5,
+          "group_wall_s": 95.12535519699668,
+          "render_readback_wall_s": 87.8056853909984,
+          "write_verify_wall_s": 7.095575638999435,
+          "binding_wall_s": 0.0045277839999471325,
+          "prepare_wall_s": 0.0409850079959142,
+          "aa_mode": 4,
+          "frame_sha256": [
+            "0b853cec489346db87c087c479a6b37235780ff76f04cb2819766bfcf91dca90",
+            "207367949c89413848111ab0e8c28c67415fe97dbe3611523928805ce673117d",
+            "10caf9dc548a3d4d5cd12f20dc6422673d09e21020fa45338e1d3306fd8aff2b",
+            "d389d86565316c021b9591f3bbbbd59543ba7904afa63582ac0124f7784f5539",
+            "69d8325cfde16385491a3b8711c2624bfc5ccef14ff30c9ff3c8669e86aef8cc"
+          ]
+        },
+        {
+          "label": "retarget-repeat-16-subframes",
+          "frames": 5,
+          "group_wall_s": 94.94388937799886,
+          "render_readback_wall_s": 87.64425744199252,
+          "write_verify_wall_s": 7.104924239003594,
+          "binding_wall_s": 0.004149039996264037,
+          "prepare_wall_s": 0.03971256900331355,
+          "aa_mode": 4,
+          "frame_sha256": [
+            "d0f5f54ac572767cd528dde5a8a5b8ae37ba8050c35348f8dd53e4c0bb0ea5a5",
+            "fac3e518c389c81f5e7cd5f1f00f595dda5ebefd574ec592d8c2d72181edc1a2",
+            "a6546d072e903812aa18acd1108423cc096e10738bf821ed8e823e65e276f68a",
+            "6719193100f6615d1a4a849050224bbf20b7be3d2b24451c17d46e07722aa909",
+            "0138bea43e1b47ed889a25d1e69510590156ce2e4581f0501943b041edd19a0e"
+          ]
+        }
+      ]
+    }
+  ],
+  "acceptance": {
+    "throughput_and_quality_qualified": false,
+    "repeated_16_subframes_cameras_passed": 1,
+    "repeated_16_subframes_cameras_total": 5,
+    "actual_codex_panel_qualified": false,
+    "g4_switch_held": true,
+    "export_held": true
+  },
+  "projection": {
+    "kind": "arithmetic_under_measured_pilot_conditions_only",
+    "hypothesis": "47 days, 50 cameras, every zone inactive throughout, one group every six simulated hours, excluding transitions",
+    "images": 9400,
+    "groups": 1880,
+    "capture_wall_hours_at_1_subframe": 26.898690553955706,
+    "capture_wall_hours_at_repeated_16_subframes": 49.581808897399405,
+    "actual_historical_schedule_known": false,
+    "includes_fire_engine_execution": false,
+    "full_scene_performance_prediction": false
+  }
+}

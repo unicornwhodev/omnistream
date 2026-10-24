@@ -15,18 +15,14 @@ test('real pinned Direct wrapper forwards fidelity controls into the native down
   const make = new Function('R', 'wa', `return new (class { ${patched.slice(from, to)} })()`);
   const wrapper = make({ CursorType:{ FREE:0 } }, value=>value);
   let request;
-  wrapper._props = {
-    width:1920,height:1080,fps:30,videoElementId:'quality-test',codec:'H264',
-    maxBitrateKbps:60000,dynamicStreamingMode:0,
-  };
   wrapper.attemptLabel=()=>''; wrapper.logConnectionAttempt=()=>{};
   wrapper.isSecure=()=>false;
   wrapper._streamClient={startStreaming(value){request=value;}};
-  await wrapper.startButtonClick();
-  assert.deepEqual(request.downstreamParams,[{
-    videoTagId:'quality-test',codec:'H264',width:1920,height:1080,fps:30,
-    maxBitrateKbps:60000,dynamicStreamingMode:0,
-  }]);
+  for (const [width,height,codec] of [[1920,1080,'H264'],[3840,2160,'AV1']]) {
+    wrapper._props = {width,height,fps:30,videoElementId:'quality-test',codec,maxBitrateKbps:60000,dynamicStreamingMode:0};
+    await wrapper.startButtonClick();
+    assert.deepEqual(request.downstreamParams,[{videoTagId:'quality-test',codec,width,height,fps:30,maxBitrateKbps:60000,dynamicStreamingMode:0}]);
+  }
 });
 
 test('an SDK drift cannot silently drop the requested fidelity policy', () => {
