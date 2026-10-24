@@ -3,8 +3,9 @@
 Independent Python capture package for one shared simulation and fixed groups
 of five USD cameras. There are no FireViewer backend imports or service calls.
 This revision provides the scheduling, storage and Replicator integration
-source. **Final Omniverse GPU qualification and a production fire/smoke adapter
-are still required. CPU tests do not establish operational readiness.**
+source. A native Colab L4 geometric fixture has exercised the driver, recovery
+and short resource matrix. **Actual Justin/fire rendering, GPU execution
+profiling and a production fire/smoke adapter are still required.**
 
 | Module | Responsibility |
 |---|---|

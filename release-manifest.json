@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-24T02:40:10.194Z",
+  "generatedAt": "2026-10-24T03:48:13.850Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -121,8 +121,8 @@
     },
     {
       "path": "docs/QUALIFICATION-JUSTIN-2026-10-24.md",
-      "size": 11674,
-      "sha256": "1bab803e1c8fba14878aad6cfff06e4de14d52b282b78d5172a88eeec692043d"
+      "size": 12151,
+      "sha256": "b93bdfcf8132b647cab9af8176f1190c90554d42521506092a343aff92b4ef77"
     },
     {
       "path": "docs/QUALIFICATION-LOCAL-2026-10-21.md",
@@ -213,6 +213,11 @@
       "path": "docs/evidence/local-2026-10-21/side-camera.jpg",
       "size": 84345,
       "sha256": "3d482381aa77be70475a5b07d521c7b7afc9e6cd0c73f99b7fc6a69238909c3d"
+    },
+    {
+      "path": "docs/evidence/native-2026-10-24/fixture-summary.json",
+      "size": 8303,
+      "sha256": "1e4f3813d87b28f15b21de19841917cd201bc0210a162b7aff1edfceb64eec9e"
     },
     {
       "path": "installer/Build-Release.ps1",
@@ -386,8 +391,8 @@
     },
     {
       "path": "pipelines/event_capture/README.md",
-      "size": 3418,
-      "sha256": "2b47116c7b1058f831f84e0107c55f433b95b451df634225bc0a0bab940b1d22"
+      "size": 3486,
+      "sha256": "d1ef4406363b32f8c0f5bfd6ecdf22ff0c2a6b45bc3b5a98b0ef2f197a8e417c"
     },
     {
       "path": "pipelines/event_capture/docs/ADAPTER.md",
@@ -401,8 +406,8 @@
     },
     {
       "path": "pipelines/event_capture/docs/QUALIFICATION.md",
-      "size": 3766,
-      "sha256": "00e4ed5e1bd60694a7444dab6fe3018c324878a44007d4f912f8bfb4b6694fae"
+      "size": 6992,
+      "sha256": "513d4e5b20e369d5f7f8576ac1b049ac497ec497a13b34cb2f706c1513bbf74b"
     },
     {
       "path": "pipelines/event_capture/docs/WEATHER.md",
@@ -471,8 +476,8 @@
     },
     {
       "path": "pipelines/event_capture/src/fireviewer_capture/omniverse_driver.py",
-      "size": 8896,
-      "sha256": "87cfb6c488b192e223100f0554a8c4b600281239e8ff9120235fb03dba89f956"
+      "size": 11285,
+      "sha256": "0bfa293eab9892756cb8d1f762d5a14153aab0734ffcc3994a1dd7ac4285aae8"
     },
     {
       "path": "pipelines/event_capture/src/fireviewer_capture/orchestrator.py",
@@ -530,6 +535,11 @@
       "sha256": "17826b4643f27770aa8e37dd5b5704bc1de68518ae4cdda08badb64c4e77104d"
     },
     {
+      "path": "pipelines/event_capture/tests/test_manual_writer_contract.py",
+      "size": 4003,
+      "sha256": "3fb7ec894a1cda4cfdd2bb542b39ab9c3b66f2691f262281e2ba5d215209ef4f"
+    },
+    {
       "path": "pipelines/event_capture/tests/test_usd_and_benchmark.py",
       "size": 3040,
       "sha256": "4aae191a6e01556b092d0a02d5c8011d0cb88c43ef24945a74af14384e93c1be"
@@ -553,6 +563,11 @@
       "path": "pipelines/event_capture/tools/prepare_geographic_cameras.py",
       "size": 3839,
       "sha256": "0a01a29b8b793aecd414dcd795eb4bfe9cb8dd43951cd164d225198cbace96e0"
+    },
+    {
+      "path": "pipelines/event_capture/tools/qualify_in_isaacsim.py",
+      "size": 9975,
+      "sha256": "d55bc208c81ae587af7a61e5f78ee194e71363b841ad61553e55db4526a9474d"
     },
     {
       "path": "pipelines/event_capture/tools/run_in_isaacsim.py",

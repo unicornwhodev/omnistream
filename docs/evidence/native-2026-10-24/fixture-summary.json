@@ -1,0 +1,266 @@
+{
+  "schema": "fireviewer.native-fixture-summary.v1",
+  "fixture_only": true,
+  "real_justin_scene": false,
+  "real_fire_adapter": "missing",
+  "final_operational_acceptance": false,
+  "native_writer_source_sha256": "0bfa293eab9892756cb8d1f762d5a14153aab0734ffcc3994a1dd7ac4285aae8",
+  "native_report_sha256": "64e64413a02f2f66dd2179300843ae8ba59f5b742a6ac1aa6514eb4742359df9",
+  "benchmark": [
+    {
+      "groups": 1,
+      "policy": "uniform",
+      "images": 10,
+      "groups_committed": 2,
+      "wall_s": 3.0483848009998837,
+      "simulation_wall_s": 0.01468762800004697,
+      "render_wall_s": 1.8008275860001959,
+      "write_wall_s": 0.5260930750000625,
+      "gpu_execution_s": null,
+      "peak_rss_bytes": 4918853632,
+      "peak_device_vram_bytes": 4303028224,
+      "images_per_wall_s": 3.2804257509484875,
+      "peak_active_products": 5,
+      "peak_cached_products": 5
+    },
+    {
+      "groups": 1,
+      "policy": "event",
+      "images": 5,
+      "groups_committed": 1,
+      "wall_s": 1.5236992820000523,
+      "simulation_wall_s": 0.007101756999873032,
+      "render_wall_s": 0.6558976940000321,
+      "write_wall_s": 0.27196329399976094,
+      "gpu_execution_s": null,
+      "peak_rss_bytes": 4929441792,
+      "peak_device_vram_bytes": 4302569472,
+      "images_per_wall_s": 3.281487403102831,
+      "peak_active_products": 5,
+      "peak_cached_products": 5
+    },
+    {
+      "groups": 2,
+      "policy": "uniform",
+      "images": 20,
+      "groups_committed": 4,
+      "wall_s": 7.265614696999819,
+      "simulation_wall_s": 0.014694462000079511,
+      "render_wall_s": 3.0250240229993324,
+      "write_wall_s": 1.0384835990003012,
+      "gpu_execution_s": null,
+      "peak_rss_bytes": 4966055936,
+      "peak_device_vram_bytes": 4556718080,
+      "images_per_wall_s": 2.7526920754906774,
+      "peak_active_products": 5,
+      "peak_cached_products": 5
+    },
+    {
+      "groups": 2,
+      "policy": "event",
+      "images": 10,
+      "groups_committed": 2,
+      "wall_s": 3.0975801720001073,
+      "simulation_wall_s": 0.00724227900036567,
+      "render_wall_s": 1.246519962000093,
+      "write_wall_s": 0.48199228600014976,
+      "gpu_execution_s": null,
+      "peak_rss_bytes": 4966420480,
+      "peak_device_vram_bytes": 4556718080,
+      "images_per_wall_s": 3.228326449914935,
+      "peak_active_products": 5,
+      "peak_cached_products": 5
+    },
+    {
+      "groups": 5,
+      "policy": "uniform",
+      "images": 50,
+      "groups_committed": 10,
+      "wall_s": 17.258353089999673,
+      "simulation_wall_s": 0.014394512999842846,
+      "render_wall_s": 7.589885302000312,
+      "write_wall_s": 2.4500983000002634,
+      "gpu_execution_s": null,
+      "peak_rss_bytes": 5022687232,
+      "peak_device_vram_bytes": 5319360512,
+      "images_per_wall_s": 2.8971478181757924,
+      "peak_active_products": 5,
+      "peak_cached_products": 5
+    },
+    {
+      "groups": 5,
+      "policy": "event",
+      "images": 25,
+      "groups_committed": 5,
+      "wall_s": 7.978632303999802,
+      "simulation_wall_s": 0.007279724999989412,
+      "render_wall_s": 3.137388051999551,
+      "write_wall_s": 1.186035038999762,
+      "gpu_execution_s": null,
+      "peak_rss_bytes": 5026762752,
+      "peak_device_vram_bytes": 5319360512,
+      "images_per_wall_s": 3.1333691098243923,
+      "peak_active_products": 5,
+      "peak_cached_products": 5
+    },
+    {
+      "groups": 10,
+      "policy": "uniform",
+      "images": 100,
+      "groups_committed": 20,
+      "wall_s": 34.7045943320004,
+      "simulation_wall_s": 0.014564628999778506,
+      "render_wall_s": 14.857034265999573,
+      "write_wall_s": 4.867983541000285,
+      "gpu_execution_s": null,
+      "peak_rss_bytes": 5123358720,
+      "peak_device_vram_bytes": 6590431232,
+      "images_per_wall_s": 2.8814628704013416,
+      "peak_active_products": 5,
+      "peak_cached_products": 5
+    },
+    {
+      "groups": 10,
+      "policy": "event",
+      "images": 50,
+      "groups_committed": 10,
+      "wall_s": 16.205066045999956,
+      "simulation_wall_s": 0.007106414000190853,
+      "render_wall_s": 6.284497720999752,
+      "write_wall_s": 2.4298901279998972,
+      "gpu_execution_s": null,
+      "peak_rss_bytes": 5127614464,
+      "peak_device_vram_bytes": 6590431232,
+      "images_per_wall_s": 3.085454873066806,
+      "peak_active_products": 5,
+      "peak_cached_products": 5
+    }
+  ],
+  "memory": {
+    "device_vram_used_bytes": {
+      "growth_bytes_per_cycle": 0.0,
+      "limit_bytes_per_cycle": 8388608,
+      "measured": true,
+      "passed": true,
+      "peak_bytes": 6590431232
+    },
+    "passed": true,
+    "process_rss_bytes": {
+      "growth_bytes_per_cycle": 196403.2,
+      "limit_bytes_per_cycle": 33554432,
+      "measured": true,
+      "passed": true,
+      "peak_bytes": 5021687808
+    }
+  },
+  "static_numeric_ghosting": {
+    "mean_absolute_RGB_difference_0_255": 0.23200954861111112,
+    "p99_absolute_RGB_difference_0_255": 2.0,
+    "passed": true,
+    "thresholds": {
+      "mean": 2,
+      "p99": 12
+    },
+    "visual_ghosting_inspection_still_required": true
+  },
+  "smoke_events": {
+    "remaining_products": 0,
+    "result": {
+      "committed_groups": 4,
+      "complete": true,
+      "sim_time_us": 20000000
+    },
+    "unsolicited_writer_callbacks": 0,
+    "verification": {
+      "groups_verified": 4,
+      "images_verified": 20,
+      "native_render_and_scientific_acceptance_not_implied": true
+    }
+  },
+  "recovery": {
+    "remaining_products": 0,
+    "result": {
+      "committed_groups": 1,
+      "complete": true,
+      "sim_time_us": 1000000
+    },
+    "unsolicited_writer_callbacks": 0,
+    "verification": {
+      "groups_verified": 1,
+      "images_verified": 5,
+      "native_render_and_scientific_acceptance_not_implied": true
+    }
+  },
+  "recovery_counts": {
+    "groups_committed": 1,
+    "images_reused_verified": 1,
+    "images_written_new": 4,
+    "peak_active_products": 2,
+    "peak_cached_products": 4,
+    "render_batches": 2,
+    "simulation_advance_calls": 1
+  },
+  "cycle_callbacks": 0,
+  "cycle_remaining_products": 0,
+  "png_count": 355,
+  "hardware": {
+    "gpu": "NVIDIA L4",
+    "vram_MiB": 23034,
+    "driver": "580.82.07",
+    "isaac_sim": "5.1.0.0",
+    "execution": "Colab; headless RTX; main viewport updates disabled"
+  },
+  "utc_completed": "2026-10-24T03:30:35Z",
+  "native_writer_canonical_lf_sha256": "0bfa293eab9892756cb8d1f762d5a14153aab0734ffcc3994a1dd7ac4285aae8",
+  "limitations": [
+    "Geometric fixture only; not Justin or fire rendering",
+    "GPU execution profiler timing unavailable; render wall time is not GPU time",
+    "Short resource check only; no long-duration soak",
+    "Static numeric comparison does not establish smoke/fire visual ghosting acceptance",
+    "Real fire/smoke producer adapter is missing",
+    "Actual Justin scene in Codex is not validated"
+  ],
+  "delivered_tool_reproduction": {
+    "native_report_sha256": "4e1eff5d521ea889dda0ff4b59caa2e772c24abb3c8e738fbaa607ac1f248973",
+    "png_count": 355,
+    "memory": {
+      "device_vram_used_bytes": {
+        "growth_bytes_per_cycle": 0.0,
+        "limit_bytes_per_cycle": 8388608,
+        "measured": true,
+        "passed": true,
+        "peak_bytes": 6590431232
+      },
+      "passed": true,
+      "process_rss_bytes": {
+        "growth_bytes_per_cycle": 195652.26666666666,
+        "limit_bytes_per_cycle": 33554432,
+        "measured": true,
+        "passed": true,
+        "peak_bytes": 5010153472
+      }
+    },
+    "static_numeric_ghosting": {
+      "mean_absolute_RGB_difference_0_255": 0.23283203125,
+      "p99_absolute_RGB_difference_0_255": 2.0,
+      "passed": true,
+      "thresholds": {
+        "mean": 2,
+        "p99": 12
+      },
+      "visual_ghosting_inspection_still_required": true
+    },
+    "final_operational_acceptance": false,
+    "tool_canonical_lf_sha256": "d55bc208c81ae587af7a61e5f78ee194e71363b841ad61553e55db4526a9474d",
+    "utc_completed": "2026-10-24T03:36:56Z"
+  },
+  "drive_backup": {
+    "fixture_samples_only": true,
+    "png_samples_retained": 13,
+    "all_images_metadata_and_hashes_retained": 710,
+    "archive_bytes": 4466410,
+    "sha256": "8d09c886a43f3a26f6a1c52aad79f009b7c6d4a2d9bfd560adfa2e258e0d15dc",
+    "cloud_readback_verified": true,
+    "raw_images_exported_to_pc": false
+  }
+}

@@ -20,6 +20,7 @@ class Product:
     product:object
     writer:object
     enabled:bool=False
+    primed:bool=False
 
 
 class OmniverseRenderDriver(RenderDriver):
@@ -83,10 +84,28 @@ class OmniverseRenderDriver(RenderDriver):
 
     async def create_product(self,camera,config):
         rep=self.rep;owner=self
+        # In the qualified Isaac Sim 5.1 SDK, a writer attached while the
+        # orchestrator is STEPPED starts with its trigger already set. Pause
+        # only capture orchestration before attaching new writers. Stopping
+        # it would repeat asset initialization for every cache eviction.
+        status=rep.orchestrator.get_status()
+        if status==rep.orchestrator.Status.STEPPED:
+            import omni.timeline
+            timeline=omni.timeline.get_timeline_interface()
+            before=timeline.get_current_time()
+            rep.orchestrator.pause()
+            if not rep.orchestrator.get_is_paused() or abs(timeline.get_current_time()-before)>1e-9:
+                raise ContractError('Capture graph pause failed or changed the simulation time')
+        elif status not in [rep.orchestrator.Status.STOPPED,rep.orchestrator.Status.PAUSED]:
+            raise ContractError('Capture graph is busy; cannot attach a new manual writer')
         class ManualRGBWriter(rep.Writer):
             def __init__(self):
                 self.annotators=[rep.AnnotatorRegistry.get_annotator("rgb")]
                 self.data_structure="legacy";self.pending=None;self.lock=threading.Lock()
+            def write_metadata(self,*args,**kwargs):
+                # The capture store commits its own verified metadata schema.
+                # This in-memory RGB writer intentionally has no SDK backend.
+                pass
             def arm(self):
                 with self.lock:
                     if self.pending is not None:raise ContractError("Writer already armed")
@@ -127,15 +146,30 @@ class OmniverseRenderDriver(RenderDriver):
             raise ContractError("Too many active products")
         futures={};gpu_token=None;started=time.perf_counter();before=self.unsolicited_callbacks
         try:
+            if self.gpu_timing_provider:
+                gpu_token=self.gpu_timing_provider.begin(tuple(p.product.path for p in handles.values()))
+            if any(not p.primed for p in handles.values()):
+                # Manual writer events require an initialized/stepped graph.
+                # A newly attached writer otherwise loses its first event.
+                # No writer is armed or scheduled during this single priming
+                # frame; it cannot create an accepted image or advance time.
+                await asyncio.wait_for(self.rep.orchestrator.step_async(delta_time=0.0,rt_subframes=1),
+                                       timeout=config['render'].get('initialization_timeout_wall_s',300))
+                if self.unsolicited_callbacks!=before:
+                    raise ContractError('A manual writer fired during its unscheduled priming frame')
+                for p in handles.values():p.primed=True
             for key,p in handles.items():
                 if not p.enabled:raise ContractError("Requested Render Product is disabled")
                 futures[key]=p.writer.arm();p.writer.schedule_write()
-            if self.gpu_timing_provider:
-                gpu_token=self.gpu_timing_provider.begin(tuple(p.product.path for p in handles.values()))
-            await self.rep.orchestrator.step_async(delta_time=0.0,rt_subframes=config["render"]["rt_subframes"])
+            await asyncio.wait_for(self.rep.orchestrator.step_async(delta_time=0.0,rt_subframes=config["render"]["rt_subframes"]),
+                                   timeout=config['render'].get('render_timeout_wall_s',300))
             # Stop all managed rendering before image encoding or disk writes.
             for p in handles.values():self.set_updates(p,False)
-            frames={key:await asyncio.wait_for(asyncio.wrap_future(future),timeout=config["render"].get("writer_timeout_wall_s",60)) for key,future in futures.items()}
+            try:
+                frames={key:await asyncio.wait_for(asyncio.wrap_future(future),timeout=config["render"].get("writer_timeout_wall_s",60)) for key,future in futures.items()}
+            except TimeoutError:
+                missing=sorted(key for key,future in futures.items() if not future.done() or future.cancelled())
+                raise ContractError('Explicit RGB writer timed out for cameras: '+', '.join(missing)) from None
             if self.unsolicited_callbacks!=before:raise ContractError("An automatic/unscheduled writer callback occurred")
             gpu=None;source=None
             if self.gpu_timing_provider:

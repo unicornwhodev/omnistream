@@ -162,12 +162,18 @@ unités, dates UTC, CSV sources et empreintes sont conservés. Le champ de vent
 en relief et l’humidité du combustible ne sont pas calibrés par ces données.
 Voir le [contrat météo](../pipelines/event_capture/docs/WEATHER.md).
 
-Les 32 tests CPU/OpenUSD du pipeline sont passés dans Colab. Ils ne constituent
-pas une qualification du rendu Omniverse. Le moteur d’incendie et de fumée doit
+Les 36 tests CPU/OpenUSD du pipeline sont passés dans Colab. Ils ne constituent
+pas une qualification du rendu de Justin. Le moteur d’incendie et de fumée doit
 fournir un adaptateur réel pour l’état, les événements, le gel de tous les
 producteurs et la reprise ; cet adaptateur est explicitement manquant. Les
-Render Products, le profilage GPU, la stabilité mémoire, le ghosting et la
-présence de tous les assets visibles restent à qualifier dans Kit compatible.
+essais RTX sur une scène géométrique explicitement marquée ont aussi produit
+355 images vérifiées dans Isaac Sim 5.1 sur un Colab L4 : matrice 1/2/5/10 groupes,
+reprise sur fichier incomplet et douze cycles de cinq caméras. Le contrôle
+mémoire court et la comparaison numérique d’une vue répétée passent. Ces
+images ne montrent pas Justin ni un incendie réel simulé. Le profilage du
+temps GPU, le ghosting de feu/fumée, la présence de tous les assets visibles
+et le panneau Codex montrant cette carte restent à qualifier. Le
+[rapport natif](../pipelines/event_capture/docs/QUALIFICATION.md) détaille les limites.
 Le notebook de préparation météo/caméras a également été sauvegardé puis exécuté
 dans Colab : quatre cellules de code, zéro erreur. Ses sorties indiquent
 explicitement l’absence de qualification GPU et le maintien de l’export suspendu.

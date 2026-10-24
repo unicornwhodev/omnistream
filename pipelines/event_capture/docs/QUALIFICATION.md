@@ -1,6 +1,6 @@
 # Qualification gates and benchmark
 
-The current 32 tests passed on Colab CPU on 2026-10-24, including six weather
+The current 36 tests passed on Colab CPU on 2026-10-24, including six weather
 tests and a real OpenUSD check of the 50 camera poses and metric optics.
 These use explicitly named CPU test doubles for rendered arrays. They are
 source-level evidence, not real scene captures or NVIDIA GPU acceptance.
@@ -57,6 +57,60 @@ Native acceptance must include:
    DOM dumps, artificial unit images and offscreen fixture renders do not pass
    the real-scene panel gate.
 
-The current Colab session was CPU-only when these tests were run. The native
-matrix, profiler, memory stability, ghosting, real fire engine integration and
-real scene panel acceptance have **not** passed. Keep final scene export held.
+## Native geometric fixture, 2026-10-24
+
+A separate Colab NVIDIA L4 (23,034 MiB, driver 580.82.07) ran Isaac Sim 5.1.0.0
+with actual RTX RGB output. The marked geometric fixture is not the Justin
+landscape, a fire solver, or smoke rendering. Its state log tests scheduling.
+The existing recorded NVIDIA agreement and matching user-space driver libraries
+were reused; the Google host driver was not replaced.
+
+The 1/2/5/10-group comparison verified 270 RGB images at 1280 × 720. Uniform
+sampling used two instants per zone over 20 simulated seconds; the event policy
+used one. These short, deliberately chosen fixture counts do not predict
+production savings over 47 days. The active/cache cap was five. Native smoke
+on/off input events and negatives added 20 images; incomplete-file recovery
+reused one verified image and rendered four replacements with a cap of two.
+Twelve five-view cycles added 60 images: 355 verified images in total.
+
+After three warm-up cycles, device VRAM growth was 0 bytes/cycle and process
+RSS growth about 196,403 bytes/cycle, under predeclared limits of 8/32 MiB per
+cycle. This is a short-run allocator/resource check, not a long-duration soak.
+The repeated static view had mean absolute RGB difference 0.232 and p99 2
+(0–255 units; limits 2 and 12). Numerical comparison passed; visual smoke/fire
+ghosting inspection is still required. There were no unsolicited callbacks or
+remaining managed products in those cycle/recovery cases.
+
+Native testing exposed two SDK boundary failures: the first manual event can
+be lost before graph initialization; a new writer attached while orchestration
+is STEPPED can start pre-triggered. The driver primes the graph without writers
+armed/scheduled, and pauses capture orchestration before attaching more writers.
+The simulation time is checked; no simulation restart or viewport rotation is
+used. A stop/reinitialize workaround was discarded because it repeated expensive
+asset-loading waits after cache evictions. Failed/partial trials were preserved
+separately and do not contribute to accepted image counts.
+
+Run the native fixture with the compatible environment's Python and an already
+recorded agreement. Use a new output directory:
+
+```bash
+python tools/qualify_in_isaacsim.py --output /content/qualification-new-run
+```
+
+The script creates its own explicitly marked stage; never substitute it for
+real-scene acceptance. It writes checkpointed image groups, benchmark results,
+resource samples, source hashes and a report whose final operational acceptance
+remains false. See the [sanitized measured receipt](../../../docs/evidence/native-2026-10-24/fixture-summary.json).
+
+The delivered script was also run independently and completed another 355-image
+matrix. A Drive backup was read back and verified: 13 representative unmodified
+PNG samples and the metadata/hashes of all 710 images across both runs. The
+samples include each zone and the repeated-view A/B/A comparison. Full fixture
+pixels are reproducible with the script; the retained sample archive is not a
+backup of every generated PNG. No fixture images were exported to the PC.
+
+Actual GPU execution timing is still null: measured render wall time is
+available separately. A real fire/smoke adapter, exact producer freeze/restore,
+visibility-complete Justin assets, visual ghosting checks, scientific terrain
+acceptance and actual decoded Justin frames in Codex are outstanding gates.
+**Keep final scene export held.**
