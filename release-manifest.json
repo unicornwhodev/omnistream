@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "product": "omnistream-for-codex",
   "version": "1.0.0-rc4",
-  "generatedAt": "2026-10-23T20:54:44.339Z",
+  "generatedAt": "2026-10-24T02:40:10.194Z",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -16,8 +16,8 @@
     },
     {
       "path": ".gitignore",
-      "size": 478,
-      "sha256": "9941664a2d0c2cd0199c963d70c4e41616e06eee2b1d5acd1ab80ad594264219"
+      "size": 617,
+      "sha256": "919fb76b950a2213647562d4734828fbc70807e84c3772b02680b7a3f3bd025b"
     },
     {
       "path": ".mcp.json",
@@ -26,8 +26,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "size": 9151,
-      "sha256": "b9b64a31c740edf5c4d7a29d7fd59775cfdfe14f345b54a0d7bb83393608fb9e"
+      "size": 9980,
+      "sha256": "7b51143d1ac7d36f003442fc8fae5f07637cad1578c3bfb848dc5182d3dad079"
     },
     {
       "path": "QA-REPORT.md",
@@ -76,8 +76,8 @@
     },
     {
       "path": "docs/LOCAL-SETUP.md",
-      "size": 9595,
-      "sha256": "4bef89aef86b4ad58c0328695c5bfc3f601a9713d3c0dbcbd842e2e7442c84bf"
+      "size": 9645,
+      "sha256": "306da7dabe2a819f1b6abe96fde5f8a24791e879f710aae62d02f8139d451e2b"
     },
     {
       "path": "docs/MCP-REFERENCE.md",
@@ -120,6 +120,11 @@
       "sha256": "329005dbe64a11950154fdd7d51021ee8a882d5ca7bb5b28506972cc2ff7f132"
     },
     {
+      "path": "docs/QUALIFICATION-JUSTIN-2026-10-24.md",
+      "size": 11674,
+      "sha256": "1bab803e1c8fba14878aad6cfff06e4de14d52b282b78d5172a88eeec692043d"
+    },
+    {
       "path": "docs/QUALIFICATION-LOCAL-2026-10-21.md",
       "size": 9976,
       "sha256": "5da6c272e9508848c76b24db89a8142dc51b8f691689cc15b2683e5e775b85cc"
@@ -131,8 +136,8 @@
     },
     {
       "path": "docs/README.md",
-      "size": 2777,
-      "sha256": "ef667b1c768b2f257a8595f0e530de0c84c69323f80a6549d00198f185f5486e"
+      "size": 3175,
+      "sha256": "de6134e43bedb6b5a5cdb69f99966f7d9e3a0162049273a6f32d2d9bd4cb1654"
     },
     {
       "path": "docs/RELEASE-CHECKLIST.md",
@@ -153,6 +158,11 @@
       "path": "docs/SECURITY.md",
       "size": 2797,
       "sha256": "bbd8aaaf9028f72c29728e17a64a8164261b14aaa1637b4071adff096071aa92"
+    },
+    {
+      "path": "docs/TILED-GEOGRAPHIC-SCENES.md",
+      "size": 3689,
+      "sha256": "994233a4f7c323987936c5a25e8dfd4e5e021dab6e21cc362686e6fd9e0ab2aa"
     },
     {
       "path": "docs/TROUBLESHOOTING.md",
@@ -286,8 +296,8 @@
     },
     {
       "path": "mcp/local-signaling.mjs",
-      "size": 7816,
-      "sha256": "b2c283c16b5c43342b53e26f0f91d32c445c01c90751d2f0e2bdb23a85702bf2"
+      "size": 8238,
+      "sha256": "9f6f437a5826fcda3a27f02565c6454606ad22672bc40aa36c6f27180ea245ee"
     },
     {
       "path": "mcp/loopback-tls.mjs",
@@ -298,6 +308,11 @@
       "path": "mcp/operation-queue.mjs",
       "size": 3588,
       "sha256": "2e8a6438c529ab08095eaf55ee0530f40f5c4d1ad8930838bafe8e06540154b9"
+    },
+    {
+      "path": "mcp/panel-resource.mjs",
+      "size": 889,
+      "sha256": "8ad691d1b06b38ee802e33c0ebdde2e47a094b47cfefc4a2a182362a818aa4ba"
     },
     {
       "path": "mcp/panel-runtime-harness.mjs",
@@ -331,8 +346,8 @@
     },
     {
       "path": "mcp/server.mjs",
-      "size": 101713,
-      "sha256": "172b821d002bb4c97e6e4640e01947b80ab0297dffd30dd074215519436dc7fa"
+      "size": 102051,
+      "sha256": "84a5c54c809b25c527f3cb9b97b1b65e38288626045e54bcf282257bcfc1d4d3"
     },
     {
       "path": "mcp/stage-path-policy.mjs",
@@ -361,13 +376,188 @@
     },
     {
       "path": "mcp/test-server.mjs",
-      "size": 43942,
-      "sha256": "2a4eccd6478b8ef0703aa6859952ab69dea9f35333510fa9dcfbb2915d6155af"
+      "size": 44003,
+      "sha256": "a9f366216b376c4fc311e9356b32c743acd157d453bd24aaf1d821d1653d106a"
     },
     {
       "path": "package.json",
-      "size": 2946,
-      "sha256": "817cc3e11c7af2173503db0fa650b4c9f021ccc003c3471b17139945354fc8b1"
+      "size": 2978,
+      "sha256": "e4149981d54316ca99f97e03dd833197d47563d1f78fd6bd870c57d358b7830a"
+    },
+    {
+      "path": "pipelines/event_capture/README.md",
+      "size": 3418,
+      "sha256": "2b47116c7b1058f831f84e0107c55f433b95b451df634225bc0a0bab940b1d22"
+    },
+    {
+      "path": "pipelines/event_capture/docs/ADAPTER.md",
+      "size": 2626,
+      "sha256": "0c5fd6cbdde1920570a62ce85c1589f94ad40348f0f8670a1f7c06d50fdf5496"
+    },
+    {
+      "path": "pipelines/event_capture/docs/EXECUTION.md",
+      "size": 3710,
+      "sha256": "0a9947aa5d3a154eca5d1d49bbeb79c2939f4723ff756940b2bd031daa5d53d6"
+    },
+    {
+      "path": "pipelines/event_capture/docs/QUALIFICATION.md",
+      "size": 3766,
+      "sha256": "00e4ed5e1bd60694a7444dab6fe3018c324878a44007d4f912f8bfb4b6694fae"
+    },
+    {
+      "path": "pipelines/event_capture/docs/WEATHER.md",
+      "size": 4123,
+      "sha256": "4581f5277c219b3bd47d79aa055e80b234fb23152695fad4b7ed71475676d67b"
+    },
+    {
+      "path": "pipelines/event_capture/examples/reference_50_cameras.json",
+      "size": 34386,
+      "sha256": "a1e17df0fd14de555fe6d14b361d3ada9b1dd5714bdaf1aae79438a033375134"
+    },
+    {
+      "path": "pipelines/event_capture/pyproject.toml",
+      "size": 539,
+      "sha256": "cf48e652b13ab89e7a8c834b83ec0a12ebb355aec02a845720ca866a7e8b559c"
+    },
+    {
+      "path": "pipelines/event_capture/schemas/capture-image.schema.json",
+      "size": 3607,
+      "sha256": "28cee4ca9214a095dcabbe6914f08793171a5af9fa2184aa2f30e22e6d813ef0"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/__init__.py",
+      "size": 383,
+      "sha256": "901da93d6d193450fe2afbba2f11328270cbe8346c0e2dad95018530d521525e"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/activity.py",
+      "size": 7149,
+      "sha256": "14fbc002e1770c4470a5646dbcccd734df283f61abc6630d4eab25c9aaf709eb"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/benchmark.py",
+      "size": 4169,
+      "sha256": "df13a1deac7240f207b18a2cabd5b29c8e0ce8a0e510785775d9049d68a9325a"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/cli.py",
+      "size": 2954,
+      "sha256": "40c2094fc124b3f64b5df8e158058f13db37895edfdabe3a675edbc8320d70d3"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/config.py",
+      "size": 4404,
+      "sha256": "578b27413e33af5e438cd996ccc74efbf172e7bf2703efea505a97c11b04abff"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/drivers.py",
+      "size": 1005,
+      "sha256": "f60e730a5f5271fa4eb65984bfed752556ec192cd5d9bfcb3824bb1818e974a5"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/kit_replay.py",
+      "size": 2274,
+      "sha256": "8d9a396218e67904ef3e4707dd831fc9cbe474abba680ccd6ca427c5b094bcfc"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/metrics.py",
+      "size": 2927,
+      "sha256": "2efa892ea6f2483f85aa428815256673330bc8644ceff4bf3d5aeaed895da437"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/models.py",
+      "size": 4779,
+      "sha256": "90ca0052d7ea9c9b45d8c86f24f4c34eaa027e5aae2c293546a914651439f2c5"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/omniverse_driver.py",
+      "size": 8896,
+      "sha256": "87cfb6c488b192e223100f0554a8c4b600281239e8ff9120235fb03dba89f956"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/orchestrator.py",
+      "size": 4845,
+      "sha256": "5d7741c354a5e3fdea9003b8d872f4f3c91680b59e6ec5805f88c0c0e4e6217f"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/qualification.py",
+      "size": 2377,
+      "sha256": "dd103db4eca9e59b8e9e2d4a0c53fa303f1e1dd9ccb2321faee36195c04093d9"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/replicator.py",
+      "size": 8024,
+      "sha256": "189abc544816a26fbe3fa6e193641333065ee8811e6bf05d9e1081e5e5fa57b4"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/runner.py",
+      "size": 2523,
+      "sha256": "b22900620b28e61ead9fc8e12be524dea9fae77b3d389d50051f65359984dddc"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/scheduler.py",
+      "size": 4932,
+      "sha256": "f927e8197ceb449d333cb396fb1706cc28f1bad1c032e5d6659d7663010880ae"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/simulation.py",
+      "size": 6514,
+      "sha256": "be76b3d18b3267160170750f8c4d7b1da48e0525dc35daaae5d5b6ec80d6bbf6"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/storage.py",
+      "size": 6875,
+      "sha256": "8f4c2d4f236ff3b50ea0116764d5f6a0c4137eb6bc330766e92b728e7cde3215"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/usd_cameras.py",
+      "size": 2689,
+      "sha256": "d1a7e3a2467dbea8e18e610d0060a3905f39e776d020fac28468d889c7170ada"
+    },
+    {
+      "path": "pipelines/event_capture/src/fireviewer_capture/weather.py",
+      "size": 6797,
+      "sha256": "312d0a182d4f273c9c995676585a623a63fd5829677b4f956d4bc8b77ce5b97c"
+    },
+    {
+      "path": "pipelines/event_capture/tests/helpers.py",
+      "size": 4011,
+      "sha256": "1a9cbd8279f3c01f10fa182311597fbccf553307bd81bfb5d346cdc02b41af9f"
+    },
+    {
+      "path": "pipelines/event_capture/tests/test_event_pipeline.py",
+      "size": 12071,
+      "sha256": "17826b4643f27770aa8e37dd5b5704bc1de68518ae4cdda08badb64c4e77104d"
+    },
+    {
+      "path": "pipelines/event_capture/tests/test_usd_and_benchmark.py",
+      "size": 3040,
+      "sha256": "4aae191a6e01556b092d0a02d5c8011d0cb88c43ef24945a74af14384e93c1be"
+    },
+    {
+      "path": "pipelines/event_capture/tests/test_weather.py",
+      "size": 3092,
+      "sha256": "b0f2b9ba3644cec349bbb062b8e246255bd94b6de9d718746c8f171718246644"
+    },
+    {
+      "path": "pipelines/event_capture/tools/benchmark_plan.py",
+      "size": 1225,
+      "sha256": "68310ada9c93eed6f5c982326041adc0498a508b04d4a64a1d2ec4528fabe143"
+    },
+    {
+      "path": "pipelines/event_capture/tools/build_reference_config.py",
+      "size": 3318,
+      "sha256": "724770e286ad5c16f99f20e6eedafeec973dbdd4b4ec02e0f91c9f556a6b252f"
+    },
+    {
+      "path": "pipelines/event_capture/tools/prepare_geographic_cameras.py",
+      "size": 3839,
+      "sha256": "0a01a29b8b793aecd414dcd795eb4bfe9cb8dd43951cd164d225198cbace96e0"
+    },
+    {
+      "path": "pipelines/event_capture/tools/run_in_isaacsim.py",
+      "size": 1817,
+      "sha256": "68f509750e42c7ddffa5a05c1a218a1e2592474c587cceab0aef6b161f38b65b"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/config/extension.toml",
@@ -381,8 +571,13 @@
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/extension.py",
-      "size": 28358,
-      "sha256": "ed82219163bcf6f68d71903e0f2dd6fe549637433a80f2fa1794a6dd79deb281"
+      "size": 30104,
+      "sha256": "654a4c308a814b8f807223fada0fe3ef7bbedfcf653d9e5daf174f79dab04bb0"
+    },
+    {
+      "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/geographic_streaming.py",
+      "size": 6611,
+      "sha256": "ee46b074c424f2c7f4492e4780d7ad478ddeef095aedffb5e9c6641dd583e0dc"
     },
     {
       "path": "runtime/bridge/omnistream.codex.bridge/omnistream/codex/bridge/scene_policy.py",
@@ -470,14 +665,24 @@
       "sha256": "5eb3650445c3f4f04be3b7a6b70213df40d8d7738cd786e019b89887e0d73788"
     },
     {
+      "path": "tests/test_geographic_streaming.py",
+      "size": 5179,
+      "sha256": "ab806f22feef76808b24c1371b0612b65145d1e6e71809229df7b44f400f1eaf"
+    },
+    {
       "path": "tests/test_local_signaling.mjs",
-      "size": 4645,
-      "sha256": "ce846259ca97476b910de82bee5a135d912f25afd012bd2918c7a79529defc6a"
+      "size": 5523,
+      "sha256": "42c22143449c1ed43d818ed3f7177442bdf25709cf145c7e88cf6b8a8391a124"
     },
     {
       "path": "tests/test_loopback_tls.mjs",
       "size": 2514,
       "sha256": "1924c45b7fd8e08c0cb799dd980f933c2c2e442be8d7a53517fefd470a919397"
+    },
+    {
+      "path": "tests/test_panel_resource.mjs",
+      "size": 1379,
+      "sha256": "d6e1ee81cf661e08be51e4c386dbba334e23daed32fbb6cec2a9660bcf1fbc53"
     },
     {
       "path": "tests/test_public_contract.mjs",
@@ -551,23 +756,23 @@
     },
     {
       "path": "web/src/host-bridge.ts",
-      "size": 4290,
-      "sha256": "4bc7692536c38cd9efd2ae1db6dd848d8f88eae62470e4fee72fb866370e0fe0"
+      "size": 4562,
+      "sha256": "4d53f953cc22472d148bf35cb3926c3cb41327b620b9a0074389318fdaeb7f9f"
     },
     {
       "path": "web/src/index.css",
-      "size": 26408,
-      "sha256": "f4549bebe35a5a0feb138068dc61cdf3b90987270e83b8be5a32f42c34269dba"
+      "size": 26856,
+      "sha256": "e083970ad5bfd896317466c87cf53c9a458d42f963dd74130e3110019da55d92"
     },
     {
       "path": "web/src/main.tsx",
-      "size": 108975,
-      "sha256": "79f2fe2c889734c12456536b4aa34ea0f21f73a66c63f237406777a154cf67d1"
+      "size": 109418,
+      "sha256": "bbb8367d5b0824166420925dba313c97aff8a4d56be0d03a273fe8769661f63c"
     },
     {
       "path": "web/src/mcp-signaling.ts",
-      "size": 10821,
-      "sha256": "bfeb1ff7109261c417e9c691940f84bcdbdd9bb2099e0f48d76662655b854e3f"
+      "size": 11040,
+      "sha256": "aaa4f3a1eb1d4f5fca74f84e91c71ed8b4461567e7f2cf07fd3265707b3deb11"
     },
     {
       "path": "web/src/scene.css",
@@ -586,8 +791,8 @@
     },
     {
       "path": "web/src/stream-diagnostics.ts",
-      "size": 5864,
-      "sha256": "e8943ea7fb19ce88940fe32eeb49f6d33049b8d5a7378f56381f41634c7a11e9"
+      "size": 6300,
+      "sha256": "b4281fcdc19a0c7282225ceb356386d23e94f1de2af77f1c2327f42364d5b76e"
     },
     {
       "path": "web/src/tool-result.mjs",
@@ -601,13 +806,13 @@
     },
     {
       "path": "web/tests/mcp-signaling.test.mjs",
-      "size": 6402,
-      "sha256": "c45520bc5bdeccc2dbe46c37964881b5c8e4bcc23eb87e58d471226ec7e32e43"
+      "size": 6792,
+      "sha256": "52e9a7b8f2070f830645796eac881b02735cdb949ceeff994fcbfc344de7f112"
     },
     {
       "path": "web/tests/panel-contract.mjs",
-      "size": 14113,
-      "sha256": "ce9d8b3e83b7a8c1cd047e081abbc3bee02d1de318535803f102e4db7effe254"
+      "size": 14196,
+      "sha256": "e3f40ea39071bf99bb3924bb10c3d045b4854f12e22b29e87558976eac48db80"
     },
     {
       "path": "web/tests/session-preparation.test.mjs",
@@ -621,8 +826,8 @@
     },
     {
       "path": "web/tests/stream-diagnostics.test.mjs",
-      "size": 3277,
-      "sha256": "466eb152af54fde91857178cc3eae24326d75c16fd3a344f84506f5668654c1a"
+      "size": 3809,
+      "sha256": "f516de55c7eb4d670d8567640ce0e624dec9bac55226b9c6ebb91a2fd8e0890f"
     },
     {
       "path": "web/tsconfig.app.json",

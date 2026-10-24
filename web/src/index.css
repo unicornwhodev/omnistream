@@ -453,6 +453,8 @@ pre {
 }
 .viewport-overlay {
   position: absolute;
+  /* The SDK reparents video into an input wrapper appended after this node. */
+  z-index: 2;
   inset: 0;
   display: flex;
   flex-direction: column;
@@ -508,6 +510,8 @@ pre {
 }
 .live-badge {
   position: absolute;
+  z-index: 3;
+  pointer-events: none;
   left: 12px;
   top: 12px;
   border-radius: 4px;
@@ -1434,6 +1438,10 @@ summary span {
 }
 .connection-modes { display: flex; gap: 8px; padding: 10px 20px; border-bottom: 1px solid var(--border); }
 .connection-modes [aria-pressed="true"] { color: var(--accent); border-color: currentColor; }
+/* Expanded Apps have a fixed host viewport. Keep their scrolling inside the
+   app; inline cards must retain intrinsic sizing to avoid a resize loop. */
+html[data-omnistream-display-mode="fullscreen"] { overflow: hidden; }
+html[data-omnistream-display-mode="fullscreen"] #root { height: 100dvh; overflow-y: auto; }
 .remote-studio { max-width: 1440px; margin: auto; padding: 24px; }
 .remote-studio header p, .remote-studio section > p { color: var(--muted); margin: 12px 0; line-height: 1.6; }
 .remote-connection { padding: 20px 0; }

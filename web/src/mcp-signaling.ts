@@ -28,6 +28,7 @@ export class McpSignalingSocket extends EventTarget {
   private onDiagnostic: (code: string) => void;
   private sessionId: string | undefined;
   private diagnosticPackets: boolean;
+  private closingCode = 1000;
 
   constructor(url: string, invoke: Invoke, onFinished: () => void = () => {}, onDiagnostic: (code: string) => void = () => {}, sessionId?: string, diagnosticPackets = false) {
     super(); this.url = url; this.invoke = invoke; this.onFinished = onFinished; this.onDiagnostic = onDiagnostic;
@@ -51,6 +52,7 @@ export class McpSignalingSocket extends EventTarget {
     if (code !== 1000 && (code < 3000 || code > 4999)) throw new DOMException("Invalid close code.", "InvalidAccessError");
     if (new TextEncoder().encode(reason).length > 123) throw new DOMException("Close reason is too long.", "SyntaxError");
     if (this.finished || this.readyState === this.CLOSING) return;
+    this.closingCode = code;
     this.readyState = this.CLOSING;
     // Native WebSocket.close() never dispatches onclose inside its caller's
     // stack. The NVIDIA client clears its old socket after calling close.
@@ -74,7 +76,9 @@ export class McpSignalingSocket extends EventTarget {
     const event = new Event("close") as CloseEvent;
     Object.defineProperties(event, { code: { value: code }, reason: { value: "" }, wasClean: { value: wasClean } });
     this.emit("close", event); this.onFinished();
-    if (this.channelId) void this.invoke("close_omniverse_signaling", { channelId: this.channelId }).catch(() => {});
+    if (this.channelId) void this.invoke("close_omniverse_signaling", {
+      channelId: this.channelId, ...(code !== 1000 && code >= 3000 && code <= 4999 ? { code } : {}),
+    }).catch(() => {});
   }
 
   private fail() {
@@ -111,7 +115,9 @@ export class McpSignalingSocket extends EventTarget {
         ...(url.searchParams.get("reconnect") === "1" ? { reconnect: true } : {}) });
       if (typeof opened.channelId !== "string" || opened.state !== "open") throw new Error("Invalid private signaling response.");
       this.channelId = opened.channelId;
-      if (this.finished || this.readyState === this.CLOSING) { await this.invoke("close_omniverse_signaling", { channelId: this.channelId }); return; }
+      if (this.finished || this.readyState === this.CLOSING) { await this.invoke("close_omniverse_signaling", {
+        channelId: this.channelId, ...(this.closingCode !== 1000 ? { code: this.closingCode } : {}),
+      }); return; }
       this.readyState = this.OPEN; this.emit("open", new Event("open"));
       while (!this.finished && this.readyState !== this.CLOSING) {
         const payload = await this.invoke("exchange_omniverse_signaling", {

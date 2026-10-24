@@ -38,8 +38,9 @@ The opening tool declares a conversation side-panel entrypoint. Its UI resource
 now prefers `fullscreen`, and the initialized Apps client makes one bounded
 request for that expanded host surface. A refused display request does not
 disable controller access. Actual opening still needs to be observed in Codex;
-these declarations alone do not certify it. The current UI resource is
-`ui://omnistream-for-codex/panel-rc4-layout.html`. Reload the plugin's MCP
+these declarations alone do not certify it. The current UI resource contains
+a hash of its HTML, JavaScript and CSS:
+`ui://omnistream-for-codex/panel-<content-hash>.html`. Reload the plugin's MCP
 controller after an update so Codex discovers its current schema and entrypoint;
 close old cards before opening the new resource. The inline layout uses content
 height and must stop resizing once its contents have settled.

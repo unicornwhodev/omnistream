@@ -75,3 +75,11 @@ test('client close is asynchronous so SDK cleanup cannot see its own close as a 
  await flush();assert.equal(socket.readyState,socket.CLOSED);assert.equal(disconnected,false);
  assert.equal(h.calls.filter(c=>c.name==='close_omniverse_signaling').length,1);
 });
+
+test('SDK application close codes survive the panel-to-MCP boundary',async t=>{
+ const h=harness();const socket=new McpSignalingSocket(url,h.invoke);t.after(()=>h.stop());
+ await flush();socket.close(4001);await flush();
+ assert.deepEqual(h.calls.filter(c=>c.name==='close_omniverse_signaling'),[
+  {name:'close_omniverse_signaling',args:{channelId:'fixture-channel',code:4001}},
+ ]);
+});

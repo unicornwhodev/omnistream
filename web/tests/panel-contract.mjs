@@ -109,7 +109,8 @@ assert.match(css, /\.viewport-frame[\s\S]*aspect-ratio: 16 \/ 9/, "Le catalogue 
 assert.match(css, /\.remote-video[\s\S]*position: absolute[\s\S]*inset: 0/, "La vidéo doit remplir le cadre 16:9 stable.");
 // The host resizes inline apps to their intrinsic height. A viewport-height
 // child plus the connection bar must never feed the host's height back into it.
-const intrinsicCss = css.replace(/\.viewport-frame:fullscreen\s*\{[^}]*\}/g, "");
+const intrinsicCss = css.replace(/\.viewport-frame:fullscreen\s*\{[^}]*\}/g, "")
+  .replace(/html\[data-omnistream-display-mode="fullscreen"\][^{]*\{[^}]*\}/g, "");
 assert.doesNotMatch(intrinsicCss, /\b\d*(?:\.\d+)?(?:dvh|svh|lvh|vh)\b/, "La hauteur intrinsèque du panneau ne doit pas dépendre de la hauteur de son iframe Codex.");
 assert.doesNotMatch(css, /html, body, #root\s*\{[^}]*min-height:\s*100%/, "Le document auto-dimensionné ne doit pas imposer la hauteur de son hôte.");
 assert.match(css, /\.asset-source-list/, "La liste des bibliothèques détectées doit recevoir un style lisible.");

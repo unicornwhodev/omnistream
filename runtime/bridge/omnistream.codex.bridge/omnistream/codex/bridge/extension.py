@@ -16,6 +16,7 @@ from omni.kit.viewport.utility import get_active_viewport
 from pxr import Gf, Sdf, Usd, UsdGeom
 from .scene_service import SceneService
 from .telemetry import TelemetryBuffer, sanitize
+from .geographic_streaming import GeographicStreaming, load_manifest
 
 _PROTOCOL = 1
 _MAX_LINE_BYTES = 64 * 1024
@@ -41,6 +42,7 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
         self._thread = None
         self._selected_camera = None
         self._camera_dirty = False
+        self._geographic_streaming = None
         self._rate_multiplier = 1.0
         self._base_target_fps = None
         self._initial_time_seconds = 0.0
@@ -277,7 +279,10 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
         if method == "simulation.state":
             return self._simulation_state()
         if method == "simulation.configure":
-            return self._simulation_configure(params)
+            result = self._simulation_configure(params)
+            await self._refresh_geographic_streaming()
+            result.update(self._simulation_state())
+            return result
         if method == "simulation.control":
             return self._simulation_control(params)
         if method == "timeline.control":
@@ -285,9 +290,15 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
         if method == "camera.list":
             return self._camera_list()
         if method == "camera.select":
-            return self._camera_select(params)
+            result = self._camera_select(params)
+            await self._refresh_geographic_streaming()
+            result.update(self._simulation_state())
+            return result
         if method == "camera.navigate":
-            return self._camera_navigate(params)
+            result = self._camera_navigate(params)
+            await self._refresh_geographic_streaming()
+            result.update(self._simulation_state())
+            return result
         if method == "camera.save":
             return await self._camera_save()
         if method == "runtime.prepare_stop":
@@ -299,16 +310,37 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
             if self._scene_service.identity()["hasSessionEdits"]:
                 raise ValueError("unsaved_scene_edits: Export then explicitly discard managed edits before replacing the stage")
         stage_path = self._validated_stage(params.get("path"))
+        geographic = load_manifest(stage_path)
         context = omni.usd.get_context()
-        ok, error = await context.open_stage_async(str(stage_path))
+        self._geographic_streaming = None
+        load_set = omni.usd.UsdContextInitialLoadSet.LOAD_NONE if geographic else omni.usd.UsdContextInitialLoadSet.LOAD_ALL
+        ok, error = await context.open_stage_async(str(stage_path), load_set=load_set)
         if not ok:
             raise RuntimeError(error or "Kit could not open the USD stage")
         await omni.kit.app.get_app().next_update_async()
         self._selected_camera = None
         self._camera_dirty = False
+        if geographic:
+            self._geographic_streaming = GeographicStreaming(context.get_stage(), geographic)
+            self._camera_select({"cameraPath": geographic['overview_camera']})
+            await self._refresh_geographic_streaming()
         result = self._simulation_state()
         result.update({"stagePath": str(stage_path), "message": "USD stage loaded in Kit."})
         return result
+
+    async def _refresh_geographic_streaming(self):
+        streaming = self._geographic_streaming
+        if not streaming or not self._selected_camera:
+            return
+        stage = self._stage()
+        if streaming.stage != stage:
+            self._geographic_streaming = None
+            return
+        prim = self._camera_prim()
+        eye = UsdGeom.XformCache(Usd.TimeCode.Default()).GetLocalToWorldTransform(prim).ExtractTranslation()
+        status = streaming.focus(tuple(float(v) for v in eye))
+        await omni.kit.app.get_app().next_update_async()
+        self._telemetry.emit("geographic_streaming", status)
 
     def _timeline(self):
         return omni.timeline.get_timeline_interface()
@@ -359,6 +391,7 @@ class OmniStreamCodexBridgeExtension(omni.ext.IExt):
             "cameras": cameras,
             "selectedCamera": self._selected_camera,
             "cameraDirty": bool(self._camera_dirty),
+            "geographicStreaming": dict(self._geographic_streaming.status) if self._geographic_streaming else None,
             "controlBridgeConnected": True,
         }
 

@@ -1,0 +1,1748 @@
+{
+  "schema": "fireviewer.event-capture-config.v1",
+  "scenario_id": "die-justin-reference-47-days",
+  "scene_revision": "replace-with-verified-scene-revision",
+  "seed": 20260624,
+  "execution_environment": "colab",
+  "period": {
+    "start": "2026-06-24T00:00:00+02:00",
+    "end_exclusive": "2026-08-10T00:00:00+02:00",
+    "timezone": "Europe/Paris"
+  },
+  "acceleration": 500,
+  "coordinate_system": "scene_local_metric_Z_up",
+  "adapter": {
+    "kind": "missing",
+    "reason": "Bind a real simulator adapter; no front API is assumed"
+  },
+  "weather": {
+    "provider": "supplied_by_simulation_adapter",
+    "observed_and_modelled_sources_must_remain_distinct": true,
+    "missing_values": "null, never fabricated"
+  },
+  "activity": {
+    "enter_margin_m": 50,
+    "exit_margin_m": 150,
+    "enter_hold_sim_s": 30,
+    "exit_hold_sim_s": 90,
+    "post_extinction_window_sim_s": 21600,
+    "poll_interval_sim_s": 3600,
+    "requires_stop_on_activity_event": true
+  },
+  "capture_policy": {
+    "inactive": {
+      "interval_sim_s": 21600,
+      "priority": 10
+    },
+    "early_smoke": {
+      "interval_sim_s": 300,
+      "priority": 80
+    },
+    "active_rapid": {
+      "interval_sim_s": 90,
+      "priority": 100
+    },
+    "active_stable": {
+      "interval_sim_s": 300,
+      "priority": 90
+    },
+    "declining": {
+      "interval_sim_s": 900,
+      "priority": 50
+    },
+    "post_extinction": {
+      "interval_sim_s": 1800,
+      "priority": 30
+    }
+  },
+  "render": {
+    "resolution_px": [
+      1280,
+      720
+    ],
+    "channels": [
+      "rgb"
+    ],
+    "max_active_products": 5,
+    "max_cached_products": 10,
+    "rt_subframes": 8,
+    "writer_timeout_wall_s": 60,
+    "renderer": "RayTracedLighting",
+    "main_viewport_policy": "unchanged; no camera rotation",
+    "seed": 20260624
+  },
+  "zones": [
+    {
+      "id": "zone_01",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -10000,
+              -10000
+            ],
+            [
+              -6000,
+              -10000
+            ],
+            [
+              -6000,
+              0
+            ],
+            [
+              -10000,
+              0
+            ],
+            [
+              -10000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_01_cam_01",
+        "zone_01_cam_02",
+        "zone_01_cam_03",
+        "zone_01_cam_04",
+        "zone_01_cam_05"
+      ]
+    },
+    {
+      "id": "zone_02",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6000,
+              -10000
+            ],
+            [
+              -2000,
+              -10000
+            ],
+            [
+              -2000,
+              0
+            ],
+            [
+              -6000,
+              0
+            ],
+            [
+              -6000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_02_cam_01",
+        "zone_02_cam_02",
+        "zone_02_cam_03",
+        "zone_02_cam_04",
+        "zone_02_cam_05"
+      ]
+    },
+    {
+      "id": "zone_03",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2000,
+              -10000
+            ],
+            [
+              2000,
+              -10000
+            ],
+            [
+              2000,
+              0
+            ],
+            [
+              -2000,
+              0
+            ],
+            [
+              -2000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_03_cam_01",
+        "zone_03_cam_02",
+        "zone_03_cam_03",
+        "zone_03_cam_04",
+        "zone_03_cam_05"
+      ]
+    },
+    {
+      "id": "zone_04",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              2000,
+              -10000
+            ],
+            [
+              6000,
+              -10000
+            ],
+            [
+              6000,
+              0
+            ],
+            [
+              2000,
+              0
+            ],
+            [
+              2000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_04_cam_01",
+        "zone_04_cam_02",
+        "zone_04_cam_03",
+        "zone_04_cam_04",
+        "zone_04_cam_05"
+      ]
+    },
+    {
+      "id": "zone_05",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              6000,
+              -10000
+            ],
+            [
+              10000,
+              -10000
+            ],
+            [
+              10000,
+              0
+            ],
+            [
+              6000,
+              0
+            ],
+            [
+              6000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_05_cam_01",
+        "zone_05_cam_02",
+        "zone_05_cam_03",
+        "zone_05_cam_04",
+        "zone_05_cam_05"
+      ]
+    },
+    {
+      "id": "zone_06",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -10000,
+              0
+            ],
+            [
+              -6000,
+              0
+            ],
+            [
+              -6000,
+              10000
+            ],
+            [
+              -10000,
+              10000
+            ],
+            [
+              -10000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_06_cam_01",
+        "zone_06_cam_02",
+        "zone_06_cam_03",
+        "zone_06_cam_04",
+        "zone_06_cam_05"
+      ]
+    },
+    {
+      "id": "zone_07",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6000,
+              0
+            ],
+            [
+              -2000,
+              0
+            ],
+            [
+              -2000,
+              10000
+            ],
+            [
+              -6000,
+              10000
+            ],
+            [
+              -6000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_07_cam_01",
+        "zone_07_cam_02",
+        "zone_07_cam_03",
+        "zone_07_cam_04",
+        "zone_07_cam_05"
+      ]
+    },
+    {
+      "id": "zone_08",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2000,
+              0
+            ],
+            [
+              2000,
+              0
+            ],
+            [
+              2000,
+              10000
+            ],
+            [
+              -2000,
+              10000
+            ],
+            [
+              -2000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_08_cam_01",
+        "zone_08_cam_02",
+        "zone_08_cam_03",
+        "zone_08_cam_04",
+        "zone_08_cam_05"
+      ]
+    },
+    {
+      "id": "zone_09",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              2000,
+              0
+            ],
+            [
+              6000,
+              0
+            ],
+            [
+              6000,
+              10000
+            ],
+            [
+              2000,
+              10000
+            ],
+            [
+              2000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_09_cam_01",
+        "zone_09_cam_02",
+        "zone_09_cam_03",
+        "zone_09_cam_04",
+        "zone_09_cam_05"
+      ]
+    },
+    {
+      "id": "zone_10",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              6000,
+              0
+            ],
+            [
+              10000,
+              0
+            ],
+            [
+              10000,
+              10000
+            ],
+            [
+              6000,
+              10000
+            ],
+            [
+              6000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_10_cam_01",
+        "zone_10_cam_02",
+        "zone_10_cam_03",
+        "zone_10_cam_04",
+        "zone_10_cam_05"
+      ]
+    }
+  ],
+  "cameras": [
+    {
+      "id": "zone_01_cam_01",
+      "usd_path": "/World/Cameras/zone_01_cam_01",
+      "position_m": [
+        -8000,
+        -5300,
+        680
+      ],
+      "look_at_m": [
+        -8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_01_cam_02",
+      "usd_path": "/World/Cameras/zone_01_cam_02",
+      "position_m": [
+        -8300,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        -8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_01_cam_03",
+      "usd_path": "/World/Cameras/zone_01_cam_03",
+      "position_m": [
+        -8000,
+        -4700,
+        680
+      ],
+      "look_at_m": [
+        -8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_01_cam_04",
+      "usd_path": "/World/Cameras/zone_01_cam_04",
+      "position_m": [
+        -7700,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        -8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_01_cam_05",
+      "usd_path": "/World/Cameras/zone_01_cam_05",
+      "position_m": [
+        -8000,
+        -5050,
+        508
+      ],
+      "look_at_m": [
+        -8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_02_cam_01",
+      "usd_path": "/World/Cameras/zone_02_cam_01",
+      "position_m": [
+        -4000,
+        -5300,
+        680
+      ],
+      "look_at_m": [
+        -4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_02_cam_02",
+      "usd_path": "/World/Cameras/zone_02_cam_02",
+      "position_m": [
+        -4300,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        -4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_02_cam_03",
+      "usd_path": "/World/Cameras/zone_02_cam_03",
+      "position_m": [
+        -4000,
+        -4700,
+        680
+      ],
+      "look_at_m": [
+        -4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_02_cam_04",
+      "usd_path": "/World/Cameras/zone_02_cam_04",
+      "position_m": [
+        -3700,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        -4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_02_cam_05",
+      "usd_path": "/World/Cameras/zone_02_cam_05",
+      "position_m": [
+        -4000,
+        -5050,
+        508
+      ],
+      "look_at_m": [
+        -4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_03_cam_01",
+      "usd_path": "/World/Cameras/zone_03_cam_01",
+      "position_m": [
+        0,
+        -5300,
+        680
+      ],
+      "look_at_m": [
+        0,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_03_cam_02",
+      "usd_path": "/World/Cameras/zone_03_cam_02",
+      "position_m": [
+        -300,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        0,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_03_cam_03",
+      "usd_path": "/World/Cameras/zone_03_cam_03",
+      "position_m": [
+        0,
+        -4700,
+        680
+      ],
+      "look_at_m": [
+        0,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_03_cam_04",
+      "usd_path": "/World/Cameras/zone_03_cam_04",
+      "position_m": [
+        300,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        0,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_03_cam_05",
+      "usd_path": "/World/Cameras/zone_03_cam_05",
+      "position_m": [
+        0,
+        -5050,
+        508
+      ],
+      "look_at_m": [
+        0,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_04_cam_01",
+      "usd_path": "/World/Cameras/zone_04_cam_01",
+      "position_m": [
+        4000,
+        -5300,
+        680
+      ],
+      "look_at_m": [
+        4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_04_cam_02",
+      "usd_path": "/World/Cameras/zone_04_cam_02",
+      "position_m": [
+        3700,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_04_cam_03",
+      "usd_path": "/World/Cameras/zone_04_cam_03",
+      "position_m": [
+        4000,
+        -4700,
+        680
+      ],
+      "look_at_m": [
+        4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_04_cam_04",
+      "usd_path": "/World/Cameras/zone_04_cam_04",
+      "position_m": [
+        4300,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_04_cam_05",
+      "usd_path": "/World/Cameras/zone_04_cam_05",
+      "position_m": [
+        4000,
+        -5050,
+        508
+      ],
+      "look_at_m": [
+        4000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_05_cam_01",
+      "usd_path": "/World/Cameras/zone_05_cam_01",
+      "position_m": [
+        8000,
+        -5300,
+        680
+      ],
+      "look_at_m": [
+        8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_05_cam_02",
+      "usd_path": "/World/Cameras/zone_05_cam_02",
+      "position_m": [
+        7700,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_05_cam_03",
+      "usd_path": "/World/Cameras/zone_05_cam_03",
+      "position_m": [
+        8000,
+        -4700,
+        680
+      ],
+      "look_at_m": [
+        8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_05_cam_04",
+      "usd_path": "/World/Cameras/zone_05_cam_04",
+      "position_m": [
+        8300,
+        -5000,
+        680
+      ],
+      "look_at_m": [
+        8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_05_cam_05",
+      "usd_path": "/World/Cameras/zone_05_cam_05",
+      "position_m": [
+        8000,
+        -5050,
+        508
+      ],
+      "look_at_m": [
+        8000,
+        -5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_06_cam_01",
+      "usd_path": "/World/Cameras/zone_06_cam_01",
+      "position_m": [
+        -8000,
+        4700,
+        680
+      ],
+      "look_at_m": [
+        -8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_06_cam_02",
+      "usd_path": "/World/Cameras/zone_06_cam_02",
+      "position_m": [
+        -8300,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        -8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_06_cam_03",
+      "usd_path": "/World/Cameras/zone_06_cam_03",
+      "position_m": [
+        -8000,
+        5300,
+        680
+      ],
+      "look_at_m": [
+        -8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_06_cam_04",
+      "usd_path": "/World/Cameras/zone_06_cam_04",
+      "position_m": [
+        -7700,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        -8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_06_cam_05",
+      "usd_path": "/World/Cameras/zone_06_cam_05",
+      "position_m": [
+        -8000,
+        4950,
+        508
+      ],
+      "look_at_m": [
+        -8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_07_cam_01",
+      "usd_path": "/World/Cameras/zone_07_cam_01",
+      "position_m": [
+        -4000,
+        4700,
+        680
+      ],
+      "look_at_m": [
+        -4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_07_cam_02",
+      "usd_path": "/World/Cameras/zone_07_cam_02",
+      "position_m": [
+        -4300,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        -4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_07_cam_03",
+      "usd_path": "/World/Cameras/zone_07_cam_03",
+      "position_m": [
+        -4000,
+        5300,
+        680
+      ],
+      "look_at_m": [
+        -4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_07_cam_04",
+      "usd_path": "/World/Cameras/zone_07_cam_04",
+      "position_m": [
+        -3700,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        -4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_07_cam_05",
+      "usd_path": "/World/Cameras/zone_07_cam_05",
+      "position_m": [
+        -4000,
+        4950,
+        508
+      ],
+      "look_at_m": [
+        -4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_08_cam_01",
+      "usd_path": "/World/Cameras/zone_08_cam_01",
+      "position_m": [
+        0,
+        4700,
+        680
+      ],
+      "look_at_m": [
+        0,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_08_cam_02",
+      "usd_path": "/World/Cameras/zone_08_cam_02",
+      "position_m": [
+        -300,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        0,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_08_cam_03",
+      "usd_path": "/World/Cameras/zone_08_cam_03",
+      "position_m": [
+        0,
+        5300,
+        680
+      ],
+      "look_at_m": [
+        0,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_08_cam_04",
+      "usd_path": "/World/Cameras/zone_08_cam_04",
+      "position_m": [
+        300,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        0,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_08_cam_05",
+      "usd_path": "/World/Cameras/zone_08_cam_05",
+      "position_m": [
+        0,
+        4950,
+        508
+      ],
+      "look_at_m": [
+        0,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_09_cam_01",
+      "usd_path": "/World/Cameras/zone_09_cam_01",
+      "position_m": [
+        4000,
+        4700,
+        680
+      ],
+      "look_at_m": [
+        4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_09_cam_02",
+      "usd_path": "/World/Cameras/zone_09_cam_02",
+      "position_m": [
+        3700,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_09_cam_03",
+      "usd_path": "/World/Cameras/zone_09_cam_03",
+      "position_m": [
+        4000,
+        5300,
+        680
+      ],
+      "look_at_m": [
+        4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_09_cam_04",
+      "usd_path": "/World/Cameras/zone_09_cam_04",
+      "position_m": [
+        4300,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_09_cam_05",
+      "usd_path": "/World/Cameras/zone_09_cam_05",
+      "position_m": [
+        4000,
+        4950,
+        508
+      ],
+      "look_at_m": [
+        4000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_10_cam_01",
+      "usd_path": "/World/Cameras/zone_10_cam_01",
+      "position_m": [
+        8000,
+        4700,
+        680
+      ],
+      "look_at_m": [
+        8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_10_cam_02",
+      "usd_path": "/World/Cameras/zone_10_cam_02",
+      "position_m": [
+        7700,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_10_cam_03",
+      "usd_path": "/World/Cameras/zone_10_cam_03",
+      "position_m": [
+        8000,
+        5300,
+        680
+      ],
+      "look_at_m": [
+        8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_10_cam_04",
+      "usd_path": "/World/Cameras/zone_10_cam_04",
+      "position_m": [
+        8300,
+        5000,
+        680
+      ],
+      "look_at_m": [
+        8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    },
+    {
+      "id": "zone_10_cam_05",
+      "usd_path": "/World/Cameras/zone_10_cam_05",
+      "position_m": [
+        8000,
+        4950,
+        508
+      ],
+      "look_at_m": [
+        8000,
+        5000,
+        500
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "focal_length_mm": 22,
+      "horizontal_aperture_mm": 36,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "pose_provenance": "explicit synthetic design example; replace from scene/site configuration"
+    }
+  ]
+}

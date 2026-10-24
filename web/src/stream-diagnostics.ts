@@ -1,5 +1,14 @@
 type PolicyEvent = { effectiveDirective: string; disposition: string; blockedURI: string };
 
+/** Public browser capability names only, never SDP or device identifiers. */
+export function supportedVideoCodecs(receiver?: Pick<typeof RTCRtpReceiver, 'getCapabilities'>): string[] {
+  try {
+    const codecs = receiver?.getCapabilities?.('video')?.codecs || [];
+    return ['H264', 'H265', 'AV1', 'VP8', 'VP9'].filter(name =>
+      codecs.some(codec => codec.mimeType.toUpperCase() === `VIDEO/${name}`));
+  } catch { return []; }
+}
+
 /** Classify a CSP failure without retaining a URL, path, query or credential. */
 export function policyDiagnostic(event: PolicyEvent): string | null {
   if (!["connect-src", "worker-src"].includes(event.effectiveDirective)) return null;

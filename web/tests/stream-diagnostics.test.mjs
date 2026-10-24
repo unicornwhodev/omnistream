@@ -1,6 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {policyDiagnostic,streamEventDiagnostic,installRtcDiagnostics} from '../../test-results/panel-state/stream-diagnostics.js';
+import {policyDiagnostic,streamEventDiagnostic,installRtcDiagnostics,supportedVideoCodecs} from '../../test-results/panel-state/stream-diagnostics.js';
+
+test('video capabilities omit arbitrary codec metadata and tolerate missing APIs',()=>{
+ const codecs=supportedVideoCodecs({getCapabilities:()=>({codecs:[
+  {mimeType:'video/H264',sdpFmtpLine:'private-value'}, {mimeType:'video/h264'},
+  {mimeType:'video/AV1'}, {mimeType:'video/rtx'}, {mimeType:'private-value'},
+ ]})});
+ assert.deepEqual(codecs,['H264','AV1']);
+ assert.deepEqual(supportedVideoCodecs(),[]);
+ assert.deepEqual(supportedVideoCodecs({getCapabilities:()=>{throw Error('unavailable');}}),[]);
+});
 
 test('CSP diagnosis classifies the resource without retaining private URLs',()=>{
  const event={effectiveDirective:'connect-src',disposition:'enforce'};

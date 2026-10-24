@@ -19,7 +19,7 @@ import { SceneWorkbench, LiveSceneStrip, useLiveScene } from "./SceneWorkbench";
 import { SessionPreparation, initialPreparation, parseConfiguration, type SimulationConfiguration } from "./session-preparation";
 import { probeSignaling } from "./signaling-probe";
 import { installMcpSignaling } from "./mcp-signaling";
-import { installRtcDiagnostics, policyDiagnostic, streamEventDiagnostic } from "./stream-diagnostics";
+import { installRtcDiagnostics, policyDiagnostic, streamEventDiagnostic, supportedVideoCodecs } from "./stream-diagnostics";
 import { ConnectionStudio, useLocalConnectionLock } from "./RemoteSessions";
 import { callHostTool as invokeHostTool, isHostBridgeReady, startHostBridge } from "./host-bridge";
 
@@ -910,6 +910,9 @@ function App() {
     const attempt = (async () => {
       setConnectionTone("working");
       report("Connexion au flux RTX local…", "working");
+      const codecs = supportedVideoCodecs(window.RTCRtpReceiver);
+      document.documentElement.dataset.omnistreamVideoCodecs = codecs.join(",");
+      report(`Codecs vidéo de cet hôte : ${codecs.join(", ") || "non disponibles"}.`, "neutral");
       const mcpSignaling = currentRuntime.browserSignaling?.transport === "mcp";
       const tlsSignaling = !mcpSignaling && currentRuntime.browserSignaling?.secure === true;
       if (tlsSignaling && (currentRuntime.browserSignaling?.host !== "localhost" || !currentRuntime.browserSignaling?.ready)) {
@@ -1915,19 +1918,21 @@ function App() {
                     : hostError
                       ? hostError
                       : runtime.processAlive
-                        ? "Kit est actif. Le contrôle de scène et la vidéo ont des connexions distinctes : rattachez le flux depuis Session Kit."
+                        ? "Kit est actif. Rattachez le flux pour afficher le rendu réel de la scène."
                         : "Choisissez votre fichier USD et un runtime Kit compatible. Le rendu sera transmis directement depuis Omniverse."}
                 </p>
                 <div className="button-row">
                   <button
                     className="primary"
-                    onClick={() =>
-                      navigate(runtime.processAlive ? "launch" : "configure")
-                    }
+                    disabled={busy}
+                    onClick={() => isManagedActiveRuntime(runtime)
+                      ? void attachExistingRuntime(runtime, sessionFlowEpoch.current, true)
+                      : navigate(runtime.processAlive ? "launch" : "configure")}
                   >
                     <Icon name="settings" />
-                    {runtime.processAlive
-                      ? "Ouvrir la session"
+                    {isManagedActiveRuntime(runtime)
+                      ? "Rattacher le flux"
+                      : runtime.processAlive ? "Ouvrir la session"
                       : "Configurer le runtime"}
                   </button>
                   <button

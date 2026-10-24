@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fireviewer:capture-image:v1",
+  "title": "Verified FireViewer capture image metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "scenario_id", "scene_revision", "seed", "config_sha256", "capture_id", "sim_time_us", "simulated_utc", "zone_id", "front_ids", "camera", "environment", "trigger", "simulation", "state_fingerprint", "render", "renderer", "annotations", "group_commit_required", "image", "write_verified"],
+  "properties": {
+    "schema": {"const": "fireviewer.capture-image.v1"},
+    "scenario_id": {"type": "string", "minLength": 1},
+    "scene_revision": {"type": "string", "minLength": 1},
+    "seed": {"type": "integer"},
+    "config_sha256": {"$ref": "#/$defs/hash"},
+    "capture_id": {"$ref": "#/$defs/hash"},
+    "sim_time_us": {"type": "integer", "minimum": 0, "description": "Integer simulated microseconds since the scenario epoch"},
+    "simulated_utc": {"type": "string", "format": "date-time"},
+    "zone_id": {"type": "string"},
+    "front_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "camera": {
+      "type": "object",
+      "required": ["id", "usd_path", "camera_to_world_usd_row_vector", "world_to_camera_cv_column_vector", "intrinsic_K", "physical_hardware_calibrated"],
+      "properties": {
+        "id": {"type": "string"},
+        "usd_path": {"type": "string", "pattern": "^/World/"},
+        "camera_to_world_usd_row_vector": {"$ref": "#/$defs/matrix4"},
+        "world_to_camera_cv_column_vector": {"$ref": "#/$defs/matrix4"},
+        "intrinsic_K": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}}},
+        "physical_hardware_calibrated": {"type": "boolean"}
+      }
+    },
+    "environment": {"type": "object", "description": "Supplied conditions with their source provenance; missing data remain explicit"},
+    "trigger": {"type": "object", "required": ["reasons", "activity", "priority", "scheduled_sim_time_us"]},
+    "simulation": {"type": "object", "required": ["engine_revision", "state", "freeze_evidence"]},
+    "state_fingerprint": {"$ref": "#/$defs/hash"},
+    "render": {"type": "object", "required": ["resolution_px", "channels", "rt_subframes", "seed"]},
+    "renderer": {"type": "object", "required": ["native_omniverse", "kind"]},
+    "annotations": {"type": "object", "required": ["fronts", "active_front_is_not_visible_flame", "unknown_annotations_remain_null"], "properties": {"fronts": {"type": "array", "items": {"type": "object", "required": ["front_id", "provenance", "camera_annotations", "flame_visible"], "properties": {"flame_visible": {"type": ["boolean", "null"]}, "provenance": {"type": "object", "required": ["kind", "source"], "properties": {"kind": {"enum": ["simulator_exact", "observed", "estimated", "unknown", "test_fixture"]}}}}}}, "active_front_is_not_visible_flame": {"const": true}, "unknown_annotations_remain_null": {"const": true}}},
+    "group_commit_required": {"const": true},
+    "image": {"type": "object", "required": ["path", "sha256", "bytes", "format"], "properties": {"path": {"type": "string"}, "sha256": {"$ref": "#/$defs/hash"}, "bytes": {"type": "integer", "minimum": 1}, "format": {"const": "png"}}},
+    "write_verified": {"const": true}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "matrix4": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}}}
+  }
+}

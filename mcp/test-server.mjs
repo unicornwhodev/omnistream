@@ -6,6 +6,7 @@ import { spawn } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { LoopbackControlServer } from "./control-rpc.mjs";
+import { panelResourceUri } from "./panel-resource.mjs";
 import { OperationClientTimeoutError, OperationInProgressError, SerialOperationQueue } from "./operation-queue.mjs";
 import {
   parseLaunchedProcessIdentity,
@@ -544,9 +545,12 @@ async function testMcpProtocol() {
       assert.deepEqual(signalingTool?._meta.ui.visibility, ["app"], "Private signaling tools must not be advertised to the model.");
       assert.equal(signalingTool.inputSchema.additionalProperties, false);
     }
-    assert.equal(openTool._meta.ui.resourceUri, "ui://omnistream-for-codex/panel-rc4-layout.html");
-    assert.equal(openTool._meta["openai/outputTemplate"], "ui://omnistream-for-codex/panel-rc4-layout.html");
-    assert.deepEqual(openTool._meta["openai/ui"], { entrypoints: [{ type: "thread" }] }, "The studio must be available directly in the conversation side panel.");
+    const expectedWidgetUri = panelResourceUri(path.join(__dirname, "web-dist"));
+    assert.equal(openTool._meta.ui.resourceUri, expectedWidgetUri);
+    assert.equal(openTool._meta["openai/outputTemplate"], expectedWidgetUri);
+    assert.deepEqual(openTool._meta["openai/ui"], {
+      entrypoints: [{ type: "thread" }], preferredModelDisplayMode: "fullscreen"
+    }, "Model invocation must prefer the expanded Codex surface as well as expose the side-panel entrypoint.");
     assert.equal(openTool._meta["openai/widgetAccessible"], true);
     assert.ok(listedTools.result.tools.filter((item) => item.name !== "read_omniverse_live_telemetry").every((item) => item.annotations.openWorldHint === true), "Kit can resolve USD dependencies beyond the requested root, so its MCP tools must not claim a closed-world boundary.");
     assert.equal(listedTools.result.tools.find((item) => item.name === "save_omniverse_camera").annotations.destructiveHint, true);
@@ -569,12 +573,12 @@ async function testMcpProtocol() {
     assert.match(attachTool.description, /never starts Kit or changes USD/i);
 
     const resources = await request(3, "resources/list");
-    assert.equal(resources.result.resources[0].uri, "ui://omnistream-for-codex/panel-rc4-layout.html");
+    assert.equal(resources.result.resources[0].uri, expectedWidgetUri);
     assert.deepEqual(resources.result.resources[0]._meta["openai/ui"], {
       availableDisplayModes: ["inline", "fullscreen"], preferredDisplayMode: "fullscreen"
     });
 
-    const resource = await request(4, "resources/read", { uri: "ui://omnistream-for-codex/panel-rc4-layout.html" });
+    const resource = await request(4, "resources/read", { uri: expectedWidgetUri });
     if (expectPanelBundle) {
       assert.equal(resource.result.contents[0]._meta["openai/ui"].preferredDisplayMode, "fullscreen");
       const html = resource.result.contents[0].text;
@@ -587,7 +591,7 @@ async function testMcpProtocol() {
     }
 
     const open = await request(5, "tools/call", { name: "open_omniverse_simulation_studio", arguments: {} });
-    assert.equal(open.result._meta["openai/outputTemplate"], "ui://omnistream-for-codex/panel-rc4-layout.html");
+    assert.equal(open.result._meta["openai/outputTemplate"], expectedWidgetUri);
 
     const legacyLaunch = await request(19, "tools/call", { name: "launch_omniverse_simulation", arguments: {} });
     assert.match(legacyLaunch.error.message, /Configure a simulation before launching/, "Legacy empty arguments are still accepted.");

@@ -7,7 +7,7 @@ class Socket extends EventTarget {
   constructor(url,protocols){super();this.url=url;this.protocols=protocols;this.sent=[];this.closed=false;Socket.instances.push(this);queueMicrotask(()=>this.dispatchEvent(new Event('open')));}
   send(data){this.sent.push(data);}
   message(data){this.dispatchEvent(new MessageEvent('message',{data}));}
-  close(){if(this.closed)return;this.closed=true;this.dispatchEvent(new Event('close'));}
+  close(code=1000){if(this.closed)return;this.closed=true;this.closeCode=code;this.dispatchEvent(new Event('close'));}
 }
 function setup(t){let session={identity:{},token:'private-fixture-credential'};let now=100;const relay=new LocalSignalingRelay({getSession:()=>session,port:49100,WebSocketClass:Socket,now:()=>now,idleMs:1000});t.after(()=>relay.dispose());return{relay,replace:()=>session={identity:{},token:'new-private-fixture'},advance:()=>now+=1001};}
 
@@ -58,4 +58,16 @@ test('safe close releases pending polling and bounds concurrent channels',async 
  await assert.rejects(relay.open('peer-8'),/previous/);
  const reading=relay.exchange({channelId:first.channelId,waitMs:1000});relay.closeAll();
  assert.equal((await reading).state,'closed');assert.equal(relay.channels.size,0);
+});
+
+test('SDK reconnect close code reaches Kit unchanged instead of requesting normal teardown',async t=>{
+ const {relay}=setup(t);const first=await relay.open('peer-handoff');const socket=Socket.instances.at(-1);
+ assert.throws(()=>relay.close(first.channelId,1006),/close code/);
+ assert.equal(socket.closed,false,'Invalid close codes must not close the managed channel.');
+ relay.close(first.channelId,4001);
+ assert.equal(socket.closeCode,4001,'Code 1000 would tell Kit to tear down the media session during SDK reconnect.');
+ assert.equal(relay.channels.size,0);
+ const next=await relay.open('peer-reconnect',{reconnect:true});const nextSocket=Socket.instances.at(-1);
+ assert.match(nextSocket.url,/reconnect=1$/);
+ relay.close(next.channelId);assert.equal(nextSocket.closeCode,1000,'Explicit normal close keeps the existing stop behavior.');
 });

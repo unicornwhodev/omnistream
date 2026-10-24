@@ -3,6 +3,7 @@ import { openSync, readSync, closeSync, fstatSync } from "node:fs";
 import { sceneTools, sceneRoutes, liveTool, validateSchema } from "./scene-tools.mjs";
 import { LiveEventStore } from "./live-events.mjs";
 import { LocalSignalingRelay } from "./local-signaling.mjs";
+import { panelResourceUri } from "./panel-resource.mjs";
 import { RemoteSessions, RemoteSessionError } from "./remote-sessions.mjs";
 import { randomBytes, randomUUID } from "node:crypto";
 import { loopbackTlsConfiguration, browserSignalingEndpoint, validateLoopbackTls, startLoopbackTls } from "./loopback-tls.mjs";
@@ -36,7 +37,7 @@ import {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pluginRoot = path.resolve(__dirname, "..");
 const manifest = JSON.parse(readFileSync(path.join(pluginRoot, ".codex-plugin", "plugin.json"), "utf8"));
-const widgetUri = "ui://omnistream-for-codex/panel-rc4-layout.html";
+const widgetUri = panelResourceUri(path.join(__dirname, "web-dist"));
 const widgetAccessTokenMetaKey = "omnistream/streamAccessToken";
 const localConfig = loadOmniStreamConfig();
 const runtimePaths = ensureOmniStreamRuntimeDirs();
@@ -266,7 +267,10 @@ const tools = [
     }, ["channelId", "afterSequence", "messages"]), true, { ui: { visibility: ["app"] } }),
   tool("close_omniverse_signaling", "Close Local Kit Signaling",
     "Panel-only close of one owned local WebRTC signaling channel. Does not stop Kit or modify USD.",
-    schema({ channelId: { type: "string", minLength: 1, maxLength: 64 } }, ["channelId"]), true,
+    schema({
+      channelId: { type: "string", minLength: 1, maxLength: 64 },
+      code: { type: "integer", oneOf: [{ const: 1000 }, { minimum: 3000, maximum: 4999 }], description: "SDK WebSocket close code, preserved for signaling handoff/reconnect. Defaults to 1000." }
+    }, ["channelId"]), true,
     { ui: { visibility: ["app"] } }),
   tool(
     "open_omniverse_simulation_studio",
@@ -276,7 +280,10 @@ const tools = [
     true,
     {
       ui: { resourceUri: widgetUri },
-      "openai/ui": { entrypoints: [{ type: "thread" }] },
+      "openai/ui": {
+        entrypoints: [{ type: "thread" }],
+        preferredModelDisplayMode: "fullscreen"
+      },
       "openai/outputTemplate": widgetUri,
       "openai/widgetAccessible": true
     }
@@ -1911,7 +1918,7 @@ async function handle(message) {
         await activeControlSession();
         payload = await localSignaling.open(args.peerId, args);
       } else if (name === "exchange_omniverse_signaling") payload = await localSignaling.exchange(args);
-      else payload = localSignaling.close(args.channelId);
+      else payload = localSignaling.close(args.channelId, args.code);
       // SDP and ICE credentials belong to the app, never public model output.
       return respond(id, result({ ok: true, state: payload.state }, "Local Kit signaling updated.", { "omnistream/signalingPayload": payload }));
     }

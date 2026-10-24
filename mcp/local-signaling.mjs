@@ -45,7 +45,10 @@ export class LocalSignalingRelay {
   end(channel, code = 1000) {
     if (channel.state === 'closed') return;
     channel.state = 'closed';
-    try { channel.socket.close(1000); } catch { /* Already closed. */ }
+    // NVIDIA uses application close codes during signaling handoff/reconnect.
+    // Replacing them with 1000 tells Kit to tear down the live media session.
+    const wireCode = code === 1000 || (code >= 3000 && code <= 4999) ? code : 1000;
+    try { channel.socket.close(wireCode); } catch { /* Already closed. */ }
     this.enqueue(channel, { type: 'close', code });
   }
 
@@ -69,7 +72,7 @@ export class LocalSignalingRelay {
       if (typeof event.data !== 'string') { this.end(channel, 1003); return; }
       this.enqueue(channel, { type: 'message', data: event.data });
     });
-    socket.addEventListener('close', () => this.end(channel, 1006));
+    socket.addEventListener('close', event => this.end(channel, event.code || 1006));
     socket.addEventListener('error', () => this.end(channel, 1006));
     try {
       await new Promise((resolve, reject) => {
@@ -127,9 +130,11 @@ export class LocalSignalingRelay {
     } finally { channel.polling = false; channel.wake = null; }
   }
 
-  close(channelId) {
+  close(channelId, code = 1000) {
+    if (!Number.isInteger(code) || (code !== 1000 && (code < 3000 || code > 4999)))
+      throw new Error('Invalid signaling close code.');
     const channel = this.channels.get(channelId);
-    if (channel) { this.end(channel); this.channels.delete(channelId); }
+    if (channel) { this.end(channel, code); this.channels.delete(channelId); }
     return { state: 'closed' };
   }
 

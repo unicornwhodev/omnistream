@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fireviewer-event-capture"
+version = "0.1.0"
+description = "Backend-independent event-driven multi-camera Omniverse capture"
+requires-python = ">=3.11"
+dependencies = ["shapely>=2,<3", "numpy>=1.24", "Pillow>=10", "jsonschema>=4.18", "psutil>=5.9"]
+
+[project.optional-dependencies]
+gpu-metrics = ["nvidia-ml-py>=12"]
+
+[project.scripts]
+fireviewer-capture = "fireviewer_capture.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -58,11 +58,19 @@ function hostBridge() {
   const app = embedded ? new McpApp({ name: 'OmniStream for Codex', version: '1.0.0-rc4' }, { availableDisplayModes: ['inline', 'fullscreen'] }, { autoResize: true, strict: true }) : null;
   // Register before connect. Initial output is followed by authoritative reads
   // once the handshake has made the controller ready.
-  if (app) app.ontoolresult = () => {};
+  const syncDisplayMode = () => {
+    const mode = app?.getHostContext()?.displayMode;
+    document.documentElement.dataset.omnistreamDisplayMode = mode || 'unknown';
+  };
+  if (app) {
+    app.ontoolresult = () => {};
+    app.addEventListener('hostcontextchanged', syncDisplayMode);
+  }
   shared = createHostBridge({
     connect: async () => {
       if (!app) return;
       await app.connect(undefined, { timeout: 15_000 });
+      syncDisplayMode();
       void requestExpandedDisplay(app);
     },
     callServerTool: params => {

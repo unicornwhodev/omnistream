@@ -24,3 +24,10 @@ web/.npmrc.local
 
 # Local release staging.
 release/
+
+# Python caches and private attachments from local tool sessions.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.codex-remote-attachments/

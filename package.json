@@ -44,6 +44,6 @@
     "test:public": "node --test ./tests/test_public_contract.mjs",
     "test:panel-source": "node ./web/tests/panel-contract.mjs --source-only",
     "test:panel-state": "node ./scripts/test-panel-state.mjs",
-    "test:release": "node --test ./tests/test_release.mjs ./tests/test_doctor.mjs"
+    "test:release": "node --test ./tests/test_release.mjs ./tests/test_doctor.mjs ./tests/test_panel_resource.mjs"
   }
 }

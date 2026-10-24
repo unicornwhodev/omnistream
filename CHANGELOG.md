@@ -1,7 +1,13 @@
 # Changelog
 
+- Add a backend-independent event capture package with explicit simulator contracts, bounded Replicator products, deterministic recovery, 50-camera configuration, capture schema and qualification tools. Native GPU and real fire-engine acceptance remain open.
+- Document the fresh 20 km Justin scene preparation and source-separated official station/ECMWF weather, including quality gaps and held export.
+
 ## 1.0.0-rc4 — Validated launch snapshots
 
+- Preserve NVIDIA application WebSocket close codes through MCP signaling so an SDK handoff does not request normal stream teardown.
+- Derive the Codex UI resource identity from its content and retain expanded-panel sizing without the inline height loop.
+- Add an optional bounded geographic payload/LOD controller for metric Z-up tiled USD scenes, with session-only opinions and real OpenUSD residency regression coverage.
 - Requalify the current candidate locally on October 21: complete automatic Windows/Kit checks, OpenUSD, observed PhysX motion and actual decoded Chrome video/native input. Keep the Codex panel-opening blocker explicit; add sanitized evidence and a reproducible setup/usage guide.
 - Accept current signaling/TLS/remote configuration keys in strict doctor while validating their structure without echoing private values; preserve optional transport and remote profiles during repair.
 - Keep an already active decoded stream when Attach is requested again, avoiding a second SDK peer and a misleading negotiation failure.
