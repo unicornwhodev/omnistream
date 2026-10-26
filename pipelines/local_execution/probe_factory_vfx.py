@@ -1,4 +1,4 @@
-"""Native RTX Minimal optical probe of an unchanged factory Flow recipe.
+"""Native RTX optical probe of an unchanged factory Flow recipe.
 
 Run via Kit --exec. Paths come from /exts/omnistream.local/probeContext.
 This is a laboratory visibility probe, not the geographic simulation and not a
@@ -21,7 +21,7 @@ sys.path.insert(0, str(PIPELINES/'factory_vfx'))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from restore_scene import atomic_json, sha256
 from render_profile import load_render_profile
-from render_policy import enforce_policy, assert_policy
+from render_policy import enforce_policy, assert_policy, expected_policy
 from flow_diagnostics import require_native_progress
 
 
@@ -38,16 +38,19 @@ async def probe():
 
     settings = carb.settings.get_settings()
     context = json.loads(Path(settings.get('/exts/omnistream.local/probeContext')).read_text())
-    # An explicit diagnostic option, disabled by default. This controls Flow
-    # volume inclusion, not the renderer mode: Minimal remains mandatory and
-    # the PathTracing, RT and RT2 modes remain disabled in both policies.
+    # Volume inclusion and the selected renderer are separate, explicit options.
+    # Minimal remains the default. Neither allowed renderer enables PT or RT2.
     flow_volume_gate = bool(context.get('flow_volume_gate', False))
+    renderer_mode = context.get('renderer_mode', 'minimal')
+    policy_options = {'flow_volume_gate':flow_volume_gate,'renderer_mode':renderer_mode,
+                      'lightweight':bool(context.get('lightweight_renderer'))}
+    native_policy = expected_policy(**policy_options)
     def enforce_native_policy():
-        return enforce_policy(settings, flow_volume_gate=flow_volume_gate)
+        return enforce_policy(settings, **policy_options)
     def assert_native_policy():
-        return assert_policy(settings, flow_volume_gate=flow_volume_gate)
+        return assert_policy(settings, **policy_options)
     profile_name, profile = load_render_profile(context.get('render_profile'))
-    resolution = tuple(profile['capture_resolution_px'])
+    resolution = (320,180) if context.get('diagnostic_low_resolution') else tuple(profile['capture_resolution_px'])
     source = Path(context['recipe_stage']).resolve(strict=True)
     metadata = json.loads(source.with_name('recipe.json').read_text())
     original_hash = sha256(source)
@@ -69,8 +72,11 @@ async def probe():
               'recipe_id':metadata['id'],'source_sha256':original_hash,
               'production_fire_simulation':False,'physical_fire_calibrated':False,
               'render_profile':profile_name,'render_profile_settings':profile,
+              'renderer_mode':renderer_mode,'renderer_policy_options':policy_options,
+              'capture_resolution_px':list(resolution),
+              'diagnostic_low_resolution':bool(context.get('diagnostic_low_resolution')),
               'all_producer_freeze_verified':False,'captures':[],'timings':{}}
-    driver = warmup = preparation_rgb = diagnostic_viewport = None
+    driver = warmup = preparation_rgb = diagnostic_viewport = flow = None
     timeline = omni.timeline.get_timeline_interface()
     try:
         usd_context = omni.usd.get_context()
@@ -105,14 +111,11 @@ async def probe():
                 attr.Set(value)
         flow.GetAttribute('densityCellSize').Set(float(context.get('voxel_size_m',0.3)))
         settings.set('/rtx/flow/maxBlocks',int(context.get('max_flow_blocks',1024)))
-        for key,value in {'/rtx/rendermode':'MinimalRendering','/rtx/minimal/mode':3,
-                          '/rtx/flow/enabled':True,'/rtx/flow/compositeEnabled':True,
-                          '/rtx/flow/pathTracingEnabled':False}.items():
-            settings.set(key,value)
+        enforce_native_policy()
         report['renderer_settings'] = {k:settings.get(k) for k in (
             '/rtx/rendermode','/rtx/minimal/mode','/rtx/flow/enabled',
             '/rtx/flow/compositeEnabled','/rtx/flow/maxBlocks',
-            '/app/useFabricSceneDelegate')}
+            '/app/useFabricSceneDelegate','/app/vulkan')}
         manager = omni.kit.app.get_app().get_extension_manager()
         report['extensions'] = {m:Path(manager.get_extension_path_by_module(m)).name
                                  for m in ('omni.flowusd','omni.replicator.core')}
@@ -139,8 +142,8 @@ async def probe():
         derived = stage.Flatten()
         layer_data = dict(derived.customLayerData)
         layer_data['renderSettings'] = {
-            'rtx:rendermode':'MinimalRendering', 'rtx:minimal:mode':3,
-            'rtx:flow:enabled':True, 'rtx:flow:pathTracingEnabled':False}
+            key.lstrip('/').replace('/',':'):value for key,value in native_policy.items()
+            if key.startswith('/rtx/')}
         derived.customLayerData = layer_data
         prepared = out/'probe.usda'
         if not derived.Export(str(prepared)):
@@ -345,6 +348,13 @@ async def probe():
         raise
     finally:
         timeline.pause()
+        # Timeline pause alone cannot stop an external Flow producer. Stop its
+        # core and emitters explicitly before releasing any render resources.
+        if flow and flow.IsValid():
+            for key, value in {'forceDisableCoreSimulation':True,
+                               'forceDisableEmitters':True,'forceSimulate':False,
+                               'simulateWhenPaused':False}.items():
+                flow.GetAttribute(key).Set(value)
         if preparation_rgb and warmup:
             preparation_rgb.detach(warmup)
         if warmup:

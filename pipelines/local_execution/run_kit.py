@@ -31,12 +31,15 @@ def main():
     import carb.settings
     settings = carb.settings.get_settings()
     keys = ('/rtx/rendermode','/rtx/minimal/mode',
+            '/persistent/rtx/modes/rt/enabled',
             '/persistent/rtx/modes/pt/enabled','/persistent/rtx/modes/rt2/enabled',
             '/persistent/rtx/modes/minimal/enabled',
             '/plugins/carb.tasking.plugin/threadCount',
             '/plugins/omni.tbb.globalcontrol/maxThreadCount',
             '/gpu/shadercompiler/warmcount','/gpu/shadercompiler/warmcountMax',
             '/gpu/shadercompiler/warmcountPerGB',
+            '/rtx/shaderDb/concurrency',
+            '/rtx-transient/psoDb/serializeAllCompiles',
             '/exts/omni.kit.viewport.window/startup/disableWindowOnLoad')
     keys = (*keys, '/renderer/enabled', '/renderer/active')
     print('LOCAL_RUNTIME_SETTINGS '+json.dumps({k:settings.get(k) for k in keys}),flush=True)

@@ -51,11 +51,47 @@ The first Fabric-disabled test could not initialize Replicator because its
 `usdrt.population` import was missing. Loading the installed dependency fixed
 that initialization error in v26, but did not activate Flow. The current probe
 now rejects zero native solver progress before attempting final image capture.
-No additional renderer-mode comparison has been run under the Minimal policy.
+The subsequent, explicitly requested classic RTX comparison is described below.
 
 The factory source USD still matches its recorded SHA-256. The derived lab is
 separate from the terrain and is not a geographic fire reconstruction. Flow's
 model fields are not calibrated temperature, density or heat-release rate.
+
+## Classic RTX comparison
+
+The selected diagnostic mode is `RaytracedLighting` (classic RTX), with PT and
+RT2 disabled and a 320 x 180 preparation/capture target. Its first attempt used
+the incorrect capitalization `RayTracedLighting`; native policy read-back
+rejected that attempt before simulation. The installed SDK spelling was then
+corrected. This initialization failure is not evidence against classic RTX.
+
+The following trials reached RGB graph initialization, but the 10.5 GB
+preventive committed-memory stop terminated them before the first image. No
+Flow advancement, fire image or smoke image was obtained. The process-tree RAM
+and whole-device VRAM measurements stayed below the requested 12/15 GB ceilings.
+The monitoring interval is 100 ms; the observed value may exceed the preventive
+threshold before termination. Neither a zero-overshoot guarantee nor long-run
+stability is inferred.
+
+| Trial | Native configuration | Peak resident RAM | Peak Job commit | Peak whole-GPU VRAM |
+| --- | --- | ---: | ---: | ---: |
+| v29 | Classic RTX, Vulkan | 8.741 GB | 10.553 GB | 2.550 GB |
+| v30 | Classic RTX with reduced lighting effects, Vulkan | 8.295 GB | 10.514 GB | 2.857 GB |
+| v31 | Same, serialized pipeline compilation and one shader worker | 8.272 GB | 10.501 GB | 2.881 GB |
+| v32 | Same, Direct3D | 9.059 GB | 10.741 GB | 2.571 GB |
+| v33 | Direct3D, TAA instead of DLSS, two CPU workers | 8.858 GB | 10.524 GB | 2.678 GB |
+
+The recipe, 512-block allocation cap and 0.6 m voxel size were retained. These
+are initialization diagnostics with changing cache conditions, not a controlled
+performance benchmark. Enabling another mode has not established a working
+local fire simulator. Source factory USD, the full map and cloud originals remain
+unchanged.
+
+All comparison processes have exited. No memory ceiling was raised, driver
+changed, or full production run started. The reduced classic preset is available
+for diagnosis, but is **not validated for use** under the current memory budget.
+The [sanitized measurement receipt](evidence/rtx-classic-comparison-20261026.json)
+contains the measured resource values and hashes of the private run receipts.
 
 ## Complete published incident inputs
 
@@ -83,7 +119,7 @@ Terrain-height sampling and independent geodetic acceptance remain pending.
 
 ## Automated checks and remaining gates
 
-The local recovery/offload/configuration/incident-input suite has 52 passing
+The local recovery/offload/configuration/incident-input suite has 55 passing
 tests. Event capture has 41 passing tests and three OpenUSD-dependent skips
 outside Kit. Windows atomic writes and asyncio's loopback socket need a host
 test process; sandbox failures before test execution are not native pipeline

@@ -112,6 +112,30 @@ of a proportional speed or VRAM improvement. Flow grid resolution, physical
 dimensions, simulated timing and the complete terrain are not reduced by this
 pixel profile.
 
+For an explicitly selected renderer comparison, the private probe context can
+set `renderer_mode` to `realtime_classic` (SDK mode `RaytracedLighting`) and
+`diagnostic_low_resolution` to `true` for 320 x 180 diagnostic images. The
+default renderer remains `minimal`. At process startup the corresponding flags
+must also enable `persistent.rtx.modes.rt`, disable `minimal`, `pt` and `rt2`,
+and select `rtx.rendermode=RaytracedLighting`. This is the installed legacy RTX
+real-time renderer, not RTX Real-Time 2.0 or Interactive Path Tracing; see the
+[NVIDIA renderer documentation](https://docs.omniverse.nvidia.com/materials-and-rendering/latest/rtx-renderer_rt_legacy.html).
+The native probe reapplies and verifies the selected policy after engine and
+stage initialization, and checks it after every simulation step. An unrecognized
+mode is rejected. A small diagnostic image does not qualify Full HD production.
+Cleanup explicitly disables both Flow core evolution and emission before
+destroying render products, including on failure.
+
+`lightweight_renderer: true` additionally selects TAA, direct lighting and Flow
+compositing, with indirect diffuse, reflections, translucency, ambient occlusion,
+shadows and subsurface scattering disabled. This option applies only to classic
+RTX. Pass the same settings at startup to avoid initializing the heavier defaults
+before the probe reapplies its policy. See `CLASSIC_LIGHT_OPTIONS` for the exact
+allowlist. It is a diagnostic preset with reduced lighting fidelity; it does not
+constitute physically calibrated fire rendering. Tests of serialized pipeline
+compilation and one shader compilation worker are recorded separately from this
+preset; a read-back setting alone does not establish a reduction in memory use.
+
 The OmniStream monitoring target is 1280 x 720 at up to 30 fps, independently of
 the native capture target. `minimal_runtime.kit` uses this viewport resolution.
 The profile documents the intended stream settings; the plugin session and
