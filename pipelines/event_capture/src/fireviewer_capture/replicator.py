@@ -72,7 +72,7 @@ class ReplicatorCaptureManager:
             stream=io.BytesIO();Image.fromarray(array[:,:,:3]).save(stream,format="PNG",compress_level=3);encoded=stream.getvalue()
         return self.store.write_frame(capture_id,context,encoded)
 
-    async def capture_instant(self,adapter,state,requests,on_group_committed=None):
+    async def capture_instant(self,adapter,state,requests,on_group_committed=None,on_group_start=None):
         if not requests:return []
         adapter.require_capture_contract();await self.start()
         if any(r.sim_time_us!=state.sim_time_us or r.state_fingerprint!=state.fingerprint for r in requests):
@@ -82,6 +82,7 @@ class ReplicatorCaptureManager:
         # product cap requires several GPU batches. No simulation restart.
         async with adapter.freeze(state) as snapshot:
             for request in requests:
+                if on_group_start:await on_group_start(request)
                 camera_ids=self.zones[request.zone_id]["camera_ids"];receipts=[]
                 contexts={i:self._context(request,self.cameras[i],snapshot) for i in camera_ids}
                 needed=[]
@@ -109,7 +110,17 @@ class ReplicatorCaptureManager:
                     for i in ids:
                         capture_id=digest([self.config_sha256,request.key,i])
                         tasks.append(asyncio.to_thread(self._write,capture_id,contexts[i],result.frames[i]))
-                    current=await asyncio.gather(*tasks);receipts.extend(current)
+                    # Worker threads cannot be cancelled safely halfway through
+                    # an atomic write. Drain every started write before leaving
+                    # the freeze lease, including failure and cancellation.
+                    pending_writes=asyncio.gather(*tasks,return_exceptions=True)
+                    try:current=await asyncio.shield(pending_writes)
+                    except BaseException:
+                        await pending_writes
+                        raise
+                    failures=[item for item in current if isinstance(item,BaseException)]
+                    if failures:raise failures[0]
+                    receipts.extend(current)
                     self.metrics.durations["encoding_and_write_batch_wall_s"]+=time.perf_counter()-started
                     self.metrics.durations["encoding_and_write_per_image_sum_s"]+=sum(r.write_wall_s for r in current)
                     self.metrics.counts["images_written_new"]+=sum(not r.reused for r in current)
@@ -118,6 +129,7 @@ class ReplicatorCaptureManager:
                 group_id=digest([self.config_sha256,request.key]);receipt_hash=self.store.commit_group(group_id,request,receipts,camera_ids)
                 completed.append((request,group_id,receipt_hash));self.metrics.counts["groups_committed"]+=1
                 if on_group_committed:await on_group_committed(request,group_id,receipt_hash)
+                await adapter.assert_frozen(snapshot)
         return completed
 
     async def close(self):

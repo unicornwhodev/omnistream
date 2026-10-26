@@ -1,5 +1,5 @@
 """Verified image commits and atomic checkpoints with idempotent recovery."""
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from dataclasses import dataclass
 import hashlib
 import io
@@ -46,6 +46,21 @@ class FrameReceipt:
     write_wall_s:float
 
 
+def _comparison_path(path):
+    """Normalize equivalent Windows namespace forms after filesystem resolution.
+
+    Windows can retain the extended prefix for a path during concurrent file
+    creation. Only DOS-drive and UNC prefixes are equivalent here; arbitrary
+    device namespaces remain distinct and cannot pass the containment check.
+    """
+    text=str(path)
+    if text[:8].upper()=='\\\\?\\UNC\\':
+        return PureWindowsPath('\\\\'+text[8:])
+    if text.startswith('\\\\?\\') and len(text)>=7 and text[4].isalpha() and text[5:7]==':\\':
+        return PureWindowsPath(text[4:])
+    return path
+
+
 class CaptureStore:
     def __init__(self,root):
         self.root=Path(root).resolve();self.root.mkdir(parents=True,exist_ok=True)
@@ -53,7 +68,8 @@ class CaptureStore:
 
     def _path(self,relative):
         path=self.root/relative
-        if not path.resolve().is_relative_to(self.root): raise ContractError("Capture path escaped output directory")
+        if not _comparison_path(path.resolve()).is_relative_to(_comparison_path(self.root)):
+            raise ContractError("Capture path escaped output directory")
         return path
 
     def _quarantine(self,path):

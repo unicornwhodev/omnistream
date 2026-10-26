@@ -1,0 +1,44 @@
+{
+  "schema": "fireviewer.factory-flow-response-cases.v1",
+  "seed": 20261017,
+  "resolution_px": [3840, 2160],
+  "solver_steps_per_second": 60,
+  "update_interval_s": 0.016666666666666666,
+  "simulated_duration_s": 6,
+  "sample_times_s": [2, 4, 6],
+  "threshold_model_units": 0.005,
+  "max_vram_fraction": 0.90,
+  "min_available_ram_gib": 5,
+  "acceptance": {
+    "hot_minus_cold_centroid_z_min_m": 0.25,
+    "signed_wind_centroid_x_min_m": 0.25,
+    "below_ground_weight_fraction_max": 0.02,
+    "relative_dt_centroid_difference_max": 0.25,
+    "relative_dt_integral_difference_max": 0.25,
+    "relative_grid_centroid_difference_max": 0.25,
+    "relative_grid_integral_difference_max": 0.25,
+    "emission_stop_temperature_integral_must_decrease": true,
+    "frozen_field_values_must_be_identical": true,
+    "native_capture_resolution_px": [3840, 2160]
+  },
+  "cases": [
+    {"id": "smoke_hot_still", "family": "fumee_sombre", "hot": true, "wind_m_s": [0, 0, 0]},
+    {"id": "smoke_cold_still", "family": "fumee_sombre", "hot": false, "wind_m_s": [0, 0, 0]},
+    {"id": "smoke_wind_positive", "family": "fumee_sombre", "hot": true, "wind_m_s": [3, 0, 0]},
+    {"id": "smoke_wind_negative", "family": "fumee_sombre", "hot": true, "wind_m_s": [-3, 0, 0]},
+    {"id": "smoke_cutoff", "family": "fumee_sombre", "hot": true, "wind_m_s": [0, 0, 0], "emission_end_s": 2},
+    {"id": "smoke_dt_half", "family": "fumee_sombre", "hot": true, "wind_m_s": [0, 0, 0], "update_interval_s": 0.008333333333333333},
+    {"id": "smoke_grid_refined", "family": "fumee_sombre", "hot": true, "wind_m_s": [0, 0, 0], "voxel_size_m": 0.06},
+    {"id": "smoke_downward_contact", "family": "fumee_sombre", "hot": false, "wind_m_s": [0, 0, -2]},
+    {"id": "smoke_light", "family": "fumee_claire", "hot": true, "wind_m_s": [1, 0, 0]},
+    {"id": "ground_flames", "family": "flammes_sol", "hot": true, "wind_m_s": [1, 0, 0]},
+    {"id": "fire_front", "family": "front_feu", "hot": true, "wind_m_s": [1, 0, 0]},
+    {"id": "crown_fire", "family": "feu_cime", "hot": true, "wind_m_s": [1, 0, 0]},
+    {"id": "building_fire", "family": "feu_bati", "hot": true, "wind_m_s": [1, 0, 0]}
+  ],
+  "limits": [
+    "Functional native response tests; not empirical wildfire calibration",
+    "The 27 original recipes are inventoried; this response matrix selects six local sustained recipes",
+    "Micro, extended and major dimensions and other intensity presets require separate native qualification"
+  ]
+}

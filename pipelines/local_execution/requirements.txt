@@ -1,0 +1,5 @@
+psutil>=5.9,<8
+requests>=2.32,<3
+pyproj>=3.7,<4
+nvidia-ml-py>=12
+pywin32>=310; sys_platform == "win32"

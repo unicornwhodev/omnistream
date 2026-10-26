@@ -17,7 +17,7 @@ def load_factory(spec):
     return getattr(importlib.import_module(module),name)
 
 
-async def run_in_current_kit(config_path,output,adapter_factory=None,fixture_log=None,max_groups=None,gpu_timing_factory=None,residency_factory=None):
+async def run_in_current_kit(config_path,output,adapter_factory=None,fixture_log=None,max_groups=None,gpu_timing_factory=None,residency_factory=None,offload_factory=None):
     config=load_config(config_path)
     if bool(adapter_factory)==bool(fixture_log):
         raise MissingSimulationAdapter('Provide one real adapter factory, or an explicitly marked qualification fixture log')
@@ -32,7 +32,8 @@ async def run_in_current_kit(config_path,output,adapter_factory=None,fixture_log
     timing=load_factory(gpu_timing_factory)(config) if gpu_timing_factory else None
     residency=load_factory(residency_factory)(config) if residency_factory else None
     store=CaptureStore(output);metrics=RunMetrics();driver=OmniverseRenderDriver(timing,residency)
-    manager=ReplicatorCaptureManager(config,driver,store,metrics);pipeline=CapturePipeline(config,adapter,manager,store,metrics)
+    offloader=load_factory(offload_factory)(config,store) if offload_factory else None
+    manager=ReplicatorCaptureManager(config,driver,store,metrics);pipeline=CapturePipeline(config,adapter,manager,store,metrics,offloader)
     try:
         with ResourceSampler(metrics):result=await pipeline.run(resume=True,max_groups=max_groups)
         return result

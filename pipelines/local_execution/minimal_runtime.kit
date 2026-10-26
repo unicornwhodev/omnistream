@@ -1,0 +1,67 @@
+[package]
+title = "OmniStream Local RTX Minimal Qualification"
+version = "0.1.0"
+description = "Small native application; qualification required before production"
+
+[dependencies]
+"omni.usd" = {}
+"omni.kit.viewport.window" = {}
+"omni.hydra.rtx" = {}
+"omni.flowusd" = {}
+"omni.usd.schema.flow" = {}
+"omni.physx" = {}
+"omni.warp.core" = {}
+"omni.replicator.core" = {}
+
+[settings]
+app.name = "OmniStream Local Minimal"
+app.settings.persistent = false
+app.content.emptyStageOnStart = true
+app.file.ignoreUnsavedOnExit = true
+app.settings.fabricDefaultStageFrameHistoryCount = 3
+app.window.width = 1280
+app.window.height = 720
+app.renderer.resolution.width = 1280
+app.renderer.resolution.height = 720
+app.renderer.skipWhileMinimized = false
+app.asyncRendering = false
+renderer.enabled = "rtx"
+renderer.active = "rtx"
+app.runLoops.main.rateLimitEnabled = true
+app.runLoops.main.rateLimitFrequency = 30
+app.runLoops.main.rateLimitUseBusyLoop = false
+# Keep compiler/physics work bounded and leave CPU capacity for the desktop.
+plugins."carb.tasking.plugin".threadCount = 4
+plugins."omni.tbb.globalcontrol".maxThreadCount = 4
+# Slang compiler sessions are a separate pool from Carbonite workers. These
+# settings exist in the installed carb.shadercompiler-slang plugin. Keep a
+# single warm session so a many-core host cannot preallocate a large pool.
+gpu.shadercompiler.warmcount = 1
+gpu.shadercompiler.warmcountMax = 1
+gpu.shadercompiler.warmcountPerGB = 1
+persistent.physics.numThreads = 2
+# Native qualification uses explicit Render Products. A second, unused default
+# viewport must not start rendering before the probe or between capture groups.
+exts."omni.kit.viewport.window".startup.disableWindowOnLoad = true
+renderer.multiGpu.enabled = false
+renderer.multiGpu.autoEnable = false
+rtx.rendermode = "MinimalRendering"
+persistent.rtx.modes.minimal.enabled = true
+persistent.rtx.modes.pt.enabled = false
+persistent.rtx.modes.rt.enabled = false
+persistent.rtx.modes.rt2.enabled = false
+# Full material evaluation keeps emission visible; textured-diffuse mode does not.
+rtx.minimal.mode = 3
+rtx.sceneDb.ambientLightIntensity = 0.2
+rtx.flow.enabled = true
+rtx.flow.compositeEnabled = true
+rtx.flow.pathTracingEnabled = false
+rtx.flow.rayTracedShadowsEnabled = false
+rtx.flow.rayTracedReflectionsEnabled = false
+rtx.flow.rayTracedTranslucencyEnabled = false
+rtx-transient.dlssg.enabled = false
+rtx-transient.resourcemanager.texturestreaming.memoryBudget = 0.12
+omni.replicator.asyncRendering = false
+
+# Memory allocations are additionally guarded by bounded_process.py. This
+# texture fraction is not a total VRAM limit. No scene is loaded automatically.

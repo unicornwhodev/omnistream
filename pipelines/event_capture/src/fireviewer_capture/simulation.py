@@ -37,6 +37,9 @@ class SimulationAdapter(ABC):
     advance_to may stop BEFORE its target for an activity event, never after it.
     A frozen lease must include propagation, smoke and asynchronous producers;
     pausing an Omniverse timeline alone does not satisfy this contract.
+    Clock progression belongs exclusively to advance_to. Releasing a capture
+    lease, including after an I/O failure, must not restart free-running
+    external producers. The pipeline may be stopped awaiting cloud recovery.
     """
     capabilities: AdapterCapabilities
 

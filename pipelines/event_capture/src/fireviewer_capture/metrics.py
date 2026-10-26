@@ -8,6 +8,7 @@ class RunMetrics:
     def __init__(self):
         self.started=time.perf_counter();self.durations=defaultdict(float);self.counts=defaultdict(int)
         self.samples=[];self.gpu_timing_unavailable_batches=0
+        self.requested_acceleration=None
 
     def add_render(self,wall_seconds,gpu_seconds=None,gpu_source=None):
         self.durations["render_wall_s"]+=wall_seconds
@@ -19,7 +20,14 @@ class RunMetrics:
 
     def summary(self):
         elapsed=time.perf_counter()-self.started;new=self.counts["images_written_new"]
+        advanced_s=self.counts.get('simulated_time_advanced_us',0)/1_000_000
+        advance_wall=self.durations.get('simulation_advance_wall_s',0)
         return {"wall_total_s":elapsed,"durations":dict(self.durations),"counts":dict(self.counts),
+                "requested_acceleration":self.requested_acceleration,
+                "simulated_time_advanced_s":advanced_s,
+                "advance_effective_acceleration":advanced_s/advance_wall if advance_wall else None,
+                "pipeline_effective_acceleration":advanced_s/elapsed if elapsed else None,
+                "acceleration_measurement_scope":"current invocation; pipeline includes captures and checkpoints; native startup excluded",
                 "new_images_per_wall_second":new/elapsed if elapsed else None,
                 "gpu_render_execution_s":self.durations.get("gpu_render_execution_s") if not self.gpu_timing_unavailable_batches else None,
                 "gpu_timing_unavailable_batches":self.gpu_timing_unavailable_batches,
