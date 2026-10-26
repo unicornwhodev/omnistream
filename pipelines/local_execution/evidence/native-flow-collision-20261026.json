@@ -1,0 +1,153 @@
+{
+  "schema": "omnistream.native-flow-collision-evidence.v1",
+  "date": "2026-10-26",
+  "accepted_for_production": false,
+  "physical_fire_calibrated": false,
+  "geographic_die_scene": false,
+  "scope": "Ten-second factory Flow laboratory; static closed PhysX triangle-mesh floor; independent native field measurement",
+  "kit_version": "110.2.0+feature.342835.698af100.gl",
+  "extensions": {
+    "omni.flowusd": "omni.flowusd-110.0.4+110.0.0.wx64.r.cp312.u7f4",
+    "omni.kit.viewport.utility": "omni.kit.viewport.utility-2.1.0+698af100"
+  },
+  "renderer_policy": {
+    "/rtx/rendermode": "RaytracedLighting",
+    "/rtx/minimal/mode": 3,
+    "/persistent/rtx/modes/minimal/enabled": false,
+    "/persistent/rtx/modes/pt/enabled": false,
+    "/persistent/rtx/modes/rt/enabled": true,
+    "/persistent/rtx/modes/rt2/enabled": false,
+    "/rtx/flow/enabled": true,
+    "/rtx/flow/compositeEnabled": true,
+    "/rtx/flow/pathTracingEnabled": false,
+    "/rtx/flow/rayTracedShadowsEnabled": false,
+    "/rtx/flow/rayTracedReflectionsEnabled": false,
+    "/rtx/flow/rayTracedTranslucencyEnabled": false,
+    "/rtx/post/aa/op": 3,
+    "/rtx/post/dlss/execMode": 4,
+    "/rtx-transient/dlssg/enabled": false,
+    "/rtx/directLighting/enabled": true,
+    "/rtx/indirectDiffuse/enabled": false,
+    "/rtx/reflections/enabled": false,
+    "/rtx/translucency/enabled": false,
+    "/rtx/ambientOcclusion/enabled": false,
+    "/rtx/shadows/enabled": false,
+    "/rtx/raytracing/subsurface/enabled": false
+  },
+  "factory_source_sha256": "896793a7e81654e1396329002ae0c5a1cecdde52e105432d7cb5cabf0b25b0fd",
+  "derived_stage_sha256": "1ec6dbd7b53c82f27805372d07f1da4b09288dde230031333233f4dd4b930332",
+  "final_state": {
+    "timeline_s": 9.999999999999975,
+    "native_sim_time_s": 35.00084566666684,
+    "native_fault_time_s": 0.0,
+    "active_blocks": 287,
+    "max_blocks": 512
+  },
+  "native_clock_semantics": "absolute flushed-work timestamp; not scenario elapsed time",
+  "captures": [
+    {
+      "file": "native-flow-final.png",
+      "sha256": "95806479eae7bc5d70bac117fb101b00b14f40be87001e513c8b806996a1aa6b",
+      "bytes": 1040736,
+      "resolution_px": [
+        1920,
+        1080
+      ],
+      "png_stream_verified": true
+    }
+  ],
+  "host": {
+    "receipt_sha256": "bd3a1353a204f8131b192b3250b6bf671162a3430762e43d3eed382fed1aeed4",
+    "reason": "normal_exit",
+    "wall_s": 39.32799999997951,
+    "peak_job_commit_bytes": 9463091200,
+    "peak_owned_rss_bytes": 6258356224,
+    "peak_device_vram_bytes": 4799782912,
+    "observed_gpu_ceiling_exceeded": false
+  },
+  "field_measurement_host": {
+    "receipt_sha256": "5484bff947182c5a1d620366cc94a97ff72b21191f523ccab6ca5ddd7e48c61d",
+    "reason": "normal_exit",
+    "wall_s": 1.452999999979511,
+    "peak_job_commit_bytes": 824999936,
+    "peak_owned_rss_bytes": 471056384,
+    "peak_device_vram_bytes": 2316156928,
+    "observed_gpu_ceiling_exceeded": false
+  },
+  "collision_comparison": {
+    "Smoke": {
+      "without_collision_below_ground_weight_fraction": 0.15418548017998843,
+      "with_collision_below_ground_weight_fraction": 0.0,
+      "allocated_voxels_measured": 2342912,
+      "threshold_model_units": 0.005,
+      "bounds_m": {
+        "min": [
+          -158.10000306367874,
+          -16.500000774860382,
+          0.30000001192092896
+        ],
+        "max": [
+          162.90000611543655,
+          18.30000001192093,
+          12.900000393390656
+        ]
+      },
+      "centroid_m": [
+        2.4005636683727034,
+        0.012099687035246724,
+        3.2063321119227552
+      ],
+      "finite": true,
+      "canonical_voxel_values_sha256": "40ed91933851abef28df34f5367f9f92a3f968c20a58412a64780d1b13954c79",
+      "last_two_frozen_exports_equal": true,
+      "units": "native Flow scalar units; not kg/m3, kelvin or heat-release rate"
+    },
+    "Temperature": {
+      "without_collision_below_ground_weight_fraction": 0.11584550519391977,
+      "with_collision_below_ground_weight_fraction": 0.0,
+      "allocated_voxels_measured": 2342912,
+      "threshold_model_units": 0.005,
+      "bounds_m": {
+        "min": [
+          -157.50001221895218,
+          -15.900000393390656,
+          0.30000001192092896
+        ],
+        "max": [
+          159.90000611543655,
+          17.10000115633011,
+          11.100000202655792
+        ]
+      },
+      "centroid_m": [
+        1.4516985459865217,
+        -0.1464796811544701,
+        2.799401391500991
+      ],
+      "finite": true,
+      "canonical_voxel_values_sha256": "f1501fa7e29d0120a8ef495c749b41d811ded403b765719531cfab530e71706c",
+      "last_two_frozen_exports_equal": true,
+      "units": "native Flow scalar units; not kg/m3, kelvin or heat-release rate"
+    }
+  },
+  "raw_receipt_sha256": "51f07144aa58e4ac0b387219afb88fb0661395576f37de24e7f7606147bb2f26",
+  "field_measurements_sha256": "c5488ba70c729ec074b40717f56fc0399a15161c150f1aeaae8de822767ebbd3",
+  "limitations": [
+    "No production propagation adapter",
+    "No calibrated heat-release rate or SI scalar fields",
+    "No native five-camera qualification",
+    "No long-run memory or ghosting pass",
+    "Velocity and all other producers not verified frozen",
+    "Native checkpoint/restart and deterministic replay not established",
+    "Fabric interface-version warning remains; general binary compatibility not established"
+  ],
+  "cloud_transfer": {
+    "verified": true,
+    "bundle_id": "9a383a1afa6940aff62884f7914a3ce5315c31e15c17e08835a5a45855a0d90d",
+    "native_image_sha256": "95806479eae7bc5d70bac117fb101b00b14f40be87001e513c8b806996a1aa6b",
+    "native_image_bytes": 1040736,
+    "spool_media_pruned": true,
+    "local_review_evidence_retained": true,
+    "validation_scope": "single real laboratory image; not production or full five-camera group"
+  }
+}

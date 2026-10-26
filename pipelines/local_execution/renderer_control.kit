@@ -1,0 +1,55 @@
+[package]
+title = "OmniStream Renderer Negative Control"
+version = "0.1.0"
+description = "No fire, Flow or physics: native renderer initialization only"
+
+[dependencies]
+"omni.usd" = {}
+"omni.kit.viewport.window" = {}
+"omni.kit.viewport.utility" = {}
+"omni.hydra.rtx" = {}
+
+[settings]
+app.name = "OmniStream Renderer Negative Control"
+app.settings.persistent = false
+app.content.emptyStageOnStart = true
+app.file.ignoreUnsavedOnExit = true
+app.window.width = 320
+app.window.height = 180
+app.renderer.resolution.width = 320
+app.renderer.resolution.height = 180
+app.renderer.skipWhileMinimized = false
+app.asyncRendering = false
+renderer.enabled = "rtx"
+renderer.active = "rtx"
+renderer.multiGpu.enabled = false
+renderer.multiGpu.autoEnable = false
+app.runLoops.main.rateLimitEnabled = true
+app.runLoops.main.rateLimitFrequency = 30
+app.runLoops.main.rateLimitUseBusyLoop = false
+plugins."carb.tasking.plugin".threadCount = 2
+plugins."omni.tbb.globalcontrol".maxThreadCount = 2
+gpu.shadercompiler.warmcount = 1
+gpu.shadercompiler.warmcountMax = 1
+gpu.shadercompiler.warmcountPerGB = 1
+exts."omni.kit.viewport.window".startup.disableWindowOnLoad = true
+rtx.rendermode = "RaytracedLighting"
+persistent.rtx.modes.minimal.enabled = false
+persistent.rtx.modes.pt.enabled = false
+persistent.rtx.modes.rt.enabled = true
+persistent.rtx.modes.rt2.enabled = false
+rtx.flow.enabled = false
+rtx.flow.compositeEnabled = false
+rtx.flow.pathTracingEnabled = false
+rtx.post.aa.op = 3
+rtx.post.dlss.execMode = 4
+rtx.directLighting.enabled = true
+rtx.indirectDiffuse.enabled = false
+rtx.reflections.enabled = false
+rtx.translucency.enabled = false
+rtx.ambientOcclusion.enabled = false
+rtx.shadows.enabled = false
+rtx.raytracing.subsurface.enabled = false
+rtx-transient.dlssg.enabled = false
+rtx.shaderDb.concurrency = 1
+rtx-transient.psoDb.serializeAllCompiles = true

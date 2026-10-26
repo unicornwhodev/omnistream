@@ -19,4 +19,5 @@ def require_native_progress(initial, final, max_blocks):
     if final['last_block_fault_sim_time_s'] > initial['last_block_fault_sim_time_s']:
         raise RuntimeError('Native Flow hit its block limit during the probe')
     return {'native_clock_advanced_s':final['last_absolute_sim_time_s']-initial['last_absolute_sim_time_s'],
+            'native_clock_semantics':'absolute flushed-work timestamp, not scenario elapsed time',
             'flow_solver_advancement_observed':True,'physical_fire_calibrated':False}

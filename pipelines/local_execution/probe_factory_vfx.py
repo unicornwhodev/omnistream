@@ -23,6 +23,7 @@ from restore_scene import atomic_json, sha256
 from render_profile import load_render_profile
 from render_policy import enforce_policy, assert_policy, expected_policy
 from flow_diagnostics import require_native_progress
+from native_capture import wait_for_png
 
 
 async def probe():
@@ -39,11 +40,13 @@ async def probe():
     settings = carb.settings.get_settings()
     context = json.loads(Path(settings.get('/exts/omnistream.local/probeContext')).read_text())
     # Volume inclusion and the selected renderer are separate, explicit options.
-    # Minimal remains the default. Neither allowed renderer enables PT or RT2.
+    # Minimal remains the default. RT2 needs a separate explicit opt-in because
+    # its real-time algorithm uses path tracing; Interactive PT stays disabled.
     flow_volume_gate = bool(context.get('flow_volume_gate', False))
     renderer_mode = context.get('renderer_mode', 'minimal')
     policy_options = {'flow_volume_gate':flow_volume_gate,'renderer_mode':renderer_mode,
-                      'lightweight':bool(context.get('lightweight_renderer'))}
+                      'lightweight':bool(context.get('lightweight_renderer')),
+                      'allow_realtime_path_tracing':context.get('allow_realtime_path_tracing') is True}
     native_policy = expected_policy(**policy_options)
     def enforce_native_policy():
         return enforce_policy(settings, **policy_options)
@@ -76,7 +79,7 @@ async def probe():
               'capture_resolution_px':list(resolution),
               'diagnostic_low_resolution':bool(context.get('diagnostic_low_resolution')),
               'all_producer_freeze_verified':False,'captures':[],'timings':{}}
-    driver = warmup = preparation_rgb = diagnostic_viewport = flow = None
+    driver = warmup = preparation_rgb = diagnostic_viewport = initial_viewport = flow = None
     timeline = omni.timeline.get_timeline_interface()
     try:
         usd_context = omni.usd.get_context()
@@ -175,9 +178,16 @@ async def probe():
         graph, _, _, _ = og.Controller.edit(
             {'graph_path':'/World/Probe/FlowTelemetry','evaluator_name':'execution'},
             {og.Controller.Keys.CREATE_NODES:[
+                ('Read','omni.graph.action.OnImpulseEvent'),
                 ('Time','omni.flowusd.FlowSimTime'),
-                ('Blocks','omni.flowusd.FlowBlocks')]})
+                ('Blocks','omni.flowusd.FlowBlocks')],
+             og.Controller.Keys.SET_VALUES:[('Read.inputs:onlyPlayback',False)],
+             og.Controller.Keys.CONNECT:[('Read.outputs:execOut','Time.inputs:execIn'),
+                                         ('Time.outputs:execOut','Blocks.inputs:execIn')]})
         def native_flow_state():
+            # These native Flow nodes expose an execIn only in an action graph.
+            # Evaluating an untriggered graph merely returns default zeros.
+            og.Controller.set(og.Controller.attribute('/World/Probe/FlowTelemetry/Read.state:enableImpulse'),True)
             og.Controller.evaluate_sync(graph)
             root = '/World/Probe/FlowTelemetry/'
             result = {name:og.Controller.get(og.Controller.attribute(root+attribute))
@@ -200,6 +210,31 @@ async def probe():
         progress('Factory stage opened', renderer_mode=settings.get('/rtx/rendermode'),
                  flow_path_tracing=settings.get('/rtx/flow/pathTracingEnabled'))
         rep.orchestrator.set_capture_on_play(False)
+        if context.get('native_viewport_initialization'):
+            # Isolate native rendering from Replicator's graph initialization.
+            # This frozen laboratory frame is not a fire/smoke validation image.
+            from omni.kit.viewport.utility import create_viewport_window, capture_viewport_to_file
+            from pxr import Sdf
+            timeline.pause()
+            flow.GetAttribute('forceDisableCoreSimulation').Set(True)
+            flow.GetAttribute('forceDisableEmitters').Set(True)
+            initial_viewport = create_viewport_window('Native initialization diagnostic',
+                width=320,height=180,camera_path=Sdf.Path(cameras[0]['usd_path']))
+            initial_viewport.viewport_api.set_texture_resolution((320,180))
+            image_path = out/'native-viewport-initialization.png'
+            progress('Initialize viewport without Replicator capture graph')
+            capture = capture_viewport_to_file(initial_viewport.viewport_api,str(image_path))
+            await capture.wait_for_result()
+            await wait_for_png(image_path,(320,180))
+            assert_native_policy()
+            with Image.open(image_path) as image:
+                image.load()
+                if image.size != (320,180):raise RuntimeError('Diagnostic viewport dimensions differ')
+            report['native_viewport_initialization'] = {'file':image_path.name,
+                'sha256':sha256(image_path),'bytes':image_path.stat().st_size,
+                'flow_frozen':True,'production_evidence':False}
+            initial_viewport.viewport_api.updates_enabled = False
+            progress('Viewport native RGB obtained before Replicator initialization')
         rep.set_global_seed(config['seed'])
         warmup = rep.create.render_product(cameras[0]['usd_path'],(320,180),force_new=True)
         # An explicit RGB annotator supplies the render graph dependency. A
@@ -363,6 +398,9 @@ async def probe():
         if diagnostic_viewport:
             diagnostic_viewport.viewport_api.updates_enabled = False
             diagnostic_viewport.destroy()
+        if initial_viewport:
+            initial_viewport.viewport_api.updates_enabled = False
+            initial_viewport.destroy()
         report['source_unchanged'] = sha256(source)==original_hash
         if not report['source_unchanged']:
             report['completed'] = False

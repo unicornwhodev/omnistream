@@ -126,7 +126,8 @@ mode is rejected. A small diagnostic image does not qualify Full HD production.
 Cleanup explicitly disables both Flow core evolution and emission before
 destroying render products, including on failure.
 
-`lightweight_renderer: true` additionally selects TAA, direct lighting and Flow
+`lightweight_renderer: true` additionally selects native-resolution DLAA,
+disables generated frames, and enables direct lighting and Flow
 compositing, with indirect diffuse, reflections, translucency, ambient occlusion,
 shadows and subsurface scattering disabled. This option applies only to classic
 RTX. Pass the same settings at startup to avoid initializing the heavier defaults
@@ -135,6 +136,45 @@ allowlist. It is a diagnostic preset with reduced lighting fidelity; it does not
 constitute physically calibrated fire rendering. Tests of serialized pipeline
 compilation and one shader compilation worker are recorded separately from this
 preset; a read-back setting alone does not establish a reduction in memory use.
+The installed Kit settings use `/rtx/post/aa/op=3` with
+`/rtx/post/dlss/execMode=4` for DLAA. Earlier diagnostics requested `op=2` and
+incorrectly called it TAA; that was legacy FXAA, and this runtime reset it to
+3 on render. Reapplying 2 did not stabilize it. The corrected policy uses the
+supported DLAA setting and still rejects changed settings after native rendering.
+
+`native_viewport_initialization: true` performs an explicitly labelled frozen
+viewport diagnostic before creating the Replicator capture graph. It uses one
+320 x 180 viewport in the headless Kit process, saves the native image only if
+the capture completes, then disables viewport updates. It is not a replacement
+for the production manual writers or five-camera synchronization qualification.
+`run_kit.py` emits bounded five-second completed-update heartbeats; a long native
+update cannot emit one until it returns, so the independent process guard remains
+necessary.
+
+`renderer_control.kit` and `probe_renderer_only.py` provide a separate negative
+control with a floor, a light and one fixed camera, without loading Flow,
+PhysX, Warp or Replicator. The private context selects
+`capture_backend: native_viewport` and a new output directory. Launch it with
+the same bounded process guard and a compatible installed Kit SDK, never with
+an unguarded application shortcut. The default script backend remains
+`replicator` when testing an experience that includes Replicator.
+The saved image is labelled `negative-control.png`; it is **not** fire,
+smoke, terrain or production evidence. The native-viewport path waits for the
+complete file, verifies PNG chunk CRCs, dimensions and its bounded compressed
+pixel stream, and requires visual inspection before its
+receipt can be accepted. Use the private native log to distinguish shader
+compilation from a stalled capture callback. A wall timeout alone does not
+establish a renderer defect.
+
+RTX Real-Time 2.0 is a separate prepared option, **not yet qualified locally**.
+It uses path tracing even though the Interactive PT mode remains off; see
+[NVIDIA's description](https://docs.omniverse.nvidia.com/materials-and-rendering/latest/rtx-renderer_rt.html).
+When explicitly authorized, select `renderer_mode: realtime2` and the literal
+boolean `allow_realtime_path_tracing: true`. Its lightweight option limits all
+three configured bounce budgets to one and disables generated frames. Startup
+flags must select `RealTimePathTracing`, enable `rt2`, and disable `rt`, `pt` and
+`minimal`. No automatic fallback selects RT2. This does not change resource caps
+or authorize production, and it must not bypass an operator's path-tracing restriction.
 
 The OmniStream monitoring target is 1280 x 720 at up to 30 fps, independently of
 the native capture target. `minimal_runtime.kit` uses this viewport resolution.
@@ -240,8 +280,8 @@ failure or cancellation.
 
 ## Native initialization and failure evidence
 
-The current short native tests use Kit 110.3 through the isolated Isaac Sim 6.1
-kernel/application. They use Vulkan and its matching shader-cache extension.
+The initial native tests used Kit 110.3 through the isolated Isaac Sim 6.1
+kernel/application. They used Vulkan and its matching shader-cache extension.
 Download large extension archives to a bounded file stream; buffering a complete
 archive during precaching can itself exhaust RAM. Verify CRC/content before
 installing the cache and retain the matching version. Do not delete shared
@@ -260,10 +300,68 @@ PathTracing renderer or enables PT/RT2 modes.
 
 The probe records both the ordinary timeline and the installed Flow telemetry
 nodes, plus direct binding block counts. Their actual contracts are read from
-the installed `FlowSimTime` and `FlowBlocks` nodes. Zero solver time/blocks and
+the installed `FlowSimTime` and `FlowBlocks` nodes. Their execution inputs are
+explicitly triggered by `OnImpulseEvent`, with `onlyPlayback=false`. The Flow
+flushed-work timestamp includes an initialization offset and must not be used
+as the elapsed scenario time. Zero solver time/blocks and
 missing NanoVDB fields cannot be qualified by successful RGB output. See the
 [Flow settings](https://docs.omniverse.nvidia.com/kit/docs/flow/latest/settings.html)
 and [current qualification results](QUALIFICATION-STATUS.md).
+
+### Lightweight native viewport qualification
+
+`launch_flow_viewport.py` runs `probe_flow_viewport.py` with an already installed
+Kit SDK, an explicit factory recipe and its original digest. It creates a new
+laboratory derivative, never edits the recipe or the geographic scene, and
+never starts the 47-day run. The native test uses classic `RaytracedLighting`,
+native-resolution DLAA and disabled PT/RT2/frame generation. It simulates at
+320 × 180, then freezes Flow and captures at the selected output resolution.
+
+The tested configuration is Kit `110.2.0+feature.342835.698af100.gl`, Flow
+`110.0.4+110.0.0.wx64.r.cp312.u7f4`, Flow schema `110.0.0+110.0.0.u7f4`,
+and the SDK's PhysX `110.1.1`. The Flow load reports a Fabric interface-version
+warning; the recorded short native tests pass, but broader compatibility is not
+established. Do not point this SDK at an entire newer extension cache: pass only
+the two explicit Flow extension paths. Preserve the SDK's own matching renderer
+extensions. No extension, SDK, credential or proprietary binary is distributed
+by this repository.
+
+```powershell
+python pipelines/local_execution/launch_flow_viewport.py --workspace <private-work-dir> --run-name flow-lab-001 --kit-root <installed-sdk-build> --flow-extension <installed-flow-extension> --flow-schema-extension <installed-flow-schema> --license-receipt <existing-license-acceptance.json> --recipe-stage <factory-recipe/effect.usda> --duration-s 10 --resolution 1920x1080 --physics-collision --measure-fields
+```
+
+Use a new run name. An existing run directory is not overwritten. The workspace
+shares its exclusive heavy-work lock with scene restoration. Its runtime state
+is reused without deletion; `--runtime-state <relative-directory>` may select a
+previous cache from the same SDK/extension set. First-use shader compilation can
+take longer and remains subject to the memory guard and 600-second deadline.
+The launcher retains the 11.5 GB Job limit, 10.5 GB preventive commit stop,
+4 GB host reserve and 14 GB whole-GPU stop below the requested 15 GB ceiling.
+
+`--physics-collision` adds a closed static triangle-mesh floor with native
+PhysX/Flow collision. The recipe's ground eraser stays disabled. Optional native
+Smoke and Temperature NanoVDB exports are bounded by a checked 128 MiB spool;
+the check is not an OS disk quota. Flow core evolution and emitters stay disabled
+while positive carrier ticks drain readback; the scenario clock is restored.
+The PNG callback is followed by complete CRC/compressed-stream/dimension
+verification in `native_capture.py`, because the callback alone can precede the
+actual write. Neither a PNG hash nor a successful process exit establishes
+physical acceptance.
+
+After Kit exits, use the installed NVIDIA Warp module and
+`pipelines/factory_vfx/field_metrics.py` in a separate bounded process to measure
+the last two exports of each field. Keep this process separate from rendering.
+It reads every allocated voxel under an explicit measurement budget. Check
+canonical voxel/value hashes as well as field bounds, finite values and
+below-ground support. Different file headers alone do not imply field motion.
+Do not interpret native scalar units as SI density, temperature or heat release.
+
+The public launcher was executed successfully for ten seconds at Full HD,
+followed by independent native voxel measurements. The confirmed scope is
+visibility, static ground collision and frozen smoke/temperature for this case.
+It does not replace the Replicator writer, multi-camera, event scheduler,
+propagation-adapter, native restart or long-run qualification. See the
+[sanitized native receipt](evidence/native-flow-collision-20261026.json).
 
 ## Published perimeter and chronology preparation
 

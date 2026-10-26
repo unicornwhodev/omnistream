@@ -1,0 +1,417 @@
+{
+  "schema": "omnistream.renderer-initialization-diagnosis.v1",
+  "date": "2026-10-26",
+  "accepted_for_production": false,
+  "rt2_executed": true,
+  "trials": [
+    {
+      "trial": "v34",
+      "purpose": "Zero warm Slang sessions",
+      "receipt_sha256": "da51b45b0526fd3d574be6491c00fa903979e129cb81c30a06401614f5745e23",
+      "reason": "job_commit_headroom_threshold",
+      "wall_s": 43.15600000001723,
+      "peak_job_commit_bytes": 10505355264,
+      "peak_owned_rss_bytes": 8832286720,
+      "peak_device_vram_bytes": 2643730432,
+      "first_native_rgb_received": false,
+      "completed_simulated_duration_s": 0
+    },
+    {
+      "trial": "v35",
+      "purpose": "Private normal thread dump",
+      "receipt_sha256": "11783433a78c76dc32ed1a54acd6b6b0aea2c3e967625fa23c9ecc7453c2be09",
+      "reason": "job_commit_headroom_threshold",
+      "wall_s": 45.594000000011874,
+      "peak_job_commit_bytes": 10505461760,
+      "peak_owned_rss_bytes": 8761532416,
+      "peak_device_vram_bytes": 2641043456,
+      "first_native_rgb_received": false,
+      "completed_simulated_duration_s": 0
+    },
+    {
+      "trial": "v36",
+      "purpose": "MDL library compilation disabled",
+      "receipt_sha256": "ea8ca9cdd1d5471cefaff8dcd49a42d02fece7e378dc7439f8adf8d08d6352c9",
+      "reason": "job_commit_headroom_threshold",
+      "wall_s": 42.89000000001397,
+      "peak_job_commit_bytes": 10534404096,
+      "peak_owned_rss_bytes": 8827113472,
+      "peak_device_vram_bytes": 2652512256,
+      "first_native_rgb_received": false,
+      "completed_simulated_duration_s": 0
+    },
+    {
+      "trial": "v37",
+      "purpose": "Native viewport before Replicator graph",
+      "receipt_sha256": "ef0b16d85790709f3566d7b5b82185fef43d8619c0731870bded50012d368b5b",
+      "reason": "job_commit_headroom_threshold",
+      "wall_s": 42.89000000001397,
+      "peak_job_commit_bytes": 10515734528,
+      "peak_owned_rss_bytes": 8826085376,
+      "peak_device_vram_bytes": 2668347392,
+      "first_native_rgb_received": false,
+      "completed_simulated_duration_s": 0
+    },
+    {
+      "trial": "v38",
+      "purpose": "Authorized RTX Real-Time 2.0 with one bounce",
+      "receipt_sha256": "b508d45ecaf4c413cabf9601bebb27a8e5d289deaaa30c0f590e23c6a28eb5bc",
+      "reason": "job_commit_headroom_threshold",
+      "wall_s": 40.905999999988126,
+      "peak_job_commit_bytes": 10534510592,
+      "peak_owned_rss_bytes": 8833126400,
+      "peak_device_vram_bytes": 2642915328,
+      "first_native_rgb_received": false,
+      "completed_simulated_duration_s": 0
+    },
+    {
+      "trial": "v39",
+      "purpose": "Kit 110.3 negative control without Flow prims; Replicator capture",
+      "receipt_sha256": "e0a7feb67392d69c2f323ae23c4067258efd560dfe52df8ec621455d5197ddab",
+      "reason": "wall_timeout",
+      "wall_s": 300.09399999998277,
+      "peak_job_commit_bytes": 8470728704,
+      "peak_owned_rss_bytes": 6969442304,
+      "peak_device_vram_bytes": 2565050368,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": false,
+      "final_state": null,
+      "captures": []
+    },
+    {
+      "trial": "v40",
+      "purpose": "Kit 110.2 negative control without Flow, PhysX, Warp or Replicator",
+      "receipt_sha256": "a40bfbc4a085ca23d3b8f9403f67af1a2c4ee9b31686c1e577a572a989495414",
+      "reason": "wall_timeout",
+      "wall_s": 300.625,
+      "peak_job_commit_bytes": 7069364224,
+      "peak_owned_rss_bytes": 5760589824,
+      "peak_device_vram_bytes": 2524647424,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": false,
+      "final_state": null,
+      "captures": []
+    },
+    {
+      "trial": "v41",
+      "purpose": "Native viewport negative control with warmed shader cache",
+      "receipt_sha256": "84e7b2cd3c20368712316d0cc0dce36d6fc9a8c421d81f252126ba18f6d4ea80",
+      "reason": "normal_exit",
+      "wall_s": 140.78200000000652,
+      "peak_job_commit_bytes": 8289923072,
+      "peak_owned_rss_bytes": 6265036800,
+      "peak_device_vram_bytes": 3310358528,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": true,
+      "final_state": null,
+      "captures": [],
+      "probe_receipt_sha256": "ad95d920616d594cb79c1054ebcd393d39763a7142a0bba000bc461cf4dec823"
+    },
+    {
+      "trial": "v42",
+      "purpose": "Actual native Flow, legacy antialiasing policy mismatch",
+      "receipt_sha256": "94cd4ba4e15e14289b3ff6678f690108edee9c0eb4247a7eb48e0937de30f937",
+      "reason": "process_failed",
+      "wall_s": 440.125,
+      "peak_job_commit_bytes": 8348315648,
+      "peak_owned_rss_bytes": 6800171008,
+      "peak_device_vram_bytes": 3319918592,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": false,
+      "final_state": null,
+      "captures": [],
+      "probe_receipt_sha256": "1f477cc2140a912d121ae30596beb16620226699527b6c20d758f6014bca83eb"
+    },
+    {
+      "trial": "v43",
+      "purpose": "Legacy antialiasing reapplication rejected",
+      "receipt_sha256": "99b0b4b8eb705aee66dc14617096699c4715f62ebc3b9daa71c9b0649dba0e23",
+      "reason": "process_failed",
+      "wall_s": 36.60899999999674,
+      "peak_job_commit_bytes": 7434162176,
+      "peak_owned_rss_bytes": 5494263808,
+      "peak_device_vram_bytes": 3320311808,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": false,
+      "final_state": null,
+      "captures": [],
+      "probe_receipt_sha256": "a1f9fd25a5b2ecd9e4f6577380682d5f16a868255ae4bc8f73fdf19693fbb6f6"
+    },
+    {
+      "trial": "v44",
+      "purpose": "Native DLAA Flow image, telemetry trigger missing",
+      "receipt_sha256": "98ac1a213ab7e369ea80c7a686662d699eebebb0eb00891dc9100a9de576d6c3",
+      "reason": "process_failed",
+      "wall_s": 29.46899999998277,
+      "peak_job_commit_bytes": 7672410112,
+      "peak_owned_rss_bytes": 5542088704,
+      "peak_device_vram_bytes": 3490181120,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": false,
+      "final_state": {
+        "timeline_s": 2.0,
+        "native_sim_time_s": 0.0,
+        "native_fault_time_s": 0.0,
+        "active_blocks": 223,
+        "max_blocks": 512
+      },
+      "captures": [
+        {
+          "file": "native-flow-2s.png",
+          "sha256": "6de0c30b0cc2650b40d749cc9da547cd92946024d3e9356bb83d6900c4c5dbbe",
+          "bytes": 26165
+        }
+      ],
+      "probe_receipt_sha256": "0cf62cc91fb94866e57c7d153d948e84f9a30b906cbeee00d15f874d741b198d"
+    },
+    {
+      "trial": "v45",
+      "purpose": "Native Flow progress with execution-graph trigger corrected",
+      "receipt_sha256": "11d560558812087c60f61c4676997afd509d29b7eff431c6f34f762c5d4af654",
+      "reason": "normal_exit",
+      "wall_s": 29.469000000011874,
+      "peak_job_commit_bytes": 7695548416,
+      "peak_owned_rss_bytes": 5577723904,
+      "peak_device_vram_bytes": 3488739328,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": true,
+      "final_state": {
+        "timeline_s": 2.0,
+        "native_sim_time_s": 26.28445266666677,
+        "native_fault_time_s": 0.0,
+        "active_blocks": 219,
+        "max_blocks": 512
+      },
+      "captures": [
+        {
+          "file": "native-flow-2s.png",
+          "sha256": "e5e8cbbf783cb9954eb14d4ca0f43e9ce11a921a77b051331b39710d05dc8dc0",
+          "bytes": 26108
+        }
+      ],
+      "probe_receipt_sha256": "7d338f6d189e4976e644177744e826a60c29f071cc7403aaeb43c304542ced03"
+    },
+    {
+      "trial": "v46",
+      "purpose": "Full HD capture callback before file write completed",
+      "receipt_sha256": "10ef4144c73419b86f95b0fed51236919cc3f67d2ec99e31a9cf69036c215f6d",
+      "reason": "process_failed",
+      "wall_s": 33.07799999997951,
+      "peak_job_commit_bytes": 8880603136,
+      "peak_owned_rss_bytes": 5768544256,
+      "peak_device_vram_bytes": 4631969792,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": false,
+      "final_state": {
+        "timeline_s": 4.999999999999992,
+        "native_sim_time_s": 29.481034666666915,
+        "native_fault_time_s": 0.0,
+        "active_blocks": 281,
+        "max_blocks": 512
+      },
+      "captures": [],
+      "probe_receipt_sha256": "65f3d0cf3cf3fe4b8699c9f3a2f7d03c2409eb56181d13fecfccd26f69c8a564"
+    },
+    {
+      "trial": "v47",
+      "purpose": "Full HD capture with complete PNG verification",
+      "receipt_sha256": "08db28c38731ec0fd9f13e13e3a122e3f390487c877529baaecfdae05948d90e",
+      "reason": "normal_exit",
+      "wall_s": 33.312000000005355,
+      "peak_job_commit_bytes": 9047080960,
+      "peak_owned_rss_bytes": 5944782848,
+      "peak_device_vram_bytes": 4623368192,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": true,
+      "final_state": {
+        "timeline_s": 4.999999999999992,
+        "native_sim_time_s": 29.58632866666691,
+        "native_fault_time_s": 0.0,
+        "active_blocks": 289,
+        "max_blocks": 512
+      },
+      "captures": [
+        {
+          "file": "native-flow-final.png",
+          "sha256": "39ad2e5db873bd0580e5ade1619ba757ad7277115009a7abd5c1eedead24eb19",
+          "bytes": 909583,
+          "resolution_px": [
+            1920,
+            1080
+          ],
+          "png_stream_verified": true
+        }
+      ],
+      "probe_receipt_sha256": "ebac73bee1956644726bf085daf7256c2510cf792739d9315d07f664734153b6"
+    },
+    {
+      "trial": "v48",
+      "purpose": "Ten-second Flow image, paused field export incomplete",
+      "receipt_sha256": "63a376e834bd2976d7b43c79e0373e0566882e17825c7716096cfd507363c457",
+      "reason": "process_failed",
+      "wall_s": 38.64100000000326,
+      "peak_job_commit_bytes": 8982212608,
+      "peak_owned_rss_bytes": 5978673152,
+      "peak_device_vram_bytes": 4619337728,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": false,
+      "final_state": {
+        "timeline_s": 9.999999999999975,
+        "native_sim_time_s": 34.678721666666874,
+        "native_fault_time_s": 0.0,
+        "active_blocks": 381,
+        "max_blocks": 512
+      },
+      "captures": [
+        {
+          "file": "native-flow-final.png",
+          "sha256": "45ef62c2e381acdeff94ce74b44335d1ca272aa26436b5879c638f8e45492657",
+          "bytes": 1108184,
+          "resolution_px": [
+            1920,
+            1080
+          ],
+          "png_stream_verified": true
+        }
+      ],
+      "probe_receipt_sha256": "0018fa48984bee3540546125b79483d46550bb3fe7ac2eef85b6507586a68f73"
+    },
+    {
+      "trial": "v49",
+      "purpose": "Native fields obtained; diagnostic spool threshold exceeded",
+      "receipt_sha256": "b8298ba9569a52d0064929a379eda5f52e22c51c1f1e4699f61943041304db23",
+      "reason": "process_failed",
+      "wall_s": 38.969000000011874,
+      "peak_job_commit_bytes": 9583394816,
+      "peak_owned_rss_bytes": 6416547840,
+      "peak_device_vram_bytes": 4629684224,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": false,
+      "final_state": {
+        "timeline_s": 9.999999999999975,
+        "native_sim_time_s": 34.784616666666864,
+        "native_fault_time_s": 0.0,
+        "active_blocks": 382,
+        "max_blocks": 512
+      },
+      "captures": [
+        {
+          "file": "native-flow-final.png",
+          "sha256": "d300532902b8e90438b76f8b740a4641e7589272031a5c07fbdef36938d367d2",
+          "bytes": 1135126,
+          "resolution_px": [
+            1920,
+            1080
+          ],
+          "png_stream_verified": true
+        }
+      ],
+      "probe_receipt_sha256": "578bb07627b65f0d5819188daa79c02d15e2dd69842b7341d6a4eb009eef133d"
+    },
+    {
+      "trial": "v50",
+      "purpose": "PhysX floor collision, readback disabled too early",
+      "receipt_sha256": "804b680c90c788e28bc5ef954e33a625d2222eec98de80a7eac9bd233c6ec660",
+      "reason": "process_failed",
+      "wall_s": 40.42200000002049,
+      "peak_job_commit_bytes": 9334222848,
+      "peak_owned_rss_bytes": 6171361280,
+      "peak_device_vram_bytes": 4836851712,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": false,
+      "final_state": {
+        "timeline_s": 9.999999999999975,
+        "native_sim_time_s": 36.03337466666673,
+        "native_fault_time_s": 0.0,
+        "active_blocks": 273,
+        "max_blocks": 512
+      },
+      "captures": [
+        {
+          "file": "native-flow-final.png",
+          "sha256": "d3b283f716f094e209e2532d4a02327e2d3e6173581867f575b0c0be51f6da65",
+          "bytes": 1050479,
+          "resolution_px": [
+            1920,
+            1080
+          ],
+          "png_stream_verified": true
+        }
+      ],
+      "probe_receipt_sha256": "6d306039ac4ca7045e0503b6068d0ebd237b87822ade92f23198b7c1ed9ca28d"
+    },
+    {
+      "trial": "v51",
+      "purpose": "PhysX floor collision and bounded native field export",
+      "receipt_sha256": "0ae6527abc546d6d048ae8a719bb791802dbe7b9c1a31b90b2288005193e500b",
+      "reason": "normal_exit",
+      "wall_s": 39.171999999991385,
+      "peak_job_commit_bytes": 9494011904,
+      "peak_owned_rss_bytes": 6291464192,
+      "peak_device_vram_bytes": 4802166784,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": true,
+      "final_state": {
+        "timeline_s": 9.999999999999975,
+        "native_sim_time_s": 34.780085666666864,
+        "native_fault_time_s": 0.0,
+        "active_blocks": 280,
+        "max_blocks": 512
+      },
+      "captures": [
+        {
+          "file": "native-flow-final.png",
+          "sha256": "e113dbc1c8a3f93fff060290354b32c0d894a6ceedd92ed4b641a3f587dd544c",
+          "bytes": 1068570,
+          "resolution_px": [
+            1920,
+            1080
+          ],
+          "png_stream_verified": true
+        }
+      ],
+      "probe_receipt_sha256": "714a90f2e61be11f5f497a56329b4b4805b60897304700399d745040b10d8ec2"
+    },
+    {
+      "trial": "v52",
+      "purpose": "Public launcher: PhysX collision, native Full HD and bounded field export",
+      "receipt_sha256": "bd3a1353a204f8131b192b3250b6bf671162a3430762e43d3eed382fed1aeed4",
+      "reason": "normal_exit",
+      "wall_s": 39.32799999997951,
+      "peak_job_commit_bytes": 9463091200,
+      "peak_owned_rss_bytes": 6258356224,
+      "peak_device_vram_bytes": 4799782912,
+      "observed_gpu_ceiling_exceeded": false,
+      "probe_completed": true,
+      "final_state": {
+        "timeline_s": 9.999999999999975,
+        "native_sim_time_s": 35.00084566666684,
+        "native_fault_time_s": 0.0,
+        "active_blocks": 287,
+        "max_blocks": 512
+      },
+      "captures": [
+        {
+          "file": "native-flow-final.png",
+          "sha256": "95806479eae7bc5d70bac117fb101b00b14f40be87001e513c8b806996a1aa6b",
+          "bytes": 1040736,
+          "resolution_px": [
+            1920,
+            1080
+          ],
+          "png_stream_verified": true
+        }
+      ],
+      "probe_receipt_sha256": "51f07144aa58e4ac0b387219afb88fb0661395576f37de24e7f7606147bb2f26"
+    }
+  ],
+  "thread_sample": {
+    "normal_dump_bytes": 1449330,
+    "normal_dump_sha256": "0c8e437875d109aa6e1a9905dd18337e3ecb31f7e59b797128458dcaa03d653a",
+    "full_memory_dump": false,
+    "top_cpu_thread_instruction_module": "nvwgf2umx.dll",
+    "driver_defect_established": false,
+    "private_raw_artifacts_published": false
+  },
+  "rt2_scope": "explicitly authorized isolated 2-second, 320x180 diagnostic; no production"
+}

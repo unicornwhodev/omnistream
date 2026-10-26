@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import time
 
 
 def main():
@@ -40,11 +41,26 @@ def main():
             '/gpu/shadercompiler/warmcountPerGB',
             '/rtx/shaderDb/concurrency',
             '/rtx-transient/psoDb/serializeAllCompiles',
+            '/rtx/materialDb/compileMdlAsLibrary',
+            '/rtx/raytracing/debug/oneUberPermutation',
+            '/rtx/raytracing/debug/uberThenDeferNonUber',
             '/exts/omni.kit.viewport.window/startup/disableWindowOnLoad')
     keys = (*keys, '/renderer/enabled', '/renderer/active')
     print('LOCAL_RUNTIME_SETTINGS '+json.dumps({k:settings.get(k) for k in keys}),flush=True)
+    update_count = 0
+    started = last_report = time.monotonic()
+    max_update_s = 0.0
     while app.is_running():
+        before = time.monotonic()
         app.update()
+        update_count += 1
+        after = time.monotonic()
+        max_update_s = max(max_update_s, after-before)
+        if after-last_report >= 5:
+            print('LOCAL_RUNTIME_HEARTBEAT '+json.dumps({
+                'wall_s':after-started,'completed_app_updates':update_count,
+                'max_update_wall_s':max_update_s}),flush=True)
+            last_report = after
     return app.shutdown()
 
 

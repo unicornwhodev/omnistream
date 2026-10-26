@@ -57,14 +57,45 @@ class RenderPolicyTests(unittest.TestCase):
             enforce_policy(settings, renderer_mode='PathTracing')
         self.assertEqual(settings, MINIMAL_POLICY)
 
+    def test_capture_policy_rejects_upsampling_and_generated_frames(self):
+        options = {'renderer_mode':'realtime_classic', 'lightweight':True}
+        for key, value in (('/rtx/post/dlss/execMode',2),
+                           ('/rtx-transient/dlssg/enabled',True)):
+            with self.subTest(key=key):
+                settings = Settings()
+                enforce_policy(settings, **options)
+                settings[key] = value
+                with self.assertRaises(RuntimeError):
+                    assert_policy(settings, **options)
+
     def test_lightweight_classic_keeps_flow_compositing(self):
         settings = Settings()
         enforce_policy(settings, renderer_mode='realtime_classic', lightweight=True)
         self.assertTrue(settings['/rtx/flow/compositeEnabled'])
         self.assertTrue(settings['/rtx/directLighting/enabled'])
-        self.assertEqual(settings['/rtx/post/aa/op'], 2)
+        self.assertEqual(settings['/rtx/post/aa/op'], 3)
+        self.assertEqual(settings['/rtx/post/dlss/execMode'], 4)
+        self.assertFalse(settings['/rtx-transient/dlssg/enabled'])
         for effect in ('indirectDiffuse', 'reflections', 'translucency', 'ambientOcclusion', 'shadows'):
             self.assertFalse(settings[f'/rtx/{effect}/enabled'])
         settings['/rtx/reflections/enabled'] = True
         with self.assertRaises(RuntimeError):
             assert_policy(settings, renderer_mode='realtime_classic', lightweight=True)
+
+    def test_realtime2_needs_explicit_opt_in_before_writing_settings(self):
+        settings = Settings(MINIMAL_POLICY)
+        for opt_in in (False, None, 'false', 'true', 1):
+            with self.assertRaisesRegex(ValueError, 'explicit'):
+                enforce_policy(settings, renderer_mode='realtime2', allow_realtime_path_tracing=opt_in)
+        self.assertEqual(settings, MINIMAL_POLICY)
+
+    def test_realtime2_is_labelled_and_bounded_without_interactive_pt(self):
+        settings = Settings()
+        enforce_policy(settings, renderer_mode='realtime2', lightweight=True,
+                       allow_realtime_path_tracing=True)
+        self.assertEqual(settings['/rtx/rendermode'], 'RealTimePathTracing')
+        self.assertTrue(settings['/persistent/rtx/modes/rt2/enabled'])
+        self.assertFalse(settings['/persistent/rtx/modes/pt/enabled'])
+        self.assertFalse(settings['/persistent/rtx/modes/rt/enabled'])
+        self.assertEqual(settings['/rtx/rtpt/maxBounces'], 1)
+        self.assertFalse(settings['/rtx-transient/dlssg/enabled'])
