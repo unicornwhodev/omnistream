@@ -56,3 +56,11 @@ five-image group manifest makes a group usable. File existence alone does not.
 The current normalized weather preparation retains official observations and
 ECMWF estimates separately. Live integration must select its source explicitly;
 missing station values are not silently replaced by model values.
+
+For large tiled scenes, see the measured [Die–Justin camera coverage and
+zone-loading plan](../../docs/ZONE-CAMERA-PLANNING.md). The CPU tool
+`tools/analyze_scene_coverage.py` measures sampled terrain visibility and writes
+a separate camera proposal; it does not enable production culling. The render
+driver requires an explicit residency contract covering offscreen lighting,
+smoke, physics and a common frozen state. Independent per-camera physics
+restarts are not a substitute for a qualified complete checkpoint.

@@ -1,0 +1,12 @@
+{
+  "schema": "fireviewer.spatial-planning-tests.v1",
+  "native_render_qualification": false,
+  "full_suite": {"tests_run": 56, "passed": 53, "skipped": 3, "failed": 0, "seconds": 8.443},
+  "skip_reason": "OpenUSD unavailable in the general Python environment; separate SDK camera readback was performed",
+  "final_targeted_suite": {"tests_run": 13, "passed": 13, "skipped": 0, "failed": 0, "seconds": 0.101},
+  "targeted_suite": "test_coverage.py",
+  "job_memory_limit_bytes": 599998464,
+  "host_ram_reserve_bytes": 4000000000,
+  "kit_started": false,
+  "sandbox_diagnostic": "Asyncio's internal local socket stalled in the sandbox. Two bounded diagnostic runs timed out. Tests passed outside that sandbox with the same Job memory guard."
+}

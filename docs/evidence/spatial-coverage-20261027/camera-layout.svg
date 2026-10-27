@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="650" viewBox="0 0 1080 650"><style>text{font-family:Arial,sans-serif;fill:#172b40}.title{font-size:20px;font-weight:bold}.sub{font-size:13px}.axis{font-size:12px}.note{font-size:14px}</style><rect width="1080" height="650" fill="#f8fafc"/><text x="30" y="33" class="title">Die–Justin · répartition des caméras sur 20 × 20 km</text><text x="30" y="59" class="sub">Plan de préparation : ni rendu Omniverse, ni preuve de visibilité des flammes.</text>
+<text x="60" y="94" class="title">Positions actuelles</text><text x="60" y="115" class="sub">50 caméras groupées autour de 10 points</text><rect x="60" y="130" width="420" height="420" fill="white" stroke="#335069"/>
+<path d="M144 130v420" stroke="#afbac6"/>
+<path d="M228 130v420" stroke="#afbac6"/>
+<path d="M312 130v420" stroke="#afbac6"/>
+<path d="M396 130v420" stroke="#afbac6"/>
+<path d="M60 340h420" stroke="#afbac6"/>
+<circle cx="102" cy="451.3" r="3.8" fill="#bc522a"><title>zone_01_cam_01</title></circle>
+<circle cx="95.7" cy="445" r="3.8" fill="#bc522a"><title>zone_01_cam_02</title></circle>
+<circle cx="102" cy="438.7" r="3.8" fill="#bc522a"><title>zone_01_cam_03</title></circle>
+<circle cx="108.30000000000001" cy="445" r="3.8" fill="#bc522a"><title>zone_01_cam_04</title></circle>
+<circle cx="102" cy="446.05" r="3.8" fill="#bc522a"><title>zone_01_cam_05</title></circle>
+<circle cx="186" cy="451.3" r="3.8" fill="#bc522a"><title>zone_02_cam_01</title></circle>
+<circle cx="179.7" cy="445" r="3.8" fill="#bc522a"><title>zone_02_cam_02</title></circle>
+<circle cx="186" cy="438.7" r="3.8" fill="#bc522a"><title>zone_02_cam_03</title></circle>
+<circle cx="192.3" cy="445" r="3.8" fill="#bc522a"><title>zone_02_cam_04</title></circle>
+<circle cx="186" cy="446.05" r="3.8" fill="#bc522a"><title>zone_02_cam_05</title></circle>
+<circle cx="270" cy="451.3" r="3.8" fill="#bc522a"><title>zone_03_cam_01</title></circle>
+<circle cx="263.7" cy="445" r="3.8" fill="#bc522a"><title>zone_03_cam_02</title></circle>
+<circle cx="270" cy="438.7" r="3.8" fill="#bc522a"><title>zone_03_cam_03</title></circle>
+<circle cx="276.3" cy="445" r="3.8" fill="#bc522a"><title>zone_03_cam_04</title></circle>
+<circle cx="270" cy="446.05" r="3.8" fill="#bc522a"><title>zone_03_cam_05</title></circle>
+<circle cx="354" cy="451.3" r="3.8" fill="#bc522a"><title>zone_04_cam_01</title></circle>
+<circle cx="347.70000000000005" cy="445" r="3.8" fill="#bc522a"><title>zone_04_cam_02</title></circle>
+<circle cx="354" cy="438.7" r="3.8" fill="#bc522a"><title>zone_04_cam_03</title></circle>
+<circle cx="360.3" cy="445" r="3.8" fill="#bc522a"><title>zone_04_cam_04</title></circle>
+<circle cx="354" cy="446.05" r="3.8" fill="#bc522a"><title>zone_04_cam_05</title></circle>
+<circle cx="438" cy="451.3" r="3.8" fill="#bc522a"><title>zone_05_cam_01</title></circle>
+<circle cx="431.7" cy="445" r="3.8" fill="#bc522a"><title>zone_05_cam_02</title></circle>
+<circle cx="438" cy="438.7" r="3.8" fill="#bc522a"><title>zone_05_cam_03</title></circle>
+<circle cx="444.3" cy="445" r="3.8" fill="#bc522a"><title>zone_05_cam_04</title></circle>
+<circle cx="438" cy="446.05" r="3.8" fill="#bc522a"><title>zone_05_cam_05</title></circle>
+<circle cx="102" cy="241.3" r="3.8" fill="#bc522a"><title>zone_06_cam_01</title></circle>
+<circle cx="95.7" cy="235" r="3.8" fill="#bc522a"><title>zone_06_cam_02</title></circle>
+<circle cx="102" cy="228.7" r="3.8" fill="#bc522a"><title>zone_06_cam_03</title></circle>
+<circle cx="108.30000000000001" cy="235" r="3.8" fill="#bc522a"><title>zone_06_cam_04</title></circle>
+<circle cx="102" cy="236.04999999999995" r="3.8" fill="#bc522a"><title>zone_06_cam_05</title></circle>
+<circle cx="186" cy="241.3" r="3.8" fill="#bc522a"><title>zone_07_cam_01</title></circle>
+<circle cx="179.7" cy="235" r="3.8" fill="#bc522a"><title>zone_07_cam_02</title></circle>
+<circle cx="186" cy="228.7" r="3.8" fill="#bc522a"><title>zone_07_cam_03</title></circle>
+<circle cx="192.3" cy="235" r="3.8" fill="#bc522a"><title>zone_07_cam_04</title></circle>
+<circle cx="186" cy="236.04999999999995" r="3.8" fill="#bc522a"><title>zone_07_cam_05</title></circle>
+<circle cx="270" cy="241.3" r="3.8" fill="#bc522a"><title>zone_08_cam_01</title></circle>
+<circle cx="263.7" cy="235" r="3.8" fill="#bc522a"><title>zone_08_cam_02</title></circle>
+<circle cx="270" cy="228.7" r="3.8" fill="#bc522a"><title>zone_08_cam_03</title></circle>
+<circle cx="276.3" cy="235" r="3.8" fill="#bc522a"><title>zone_08_cam_04</title></circle>
+<circle cx="270" cy="236.04999999999995" r="3.8" fill="#bc522a"><title>zone_08_cam_05</title></circle>
+<circle cx="354" cy="241.3" r="3.8" fill="#bc522a"><title>zone_09_cam_01</title></circle>
+<circle cx="347.70000000000005" cy="235" r="3.8" fill="#bc522a"><title>zone_09_cam_02</title></circle>
+<circle cx="354" cy="228.7" r="3.8" fill="#bc522a"><title>zone_09_cam_03</title></circle>
+<circle cx="360.3" cy="235" r="3.8" fill="#bc522a"><title>zone_09_cam_04</title></circle>
+<circle cx="354" cy="236.04999999999995" r="3.8" fill="#bc522a"><title>zone_09_cam_05</title></circle>
+<circle cx="438" cy="241.3" r="3.8" fill="#bc522a"><title>zone_10_cam_01</title></circle>
+<circle cx="431.7" cy="235" r="3.8" fill="#bc522a"><title>zone_10_cam_02</title></circle>
+<circle cx="438" cy="228.7" r="3.8" fill="#bc522a"><title>zone_10_cam_03</title></circle>
+<circle cx="444.3" cy="235" r="3.8" fill="#bc522a"><title>zone_10_cam_04</title></circle>
+<circle cx="438" cy="236.04999999999995" r="3.8" fill="#bc522a"><title>zone_10_cam_05</title></circle>
+<text x="60" y="569" class="axis">−10 km</text><text x="267" y="569" class="axis">0</text><text x="435" y="569" class="axis">+10 km Est</text><text x="62" y="145" class="axis">Nord ↑</text>
+<text x="590" y="94" class="title">Proposition de vues d’ensemble</text><text x="590" y="115" class="sub">50 positions aériennes · 10 zones × 5 vues</text><rect x="590" y="130" width="420" height="420" fill="white" stroke="#335069"/>
+<path d="M674 130v420" stroke="#afbac6"/>
+<path d="M758 130v420" stroke="#afbac6"/>
+<path d="M842 130v420" stroke="#afbac6"/>
+<path d="M926 130v420" stroke="#afbac6"/>
+<path d="M590 340h420" stroke="#afbac6"/>
+<rect x="590" y="508" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="590" y="466" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="590" y="424" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="590" y="382" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="590" y="340" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="508" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="466" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="424" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="382" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="340" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="508" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="466" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="424" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="382" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="340" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="508" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="466" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="424" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="382" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="340" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="508" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="466" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="424" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="382" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="340" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="590" y="298" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="590" y="256" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="590" y="214" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="590" y="172" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="590" y="130" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="298" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="256" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="214" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="172" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="674" y="130" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="298" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="256" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="214" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="172" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="758" y="130" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="298" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="256" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="214" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="172" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="842" y="130" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="298" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="256" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="214" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="172" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<rect x="926" y="130" width="84" height="42" fill="#dcebf6" fill-opacity=".55" stroke="#c5d7e5" stroke-dasharray="3 3"/>
+<circle cx="632" cy="529" r="3.8" fill="#136f63"><title>zone_01_cam_01</title></circle>
+<circle cx="632" cy="487" r="3.8" fill="#136f63"><title>zone_01_cam_02</title></circle>
+<circle cx="632" cy="445" r="3.8" fill="#136f63"><title>zone_01_cam_03</title></circle>
+<circle cx="632" cy="403" r="3.8" fill="#136f63"><title>zone_01_cam_04</title></circle>
+<circle cx="632" cy="361" r="3.8" fill="#136f63"><title>zone_01_cam_05</title></circle>
+<circle cx="716" cy="529" r="3.8" fill="#136f63"><title>zone_02_cam_01</title></circle>
+<circle cx="716" cy="487" r="3.8" fill="#136f63"><title>zone_02_cam_02</title></circle>
+<circle cx="716" cy="445" r="3.8" fill="#136f63"><title>zone_02_cam_03</title></circle>
+<circle cx="716" cy="403" r="3.8" fill="#136f63"><title>zone_02_cam_04</title></circle>
+<circle cx="716" cy="361" r="3.8" fill="#136f63"><title>zone_02_cam_05</title></circle>
+<circle cx="800" cy="529" r="3.8" fill="#136f63"><title>zone_03_cam_01</title></circle>
+<circle cx="800" cy="487" r="3.8" fill="#136f63"><title>zone_03_cam_02</title></circle>
+<circle cx="800" cy="445" r="3.8" fill="#136f63"><title>zone_03_cam_03</title></circle>
+<circle cx="800" cy="403" r="3.8" fill="#136f63"><title>zone_03_cam_04</title></circle>
+<circle cx="800" cy="361" r="3.8" fill="#136f63"><title>zone_03_cam_05</title></circle>
+<circle cx="884" cy="529" r="3.8" fill="#136f63"><title>zone_04_cam_01</title></circle>
+<circle cx="884" cy="487" r="3.8" fill="#136f63"><title>zone_04_cam_02</title></circle>
+<circle cx="884" cy="445" r="3.8" fill="#136f63"><title>zone_04_cam_03</title></circle>
+<circle cx="884" cy="403" r="3.8" fill="#136f63"><title>zone_04_cam_04</title></circle>
+<circle cx="884" cy="361" r="3.8" fill="#136f63"><title>zone_04_cam_05</title></circle>
+<circle cx="968" cy="529" r="3.8" fill="#136f63"><title>zone_05_cam_01</title></circle>
+<circle cx="968" cy="487" r="3.8" fill="#136f63"><title>zone_05_cam_02</title></circle>
+<circle cx="968" cy="445" r="3.8" fill="#136f63"><title>zone_05_cam_03</title></circle>
+<circle cx="968" cy="403" r="3.8" fill="#136f63"><title>zone_05_cam_04</title></circle>
+<circle cx="968" cy="361" r="3.8" fill="#136f63"><title>zone_05_cam_05</title></circle>
+<circle cx="632" cy="319" r="3.8" fill="#136f63"><title>zone_06_cam_01</title></circle>
+<circle cx="632" cy="277" r="3.8" fill="#136f63"><title>zone_06_cam_02</title></circle>
+<circle cx="632" cy="235" r="3.8" fill="#136f63"><title>zone_06_cam_03</title></circle>
+<circle cx="632" cy="193" r="3.8" fill="#136f63"><title>zone_06_cam_04</title></circle>
+<circle cx="632" cy="151" r="3.8" fill="#136f63"><title>zone_06_cam_05</title></circle>
+<circle cx="716" cy="319" r="3.8" fill="#136f63"><title>zone_07_cam_01</title></circle>
+<circle cx="716" cy="277" r="3.8" fill="#136f63"><title>zone_07_cam_02</title></circle>
+<circle cx="716" cy="235" r="3.8" fill="#136f63"><title>zone_07_cam_03</title></circle>
+<circle cx="716" cy="193" r="3.8" fill="#136f63"><title>zone_07_cam_04</title></circle>
+<circle cx="716" cy="151" r="3.8" fill="#136f63"><title>zone_07_cam_05</title></circle>
+<circle cx="800" cy="319" r="3.8" fill="#136f63"><title>zone_08_cam_01</title></circle>
+<circle cx="800" cy="277" r="3.8" fill="#136f63"><title>zone_08_cam_02</title></circle>
+<circle cx="800" cy="235" r="3.8" fill="#136f63"><title>zone_08_cam_03</title></circle>
+<circle cx="800" cy="193" r="3.8" fill="#136f63"><title>zone_08_cam_04</title></circle>
+<circle cx="800" cy="151" r="3.8" fill="#136f63"><title>zone_08_cam_05</title></circle>
+<circle cx="884" cy="319" r="3.8" fill="#136f63"><title>zone_09_cam_01</title></circle>
+<circle cx="884" cy="277" r="3.8" fill="#136f63"><title>zone_09_cam_02</title></circle>
+<circle cx="884" cy="235" r="3.8" fill="#136f63"><title>zone_09_cam_03</title></circle>
+<circle cx="884" cy="193" r="3.8" fill="#136f63"><title>zone_09_cam_04</title></circle>
+<circle cx="884" cy="151" r="3.8" fill="#136f63"><title>zone_09_cam_05</title></circle>
+<circle cx="968" cy="319" r="3.8" fill="#136f63"><title>zone_10_cam_01</title></circle>
+<circle cx="968" cy="277" r="3.8" fill="#136f63"><title>zone_10_cam_02</title></circle>
+<circle cx="968" cy="235" r="3.8" fill="#136f63"><title>zone_10_cam_03</title></circle>
+<circle cx="968" cy="193" r="3.8" fill="#136f63"><title>zone_10_cam_04</title></circle>
+<circle cx="968" cy="151" r="3.8" fill="#136f63"><title>zone_10_cam_05</title></circle>
+<text x="590" y="569" class="axis">−10 km</text><text x="797" y="569" class="axis">0</text><text x="965" y="569" class="axis">+10 km Est</text><text x="592" y="145" class="axis">Nord ↑</text>
+<text x="30" y="602" class="note">Points : positions XY. Traits pleins : 10 zones. Pointillés : cellules de couverture attribuées.</text><text x="30" y="626" class="note">Les cellules ne représentent pas les empreintes visibles. Occlusions et détail doivent être qualifiés par rendu.</text></svg>

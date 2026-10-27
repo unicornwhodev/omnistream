@@ -1,0 +1,56 @@
+{
+  "files": [
+    {
+      "bytes": 17158,
+      "file": "camera-layout.svg",
+      "sha256": "2d3406841811dc1f113314aab9625f6f4a813c29de3cc3b853d29f95f6df94e3"
+    },
+    {
+      "bytes": 3063,
+      "file": "coverage-report-100m.json",
+      "sha256": "4c0f1e3ef058c194b5baa687d35beda1e9dc83ec739e3da5254474460b893554"
+    },
+    {
+      "bytes": 3076,
+      "file": "coverage-report.json",
+      "sha256": "93a6822b97d5ef1f33be1cb0708a0402449ed45a1328b02a85b1525913ad3225"
+    },
+    {
+      "bytes": 710,
+      "file": "cpu-resource-receipt.json",
+      "sha256": "b31dff881706d7719e868057eca5762f98a7e220315c2773815d761c036dd9f2"
+    },
+    {
+      "bytes": 5555,
+      "file": "existing-per-camera.json",
+      "sha256": "0e31b5037f8002fe827a43707bb7a0ebabec25417d80e0ce11b770db170be620"
+    },
+    {
+      "bytes": 5603,
+      "file": "overview_proposal-per-camera.json",
+      "sha256": "3310c82b406c89bf6a6c9536c67cbe345d030bb653aa430ca7f8b8a0b3be4b28"
+    },
+    {
+      "bytes": 44070,
+      "file": "overview-cameras.json",
+      "sha256": "fb5e3addd79a890b31fa6086323b58165a886fc17fdd5a23a28ada82b294b9b9"
+    },
+    {
+      "bytes": 27149,
+      "file": "overview-cameras.usda",
+      "sha256": "8f975de5efc2ccf437522b8a99b214cb21782ca5a79842160ee0a8c1f5b6a6bb"
+    },
+    {
+      "bytes": 102807,
+      "file": "terrain-coverage-final.png",
+      "sha256": "821a29c85cae9503a09ace1e5cc066b4d1ba05154b909bc522763589f2a250f5"
+    },
+    {
+      "bytes": 742,
+      "file": "test-results.json",
+      "sha256": "f524e2c1b362cae69ced7c55ec0ac24701a1f559d7792ff2ff754490e9ba80a0"
+    }
+  ],
+  "schema": "fireviewer.planning-evidence-manifest.v1",
+  "purpose": "CPU coverage planning, not native simulation capture"
+}

@@ -1,0 +1,662 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def "Cameras"
+    {
+        def Camera "zone_01_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, -9000, 3833.854736328125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_01_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, -7000, 3362.2329711914062, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_01_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, -5000, 3478.4993286132812, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_01_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, -3000, 3723.71533203125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_01_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, -1000, 3752.213623046875, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_02_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, -9000, 3823.3995361328125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_02_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, -7000, 3786.7220458984375, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_02_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, -5000, 3721.9405517578125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_02_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, -3000, 3614.9526977539062, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_02_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, -1000, 3670.455322265625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_03_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, -9000, 3912.5399169921875, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_03_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, -7000, 3872.460205078125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_03_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, -5000, 3901.9136962890625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_03_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, -3000, 3890.7637939453125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_03_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, -1000, 3729.549560546875, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_04_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (4000, -9000, 3332.9723510742188, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_04_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (4000, -7000, 3374.474853515625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_04_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (4000, -5000, 3476.7880249023438, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_04_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (4000, -3000, 3414.7942504882812, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_04_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (4000, -1000, 3663.54296875, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_05_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (8000, -8999.999999999998, 3375.0825805664062, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_05_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (8000, -7000, 3295.2992553710938, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_05_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (8000, -5000, 3902.2314453125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_05_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (8000, -3000, 4092.204345703125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_05_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (8000, -1000, 4680.71630859375, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_06_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, 1000, 3398.390869140625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_06_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, 3000, 3544.6011962890625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_06_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, 5000, 3571.9049072265625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_06_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, 7000, 3558.5443115234375, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_06_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-8000, 9000, 3981.394287109375, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_07_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, 1000, 3647.2561645507812, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_07_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, 3000, 3561.6537475585938, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_07_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, 4999.999999999999, 3625.061279296875, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_07_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, 7000, 3756.8525390625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_07_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, -0, 0), (0, 0, 1, 0), (-4000, 8999.999999999998, 4091.1812744140625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_08_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (0, 1000, 3639.03662109375, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_08_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (0, 3000, 3471.8125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_08_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (0, 4999.999999999999, 3531.2052612304688, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_08_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (0, 7000, 3728.04931640625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_08_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (0, 9000, 4283.00830078125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_09_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (4000, 1000, 3669.4295654296875, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_09_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (4000, 3000, 3540.623779296875, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_09_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (4000, 5000, 3625.9698486328125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_09_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (4000, 7000, 3667.06591796875, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_09_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (4000, 8999.999999999998, 4260.788940429687, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_10_cam_01"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (8000, 1000, 4636.74462890625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_10_cam_02"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (8000, 3000, 4655.7403564453125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_10_cam_03"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (8000, 5000, 4549.2730712890625, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_10_cam_04"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (8000, 7000, 4466.778564453125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Camera "zone_10_cam_05"
+        {
+            float2 clippingRange = (0.1, 100000)
+            float focalLength = 0.22
+            float fStop = 0
+            float horizontalAperture = 0.36
+            float horizontalApertureOffset = 0
+            float verticalAperture = 0.2025
+            float verticalApertureOffset = 0
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, -0, 1, 0), (8000, 9000, 4374.1788330078125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+}

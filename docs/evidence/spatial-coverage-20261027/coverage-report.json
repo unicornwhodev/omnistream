@@ -1,0 +1,77 @@
+{
+  "schema": "fireviewer.camera-coverage-report.v1",
+  "status": "CPU planning only; not native rendering acceptance",
+  "source_config_sha256": "d298a8a8f0a9f0d1682e9955f71221e5d494b641317ad25f59fba2938ddb40a3",
+  "terrain_height_field_sha256": "cc75a3feef80be46cdce13de46d12e0e3a1a2814504f8b5ee7a1ed6cb8f7248e",
+  "terrain_mesh_spacing_m": 7.936507936507937,
+  "survey_bounds_xy_m": [
+    -10000,
+    -10000,
+    10000.0,
+    10000.0
+  ],
+  "area_km2": 400.0,
+  "ground_sample_spacing_m": 50.0,
+  "sample_target_height_above_terrain_m": 2.0,
+  "maximum_horizontal_los_sample_spacing_m": 12.5,
+  "resolution_px": [
+    1920,
+    1080
+  ],
+  "comparison": {
+    "existing": {
+      "sample_count": 160000,
+      "camera_count": 50,
+      "terrain_visible_samples": 49698,
+      "terrain_visible_fraction": 0.3106125,
+      "two_or_more_views_fraction": 0.07416875,
+      "optimistic_frontoparallel_scale_m_per_pixel_median": 3.4093161189947727,
+      "optimistic_frontoparallel_scale_m_per_pixel_p95": 8.482097490439806,
+      "sample_fraction_visible_at_optimistic_scale_le_1m_per_pixel": 0.05356875,
+      "sample_fraction_visible_at_optimistic_scale_le_0_25m_per_pixel": 0.00346875,
+      "actual_render_tested": false,
+      "vegetation_building_and_smoke_occlusion_checked": false,
+      "flame_visibility_validated": false,
+      "assumed_static_context_tiles": {
+        "min": 25,
+        "max": 964,
+        "median": 70.0,
+        "total_scene_tiles": 1600,
+        "memory_usage_measured": false
+      }
+    },
+    "overview_proposal": {
+      "sample_count": 160000,
+      "camera_count": 50,
+      "terrain_visible_samples": 159928,
+      "terrain_visible_fraction": 0.99955,
+      "two_or_more_views_fraction": 0.49996875,
+      "optimistic_frontoparallel_scale_m_per_pixel_median": 2.533803329034285,
+      "optimistic_frontoparallel_scale_m_per_pixel_p95": 2.908132709936662,
+      "sample_fraction_visible_at_optimistic_scale_le_1m_per_pixel": 0.0,
+      "sample_fraction_visible_at_optimistic_scale_le_0_25m_per_pixel": 0.0,
+      "actual_render_tested": false,
+      "vegetation_building_and_smoke_occlusion_checked": false,
+      "flame_visibility_validated": false,
+      "assumed_static_context_tiles": {
+        "min": 60,
+        "max": 128,
+        "median": 103.0,
+        "total_scene_tiles": 1600,
+        "memory_usage_measured": false
+      }
+    }
+  },
+  "cameras_read_back_from_usd": 50,
+  "full_simulation_started": false,
+  "limitations": [
+    "Sampled terrain line of sight can miss narrow ridges.",
+    "Vegetation, buildings, smoke extinction, light dependencies and sensor detection are untested.",
+    "Optimistic frontoparallel scale is not terrain GSD or projected flame size.",
+    "Overview poses are virtual aerial positions, not field-surveyed surveillance sites.",
+    "The proposal preserves 10 groups of five IDs but does not replace the active camera configuration.",
+    "Tile count is not a RAM or VRAM guarantee.",
+    "Per-camera independent physics reruns are not qualified."
+  ],
+  "wall_seconds": 149.18700000000536
+}

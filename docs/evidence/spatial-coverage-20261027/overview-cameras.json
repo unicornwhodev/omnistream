@@ -1,0 +1,2085 @@
+{
+  "schema": "fireviewer.camera-coverage-proposal.v1",
+  "active_capture_config_replaced": false,
+  "cameras": [
+    {
+      "id": "zone_01_cam_01",
+      "usd_path": "/World/Cameras/zone_01_cam_01",
+      "position_m": [
+        -8000.0,
+        -9000.0,
+        3833.854736328125
+      ],
+      "look_at_m": [
+        -8000.0,
+        -9000.0,
+        866.1571044921875
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        -10000.0,
+        -6000.0,
+        -8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_01"
+    },
+    {
+      "id": "zone_01_cam_02",
+      "usd_path": "/World/Cameras/zone_01_cam_02",
+      "position_m": [
+        -8000.0,
+        -7000.0,
+        3362.2329711914062
+      ],
+      "look_at_m": [
+        -8000.0,
+        -7000.0,
+        431.2384338378906
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        -8000.0,
+        -6000.0,
+        -6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_01"
+    },
+    {
+      "id": "zone_01_cam_03",
+      "usd_path": "/World/Cameras/zone_01_cam_03",
+      "position_m": [
+        -8000.0,
+        -5000.0,
+        3478.4993286132812
+      ],
+      "look_at_m": [
+        -8000.0,
+        -5000.0,
+        378.96551513671875
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        -6000.0,
+        -6000.0,
+        -4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_01"
+    },
+    {
+      "id": "zone_01_cam_04",
+      "usd_path": "/World/Cameras/zone_01_cam_04",
+      "position_m": [
+        -8000.0,
+        -3000.0,
+        3723.71533203125
+      ],
+      "look_at_m": [
+        -8000.0,
+        -3000.0,
+        552.2628784179688
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        -4000.0,
+        -6000.0,
+        -2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_01"
+    },
+    {
+      "id": "zone_01_cam_05",
+      "usd_path": "/World/Cameras/zone_01_cam_05",
+      "position_m": [
+        -8000.0,
+        -1000.0,
+        3752.213623046875
+      ],
+      "look_at_m": [
+        -8000.0,
+        -1000.0,
+        741.5297241210938
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        -2000.0,
+        -6000.0,
+        0.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_01"
+    },
+    {
+      "id": "zone_02_cam_01",
+      "usd_path": "/World/Cameras/zone_02_cam_01",
+      "position_m": [
+        -4000.0,
+        -9000.0,
+        3823.3995361328125
+      ],
+      "look_at_m": [
+        -4000.0,
+        -9000.0,
+        875.7508544921875
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        -10000.0,
+        -2000.0,
+        -8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_02"
+    },
+    {
+      "id": "zone_02_cam_02",
+      "usd_path": "/World/Cameras/zone_02_cam_02",
+      "position_m": [
+        -4000.0,
+        -7000.0,
+        3786.7220458984375
+      ],
+      "look_at_m": [
+        -4000.0,
+        -7000.0,
+        465.8379821777344
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        -8000.0,
+        -2000.0,
+        -6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_02"
+    },
+    {
+      "id": "zone_02_cam_03",
+      "usd_path": "/World/Cameras/zone_02_cam_03",
+      "position_m": [
+        -4000.0,
+        -5000.0,
+        3721.9405517578125
+      ],
+      "look_at_m": [
+        -4000.0,
+        -5000.0,
+        463.8264465332031
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        -6000.0,
+        -2000.0,
+        -4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_02"
+    },
+    {
+      "id": "zone_02_cam_04",
+      "usd_path": "/World/Cameras/zone_02_cam_04",
+      "position_m": [
+        -4000.0,
+        -3000.0,
+        3614.9526977539062
+      ],
+      "look_at_m": [
+        -4000.0,
+        -3000.0,
+        513.9976806640625
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        -4000.0,
+        -2000.0,
+        -2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_02"
+    },
+    {
+      "id": "zone_02_cam_05",
+      "usd_path": "/World/Cameras/zone_02_cam_05",
+      "position_m": [
+        -4000.0,
+        -1000.0,
+        3670.455322265625
+      ],
+      "look_at_m": [
+        -4000.0,
+        -1000.0,
+        459.90289306640625
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        -2000.0,
+        -2000.0,
+        0.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_02"
+    },
+    {
+      "id": "zone_03_cam_01",
+      "usd_path": "/World/Cameras/zone_03_cam_01",
+      "position_m": [
+        0.0,
+        -9000.0,
+        3912.5399169921875
+      ],
+      "look_at_m": [
+        0.0,
+        -9000.0,
+        874.2578125
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        -10000.0,
+        2000.0,
+        -8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_03"
+    },
+    {
+      "id": "zone_03_cam_02",
+      "usd_path": "/World/Cameras/zone_03_cam_02",
+      "position_m": [
+        0.0,
+        -7000.0,
+        3872.460205078125
+      ],
+      "look_at_m": [
+        0.0,
+        -7000.0,
+        866.5209350585938
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        -8000.0,
+        2000.0,
+        -6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_03"
+    },
+    {
+      "id": "zone_03_cam_03",
+      "usd_path": "/World/Cameras/zone_03_cam_03",
+      "position_m": [
+        0.0,
+        -5000.0,
+        3901.9136962890625
+      ],
+      "look_at_m": [
+        0.0,
+        -5000.0,
+        1101.08447265625
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        -6000.0,
+        2000.0,
+        -4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_03"
+    },
+    {
+      "id": "zone_03_cam_04",
+      "usd_path": "/World/Cameras/zone_03_cam_04",
+      "position_m": [
+        0.0,
+        -3000.0,
+        3890.7637939453125
+      ],
+      "look_at_m": [
+        0.0,
+        -3000.0,
+        937.9495849609375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        -4000.0,
+        2000.0,
+        -2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_03"
+    },
+    {
+      "id": "zone_03_cam_05",
+      "usd_path": "/World/Cameras/zone_03_cam_05",
+      "position_m": [
+        0.0,
+        -1000.0,
+        3729.549560546875
+      ],
+      "look_at_m": [
+        0.0,
+        -1000.0,
+        969.5455932617188
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        -2000.0,
+        2000.0,
+        0.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_03"
+    },
+    {
+      "id": "zone_04_cam_01",
+      "usd_path": "/World/Cameras/zone_04_cam_01",
+      "position_m": [
+        4000.0,
+        -9000.0,
+        3332.9723510742188
+      ],
+      "look_at_m": [
+        4000.0,
+        -9000.0,
+        507.7865905761719
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        -10000.0,
+        6000.0,
+        -8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_04"
+    },
+    {
+      "id": "zone_04_cam_02",
+      "usd_path": "/World/Cameras/zone_04_cam_02",
+      "position_m": [
+        4000.0,
+        -7000.0,
+        3374.474853515625
+      ],
+      "look_at_m": [
+        4000.0,
+        -7000.0,
+        462.98675537109375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        -8000.0,
+        6000.0,
+        -6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_04"
+    },
+    {
+      "id": "zone_04_cam_03",
+      "usd_path": "/World/Cameras/zone_04_cam_03",
+      "position_m": [
+        4000.0,
+        -5000.0,
+        3476.7880249023438
+      ],
+      "look_at_m": [
+        4000.0,
+        -5000.0,
+        444.0999755859375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        -6000.0,
+        6000.0,
+        -4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_04"
+    },
+    {
+      "id": "zone_04_cam_04",
+      "usd_path": "/World/Cameras/zone_04_cam_04",
+      "position_m": [
+        4000.0,
+        -3000.0,
+        3414.7942504882812
+      ],
+      "look_at_m": [
+        4000.0,
+        -3000.0,
+        439.13323974609375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        -4000.0,
+        6000.0,
+        -2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_04"
+    },
+    {
+      "id": "zone_04_cam_05",
+      "usd_path": "/World/Cameras/zone_04_cam_05",
+      "position_m": [
+        4000.0,
+        -1000.0,
+        3663.54296875
+      ],
+      "look_at_m": [
+        4000.0,
+        -1000.0,
+        513.7760620117188
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        -2000.0,
+        6000.0,
+        0.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_04"
+    },
+    {
+      "id": "zone_05_cam_01",
+      "usd_path": "/World/Cameras/zone_05_cam_01",
+      "position_m": [
+        8000.0,
+        -9000.0,
+        3375.0825805664062
+      ],
+      "look_at_m": [
+        8000.0,
+        -9000.0,
+        577.5738525390625
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        -10000.0,
+        10000.0,
+        -8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_05"
+    },
+    {
+      "id": "zone_05_cam_02",
+      "usd_path": "/World/Cameras/zone_05_cam_02",
+      "position_m": [
+        8000.0,
+        -7000.0,
+        3295.2992553710938
+      ],
+      "look_at_m": [
+        8000.0,
+        -7000.0,
+        524.4644165039062
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        -8000.0,
+        10000.0,
+        -6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_05"
+    },
+    {
+      "id": "zone_05_cam_03",
+      "usd_path": "/World/Cameras/zone_05_cam_03",
+      "position_m": [
+        8000.0,
+        -5000.0,
+        3902.2314453125
+      ],
+      "look_at_m": [
+        8000.0,
+        -5000.0,
+        732.7698364257812
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        -6000.0,
+        10000.0,
+        -4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_05"
+    },
+    {
+      "id": "zone_05_cam_04",
+      "usd_path": "/World/Cameras/zone_05_cam_04",
+      "position_m": [
+        8000.0,
+        -3000.0,
+        4092.204345703125
+      ],
+      "look_at_m": [
+        8000.0,
+        -3000.0,
+        856.7552490234375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        -4000.0,
+        10000.0,
+        -2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_05"
+    },
+    {
+      "id": "zone_05_cam_05",
+      "usd_path": "/World/Cameras/zone_05_cam_05",
+      "position_m": [
+        8000.0,
+        -1000.0,
+        4680.71630859375
+      ],
+      "look_at_m": [
+        8000.0,
+        -1000.0,
+        1199.6572265625
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        -2000.0,
+        10000.0,
+        0.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_05"
+    },
+    {
+      "id": "zone_06_cam_01",
+      "usd_path": "/World/Cameras/zone_06_cam_01",
+      "position_m": [
+        -8000.0,
+        1000.0,
+        3398.390869140625
+      ],
+      "look_at_m": [
+        -8000.0,
+        1000.0,
+        442.9071044921875
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        0.0,
+        -6000.0,
+        2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_06"
+    },
+    {
+      "id": "zone_06_cam_02",
+      "usd_path": "/World/Cameras/zone_06_cam_02",
+      "position_m": [
+        -8000.0,
+        3000.0,
+        3544.6011962890625
+      ],
+      "look_at_m": [
+        -8000.0,
+        3000.0,
+        470.7351989746094
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        2000.0,
+        -6000.0,
+        4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_06"
+    },
+    {
+      "id": "zone_06_cam_03",
+      "usd_path": "/World/Cameras/zone_06_cam_03",
+      "position_m": [
+        -8000.0,
+        5000.0,
+        3571.9049072265625
+      ],
+      "look_at_m": [
+        -8000.0,
+        5000.0,
+        639.4468994140625
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        4000.0,
+        -6000.0,
+        6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_06"
+    },
+    {
+      "id": "zone_06_cam_04",
+      "usd_path": "/World/Cameras/zone_06_cam_04",
+      "position_m": [
+        -8000.0,
+        7000.0,
+        3558.5443115234375
+      ],
+      "look_at_m": [
+        -8000.0,
+        7000.0,
+        594.4766235351562
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        6000.0,
+        -6000.0,
+        8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_06"
+    },
+    {
+      "id": "zone_06_cam_05",
+      "usd_path": "/World/Cameras/zone_06_cam_05",
+      "position_m": [
+        -8000.0,
+        9000.0,
+        3981.394287109375
+      ],
+      "look_at_m": [
+        -8000.0,
+        9000.0,
+        696.3803100585938
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -10000.0,
+        8000.0,
+        -6000.0,
+        10000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_06"
+    },
+    {
+      "id": "zone_07_cam_01",
+      "usd_path": "/World/Cameras/zone_07_cam_01",
+      "position_m": [
+        -4000.0,
+        1000.0,
+        3647.2561645507812
+      ],
+      "look_at_m": [
+        -4000.0,
+        1000.0,
+        780.8912963867188
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        0.0,
+        -2000.0,
+        2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_07"
+    },
+    {
+      "id": "zone_07_cam_02",
+      "usd_path": "/World/Cameras/zone_07_cam_02",
+      "position_m": [
+        -4000.0,
+        3000.0,
+        3561.6537475585938
+      ],
+      "look_at_m": [
+        -4000.0,
+        3000.0,
+        667.5698852539062
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        2000.0,
+        -2000.0,
+        4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_07"
+    },
+    {
+      "id": "zone_07_cam_03",
+      "usd_path": "/World/Cameras/zone_07_cam_03",
+      "position_m": [
+        -4000.0,
+        5000.0,
+        3625.061279296875
+      ],
+      "look_at_m": [
+        -4000.0,
+        5000.0,
+        658.8114013671875
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        4000.0,
+        -2000.0,
+        6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_07"
+    },
+    {
+      "id": "zone_07_cam_04",
+      "usd_path": "/World/Cameras/zone_07_cam_04",
+      "position_m": [
+        -4000.0,
+        7000.0,
+        3756.8525390625
+      ],
+      "look_at_m": [
+        -4000.0,
+        7000.0,
+        764.2337646484375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        6000.0,
+        -2000.0,
+        8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_07"
+    },
+    {
+      "id": "zone_07_cam_05",
+      "usd_path": "/World/Cameras/zone_07_cam_05",
+      "position_m": [
+        -4000.0,
+        9000.0,
+        4091.1812744140625
+      ],
+      "look_at_m": [
+        -4000.0,
+        9000.0,
+        644.460205078125
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -6000.0,
+        8000.0,
+        -2000.0,
+        10000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_07"
+    },
+    {
+      "id": "zone_08_cam_01",
+      "usd_path": "/World/Cameras/zone_08_cam_01",
+      "position_m": [
+        0.0,
+        1000.0,
+        3639.03662109375
+      ],
+      "look_at_m": [
+        0.0,
+        1000.0,
+        605.557861328125
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        0.0,
+        2000.0,
+        2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_08"
+    },
+    {
+      "id": "zone_08_cam_02",
+      "usd_path": "/World/Cameras/zone_08_cam_02",
+      "position_m": [
+        0.0,
+        3000.0,
+        3471.8125
+      ],
+      "look_at_m": [
+        0.0,
+        3000.0,
+        412.4986572265625
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        2000.0,
+        2000.0,
+        4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_08"
+    },
+    {
+      "id": "zone_08_cam_03",
+      "usd_path": "/World/Cameras/zone_08_cam_03",
+      "position_m": [
+        0.0,
+        5000.0,
+        3531.2052612304688
+      ],
+      "look_at_m": [
+        0.0,
+        5000.0,
+        485.9360046386719
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        4000.0,
+        2000.0,
+        6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_08"
+    },
+    {
+      "id": "zone_08_cam_04",
+      "usd_path": "/World/Cameras/zone_08_cam_04",
+      "position_m": [
+        0.0,
+        7000.0,
+        3728.04931640625
+      ],
+      "look_at_m": [
+        0.0,
+        7000.0,
+        623.6448364257812
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        6000.0,
+        2000.0,
+        8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_08"
+    },
+    {
+      "id": "zone_08_cam_05",
+      "usd_path": "/World/Cameras/zone_08_cam_05",
+      "position_m": [
+        0.0,
+        9000.0,
+        4283.00830078125
+      ],
+      "look_at_m": [
+        0.0,
+        9000.0,
+        1001.353271484375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        -2000.0,
+        8000.0,
+        2000.0,
+        10000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_08"
+    },
+    {
+      "id": "zone_09_cam_01",
+      "usd_path": "/World/Cameras/zone_09_cam_01",
+      "position_m": [
+        4000.0,
+        1000.0,
+        3669.4295654296875
+      ],
+      "look_at_m": [
+        4000.0,
+        1000.0,
+        694.9299926757812
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        0.0,
+        6000.0,
+        2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_09"
+    },
+    {
+      "id": "zone_09_cam_02",
+      "usd_path": "/World/Cameras/zone_09_cam_02",
+      "position_m": [
+        4000.0,
+        3000.0,
+        3540.623779296875
+      ],
+      "look_at_m": [
+        4000.0,
+        3000.0,
+        621.7545166015625
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        2000.0,
+        6000.0,
+        4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_09"
+    },
+    {
+      "id": "zone_09_cam_03",
+      "usd_path": "/World/Cameras/zone_09_cam_03",
+      "position_m": [
+        4000.0,
+        5000.0,
+        3625.9698486328125
+      ],
+      "look_at_m": [
+        4000.0,
+        5000.0,
+        691.7300415039062
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        4000.0,
+        6000.0,
+        6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_09"
+    },
+    {
+      "id": "zone_09_cam_04",
+      "usd_path": "/World/Cameras/zone_09_cam_04",
+      "position_m": [
+        4000.0,
+        7000.0,
+        3667.06591796875
+      ],
+      "look_at_m": [
+        4000.0,
+        7000.0,
+        718.2616577148438
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        6000.0,
+        6000.0,
+        8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_09"
+    },
+    {
+      "id": "zone_09_cam_05",
+      "usd_path": "/World/Cameras/zone_09_cam_05",
+      "position_m": [
+        4000.0,
+        9000.0,
+        4260.7889404296875
+      ],
+      "look_at_m": [
+        4000.0,
+        9000.0,
+        768.2799072265625
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        2000.0,
+        8000.0,
+        6000.0,
+        10000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_09"
+    },
+    {
+      "id": "zone_10_cam_01",
+      "usd_path": "/World/Cameras/zone_10_cam_01",
+      "position_m": [
+        8000.0,
+        1000.0,
+        4636.74462890625
+      ],
+      "look_at_m": [
+        8000.0,
+        1000.0,
+        1226.01611328125
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        0.0,
+        10000.0,
+        2000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_10"
+    },
+    {
+      "id": "zone_10_cam_02",
+      "usd_path": "/World/Cameras/zone_10_cam_02",
+      "position_m": [
+        8000.0,
+        3000.0,
+        4655.7403564453125
+      ],
+      "look_at_m": [
+        8000.0,
+        3000.0,
+        1602.3900146484375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        2000.0,
+        10000.0,
+        4000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_10"
+    },
+    {
+      "id": "zone_10_cam_03",
+      "usd_path": "/World/Cameras/zone_10_cam_03",
+      "position_m": [
+        8000.0,
+        5000.0,
+        4549.2730712890625
+      ],
+      "look_at_m": [
+        8000.0,
+        5000.0,
+        1209.2333984375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        4000.0,
+        10000.0,
+        6000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_10"
+    },
+    {
+      "id": "zone_10_cam_04",
+      "usd_path": "/World/Cameras/zone_10_cam_04",
+      "position_m": [
+        8000.0,
+        7000.0,
+        4466.778564453125
+      ],
+      "look_at_m": [
+        8000.0,
+        7000.0,
+        1255.6058349609375
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        6000.0,
+        10000.0,
+        8000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_10"
+    },
+    {
+      "id": "zone_10_cam_05",
+      "usd_path": "/World/Cameras/zone_10_cam_05",
+      "position_m": [
+        8000.0,
+        9000.0,
+        4374.1788330078125
+      ],
+      "look_at_m": [
+        8000.0,
+        9000.0,
+        1218.1639404296875
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "focal_length_mm": 22.0,
+      "horizontal_aperture_mm": 36.0,
+      "clipping_range_m": [
+        0.1,
+        100000
+      ],
+      "assigned_ground_bounds_m": [
+        6000.0,
+        8000.0,
+        10000.0,
+        10000.0
+      ],
+      "minimum_height_above_assigned_terrain_m": 2640.0,
+      "pose_provenance": "virtual overhead coverage proposal; not a surveyed installation",
+      "zone_id": "zone_10"
+    }
+  ],
+  "zones": [
+    {
+      "id": "zone_01",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -10000,
+              -10000
+            ],
+            [
+              -6000,
+              -10000
+            ],
+            [
+              -6000,
+              0
+            ],
+            [
+              -10000,
+              0
+            ],
+            [
+              -10000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_01_cam_01",
+        "zone_01_cam_02",
+        "zone_01_cam_03",
+        "zone_01_cam_04",
+        "zone_01_cam_05"
+      ]
+    },
+    {
+      "id": "zone_02",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6000,
+              -10000
+            ],
+            [
+              -2000,
+              -10000
+            ],
+            [
+              -2000,
+              0
+            ],
+            [
+              -6000,
+              0
+            ],
+            [
+              -6000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_02_cam_01",
+        "zone_02_cam_02",
+        "zone_02_cam_03",
+        "zone_02_cam_04",
+        "zone_02_cam_05"
+      ]
+    },
+    {
+      "id": "zone_03",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2000,
+              -10000
+            ],
+            [
+              2000,
+              -10000
+            ],
+            [
+              2000,
+              0
+            ],
+            [
+              -2000,
+              0
+            ],
+            [
+              -2000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_03_cam_01",
+        "zone_03_cam_02",
+        "zone_03_cam_03",
+        "zone_03_cam_04",
+        "zone_03_cam_05"
+      ]
+    },
+    {
+      "id": "zone_04",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              2000,
+              -10000
+            ],
+            [
+              6000,
+              -10000
+            ],
+            [
+              6000,
+              0
+            ],
+            [
+              2000,
+              0
+            ],
+            [
+              2000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_04_cam_01",
+        "zone_04_cam_02",
+        "zone_04_cam_03",
+        "zone_04_cam_04",
+        "zone_04_cam_05"
+      ]
+    },
+    {
+      "id": "zone_05",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              6000,
+              -10000
+            ],
+            [
+              10000,
+              -10000
+            ],
+            [
+              10000,
+              0
+            ],
+            [
+              6000,
+              0
+            ],
+            [
+              6000,
+              -10000
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_05_cam_01",
+        "zone_05_cam_02",
+        "zone_05_cam_03",
+        "zone_05_cam_04",
+        "zone_05_cam_05"
+      ]
+    },
+    {
+      "id": "zone_06",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -10000,
+              0
+            ],
+            [
+              -6000,
+              0
+            ],
+            [
+              -6000,
+              10000
+            ],
+            [
+              -10000,
+              10000
+            ],
+            [
+              -10000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_06_cam_01",
+        "zone_06_cam_02",
+        "zone_06_cam_03",
+        "zone_06_cam_04",
+        "zone_06_cam_05"
+      ]
+    },
+    {
+      "id": "zone_07",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6000,
+              0
+            ],
+            [
+              -2000,
+              0
+            ],
+            [
+              -2000,
+              10000
+            ],
+            [
+              -6000,
+              10000
+            ],
+            [
+              -6000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_07_cam_01",
+        "zone_07_cam_02",
+        "zone_07_cam_03",
+        "zone_07_cam_04",
+        "zone_07_cam_05"
+      ]
+    },
+    {
+      "id": "zone_08",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2000,
+              0
+            ],
+            [
+              2000,
+              0
+            ],
+            [
+              2000,
+              10000
+            ],
+            [
+              -2000,
+              10000
+            ],
+            [
+              -2000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_08_cam_01",
+        "zone_08_cam_02",
+        "zone_08_cam_03",
+        "zone_08_cam_04",
+        "zone_08_cam_05"
+      ]
+    },
+    {
+      "id": "zone_09",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              2000,
+              0
+            ],
+            [
+              6000,
+              0
+            ],
+            [
+              6000,
+              10000
+            ],
+            [
+              2000,
+              10000
+            ],
+            [
+              2000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_09_cam_01",
+        "zone_09_cam_02",
+        "zone_09_cam_03",
+        "zone_09_cam_04",
+        "zone_09_cam_05"
+      ]
+    },
+    {
+      "id": "zone_10",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              6000,
+              0
+            ],
+            [
+              10000,
+              0
+            ],
+            [
+              10000,
+              10000
+            ],
+            [
+              6000,
+              10000
+            ],
+            [
+              6000,
+              0
+            ]
+          ]
+        ]
+      },
+      "camera_ids": [
+        "zone_10_cam_01",
+        "zone_10_cam_02",
+        "zone_10_cam_03",
+        "zone_10_cam_04",
+        "zone_10_cam_05"
+      ]
+    }
+  ],
+  "render": {
+    "resolution_px": [
+      1920,
+      1080
+    ]
+  },
+  "coordinate_system": "scene_local_metric_Z_up"
+}

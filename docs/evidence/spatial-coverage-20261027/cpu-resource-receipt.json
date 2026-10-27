@@ -1,0 +1,20 @@
+{
+  "schema": "omnistream.bounded-process.v1",
+  "exit_code": 0,
+  "reason": "normal_exit",
+  "wall_s": 151.7039999999979,
+  "ram_job_commit_limit_bytes": 599998464,
+  "requested_ram_job_commit_limit_bytes": 600000000,
+  "ram_job_commit_stop_bytes": 550000000,
+  "resident_ram_stop_bytes": 10500000000,
+  "monitor_interval_ms": 100,
+  "ram_job_limit_readback_bytes": 599998464,
+  "host_available_ram_floor_bytes": 4000000000,
+  "peak_job_commit_bytes": 237604864,
+  "peak_owned_rss_bytes": 160129024,
+  "peak_device_vram_bytes": null,
+  "gpu_stop_threshold_bytes": null,
+  "requested_gpu_ceiling_bytes": 15000000000,
+  "observed_gpu_ceiling_exceeded": null,
+  "gpu_limit_is_watchdog_not_allocation_cap": true
+}

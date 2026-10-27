@@ -12,6 +12,7 @@ import numpy as np
 from .drivers import RenderDriver,RenderBatch
 from .models import ContractError
 from .usd_cameras import read_camera
+from .residency import require_residency_contract
 
 
 @dataclass
@@ -74,9 +75,11 @@ class OmniverseRenderDriver(RenderDriver):
 
     async def prepare_batch(self,handles,contexts,config):
         if self.residency_provider:
+            fingerprints={c.get('state_fingerprint') for c in contexts.values()}
+            if len(fingerprints)!=1 or None in fingerprints:
+                raise ContractError('Residency preparation requires one explicit frozen state')
             receipt=await self.residency_provider.prepare(self.stage,tuple(contexts.values()),config)
-            if receipt.get('visible_assets_complete') is not True:
-                raise ContractError('Residency provider did not establish complete visible asset coverage')
+            require_residency_contract(receipt,next(iter(fingerprints)))
         import omni.usd
         reset=getattr(omni.usd.get_context(),'reset_renderer_accumulation',None)
         if not callable(reset):raise ContractError('This Kit runtime needs a qualified renderer-accumulation reset binding')

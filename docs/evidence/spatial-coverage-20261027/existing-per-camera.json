@@ -1,0 +1,252 @@
+[
+  {
+    "camera_id": "zone_01_cam_01",
+    "in_frustum_samples": 4664,
+    "terrain_visible_samples": 1754
+  },
+  {
+    "camera_id": "zone_01_cam_02",
+    "in_frustum_samples": 1020,
+    "terrain_visible_samples": 952
+  },
+  {
+    "camera_id": "zone_01_cam_03",
+    "in_frustum_samples": 5227,
+    "terrain_visible_samples": 1327
+  },
+  {
+    "camera_id": "zone_01_cam_04",
+    "in_frustum_samples": 1034,
+    "terrain_visible_samples": 415
+  },
+  {
+    "camera_id": "zone_01_cam_05",
+    "in_frustum_samples": 48138,
+    "terrain_visible_samples": 2014
+  },
+  {
+    "camera_id": "zone_02_cam_01",
+    "in_frustum_samples": 50146,
+    "terrain_visible_samples": 3084
+  },
+  {
+    "camera_id": "zone_02_cam_02",
+    "in_frustum_samples": 312,
+    "terrain_visible_samples": 281
+  },
+  {
+    "camera_id": "zone_02_cam_03",
+    "in_frustum_samples": 927,
+    "terrain_visible_samples": 737
+  },
+  {
+    "camera_id": "zone_02_cam_04",
+    "in_frustum_samples": 588,
+    "terrain_visible_samples": 508
+  },
+  {
+    "camera_id": "zone_02_cam_05",
+    "in_frustum_samples": 63633,
+    "terrain_visible_samples": 77
+  },
+  {
+    "camera_id": "zone_03_cam_01",
+    "in_frustum_samples": 1102,
+    "terrain_visible_samples": 304
+  },
+  {
+    "camera_id": "zone_03_cam_02",
+    "in_frustum_samples": 27720,
+    "terrain_visible_samples": 3312
+  },
+  {
+    "camera_id": "zone_03_cam_03",
+    "in_frustum_samples": 7000,
+    "terrain_visible_samples": 719
+  },
+  {
+    "camera_id": "zone_03_cam_04",
+    "in_frustum_samples": 1048,
+    "terrain_visible_samples": 513
+  },
+  {
+    "camera_id": "zone_03_cam_05",
+    "in_frustum_samples": 71121,
+    "terrain_visible_samples": 22
+  },
+  {
+    "camera_id": "zone_04_cam_01",
+    "in_frustum_samples": 759,
+    "terrain_visible_samples": 727
+  },
+  {
+    "camera_id": "zone_04_cam_02",
+    "in_frustum_samples": 335,
+    "terrain_visible_samples": 315
+  },
+  {
+    "camera_id": "zone_04_cam_03",
+    "in_frustum_samples": 643,
+    "terrain_visible_samples": 642
+  },
+  {
+    "camera_id": "zone_04_cam_04",
+    "in_frustum_samples": 325,
+    "terrain_visible_samples": 325
+  },
+  {
+    "camera_id": "zone_04_cam_05",
+    "in_frustum_samples": 64360,
+    "terrain_visible_samples": 4708
+  },
+  {
+    "camera_id": "zone_05_cam_01",
+    "in_frustum_samples": 47638,
+    "terrain_visible_samples": 2771
+  },
+  {
+    "camera_id": "zone_05_cam_02",
+    "in_frustum_samples": 1644,
+    "terrain_visible_samples": 993
+  },
+  {
+    "camera_id": "zone_05_cam_03",
+    "in_frustum_samples": 2059,
+    "terrain_visible_samples": 1994
+  },
+  {
+    "camera_id": "zone_05_cam_04",
+    "in_frustum_samples": 83197,
+    "terrain_visible_samples": 13541
+  },
+  {
+    "camera_id": "zone_05_cam_05",
+    "in_frustum_samples": 46710,
+    "terrain_visible_samples": 151
+  },
+  {
+    "camera_id": "zone_06_cam_01",
+    "in_frustum_samples": 7741,
+    "terrain_visible_samples": 486
+  },
+  {
+    "camera_id": "zone_06_cam_02",
+    "in_frustum_samples": 875,
+    "terrain_visible_samples": 425
+  },
+  {
+    "camera_id": "zone_06_cam_03",
+    "in_frustum_samples": 484,
+    "terrain_visible_samples": 420
+  },
+  {
+    "camera_id": "zone_06_cam_04",
+    "in_frustum_samples": 348,
+    "terrain_visible_samples": 271
+  },
+  {
+    "camera_id": "zone_06_cam_05",
+    "in_frustum_samples": 4141,
+    "terrain_visible_samples": 10
+  },
+  {
+    "camera_id": "zone_07_cam_01",
+    "in_frustum_samples": 424,
+    "terrain_visible_samples": 403
+  },
+  {
+    "camera_id": "zone_07_cam_02",
+    "in_frustum_samples": 615,
+    "terrain_visible_samples": 598
+  },
+  {
+    "camera_id": "zone_07_cam_03",
+    "in_frustum_samples": 65021,
+    "terrain_visible_samples": 3032
+  },
+  {
+    "camera_id": "zone_07_cam_04",
+    "in_frustum_samples": 12936,
+    "terrain_visible_samples": 306
+  },
+  {
+    "camera_id": "zone_07_cam_05",
+    "in_frustum_samples": 6975,
+    "terrain_visible_samples": 442
+  },
+  {
+    "camera_id": "zone_08_cam_01",
+    "in_frustum_samples": 633,
+    "terrain_visible_samples": 299
+  },
+  {
+    "camera_id": "zone_08_cam_02",
+    "in_frustum_samples": 95,
+    "terrain_visible_samples": 93
+  },
+  {
+    "camera_id": "zone_08_cam_03",
+    "in_frustum_samples": 174,
+    "terrain_visible_samples": 172
+  },
+  {
+    "camera_id": "zone_08_cam_04",
+    "in_frustum_samples": 177,
+    "terrain_visible_samples": 173
+  },
+  {
+    "camera_id": "zone_08_cam_05",
+    "in_frustum_samples": 8376,
+    "terrain_visible_samples": 37
+  },
+  {
+    "camera_id": "zone_09_cam_01",
+    "in_frustum_samples": 479,
+    "terrain_visible_samples": 467
+  },
+  {
+    "camera_id": "zone_09_cam_02",
+    "in_frustum_samples": 1794,
+    "terrain_visible_samples": 836
+  },
+  {
+    "camera_id": "zone_09_cam_03",
+    "in_frustum_samples": 65256,
+    "terrain_visible_samples": 1704
+  },
+  {
+    "camera_id": "zone_09_cam_04",
+    "in_frustum_samples": 55001,
+    "terrain_visible_samples": 3865
+  },
+  {
+    "camera_id": "zone_09_cam_05",
+    "in_frustum_samples": 8334,
+    "terrain_visible_samples": 2234
+  },
+  {
+    "camera_id": "zone_10_cam_01",
+    "in_frustum_samples": 354,
+    "terrain_visible_samples": 326
+  },
+  {
+    "camera_id": "zone_10_cam_02",
+    "in_frustum_samples": 183,
+    "terrain_visible_samples": 132
+  },
+  {
+    "camera_id": "zone_10_cam_03",
+    "in_frustum_samples": 42717,
+    "terrain_visible_samples": 4907
+  },
+  {
+    "camera_id": "zone_10_cam_04",
+    "in_frustum_samples": 722,
+    "terrain_visible_samples": 570
+  },
+  {
+    "camera_id": "zone_10_cam_05",
+    "in_frustum_samples": 1106,
+    "terrain_visible_samples": 84
+  }
+]
