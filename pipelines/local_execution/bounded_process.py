@@ -85,7 +85,8 @@ def process_tree_rss(process):
 def run_bounded(command, output, *, ram_bytes=11_500_000_000,
                 vram_ceiling_bytes=15_000_000_000, vram_stop_bytes=14_000_000_000,
                 gpu_index=0, monitor_gpu=True, timeout_s=3600,
-                min_available_ram_bytes=4_000_000_000, ram_stop_bytes=None):
+                min_available_ram_bytes=4_000_000_000, ram_stop_bytes=None,
+                log_paths=None, working_directory=None):
     if sys.platform != 'win32':
         raise RuntimeError('This launcher requires Windows Job Objects')
     if (ram_bytes <= 0 or min_available_ram_bytes <= 0 or timeout_s <= 0
@@ -147,8 +148,12 @@ def run_bounded(command, output, *, ram_bytes=11_500_000_000,
     reason = 'normal_exit'
     exit_code = None
     try:
-        for filename in ('stdout.private.log','stderr.private.log'):
-            handles.append(win32file.CreateFile(str(output/filename), win32con.GENERIC_WRITE,
+        logs = ([output/'stdout.private.log',output/'stderr.private.log'] if log_paths is None
+                else [no_links(p) for p in log_paths])
+        if len(logs) != 2 or logs[0] == logs[1]:
+            raise ValueError('Two distinct owned log paths are required')
+        for log in logs:
+            handles.append(win32file.CreateFile(str(log), win32con.GENERIC_WRITE,
                            win32con.FILE_SHARE_READ, security, win32con.CREATE_NEW, 0, None))
         handles.append(win32file.CreateFile('NUL', win32con.GENERIC_READ,
                        win32con.FILE_SHARE_READ|win32con.FILE_SHARE_WRITE, security,
@@ -159,7 +164,8 @@ def run_bounded(command, output, *, ram_bytes=11_500_000_000,
         process, thread, pid, _ = win32process.CreateProcess(str(Path(command[0]).resolve()),
             subprocess.list2cmdline(command), None, None, True,
             win32con.CREATE_NO_WINDOW|win32con.CREATE_SUSPENDED|win32process.BELOW_NORMAL_PRIORITY_CLASS,
-            dict(os.environ), str(Path(command[0]).resolve().parent), startup)
+            dict(os.environ), str(no_links(working_directory) if working_directory
+                                  else Path(command[0]).resolve().parent), startup)
         try:
             win32job.AssignProcessToJobObject(job, process)
         except Exception:
@@ -173,7 +179,7 @@ def run_bounded(command, output, *, ram_bytes=11_500_000_000,
                       'host_available_ram_floor_bytes':min_available_ram_bytes,
                       'gpu_is_polled_not_hard_capped':True})
         owned = psutil.Process(pid)
-        fatal_logs = FatalLogMonitor(output/name for name in ('stdout.private.log','stderr.private.log'))
+        fatal_logs = FatalLogMonitor(logs)
         win32process.ResumeThread(thread)
         with (output/'resources.jsonl').open('w',encoding='utf-8') as journal:
             while win32event.WaitForSingleObject(process, 100) == win32con.WAIT_TIMEOUT:

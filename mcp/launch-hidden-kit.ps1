@@ -18,14 +18,53 @@ if (-not (Test-Path -LiteralPath $KitExe -PathType Leaf)) {
 # command-line switch.
 $kitArgumentList = $KitArgumentLine.Trim() + " --no-window"
 
-$kit = Start-Process `
+$budgetPath = Join-Path $WorkingDirectory 'omnistream-resource-budget.private.json'
+if (Test-Path -LiteralPath $budgetPath -PathType Leaf) {
+  # An operator-configured guard is mandatory for this runtime once present.
+  # Never fall back to an unbounded launch after an admission or guard error.
+  $budget = Get-Content -LiteralPath $budgetPath -Raw | ConvertFrom-Json
+  if ($budget.schema -ne 'omnistream.local-resource-budget.v1' -or
+      -not (Test-Path -LiteralPath $budget.python -PathType Leaf) -or
+      -not (Test-Path -LiteralPath $budget.launcher -PathType Leaf)) {
+    throw 'Invalid local resource guard configuration'
+  }
+  $guardOutput = $PidPath + '.budget'
+  $requestPath = $PidPath + '.budget-request.private.json'
+  $request = [ordered]@{
+    budget = $budget; output = $guardOutput; executable = $KitExe
+    argument_line = $kitArgumentList; working_directory = $WorkingDirectory
+    stdout = $StdOutPath; stderr = $StdErrPath
+  } | ConvertTo-Json -Depth 8
+  [System.IO.File]::WriteAllText($requestPath, $request, (New-Object System.Text.UTF8Encoding($false)))
+  $guard = Start-Process -FilePath $budget.python -WindowStyle Hidden -PassThru `
+    -ArgumentList @(('"' + $budget.launcher + '"'), '--request', ('"' + $requestPath + '"')) `
+    -RedirectStandardOutput ($PidPath + '.guard.out.log') `
+    -RedirectStandardError ($PidPath + '.guard.err.log')
+  $handoff = Join-Path $guardOutput 'process.json'
+  $deadline = [DateTime]::UtcNow.AddSeconds(12)
+  while (-not (Test-Path -LiteralPath $handoff -PathType Leaf)) {
+    $guard.Refresh()
+    if ($guard.HasExited -or [DateTime]::UtcNow -ge $deadline) {
+      throw 'Resource guard did not admit a tracked Kit process'
+    }
+    Start-Sleep -Milliseconds 50
+  }
+  $admitted = Get-Content -LiteralPath $handoff -Raw | ConvertFrom-Json
+  if ($admitted.job_commit_limit_bytes -gt 12000000000 -or
+      $admitted.gpu_requested_ceiling_bytes -gt 15000000000) {
+    throw 'Guard handoff exceeds authorized ceilings'
+  }
+  $kit = Get-Process -Id ([int]$admitted.pid) -ErrorAction Stop
+} else {
+  $kit = Start-Process `
   -FilePath $KitExe `
   -ArgumentList $kitArgumentList `
   -WorkingDirectory $WorkingDirectory `
   -WindowStyle Hidden `
   -RedirectStandardOutput $StdOutPath `
   -RedirectStandardError $StdErrPath `
-  -PassThru
+    -PassThru
+}
 
 try {
   $identity = [ordered]@{

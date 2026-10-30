@@ -19,7 +19,6 @@ This index links to guides aligned with the code in version `1.0.0-rc4`. The [re
 | Understand Configure, Launch, Scene, Control, Supervise, and Diagnostics | [Operations](OPERATIONS.md) |
 | Inspect, edit, run, and monitor the already-open stage | [Open scene, simulation, and diagnostics](LIVE-SCENE.md) |
 | Bound terrain LOD and geographic asset residency | [Tiled geographic scenes](TILED-GEOGRAPHIC-SCENES.md) |
-| Prepare backend-independent event capture with 10 groups and 50 cameras | [Event capture pipeline](../pipelines/event_capture/README.md) |
 | Find MCP tools and their roles | [MCP reference](MCP-REFERENCE.md) |
 
 ## Understand and qualify the product
@@ -29,10 +28,8 @@ This index links to guides aligned with the code in version `1.0.0-rc4`. The [re
 | Components, data flows, and responsibilities | [Architecture](ARCHITECTURE.md) |
 | Local boundaries, data, credentials, and USD writes | [Security](SECURITY.md) |
 | Verification commands and expected evidence | [Validation](VALIDATION.md) |
-| Fresh 20 × 20 km IGN territory, metadata, weather and remaining scientific gates | [Justin reconstruction](QUALIFICATION-JUSTIN-2026-10-24.md) |
 | October 21 native Kit, PhysX, decoded local video and Codex opening blocker | [Current local qualification](QUALIFICATION-LOCAL-2026-10-21.md) |
 | RC4 A01–A04 status, tests and remaining Codex host gate | [Current RC4 qualification report](QUALIFICATION-2026-10-11-RC4.md) |
-| Reproduce the real Die–Pontaix map case and its current video blocker | [FireViewer RC4 case](QUALIFICATION-FIREVIEWER-RC4.md) |
 | Windows, OpenUSD, Kit, PhysX and FireViewer results obtained on October 1 | [Historical RC3 qualification report](QUALIFICATION-2026-10-01.md) |
 | Release and RC-to-stable promotion criteria | [Release checklist](RELEASE-CHECKLIST.md) |
 | Version, tags, source archive, and registry packages | [Versions and distribution](RELEASING.md) |
